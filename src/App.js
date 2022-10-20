@@ -4,7 +4,7 @@ import SubMain from './pages/SubMain/SubMain';
 import Plan from './pages/Plan/Plan';
 import Lists from './pages/Lists/Lists';
 import Detail from './pages/Detail/Detail';
-import MyPage from './pages/MyPage/MyPage';
+import MyPage from './pages/Mypage(참고)/Mypage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import User from './pages/User/User';

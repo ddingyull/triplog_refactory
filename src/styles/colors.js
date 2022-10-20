@@ -7,7 +7,7 @@
 //   —color-light: #f5f5f5;
 // }
 
-export default {
+export const colors = {
   black: '#212121',
   deep_grey: '#616161',
   grey: '#ccc',
