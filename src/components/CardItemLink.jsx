@@ -10,9 +10,9 @@ const CardItem = styled.div`
   border-radius: .65em;
 `
 
-export default function CardItemLink({imgSrc,width,height}){
+export default function CardItemLink({imgSrc, width, height}){
   return(
-    <CardItem style={{ width: '18rem' }} className="m-3 d-inline-block">
+    <CardItem width={width} height={height} className="m-3 d-inline-block border">
       <Card.Img variant="top" src="/images/map_ex.png" />
       <Card.Img variant="top" src={imgSrc} style={{Maxwidth:"900px"}}/>
       <Card.Body>
