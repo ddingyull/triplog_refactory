@@ -6,7 +6,7 @@ import CardItemLink from '../../../components/CardItemLink'
 
 
 // detail 페이지의 submenu 부분
-export default function Items ({ text, subText, imgSrc }) {
+export default function Items ({ text, subText, imgSrc, width, height }) {
   return(
     <Container className="p-3 mb-4 mt-5">
       <Row className='d-block justify-content-start'>
@@ -17,11 +17,11 @@ export default function Items ({ text, subText, imgSrc }) {
         </Col>
       </Row>
 
-      <Row  style={{width: "inherit"}}>
+      <Row >
       <TableContainer>
       {
         [1,2,3,4,5,6,7,8].map((a,i)=>(
-          <CardItemLink/>
+          <CardItemLink width={width} height={height}/>
           ))
       }
       </TableContainer>
