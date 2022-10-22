@@ -27,7 +27,7 @@ export default function NavHeader() {
           </Nav>
         </Navbar.Collapse>
         <Nav className='col-2'>
-            <Nav.Link href="/User"><FontAwesomeIcon icon={faUser}/></Nav.Link>
+            <Nav.Link href="/Login"><FontAwesomeIcon icon={faUser}/></Nav.Link>
             <Nav.Link href="/MyPage"><FontAwesomeIcon icon={faFaceSmile} /></Nav.Link>
           </Nav>
       </Container>
