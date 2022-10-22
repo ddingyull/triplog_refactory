@@ -12,13 +12,15 @@ const BtnModule = styled.a`
   font-weight: 700;
   color: ${(props) => props.textColor};
   background-color: ${(props) => props.backgroundColor};
+  transition: .3s;
 
   &:hover {
-    background: ${(props) => props.hoverColor};
+    color:${(props) => props.hoverColor};
+    background: ${(props) => props.hoverBackgroundColor};
   }
   `
 
-export default function Btn ({text, clickEvent, textColor, backgroundColor, hoverColor}) {
+export default function Btn ({text, clickEvent, textColor, backgroundColor, hoverColor, hoverBackgroundColor}) {
   return(
       <BtnModule 
         type="submit"
@@ -26,6 +28,7 @@ export default function Btn ({text, clickEvent, textColor, backgroundColor, hove
         textColor={textColor}
         backgroundColor={backgroundColor}
         hoverColor={hoverColor}
+        hoverBackgroundColor={hoverBackgroundColor}
         >
         {text}
       </BtnModule>
