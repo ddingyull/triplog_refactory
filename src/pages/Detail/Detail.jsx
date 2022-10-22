@@ -1,7 +1,24 @@
 import React from 'react';
 import {Container, Row, Col, Button, Badge, Card, Image, Form } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function Detail() {
+export default function Detail(props) {
+
+  let {contentId} = useParams();
+  // let findContentId = props.tourData.find((x) => x.contentId === contentId);
+  // console.log(findContentId);
+
+  const [tourData, setTourData] = useState([]);
+
+  useEffect (() => {
+    axios.get('https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=126508&contentTypeId=12&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y')
+    .then(response => {
+      setTourData(response.data.response.body.items.item[0]);
+    })
+  }, []);
+
   return (
     <Container>
       <Row xs={1} md={2} lg={2}>
@@ -35,19 +52,14 @@ export default function Detail() {
           <Card className="mt-3" >
             <Card.Body className="m-2" style={{height: '40vh'}}>
               <Badge bg="dark"className='col-2 mb-2' >맛집</Badge>
-              <Card.Title className="mb-3">명동교자만두</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">📍 제주도 애월읍</Card.Subtitle>
+              <Card.Title className="mb-3">{tourData.title}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">📍 {tourData.addr1}</Card.Subtitle>
               <Card.Text className='mb-2 text-muted'>
                 ⭐⭐⭐⭐⭐<span>30</span> ❤ <span>2,146</span>
               </Card.Text>
               <Card.Text>
                 <p>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
+                  {tourData.overview}
                 </p>
               </Card.Text>
             </Card.Body>
