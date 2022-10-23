@@ -2,6 +2,7 @@ import { Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
+
 const BtnModule = styled.a`
   width: inherit;
   border-radius: 5px;
@@ -12,20 +13,25 @@ const BtnModule = styled.a`
   font-weight: 700;
   color: ${(props) => props.textColor};
   background-color: ${(props) => props.backgroundColor};
+  transition: .3s;
 
   &:hover {
-    background: ${(props) => props.hoverColor};
+    color:${(props) => props.hoverColor};
+    background: ${(props) => props.hoverBackgroundColor};
   }
   `
 
-export default function Btn ({text, clickEvent, textColor, backgroundColor, hoverColor}) {
+export default function Btn ({text, onClick, textColor, backgroundColor, hoverColor, hoverBackgroundColor}) {
+  
+
   return(
       <BtnModule 
         type="submit"
-        onClick={clickEvent}
+        onClick={onClick}
         textColor={textColor}
         backgroundColor={backgroundColor}
         hoverColor={hoverColor}
+        hoverBackgroundColor={hoverBackgroundColor}
         >
         {text}
       </BtnModule>
