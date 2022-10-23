@@ -17,9 +17,7 @@ export default function CalendarLink({ text, subText }){
 
   return(
       <Container className="col-7 m-auto d-flex justify-content-center">
-        <Button onClick={() =>(CalendarShow())} className="">출발 일정 지정하기</Button>
-
-        <CalendarModule/>
+        {/* <Button onClick={() =>(CalendarShow())} className="">출발 일정 지정하기</Button> */}
 
         <Row className='col-12'>
           <img className="col-7 d-block m-4" alt="지도이미지" src='/images/backgroundImg.png' style={{width:"100%"}}/>
@@ -30,6 +28,7 @@ export default function CalendarLink({ text, subText }){
           <Title className="justify-content-start fw-bold m-5">{text}</Title>
           {/* <p className='m-0 fs-6' >2022.10.25 - 10.28</p> */}
           <p className='m-0 fs-6 text-secondary'>{subText}</p>
+          <CalendarModule/>
         </Col>
         </Row>
 
