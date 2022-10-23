@@ -15,9 +15,10 @@ export default function Users() {
   const [ userpw, setUserpw ] = useState('');
   const {Navigate} = useNavigate();
 
+  let userID = 1;
   const register = () => {
     axios.post('http://localhost:3000/users', {
-    userID: 1,
+    userID: userID++,
     nickname: nickname,
     useremail: useremail,
     userpw: userpw,
@@ -25,16 +26,37 @@ export default function Users() {
     regDate: new Date(),
   })
   .then(response => {
-    console.log('회원 등록 됨');
+    console.log('회원 등록 성공');
     console.log('유저 정보', response.data.user);
-    console.log('유저 토큰', response.data.jwt);
-    localStorage.setItem('토큰', response.data.jwt);
+    console.log('user token', response.data.jwt);
+    localStorage.setItem('token', response.data.jwt);
     Navigate('/')
   })
   .catch(error => {
     console.log('error', error.response);
   });
   }
+
+  const [UserEmailValid, setUserEmailValid ] = useState(false);
+  const [UserPwValid, setUserPwValid ] = useState(false);
+
+  const handleEmail = (e) => {
+    setUseremail(e.target.value);
+    const USEREMAIL_REGEX =  
+      '^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$'
+    if( USEREMAIL_REGEX.test(useremail)) {
+      setUserEmailValid(true);
+    } else {
+      setUserEmailValid(false)
+    }
+  }
+
+  const errMessage = 
+    !UserEmailValid && userpw.length > 0 ? <div>@를 사용하세요</div> : null
+console.log(errMessage);
+  
+
+
 
   return(
     <>
@@ -60,24 +82,26 @@ export default function Users() {
               value={nickname}
               onChange={(e) => {
                 setNickname(e.target.value);
-                console.log(e.target.value);
-                console.log(nickname);
+                // console.log(e.target.value);
+                // console.log(nickname);
               }}
               inputProps={{
                 type:'text',
                 placeholder:'닉네임을 입력해주세요.',
               }}
-              errMessage={'존재하는 닉네임입니다.'}
+              validText={errMessage}
             />
             <Forminput
               id={'useremail'}
               label='아이디'
               value={useremail}
-              onChange={(e) => {setUseremail(e.target.value);}}
+              onChange={handleEmail}
               inputProps={{
                 type:'text',
-                placeholder:'이메일을 입력해주세요.'
+                placeholder:'test@gmail.com'
               }}
+              validText='왜안돼..'
+              
             />
             <Forminput
               id={'userpw'}
@@ -86,8 +110,9 @@ export default function Users() {
               onChange={(e) => {setUserpw(e.target.value);}}
               inputProps={{
                 type:'password',
-                placeholder:'비밀번호를 입력해주세요.'
+                placeholder:'영문, 숫자 포함 8글자 이상'
               }}
+              validText={errMessage}
             />
           <Btn 
             id="submit"
