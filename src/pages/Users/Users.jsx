@@ -8,16 +8,24 @@ import Footer from '../../components/Footer'
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
 
+const ERROR_MSG = {
+  required: '필수 정보입니다.',
+  invalidUserEmail: '@ 를 사용하세요',
+  invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
+};
 
 export default function Users() {
+  // const [users, setUsers] = useState({nickname:'', useremail:'', userpw:''})
   const [ nickname, setNickname ] = useState('');
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
+  const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
   const {Navigate} = useNavigate();
 
+  let userID = 1;
   const register = () => {
     axios.post('http://localhost:3000/users', {
-    userID: 1,
+    userID: userID++,
     nickname: nickname,
     useremail: useremail,
     userpw: userpw,
@@ -25,16 +33,41 @@ export default function Users() {
     regDate: new Date(),
   })
   .then(response => {
-    console.log('회원 등록 됨');
+    console.log('회원 등록 성공');
     console.log('유저 정보', response.data.user);
-    console.log('유저 토큰', response.data.jwt);
-    localStorage.setItem('토큰', response.data.jwt);
+    console.log('user token', response.data.jwt);
+    localStorage.setItem('token', response.data.jwt);
     Navigate('/')
   })
   .catch(error => {
     console.log('error', error.response);
   });
   }
+
+  const [UserEmailValid, setUserEmailValid ] = useState(false);
+  const [UserPwValid, setUserPwValid ] = useState(false);
+
+  const handleEmail = (e) => {
+    setUseremail(e.target.value);
+    const USEREMAIL_REGEX =  
+      /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$/
+    if( USEREMAIL_REGEX.test(useremail)) {
+      setUserEmailValid(true);
+    } else {
+      setUserEmailValid(false);
+    }
+  }
+
+  const handlePw = (e) => {
+    setUserpw(e.target.value);
+    const USERPW_REGEX =  /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/
+    if( USERPW_REGEX.test(userpw)) {
+      setUserPwValid(true);
+    } else {
+      setUserPwValid(false);
+    }
+  }
+  
 
   return(
     <>
@@ -60,35 +93,39 @@ export default function Users() {
               value={nickname}
               onChange={(e) => {
                 setNickname(e.target.value);
-                console.log(e.target.value);
-                console.log(nickname);
               }}
               inputProps={{
                 type:'text',
                 placeholder:'닉네임을 입력해주세요.',
               }}
-              errMessage={'존재하는 닉네임입니다.'}
+              validText={!UserEmailValid ?
+                (errorMsg.required):null}
             />
+
             <Forminput
               id={'useremail'}
               label='아이디'
               value={useremail}
-              onChange={(e) => {setUseremail(e.target.value);}}
+              onChange={handleEmail}
               inputProps={{
                 type:'text',
-                placeholder:'이메일을 입력해주세요.'
+                placeholder:'test@gmail.com'
               }}
+              validText={!UserEmailValid && useremail.length > 0 ?
+                (errorMsg.invalidUserEmail):null}
             />
             <Forminput
               id={'userpw'}
               label='비밀번호'
               value={userpw}
-              onChange={(e) => {setUserpw(e.target.value);}}
+              onChange={handlePw}
               inputProps={{
                 type:'password',
-                placeholder:'비밀번호를 입력해주세요.'
+                placeholder:'영문, 숫자 포함 8글자 이상'
               }}
-            />
+              validText={!UserPwValid && userpw.length > 0 ?
+                (errorMsg.invalidUserPW):null}
+            /> 
           <Btn 
             id="submit"
             type="submit"

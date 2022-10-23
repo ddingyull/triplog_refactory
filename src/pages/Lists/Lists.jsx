@@ -1,18 +1,7 @@
 import React from 'react';
 import {Container, Row, Col, Button, Card, Image, Tabs, Tab} from 'react-bootstrap';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 export default function Lists() {
-  const [tourData, settourData] = useState([]);
-
-  useEffect (() => {
-    axios.get('https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=f0bpiY05PaHzNADbGBganvUsTEo1lHKOPHlz5P4%2B6BY8%2F3ou1vetQhG6%2FCuL%2FORR7sE5e5jIHeUr2fFiKHHHUA%3D%3D&numOfRows=12&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=1')
-    .then(response => {
-      settourData(response.data.response.body.items.item);
-    })
-  }, []);
-
   return (
     <Container>
       <div className="bg-light p-5">
@@ -70,28 +59,24 @@ export default function Lists() {
         </Tab>
       </Tabs>
 
-      <Row xs={1} md={2} lg={3} className="g-4">
-          {
-            tourData.map(function(a, i) {
-              return (
-                <Col>
-                  <Card>
-                    <Card.Img variant="top" src={tourData[i].firstimage}/>
-                    <Card.Body>
-                      <Card.Title>{tourData[i].title}</Card.Title>
-                      <Card.Text className="text-muted">{tourData[i].addr1}</Card.Text>
-                      <Card.Text className="text-muted">⭐⭐⭐⭐⭐  <span>30</span></Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              )
-            })
-          }
-      </Row>
-
-      <Row className="d-flex justify-content-center col-2 m-auto mt-4 mb-4" lg={2}>
-          <Button variant="dark" >더보기</Button>
-      </Row>
+        <Row xs={1} md={2} lg={3} className="g-4">
+        {Array.from({ length: 6 }).map((_, idx) => (
+          <Col>
+            <Card>
+              <Card.Img variant="top" src="/images/imgSample.jpg"/>
+              <Card.Body>
+                <Card.Title>장소명</Card.Title>
+                <Card.Text className="text-muted">주소명</Card.Text>
+                <Card.Text className="text-muted">⭐⭐⭐⭐⭐  <span>30</span></Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+        </Row>
+        <Row className="d-flex justify-content-center col-2 m-auto mt-4 mb-4" lg={2}>
+            <Button variant="dark" >더보기</Button>
+        </Row>
+        
     </Container>
   )
 }
