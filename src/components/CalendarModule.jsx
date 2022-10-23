@@ -13,7 +13,7 @@ export default function CalendarModule({ text, subText }){
   return(
       <>
         <div className='my-5 ' style={{fontSize:'.9rem'}}> 
-        <Calendar onChange={onChange} selectRange={true}/> 
+        <Calendar minDate = {new Date()} onChange={onChange} selectRange={true}/> 
 
 
           {value.length > 0 ? (
