@@ -1,8 +1,7 @@
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import { FormContext } from '../pages/Users/Users';
-import { useState } from 'react';
 
 
 // id, pw 유효성 확인을 위한 정규식
@@ -25,29 +24,6 @@ export default function Forminput({id, label, value, validText, onChange, inputP
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
   const inputRef = useRef(null)
-
-    //유효성 검사 + 에러 메시지
-    const checkRegex = () => {
-      let result
-      const value = {value}
-      console.log(value);
-      if (value.length === 0) {
-        return result = 'required';
-
-      } else {
-        switch (id) {
-          case 'useremail':
-            result = USEREMAIL_REGEX.test(value) ? true : 'invalidUserEmail';
-            break
-          case 'userpw':
-            result = USERPW_REGEX.test(value) ? true : 'invalidUserPW';
-            break
-          default:
-            return;
-        }
-      }
-      // setErrData({...errData, [id]: result})
-    };
 
   // 최초 1회 로드 시 ID input에 포커스
   
@@ -74,7 +50,9 @@ export default function Forminput({id, label, value, validText, onChange, inputP
         onChange={onChange}
         className='shadow-sm p-3 w-full border' />
 
-      <Form.Text className="text-danger m-1">
+      <Form.Text
+      
+      className="text-danger m-1">
         {validText}
       </Form.Text>
     </Form>

@@ -9,11 +9,18 @@ import Footer from '../../components/Footer'
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
 
+const ERROR_MSG = {
+  required: '필수 정보입니다.',
+  invalidUserEmail: '@ 를 사용하세요',
+  invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
+};
+
 
 export default function Login({text, clickEvent, textColor, backgroundColor, hoverColor}) {
   const [ nickname, setNickname ] = useState('');
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
+  const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
   const {Navigate} = useNavigate();
 
   // 로그인 검증 파트
@@ -46,6 +53,30 @@ useEffect(() => {
   }
 }, [])
 
+const [UserEmailValid, setUserEmailValid ] = useState(false);
+const [UserPwValid, setUserPwValid ] = useState(false);
+
+const handleEmail = (e) => {
+  setUseremail(e.target.value);
+  const USEREMAIL_REGEX =  
+    /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$/
+  if( USEREMAIL_REGEX.test(useremail)) {
+    setUserEmailValid(true);
+  } else {
+    setUserEmailValid(false);
+  }
+}
+
+const handlePw = (e) => {
+  setUserpw(e.target.value);
+  const USERPW_REGEX =  /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/
+  if( USERPW_REGEX.test(userpw)) {
+    setUserPwValid(true);
+  } else {
+    setUserPwValid(false);
+  }
+}
+
   return(
     <>
       <Nav/>
@@ -66,21 +97,29 @@ useEffect(() => {
           <Forminput
             id={'useremail'}
             label='아이디'
+            value={useremail}
+            onChange={handleEmail}
             inputProps={{
               type:'text',
               placeholder:'test@gmail.com'
             }}
-            errMessage={'존재하는 닉네임입니다.'}
+            validText={!UserEmailValid && useremail.length > 0 ?
+              (errorMsg.invalidUserEmail):null}
           />
         <Forminput
           id={'userpw'}
           label='비밀번호'
+          value={userpw}
+          onChange={handlePw}
           inputProps={{
             type:'password',
             placeholder:'영문, 숫자 포함 8글자 이상'
-          }}       
+          }}
+          validText={!UserPwValid && userpw.length > 0 ?
+            (errorMsg.invalidUserPW):null}      
         />
         <Btn 
+          onClick={() => {(checkUser())}}
           text='로그인' 
           textColor='#fff' 
           backgroundColor='#333'

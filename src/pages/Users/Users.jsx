@@ -8,11 +8,18 @@ import Footer from '../../components/Footer'
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
 
+const ERROR_MSG = {
+  required: '필수 정보입니다.',
+  invalidUserEmail: '@ 를 사용하세요',
+  invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
+};
 
 export default function Users() {
+  // const [users, setUsers] = useState({nickname:'', useremail:'', userpw:''})
   const [ nickname, setNickname ] = useState('');
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
+  const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
   const {Navigate} = useNavigate();
 
   let userID = 1;
@@ -43,20 +50,24 @@ export default function Users() {
   const handleEmail = (e) => {
     setUseremail(e.target.value);
     const USEREMAIL_REGEX =  
-      '^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$'
+      /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$/
     if( USEREMAIL_REGEX.test(useremail)) {
       setUserEmailValid(true);
     } else {
-      setUserEmailValid(false)
+      setUserEmailValid(false);
     }
   }
 
-  const errMessage = 
-    !UserEmailValid && userpw.length > 0 ? <div>@를 사용하세요</div> : null
-console.log(errMessage);
+  const handlePw = (e) => {
+    setUserpw(e.target.value);
+    const USERPW_REGEX =  /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/
+    if( USERPW_REGEX.test(userpw)) {
+      setUserPwValid(true);
+    } else {
+      setUserPwValid(false);
+    }
+  }
   
-
-
 
   return(
     <>
@@ -82,15 +93,15 @@ console.log(errMessage);
               value={nickname}
               onChange={(e) => {
                 setNickname(e.target.value);
-                // console.log(e.target.value);
-                // console.log(nickname);
               }}
               inputProps={{
                 type:'text',
                 placeholder:'닉네임을 입력해주세요.',
               }}
-              validText={errMessage}
+              validText={!UserEmailValid ?
+                (errorMsg.required):null}
             />
+
             <Forminput
               id={'useremail'}
               label='아이디'
@@ -100,20 +111,21 @@ console.log(errMessage);
                 type:'text',
                 placeholder:'test@gmail.com'
               }}
-              validText='왜안돼..'
-              
+              validText={!UserEmailValid && useremail.length > 0 ?
+                (errorMsg.invalidUserEmail):null}
             />
             <Forminput
               id={'userpw'}
               label='비밀번호'
               value={userpw}
-              onChange={(e) => {setUserpw(e.target.value);}}
+              onChange={handlePw}
               inputProps={{
                 type:'password',
                 placeholder:'영문, 숫자 포함 8글자 이상'
               }}
-              validText={errMessage}
-            />
+              validText={!UserPwValid && userpw.length > 0 ?
+                (errorMsg.invalidUserPW):null}
+            /> 
           <Btn 
             id="submit"
             type="submit"
