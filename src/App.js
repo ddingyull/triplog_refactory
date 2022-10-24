@@ -7,8 +7,8 @@ import Detail from './pages/Detail/Detail';
 import MyPage from './pages/Mypage(참고)/Mypage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
-// import Login from './pages/Login/Login';
-// import SignUp from './pages/SignUp/SignUp';
+import Login from './pages/Login/Login';
+import Users from './pages/Users/Users';
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/signup" element={<SignUp />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,14 +1,59 @@
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styled from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
+// import { FormContext } from '../pages/Users/Users';
 
-export default function Forminput({id, errMessage}) {
+
+// id, pw 유효성 확인을 위한 정규식
+
+// 별명 중복 검사 코드 추가해야하는데.. 
+
+const USEREMAIL_REGEX = new RegExp(
+  '^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$'
+);
+const USERPW_REGEX = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$');
+
+const ERROR_MSG = {
+  required: '필수 정보입니다.',
+  invalidUserEmail: '@ 를 사용하세요',
+  invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
+};
+
+export default function Forminput({id, label, value, validText, onChange, inputProps, errMessage}) {
+  const [ nickname, setNickname ] = useState('');
+  const [ useremail, setUseremail ] = useState('');
+  const [ userpw, setUserpw ] = useState('');
+  const inputRef = useRef(null)
+
+  // 최초 1회 로드 시 ID input에 포커스
+  
+  useEffect(()=>{
+    if(id === 'nickname'){
+      inputRef.current.focus()
+    }
+  },[])
+
   return(
-    <Form className='mb-2'>
-      <Form.Label className='d-block mb-1'>{id}</Form.Label>
-      <Form.Control type="email" placeholder="이메일 입력" className='shadow-sm p-3 w-full border' />
-      <Form.Text className="text-danger m-1">
-          {errMessage}
+    <Form id="form" className='mb-2'>
+
+      <Form.Label 
+        htmlFor={id}
+        className='d-block mb-1'>
+        {label}
+      </Form.Label>
+
+      <Form.Control 
+        id={id}
+        {...inputProps}
+        ref={inputRef}
+        value={value}
+        onChange={onChange}
+        className='shadow-sm p-3 w-full border' />
+
+      <Form.Text
+      
+      className="text-danger m-1">
+        {validText}
       </Form.Text>
     </Form>
   )
