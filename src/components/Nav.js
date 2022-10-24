@@ -9,7 +9,7 @@ export default function NavHeader() {
         <Navbar collapseOnSelect expand="lg" className='shadow-sm'>
       <Container className='text-center'>
         <Navbar.Brand href="/" className='fw-bolder col-2'>TripLog</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" className='d-block d-lg-none'/>
         <Navbar.Collapse id="responsive-navbar-nav" style={{fontSize:"0.9rem"}} className="col-8" >
           <Nav className="m-auto " >
             <NavDropdown title="여행지" id="collasible-nav-dropdown" className='ms-4'>
@@ -26,9 +26,13 @@ export default function NavHeader() {
 
           </Nav>
         </Navbar.Collapse>
-        <Nav className='col-2'>
-            <Nav.Link href="/Login"><FontAwesomeIcon icon={faUser}/></Nav.Link>
-            <Nav.Link href="/MyPage"><FontAwesomeIcon icon={faFaceSmile} /></Nav.Link>
+        <Nav className='col-2 d-sm-none d-lg-block' >
+            <Nav.Link href="/Login" className='d-sm-none d-md-inline-block'>
+              <FontAwesomeIcon icon={faUser} />
+            </Nav.Link>
+            <Nav.Link href="/MyPage" className='d-sm-none d-md-inline-block'>
+              <FontAwesomeIcon icon={faFaceSmile} />
+            </Nav.Link>
           </Nav>
       </Container>
     </Navbar>
