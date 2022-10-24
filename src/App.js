@@ -7,7 +7,7 @@ import Detail from './pages/Detail/Detail';
 import MyPage from './pages/Mypage(참고)/Mypage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
-import Login from './pages/Login/Login';
+// import Login from './pages/Login/Login';
 // import SignUp from './pages/SignUp/SignUp';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         {/* <Route path="/signup" element={<SignUp />} /> */}
       </Routes>
     </BrowserRouter>

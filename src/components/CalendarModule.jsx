@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import styled from 'styled-components';
 // import useNavigate from '';
 
 import Calendar from 'react-calendar';
@@ -42,9 +43,12 @@ function CalendarModule({ text, subText }) {
 
   return (
     <>
-    <Button variant="dark" onClick={handleShow}>
-      날짜 선택하기
-    </Button>
+    <LinkBtn 
+      variant="light" 
+      onClick={handleShow}
+      className="m-1 btn btn-light">
+      📆 일정 세우러가기
+    </LinkBtn>
 
     <Modal
       show={show}
@@ -75,6 +79,8 @@ function CalendarModule({ text, subText }) {
           minDate = {new Date()} 
           onChange={onChange} 
           selectRange={true}
+          formatDay={(locale, date) => moment(date).format("DD")} //'일'글씨 빼기
+          maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
           className='m-auto' />
     </div>
       </Modal.Body>
@@ -98,3 +104,15 @@ function CalendarModule({ text, subText }) {
 }
 
 export default CalendarModule;
+
+const LinkBtn = styled.button`
+  background-color: rgba(255, 255, 255, .4);
+  border: none;
+  font-size: 12px;
+  padding: 6px;
+  border-radius: 3px;
+
+  &:hover{
+  opacity: 1;
+  }
+`
