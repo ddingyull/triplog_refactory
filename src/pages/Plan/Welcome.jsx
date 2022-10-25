@@ -1,7 +1,6 @@
 import { Container, Row, Col, Badge } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
-import colors from '../../../styles/colors';
 
 
 // detail 페이지의 submenu 부분
@@ -12,7 +11,7 @@ export default function Welcome () {
         <Col className='m-3'>
           <Title className="justify-content-start fw-bold">thals0의 여행계획 세우기 ✏️</Title>
           <p className='m-0 fs-6' >2022.10.25 - 10.28</p>
-          <p className='m-0 fs-6'>이 여행의 스타일을 선택해주세요.</p>
+          <p className='m-0 fs-6'>여행에 필요한 모든 것</p>
         </Col>
         <Col class="d-flex justify-content-start mt-3 mb-3">
           <Plan_li><a href="/Plan"><Badge bg="success" text="light" className='fs-9'>일행과 함께하는 여행짜기</Badge>{' '}</a></Plan_li>
