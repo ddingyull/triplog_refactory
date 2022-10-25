@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faN } from "@fortawesome/free-solid-svg-icons";
 
 export default function Footer() {
   return (
@@ -7,18 +10,21 @@ export default function Footer() {
         <div class="col-md-4 d-flex align-items-center">
           <span class="text-muted">&copy; 2022 Company, Inc</span>
         </div>
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex ts-dark" style={{fontSize:"1.2rem"}}>
           <li class="ms-3">
-            <Link href="#">인스타</Link>
+            <Link href="" style={{color:"#6C757D"}}><FontAwesomeIcon icon={faGoogle} /></Link>
           </li>
           <li class="ms-3">
-            <Link href="#">블로그</Link>
+            <Link href="https://url.kr/ka3rnf" style={{color:"#6C757D"}}><FontAwesomeIcon icon={faN} /></Link>
           </li>
           <li class="ms-3">
-            <Link href="#">깃헙</Link>
+            <Link href="https://github.com/TripLog-project/TripLog" style={{color:"#6C757D"}}><FontAwesomeIcon icon={faGithub} /></Link>
           </li>
         </ul>
       </footer>
     </div>
   );
 }
+
+
+

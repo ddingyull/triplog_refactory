@@ -1,24 +1,60 @@
-import React from 'react';
+import { Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect, useRef, useState } from 'react';
+// import { FormContext } from '../pages/Users/Users';
 
-  return (
-    <div className="mb-4">
-      <label
-        className="block text-gray-700 text-sm font-bold mb-2"
-      >
+
+// id, pw 유효성 확인을 위한 정규식
+
+// 별명 중복 검사 코드 추가해야하는데.. 
+
+const USEREMAIL_REGEX = new RegExp(
+  '^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$'
+);
+const USERPW_REGEX = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$');
+
+const ERROR_MSG = {
+  required: '필수 정보입니다.',
+  invalidUserEmail: '@ 를 사용하세요',
+  invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
+};
+
+export default function Forminput({id, label, value, validText, onChange, inputProps, errMessage}) {
+  const [ nickname, setNickname ] = useState('');
+  const [ useremail, setUseremail ] = useState('');
+  const [ userpw, setUserpw ] = useState('');
+  const inputRef = useRef(null)
+
+  // 최초 1회 로드 시 ID input에 포커스
+  
+  useEffect(()=>{
+    if(id === 'nickname'){
+      inputRef.current.focus()
+    }
+  },[])
+
+  return(
+    <Form id="form" className='mb-2'>
+
+      <Form.Label 
+        htmlFor={id}
+        className='d-block mb-1'>
         {label}
-      </label>
-      <input
+      </Form.Label>
+
+      <Form.Control 
         id={id}
-        className="shadow border rounded w-full py-2 px-3 text-gray-700"
-        ref={inputRef}
-        value={formData[id]}
-        onChange={(e) => setFormData({ ...formData, [id]: e.target.value })}
-        onBlur={() => console.log(checkRegex())}
         {...inputProps}
-      />
-      <div className="mt-1 mb-3 text-xs text-red-500">에러메시지</div>
-    </div>
-  );
+        ref={inputRef}
+        value={value}
+        onChange={onChange}
+        className='shadow-sm p-3 w-full border' />
 
-
-export default FormInput;
+      <Form.Text
+      
+      className="text-danger m-1">
+        {validText}
+      </Form.Text>
+    </Form>
+  )
+}
