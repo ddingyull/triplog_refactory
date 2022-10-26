@@ -17,8 +17,8 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/SubMain/" element={<SubMain />} />
         <Route path="/Plan" element={<Plan />} />
-        <Route path="/lists" element={<Lists />} />
-        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/lists/:areaCode" element={<Lists />} />
+        <Route path="detail/:contentID" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />

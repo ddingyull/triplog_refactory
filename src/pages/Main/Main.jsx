@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Container, Row, Col, Button, Card, Image, Tabs, Tab, Carousel } from 'react-bootstrap';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Main() {
+const navigator = useNavigate();
   return (
     <>
       <Image src="/images/mainImg.jpg" fluid/>
@@ -16,14 +19,20 @@ export default function Main() {
       
         <Row className="d-flex col-8 mx-auto text-center">
           <Col>
+          <Link>
             <p className='fs-2 mb-1'>🍔</p>
-            <p className='fw-bold'>장소1</p>
+            <p className='fw-bold'>제주</p>
+            </Link>
           </Col>
           <Col>
+            <button onClick={()=> {
+              navigator('/lists/39');
+            }}>버튼</button>
             <p className='fs-2 mb-1'>🍟</p>
             <p className='fw-bold'>장소2</p>
           </Col>
           <Col>
+          
             <p className='fs-2 mb-1'>🍤</p>
             <p className='fw-bold'>장소1</p>
           </Col>
