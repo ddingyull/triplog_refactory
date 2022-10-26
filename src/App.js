@@ -10,6 +10,7 @@ import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
 import Users from './pages/Users/Users';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,7 +19,7 @@ function App() {
         <Route path="/SubMain/" element={<SubMain />} />
         <Route path="/Plan" element={<Plan />} />
         <Route path="/lists/:areaCode" element={<Lists />} />
-        <Route path="detail/:contentID" element={<Detail />} />
+        <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />
