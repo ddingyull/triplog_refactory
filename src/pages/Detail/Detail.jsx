@@ -1,8 +1,24 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import {Container, Row, Col, Button, Badge, Card, Image, Form } from 'react-bootstrap';
+import axios from 'axios';
+import Footer from '../../components/Footer';
+import Nav from '../../components/Nav';
+import { useParams } from 'react-router-dom';
 
 export default function Detail() {
+  const params = useParams();
+  const [tourData, settourData] = useState([]);
+
+  useEffect (() => {
+    axios.get('https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=f0bpiY05PaHzNADbGBganvUsTEo1lHKOPHlz5P4%2B6BY8%2F3ou1vetQhG6%2FCuL%2FORR7sE5e5jIHeUr2fFiKHHHUA%3D%3D&numOfRows=12&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=1')
+    .then(response => {
+      settourData(response.data.response.body.items.item[0]);
+    })
+  }, []);
+
   return (
+    <>
+    <Nav/>
     <Container>
       <Row xs={1} md={2} lg={2}>
         <Col>
@@ -35,7 +51,7 @@ export default function Detail() {
           <Card className="mt-3" >
             <Card.Body className="m-2" style={{height: '40vh'}}>
               <Badge bg="dark"className='col-2 mb-2' >맛집</Badge>
-              <Card.Title className="mb-3">명동교자만두</Card.Title>
+              <Card.Title className="mb-3">명동교자</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">📍 제주도 애월읍</Card.Subtitle>
               <Card.Text className='mb-2 text-muted'>
                 ⭐⭐⭐⭐⭐<span>30</span> ❤ <span>2,146</span>
@@ -122,5 +138,7 @@ export default function Detail() {
     </Row>
       
     </Container>
+    <Footer/>
+    </>
   )
 }
