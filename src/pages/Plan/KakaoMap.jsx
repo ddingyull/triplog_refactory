@@ -2,38 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-
-const FlexDiv = styled.div`
-  display: flex;
-`
-const KakaoDiv = styled.div`
-  width: 700px;
-  height: 500px;
-`
-const InputText = styled.input`
-  width: 200px;
-  height: 50px;
-`
-const RowDiv = styled.div`
-  border: 1px solid black;
-  width: 300px;
-`
-/* 임의로 만든 데이터
-const markerdata = [
-  {
-    mapy : 33.5066211,
-    mapx : 126.492810
-  },
-  {
-    mapy : 33.450705,
-    mapx : 126.570677
-  },
-  {
-    mapy : 33.550705,
-    mapx : 126.670677
-  },
-];
-*/
+import SelectList from '../../components/Plan/SelectList'
 
 export default function KakaoMap() {
   // 검색한 여행지 저장을 위한 State
@@ -52,7 +21,7 @@ export default function KakaoMap() {
     const options = {
       center: new kakao.maps.LatLng(33.368, 126.54),
       // 지도 레벨(높을 수록 멀어진다)
-      level: 10
+      level: 11
     };
     // 지도 생성을 위한 메소드
     const map = new kakao.maps.Map(container, options);
@@ -85,7 +54,7 @@ export default function KakaoMap() {
         // 선을 굵기
         strokeWeight: 3,
         // 선의 색
-        strokeColor: 'red',
+        strokeColor: '#34A853',
         // 선의 불투명도
         strokeOpacity: 1,
         // 선의 스타일
@@ -104,10 +73,31 @@ export default function KakaoMap() {
 
   return (
     <>
+        <KakaoDiv id='map'  ></KakaoDiv>
+      
       <FlexDiv>
-        <KakaoDiv id='map'></KakaoDiv>
-        <RowDiv>
-          <form action="">
+      {/* <RowDiv>
+        <h1>선택한 여행지</h1>
+        {
+          // list의 map
+          list.map(function (a, i) {
+            return (
+              <>
+                <p>{i + 1}. 여행지 = {a.title}</p>
+                <button onClick={() => {
+                  let copy = [...list]
+                  // 선택한 데이터를 삭제
+                  copy.splice(i, 1)
+                  setList(copy)
+                }}>X</button>
+              </>
+            )
+          })
+        }
+      </RowDiv> */}
+
+      <RowDiv>
+          {/* <form action="">
             <InputText type="text" placeholder='입력' ref={inputRef}/>
             <button type='button' onClick={() => {
               // input에 입력한 값 useRef
@@ -126,7 +116,7 @@ export default function KakaoMap() {
                 console.log('실패')
               })
             }}>검색</button>
-          </form>
+          </form> */}
           
           <div>
             {
@@ -144,27 +134,23 @@ export default function KakaoMap() {
             }
           </div>
         </RowDiv>
-      </FlexDiv>
-
-      <RowDiv>
-        <h1>선택한 여행지</h1>
-        {
-          // list의 map
-          list.map(function (a, i) {
-            return (
-              <>
-                <p>{i + 1}. 여행지 = {a.title}</p>
-                <button onClick={() => {
-                  let copy = [...list]
-                  // 선택한 데이터를 삭제
-                  copy.splice(i, 1)
-                  setList(copy)
-                }}>삭제</button>
-              </>
-            )
-          })
-        }
-      </RowDiv>
+        </FlexDiv>
     </>
   )
 }
+
+const FlexDiv = styled.div`
+  display: flex;
+`
+const KakaoDiv = styled.div`
+  width: 300px;
+  height: 200px;
+`
+const InputText = styled.input`
+  width: 200px;
+  height: 50px;
+`
+const RowDiv = styled.div`
+  border: 1px solid black;
+  width: 300px;
+`

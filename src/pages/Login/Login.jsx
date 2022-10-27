@@ -15,6 +15,10 @@ const ERROR_MSG = {
   invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
 };
 
+const KAKAO_CLIENT_ID = '0c33348e34eeceef7d378e029e920c12';
+const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauth/callback/kakao';
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
 
 export default function Login({text, clickEvent, textColor, backgroundColor, hoverColor}) {
   const [ nickname, setNickname ] = useState('');
@@ -25,15 +29,16 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
 
   // 로그인 검증 파트
   const checkUser = () => {
-    let nicknameValue
+    let nicknameValue;
     if(useremail === "" || userpw === "") {
       alert('아이디와 비밀번호를 입력해주세요');
       return;
     }
-    axios.post('http://localhost:3000/users', {
+    axios.post('http://localhost:4000/users', [{
     identifier: useremail,
     password: userpw,
-  })
+  }
+])
   .then(response => {
     console.log('로그인 성공');
     console.log('user 토큰', response.data.jwt);
@@ -127,6 +132,7 @@ const handlePw = (e) => {
           hoverBackgroundColor='#555'>
         </Btn>
         <Btn 
+          href='KAKAO_CLIENT_ID'
           onClick={() => {(checkUser())}}
           text='카카오로그인' 
           textColor='#333' 
@@ -134,6 +140,7 @@ const handlePw = (e) => {
           hoverColor='#333'
           hoverBackgroundColor='#d0ad00'>
         </Btn>
+        <a href={KAKAO_AUTH_URL}>카카오톡로그인</a>
       </Card>
           </Container>
       <Footer/>
