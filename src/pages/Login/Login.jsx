@@ -29,7 +29,6 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
 
   // 로그인 검증 파트
   const checkUser = () => {
-    let nicknameValue;
     if(useremail === "" || userpw === "") {
       alert('아이디와 비밀번호를 입력해주세요');
       return;
@@ -43,7 +42,6 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
     console.log('로그인 성공');
     console.log('user 토큰', response.data.jwt);
     localStorage.setItem('token', response.data.jwt);
-    nicknameValue = nickname;
     Navigate('/')
   })
   .catch(error => {

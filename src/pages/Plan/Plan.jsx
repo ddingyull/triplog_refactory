@@ -5,7 +5,7 @@ import PlanList from '../../components/Plan/PlanList';
 import SelectList from '../../components/Plan/SelectList';
 
 import styled from 'styled-components';
-import { Container, Row, Col, Card, Button, Stack, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
@@ -14,6 +14,11 @@ import KakaoMap from './KakaoMap';
 
 
 export default function Plan() {
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   // * 지도
   // 검색한 여행지 저장을 위한 State
   const [search, setSearch] = useState([]);
@@ -42,7 +47,6 @@ let [itemData] = [productItems]
     };
 
     const addPlanItem = (e) => {
-      console.log();
       const clickItem = itemData.find((item) => item.sigungucode === e.target.dataset.productid);
       console.log(clickItem); 
       console.log(productItems);
@@ -52,23 +56,27 @@ let [itemData] = [productItems]
     }; 
     // if(!clickItem)
 
-    if(productItems.length > 0) { 
   return (
     <>
       <Nav/>
       <Welcome/>
 
-      {/* 소개 */}
-      <Container 
-        sm={1} md={1} lg={1} xl={2} 
-        className='d-flex justify-content-center' 
-        gap={3}
-        style={{height:'400px'}}>
-        <Card className="col-sm-10 col-md-9 overflow-auto m-3" >
+      <Modal
+      show={show}
+      onHide={handleClose}
+      backdrop="static"
+      keyboard={false}
+      size="lg"
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>제주 여행 🍊</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Card className="col-sm-10 col-md- overflow-auto m-auto" >
         <Row className='d-flex justify-content-center'>
-          <Col md={4} className='d-flex m-3 '>
+          {/* <Col md={4} className='d-flex m-3 '>
             <p className='fw-6 fs-5 fw-bold me-2'>제주 여행 🍊</p>
-          </Col>
+          </Col> */}
           <Col md={{span: 4, offset: 2}} className='text-end d-block '>
           </Col>
         </Row>
@@ -98,58 +106,46 @@ let [itemData] = [productItems]
         </Row>
 
         {/* 여행지 리스트 보여주기 */}
-        <Row className="m-3 overflow-scroll" style={{height:'20rem'}} gap={3}>
-          <SelectList 
-            productItems={productItems} 
-            setPlanItems={setPlanItems}
-            planItems={planItems}/>
-          {/* 지도 */}
-          {/* <KakaoMap className='col-9'/> */}
-        </Row>
+          
+          <Row className="m-3 overflow-scroll" style={{height:'20rem'}} gap={3}>
+          { productItems.length > 0 ?
+            <SelectList 
+              productItems={productItems} 
+              setPlanItems={setPlanItems}
+              planItems={planItems}/>
+              : <div>잠시만요!🏖</div> }
+          </Row> 
+        
       </Card>
-      </Container>
-  
-    <Container 
-      sm={1} md={1} lg={1} xl={2} 
-      className='d-flex justify-content-center overflow-scroll'
-      style={{width:'100rem'}}>
-                
-    { [1,2,3].map((a, i) => (
-    <Card className="col-sm-12 col-md-3 overflow-auto m-3">
-    <KakaoMap className='col-6'/>
-    <Row className='d-flex justify-content-center'>
-      <Col md={4} className='d-flex m-3'>
-        <p className='fw-6 fw-bold me-2'>day {i+1}</p>
-        <p className='fw-6'>{i+1}일차</p>
-      </Col>
-      <Col md={{span: 4, offset: 2}} className='text-end d-block '>
-        {/* <a href="#" className="btn btn-light p-0" style={{width:"50%"}}>편집</a> */}
-      </Col>
-    </Row>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button 
+          variant="secondary" 
+          onClick={handleClose}>
+          닫기
+        </Button>
 
-    <Row className="m-3">
-    <PlanList 
+        <Button 
+          variant="success" 
+          onClick={handleClose}
+          >
+            선택 완료
+        </Button>
+    
+      </Modal.Footer>
+    </Modal>
+
+    {/* 여행계획 짜는 컴포넌트 */}
+    <Container className='d-flex'>
+      <PlanList 
       productItems={productItems} 
       setPlanItems={setPlanItems}
-      planItems={planItems}/>
-    </Row>
-
-    <Col className='m-auto d-flex mt-2 mb-2 col-10'>
-      <Button className="btn btn-light mx-1 " style={{width:"70%"}}>장소 추가</Button>
-      <Button className="btn btn-light mx-1 " style={{width:"70%"}}>메모 추가</Button>
-    </Col>
-    
-    <Col>
-    </Col>
-  </Card>
-      ))}
-    
-    
-  </Container>
+      planItems={planItems}
+      onClick={handleShow}/>
+      </Container>
   <Footer/>
     </>
   );
-}
 }
 
 // style-components

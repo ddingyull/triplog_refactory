@@ -1,38 +1,61 @@
-import { Card, Stack, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
+import KakaoMap from '../../pages/Plan/KakaoMap';
+import PlanItem from './PlanItem'
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const PlanList = ({productItems, planItems, setPlanItems}) => {
+const PlanList = ({productItems, planItems, setPlanItems, onClick}) => {
   
   const [productItem, setProductItem] = useState([]); //받아온데이터 담기
   let [itemData] = productItems
 
 
-  return planItems.map(({id, firstimage, title, src, addr1, sigungucode }, idx) => (
-    <Stack className="d-flex m-3 shadow-sm" direction="horizontal" gap={3} style={{height:"4rem"}}>
-    {/* <Badge className='bg-success roundedCircle text-center' style={{width:"1.4rem", height:"1.4rem"}}>
-      {sigungucode}
-    </Badge> */}
-    <img src={firstimage} style={{width:'2.5rem', height:'2.5rem', borderRadius:'50%'}}></img>
-  
-    <Stack className='col-9 d-flex flex-column my-auto'>
-      <Title className='m-1 fs-5'>{title}</Title>
-      <Title className='m-1 fs-6'>{addr1}</Title>
-    </Stack>
-    <Stack>
-    <button 
-      className='btn btn-light'
-      onClick={() => {
-        let copy = [...planItems]
-        // 선택한 데이터를 삭제
-        copy.splice(idx, 1)
-        setPlanItems(copy)
-        }}>X</button>
-    </Stack>
-  </Stack>
+  // 여행 기간만큼 map 돌려줘야함
+  return [1,2,3].map(({id, firstimage, title, src, addr1, sigungucode }, idx) => (
+    <Container 
+      // sm={1} md={1} lg={4} xl={2} 
+      className='overflow-auto'
+      style={{height:'20%'}}
+      ket={idx}>
+                
+    <Card className="col-md-12 overflow-auto">
+    <KakaoMap className='col-6 m-auto'/>
+    <Row className='d-flex justify-content-center'>
+      <Col md={4} className='d-flex m-3'>
+        <p className='fw-6 fw-bold me-2'>day {idx+1}</p>
+        <p className='fw-6'>{idx+1}일차</p>
+      </Col>
+      <Col md={{span: 4, offset: 2}} className='text-end d-block '>
+        <a href="#" className="btn btn-light p-0" style={{width:"50%"}}>완료</a>
+      </Col>
+    </Row>
+
+    <Row className="m-3">
+    <PlanItem 
+      productItems={productItems} 
+      setPlanItems={setPlanItems}
+      planItems={planItems}/>
+    </Row>
+
+    <Col className='m-auto d-flex mt-2 mb-2 col-10'>
+      <Button 
+        onClick={onClick}
+        className="btn btn-light mx-1" 
+        style={{width:"70%"}}>
+        장소 추가
+      </Button>
+
+      <Button 
+        className="btn btn-light mx-1" 
+        style={{width:"70%"}}>
+        메모 추가
+      </Button>
+    </Col>
+  </Card>
+  </Container>
   )) 
 }
 

@@ -29,13 +29,13 @@ export default function Items ({ text, subText, srcImg, width, height }) {
   
         <Row >
         <TableContainer>
-        {
-          tourData.map((a,i) => {          
-            return (
-              <CardItemLink width={width} height={height} src={tourData[i].firstimage}/>
-            )
-          })
-        }
+
+        { tourData.length > 0 ?
+            tourData.map((a,i) => {          
+              return (
+                <CardItemLink width={width} height={height} src={tourData[i].firstimage}/>
+              )
+            }) : <div>잠시만요!🏖</div> }
         </TableContainer>
         </Row>
       </Container>

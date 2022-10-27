@@ -73,7 +73,7 @@ export default function KakaoMap() {
 
   return (
     <>
-        <KakaoDiv id='map'  ></KakaoDiv>
+        <KakaoDiv id='map'></KakaoDiv>
       
       <FlexDiv>
       {/* <RowDiv>
@@ -143,8 +143,8 @@ const FlexDiv = styled.div`
   display: flex;
 `
 const KakaoDiv = styled.div`
-  width: 300px;
-  height: 200px;
+  width: 25rem;
+  height: 20rem;
 `
 const InputText = styled.input`
   width: 200px;
