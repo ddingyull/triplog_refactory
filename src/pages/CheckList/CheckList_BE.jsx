@@ -35,6 +35,38 @@ export default function CheckList_BE () {
   // }
   // console.log(checklist.items[0].item);
 
+  const checkListData = [
+    {
+      title: '기본 짐싸기',
+      content:[
+        '의류', '전자기기 챙기기', '세안용품', '상비약', '신분증/면허증', '필기구', '마스크/손 소독제'
+      ]
+    },
+    {
+      title:'필수 준비물',
+      content: [
+        '숙소',
+      ],
+    },
+    {
+      title: '트립로그에서 챙기기',
+      content: [
+        '여행 일정짜기', '가계부 짜기'
+      ]
+    },
+    {
+      title: '통신/교통 준비',
+      content: [
+        '여행지 교통편'
+      ]
+    },
+    {
+      title: '즐길거리 준비',
+      content: [
+        '관광 정보 확인하기', '맛집 정보 확인하기'
+      ]
+    },
+  ]
   return (
     <>
       <Nav/>
@@ -45,15 +77,109 @@ export default function CheckList_BE () {
             <Accordion.Header>기본 짐싸기</Accordion.Header>
             <Accordion.Body>
               <Form>
-                <Form.Check type='checkbox'>
-                  <Form.Check.Input type='checkbox' />
-                  <Form.Check.Label>의류</Form.Check.Label>
-                </Form.Check>
-                <Form.Check type='checkbox'>
-                  <Form.Check.Input type='checkbox' />
-                  <Form.Check.Label>전자기기 챙기기</Form.Check.Label>
-                </Form.Check>
+                {checkListData[0].content.map(function(a, i){
+                  return(
+                    <>
+                      <Form.Check type='checkbox'>
+                        <Form.Check.Input type='checkbox' />
+                        <Form.Check.Label>{checkListData[0].content[i]}</Form.Check.Label>
+                      </Form.Check>
+                    </>
+                  )}
+                )}
+                <input value={checklist[0].items[0].item}></input>
+                <Button
+                variant="success"
+                onClick={() => {
+                  const text = inputRef.current.value;
+                  console.log(text);
+                  axios
+                    .post("http://localhost:4000/checklist/addItem", {
+                      item: text,
+                      checked: true,
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                    })
+                    .catch(() => {
+                      console.log("실패");
+                    });
+                }}
+              >
+                완료
+              </Button>
+              </Form>
+            </Accordion.Body>
+          </Accordion.Item>
 
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>필수 준비물</Accordion.Header>
+            <Accordion.Body>
+              <Form>
+                {checkListData[1].content.map(function(a, i){
+                  return(
+                    <>
+                      <Form.Check type='checkbox'>
+                        <Form.Check.Input type='checkbox' />
+                        <Form.Check.Label>{checkListData[1].content[i]}</Form.Check.Label>
+                      </Form.Check>
+                    </>
+                  )}
+                )}
+              </Form>
+            </Accordion.Body>
+          </Accordion.Item>
+
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>트립로그에서 챙기기</Accordion.Header>
+            <Accordion.Body>
+              <Form>
+                {checkListData[2].content.map(function(a, i){
+                  return(
+                    <>
+                      <Form.Check type='checkbox'>
+                        <Form.Check.Input type='checkbox' />
+                        <Form.Check.Label>{checkListData[2].content[i]}</Form.Check.Label>
+                      </Form.Check>
+                    </>
+                  )}
+                )}
+              </Form>
+            </Accordion.Body>
+          </Accordion.Item>
+
+          <Accordion.Item eventKey="3">
+            <Accordion.Header>통신/교통 준비</Accordion.Header>
+            <Accordion.Body>
+              <Form>
+                {checkListData[3].content.map(function(a, i){
+                  return(
+                    <>
+                      <Form.Check type='checkbox'>
+                        <Form.Check.Input type='checkbox' />
+                        <Form.Check.Label>{checkListData[3].content[i]}</Form.Check.Label>
+                      </Form.Check>
+                    </>
+                  )}
+                )}
+              </Form>
+            </Accordion.Body>
+          </Accordion.Item>
+
+          <Accordion.Item eventKey="4">
+            <Accordion.Header>즐길거리 준비</Accordion.Header>
+            <Accordion.Body>
+              <Form>
+                {checkListData[4].content.map(function(a, i){
+                  return(
+                    <>
+                      <Form.Check type='checkbox'>
+                        <Form.Check.Input type='checkbox' />
+                        <Form.Check.Label>{checkListData[4].content[i]}</Form.Check.Label>
+                      </Form.Check>
+                    </>
+                  )}
+                )}
               </Form>
             </Accordion.Body>
           </Accordion.Item>
