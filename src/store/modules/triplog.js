@@ -1,7 +1,9 @@
 // 액션 타입(문자열)
-const LOGIN = 'user/LOGIN';
-const LOGOUT = 'user/LOGOUT';
-const ADD_PLAN_DATE = 'user/ADD_PLAN_DATE';
+const LOGIN = 'triplogr/LOGIN';
+const LOGOUT = 'triplogr/LOGOUT';
+const ADD_PLAN_DATE = 'triplog/ADD_PLAN_DATE';
+const ADD_PLAN_ITEM = 'triplog/ADD_PLAN_ITEM';
+
 
 // 로그인, 로그아웃 액션 생성 함수
 export function login(loginInfo) {
@@ -24,20 +26,27 @@ export function addPlanDate(planDate) {
   };
 }
 
+export function addPlanItems(planItems) {
+  return {
+    type: ADD_PLAN_ITEM,
+    payload: planItems,
+  };
+}
+
 // 초기 상태 설정
 const initState = {
   user: '',
-  isLogin: true, //로그인 끝내고 false로 바꾸기
+  isLogin: true, //로그인 끝내고 false로 바꾸기 -> 빼기
   planDate: {
     startDate: '',
     endDate: '',
     period: [],
   },
-  planItem: [{ id: '', title: '', img: '' }],
+  planItems: [[{ id: '', title: '', img: '' }]],
 };
 
 // 리듀서
-export default function users(state = initState, action) {
+export default function triplog(state = initState, action) {
   switch (action.type) {
     // login 함수가 dipatch 에 의해 전달 되면 백엔드 서로 부터 받은 email, nickname 정보를 세팅하고
     // 제일 중요한 isLogin 값을 true 로 변경, 해당 값은 Header 및 Item 페이지에서 로그인 여부를 판단하는
@@ -57,6 +66,11 @@ export default function users(state = initState, action) {
       return {
         ...state,
         planDate: action.payload,
+      };
+      case ADD_PLAN_ITEM:
+      return {
+        ...state,
+        planItems: action.payload,
       };
     default:
       return state;
