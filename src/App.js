@@ -21,6 +21,7 @@ const reduxDevTool =
 
 const store = configureStore({ reducer: rootReducer }, reduxDevTool);
 
+
 function App() {
   return (
     <Provider store={store}>
@@ -28,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/SubMain/:areaCode" element={<SubMain />} />
-        <Route path="/Plan/:areaCode" element={<Plan />} />
+        <Route path="/Plan/:areaCode" element={<Plan />} />\
         <Route path="/lists/:areaCode" element={<Lists />} />
         <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
