@@ -14,6 +14,7 @@ import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 import { Provider } from 'react-redux';
 import store from './store/modules/store'
 
+
 function App() {
   return (
     <Provider store={store}>
@@ -22,8 +23,8 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/SubMain/" element={<SubMain />} />
         <Route path="/Plan" element={<Plan />} />
-        <Route path="/lists" element={<Lists />} />
-        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/lists/:areaCode" element={<Lists />} />
+        <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />

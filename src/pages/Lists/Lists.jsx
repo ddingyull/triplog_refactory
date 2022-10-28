@@ -1,46 +1,55 @@
-import React from 'react';
-import {Container, Row, Col, Button, Card, Image, Tabs, Tab} from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import {Container, Row, Col, Card, Tabs, Tab, Button} from 'react-bootstrap';
+import Nav from '../../components/Nav';
+import Footer from '../../components/Footer';
+import MainText from './lists_main/MainText';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
+import '../Lists/contents/Paging.css';
 
 export default function Lists() {
+  const navigate = useNavigate();
+  const params = useParams();
+  const [tourData, setTourData] = useState([]);
+  const areaCode = params.areaCode;
+
+    /* pagingnation */
+  // 첫 번째 페이지
+  const [page, setPage] = useState(1);
+  // 한 페이지에 보여줄 총 갯수
+  const [pagePost] = useState(12);
+  
+  useEffect (() => {
+    axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`)
+    .then(response => {
+      setTourData(response.data.response.body.items.item);
+    })
+  }, []);
+
+
+  
+  // 데이터를 요청하는 useEffect
+  // useEffect(() => {
+  //   const reqPost = async () => {
+  //     const res = await axios.get('https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=58&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=38&areaCode=39')
+  //     // setItem(res.data.response.body.items.item)
+
+  //   };
+  //   reqPost();
+  // }, [])
+
+  // 페이지 이동 이벤트함수
+  const handlePageChange = (page) => {
+    setPage(page);
+    console.log(page)
+  };
+  
   return (
+    <>
+    <Nav/>
     <Container>
-      <div className="bg-light p-5">
-        <p className='m-1'>트립로그pick</p>
-        <h1 className="fw-bold" >제주여행<br></br>BEST 맛집 총정리</h1>
-        <Button variant="dark" size="sm" className="mt-2 mb-5 mx-1">#해시태그</Button>
-        <Button variant="dark" size="sm" className="mt-2 mb-5 mx-1">#해시태그</Button>
-      </div>
-
-      <Row className="mt-3 mb-2">
-          <Button variant="dark" className="d-flex col-9 m-auto align-items-center">
-            <Col className="flex-fill">
-              <Image src="/images/imgSample.jpg" roundedCircle style={{width:"50px"}}/>
-            </Col>
-            <Col className="flex-fill">
-              <p className="text-start fw-bold mt-2 mb-0">프랜차이즈</p>
-              <p className="text-start">가성비 프랜차이즈부터 럭셔리 프랜차이즈</p>
-            </Col>
-            <Col className="flex-fill">
-            <span>✔</span>
-            </Col>
-          </Button>
-      </Row>
-      
-      <Row>
-          <Button variant="dark" className="d-flex col-9 m-auto align-items-center">
-            <Col className="flex-fill">
-              <Image src="/images/imgSample.jpg" roundedCircle style={{width:"50px"}} />
-            </Col>
-            <Col className="flex-fill">
-              <p className="text-start fw-bold mt-2 mb-0">현지인 맛집 존맛</p>
-              <p className="text-start">가성비 현지인 맛집부터 럭셔리 현지인 맛집</p>
-            </Col>
-            <Col className="flex-fill">
-            <span>✔</span>
-            </Col>
-          </Button>
-      </Row>
-
+      <MainText/>
 
       <Tabs 
       defaultActiveKey="맛집"
@@ -58,25 +67,56 @@ export default function Lists() {
         <Tab eventKey="정렬" title="정렬" disabled>
         </Tab>
       </Tabs>
+      
+      <Row xs={1} md={2} lg={3} className="g-4">
+          { tourData.length > 0 ? 
+            tourData.slice(
+              pagePost*(page-1),
+              pagePost*(page-1)+pagePost
+            )
+            .map(function (tourData, i) {
+              return (
+                <Col>
+                  <Card onClick={() => {
+                    navigate(`/detail/${tourData.contentid}`);
+                  }} >
+                    <Card.Img variant="top" src={tourData.firstimage}/>
+                    <Card.Body>
+                      <Card.Title>{tourData.title}</Card.Title>
+                      <Card.Text className="text-muted">{tourData.addr1}</Card.Text>
+                      <Card.Text className="text-muted">⭐⭐⭐⭐⭐  <span>30</span></Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )
+            })
+            : null
+          }
+            
+      </Row>
 
-        <Row xs={1} md={2} lg={3} className="g-4">
-        {Array.from({ length: 6 }).map((_, idx) => (
-          <Col>
-            <Card>
-              <Card.Img variant="top" src="/images/imgSample.jpg"/>
-              <Card.Body>
-                <Card.Title>장소명</Card.Title>
-                <Card.Text className="text-muted">주소명</Card.Text>
-                <Card.Text className="text-muted">⭐⭐⭐⭐⭐  <span>30</span></Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-        </Row>
         <Row className="d-flex justify-content-center col-2 m-auto mt-4 mb-4" lg={2}>
-            <Button variant="dark" >더보기</Button>
+          <Pagination
+            // * 필수 값
+            // *활성 페이지
+            activePage={page}
+            // 페이지당 항목 수
+            itemsCountPerPage={12}
+            // 페이지 총 아이템수
+            totalItemsCount={tourData.length}
+            // 페이지 범위
+            pageRangeDisplayed={5}
+            // 이전 페이지 탐색 버튼의 텍스트
+            prevPageText={"<"}
+            // 다음 페이지 탐색 버튼의 텍스트
+            nextPageText={">"}
+            // 페이지 변경 핸들러 pageNumber를 인수로 수신
+            onChange={handlePageChange}
+          />
         </Row>
         
     </Container>
+    <Footer/>
+    </>
   )
 }

@@ -29,13 +29,13 @@ const navigator = useNavigate();
       
         <Row className="d-flex col-8 mx-auto text-center">
           <Col onClick={()=> {
-              navigator('/submain/1');
+              navigator('/lists/1');
             }}>
             <p className='fs-2 mb-1'>🌆</p>
             <p className='fw-bold'>서울</p>
           </Col>
           <Col onClick={()=> {
-              navigator('/submain/6');
+              navigator('/lists/6');
             }}>
             <p className='fs-2 mb-1'>🌅 </p>
             <p className='fw-bold'>부산</p>
