@@ -22,15 +22,11 @@ export default function Users() {
   const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
   const {Navigate} = useNavigate();
 
-  let userID = 1;
   const register = () => {
-    axios.post('http://localhost:3000/users', {
-    userID: userID++,
+    axios.post('http://localhost:4000/users', {
     nickname: nickname,
     useremail: useremail,
     userpw: userpw,
-    // user_img: userImg,
-    regDate: new Date(),
   })
   .then(response => {
     console.log('회원 등록 성공');
@@ -136,6 +132,7 @@ export default function Users() {
             hoverColor='#fff'
             hoverBackgroundColor='#555'>
           </Btn>
+          
         </Card>
         </Container>
       <Footer/>

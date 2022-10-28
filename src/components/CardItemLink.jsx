@@ -9,7 +9,8 @@ import axios from 'axios';
 const CardItem = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  border-radius: .65em;
+  /* border-radius: .65em; */
+  border: none;
 `
 const CardImg = styled.img`
   width: 100%;
@@ -17,14 +18,14 @@ const CardImg = styled.img`
 
 `
 // props 명만 변경
-export default function CardItemLink({src, width, height}){   
+export default function CardItemLink({width, height, src, title}){   
   console.log(src); 
   return(
     <CardItem width={width} height={height} className="m-3 d-inline-block border">
       {/* <Card.Img variant="top" src="/images/map_ex.png" /> */}
       <CardImg variant="top" src={src}/>
       <Card.Body>
-      <Card.Title>Card Title</Card.Title>
+      <Card.Title className='fs-6 '>{title}</Card.Title>
       {/* <Button variant="success">Go somewhere</Button> */}
       </Card.Body>
     </CardItem>
