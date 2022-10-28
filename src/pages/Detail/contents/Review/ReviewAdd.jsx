@@ -10,6 +10,8 @@ export default function ReviewAdd() {
   const outSection = useRef();
   const [reviewAdd, setReviewAdd] = useState(false);
 
+  const contentRef = useRef();
+
   const onClick = () => {
     setReviewAdd(true);
   };
@@ -26,17 +28,9 @@ export default function ReviewAdd() {
             }
           }}
           >
-          <Row className="d-flex justify-content-end">
-            <Col className="col-1 mt-3 mx-2">
-              <Button variant="outline-success"  className="close" 
-                onClick={() => setReviewAdd(false)}>
-                  <FontAwesomeIcon icon={faX} />
-              </Button>
-            </Col>
-          </Row>
 
           <Form.Group className="position-relative">
-            <div className='mb-3 mx-3'>
+            <div className='mt-3 mb-3 mx-3'>
               <Rating/>
               <Form.Control
                 name="textarea"
