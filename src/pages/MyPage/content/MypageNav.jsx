@@ -8,44 +8,45 @@ export default function MypageNav() {
       <Nav className="justify-content-center">
         <div className="col-3">
           <div className="nav_bar">
+            <div style={{width:'10rem', height:'10rem'}} className='bg-success rounded text-center'>TripLog</div>
             <span>
-              <a href="/mypage">나의 주문 내역</a>
+              <p href="/mypage">나의 TripLog</p>
             </span>
             <span>
-              <a href="#">주문 조회</a>
+              <a href="#">여행 조회</a>
             </span>
             <span>
-              <a href="/mypage/cancelinfo">취소/환불 현황</a>
-            </span>
-          </div>
-          <div className="nav_bar">
-            <span>
-              <a href="#">쿠폰/마일리지</a>
+              <a href="/mypage/cancelinfo">체크리스트 조회</a>
             </span>
             <span>
-              <a href="#">나의 쿠폰</a>
-            </span>
-            <span>
-              <a href="#">나의 마일리지</a>
+              <a href="/mypage/cancelinfo">가계부 조회</a>
             </span>
           </div>
+
           <div className="nav_bar">
             <span>
-              <a href="#">회원정보</a>
+              <p href="#">활동 내역</p>
+            </span>
+            <span>
+              <a href="/mypage/reviewinfo">리뷰</a>
+            </span>
+            <span>
+              <a href="/mypage/reviewinfo">찜한 곳</a>
+            </span>
+          </div>
+
+          <div className="nav_bar">
+            <span>
+              <p href="#">회원정보</p>
+            </span>
+            <span>
+              <a href="#">로그아웃</a>
             </span>
             <span>
               <a href="/mypage/userinfo">회원정보 변경</a>
             </span>
             <span>
               <a href="#">회원탈퇴</a>
-            </span>
-          </div>
-          <div className="nav_bar">
-            <span>
-              <a href="#">상품후기</a>
-            </span>
-            <span>
-              <a href="/mypage/reviewinfo">후기 목록</a>
             </span>
           </div>
         </div>
@@ -61,7 +62,7 @@ const Nav = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 
     .nav_bar {
       display: flex;
@@ -82,19 +83,19 @@ const Nav = styled.div`
       }
 
       span:nth-of-type(1) {
-        font-size: 18px;
+        font-size: 1.2rem;
         font-weight: bold;
       }
 
       span:nth-of-type(2),
-      span:nth-of-type(3) {
-        margin-top: 10px;
+      span:nth-of-type(3), 
+      span:nth-of-type(4) {
+        margin-top: .5rem;
         color: #5b5656;
 
         &.on {
           font-weight: bold;
         }
-      }
     }
-  }
+  }}
 `;
