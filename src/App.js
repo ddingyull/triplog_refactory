@@ -9,6 +9,7 @@ import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
 import Users from './pages/Users/Users';
+import CheckList_BE from './pages/CheckList/CheckList_BE';
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
         <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Budget" element={<Budget />} />
-        <Route path="/CheckList" element={<CheckList />} />
+        <Route path="/CheckList" element={<CheckList_BE />} />
         <Route path="/login" element={<Login />} />
         <Route path="/users" element={<Users />} />
       </Routes>
