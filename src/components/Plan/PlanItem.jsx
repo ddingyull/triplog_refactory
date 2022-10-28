@@ -5,19 +5,17 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { useDispatch, useSelector } from 'react-redux'
-import { addPlanItem } from '../../store/modules/triplog'
+import { useDispatch, useSelector } from 'react-redux';
+import { addPlanDate } from '../../store/modules/triplog';
 
-const PlanItem = ({onClick, productItems, planItems, setPlanItems}) => {
+const PlanItem = ({onClick, productItems}) => {
 
     // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog) 
   let dispatch = useDispatch()
-  const period = (state.planDate.period)
-  console.log(period);
 
-  const [productItem, setProductItem] = useState([]); //받아온데이터 담기
-  let [itemData] = productItems
+  const [ planItems, setPlanItems ] = useState(state.planItems)
+  
 
   if(state.isLogin){
   return planItems.map(({id, firstimage, title, src, addr1, sigungucode }, idx) => (
@@ -32,6 +30,19 @@ const PlanItem = ({onClick, productItems, planItems, setPlanItems}) => {
       <Title className='m-1 fs-5'>{title}</Title>
       <Title className='m-1' style={{fontSize:'12px'}}>{addr1}</Title>
     </Stack>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <Stack>
     <button 
       className='btn btn-light'

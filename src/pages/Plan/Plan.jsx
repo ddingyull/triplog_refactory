@@ -144,7 +144,7 @@ export default function Plan( {}) {
 
         {/* 여행지 검색 기능 */}
         <Row className='m-auto py-4'>
-        <form action="">
+      
             <InputText type="text" placeholder='입력' ref={inputRef}/>
             <button type='button' onClick={() => {
               // input에 입력한 값 useRef
@@ -163,23 +163,35 @@ export default function Plan( {}) {
                 console.log('실패')
               })
             }}>검색</button>
-          </form>
 
           <div>
             {
-              // search의 map
+              //search의 map
               search.map(function (a, i) {
                 return (
                   <>
                   {/* 검색결과나오는 UI컴포넌트 추가필요, 데이터 props받아야하나? */}
-                    <p onClick={() => {
+                  <Card 
+                    className="d-inline-block m-auto"
+                    style={{width:'9rem', border:'none'}}
+                    // data-productid={contentid} 
+                    onClick={() => {
                       let copy = [...list, {
                           title: a.title,
                           mapx: parseFloat(a.mapx),
                           mapy: parseFloat(a.mapy) 
                         }];
                       setList(copy);
-                    }} key={i}>{a.title}</p>
+                    }} 
+                    key={i}
+                    >
+                  <Card.Img variant="top" src={a.firstimage}/>
+                  <Card.Body>
+                  <Card.Title 
+                    style={{fontSize:'12px'}}
+                    className='m-0 p-0 text-center'>{a.title}</Card.Title>
+                  </Card.Body>
+                </Card>                    
                   </>
                 )
               })
@@ -195,6 +207,8 @@ export default function Plan( {}) {
               productItems={productItems} 
               setPlanItems={setPlanItems}
               planItems={planItems}
+              search={search}
+              setSearch={setSearch}
             />
               : <div>잠시만요!🏖</div> }
           </Row> 
