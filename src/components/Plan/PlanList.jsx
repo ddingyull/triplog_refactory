@@ -7,19 +7,25 @@ import PlanItem from './PlanItem'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const PlanList = ({productItems, planItems, setPlanItems, onClick}) => {
-  
-  const [productItem, setProductItem] = useState([]); //받아온데이터 담기
+// 리덕스
+import { useDispatch, useSelector } from 'react-redux'
+import { addPlanItem } from '../../store/modules/triplog'
+
+const PlanList = ({ productItems, planItems, setPlanItems, onClick}) => {
   let [itemData] = productItems
 
+  // 리듀서의  useSelector, dispatch
+  let state = useSelector((state) => state.triplog) 
+  let dispatch = useDispatch()
+  
 
-  // 여행 기간만큼 map 돌려줘야함
-  return [1,2,3].map(({id, firstimage, title, src, addr1, sigungucode }, idx) => (
+  if(state.isLogin){
+  return (state.planDate.period).map(({ id, firstimage, title, src, addr1, sigungucode }, idx) => (
     <Container 
-      // sm={1} md={1} lg={4} xl={2} 
+      sm={1} md={1} lg={2} xl={2} 
       className='overflow-auto'
       style={{height:'20%'}}
-      ket={idx}>
+      key={idx}>
                 
     <Card className="col-md-12 overflow-auto">
     <KakaoMap className='col-6 m-auto'/>
@@ -37,7 +43,8 @@ const PlanList = ({productItems, planItems, setPlanItems, onClick}) => {
     <PlanItem 
       productItems={productItems} 
       setPlanItems={setPlanItems}
-      planItems={planItems}/>
+      planItems={planItems}
+      />
     </Row>
 
     <Col className='m-auto d-flex mt-2 mb-2 col-10'>
@@ -57,7 +64,7 @@ const PlanList = ({productItems, planItems, setPlanItems, onClick}) => {
   </Card>
   </Container>
   )) 
-}
+}}
 
 
 

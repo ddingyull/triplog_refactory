@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Modal, } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 
-import { useDispatch, useSelector } from 'react-redux'
-import { addPlanDate } from '../store/modules/store'
+import { useDispatch, useSelector } from 'react-redux';
+import { addPlanDate } from '../store/modules/triplog';
 
 //CalendarModule
-function CalendarModule({ text, subText, }) {
-
+function CalendarModule({ text, subText }) {
   // 리듀서의  useSelector, dispatch
-  let state = useSelector((state) => state)  //planDate
-  let dispatch = useDispatch()
+  let state = useSelector((state) => state.triplog); 
+  let dispatch = useDispatch();
 
   const [value, onChange] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [planDate, setPlanDate] = useState([])
+  const [planDate, setPlanDate] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const Navigate = useNavigate();
+  const params = useParams();
+  const areaCode = params.areaCode;
 
-  const getDate = (e) =>{
-    // tetz 시작일과, 몇일 인지만 체크해서 for 문을 통해 planDate 계산하기 위해 startDate, endDate 는 주석 처리
-    const period = e.target.getAttribute('period');
+  const getDate = (e) => {
+    const dateLength = Math.ceil(
+      (value[1].getTime() - value[0].getTime()) / (1000 * 60 * 60 * 24)
+    );
 
-    // tetz periodDate 는 문자열 이므로 숫자로 변경
-    const dateLength = parseInt(period);
-    
     // tetz 날짜 계산의 경우 JS 에서 제공하는 형태로 해야 편리하기 때문에 Java 의 Date 형식에 맞게 계산되는 값이 들어가는 clickDateJava
     // 아래의 for 문에서 주석을 변경해서 사용하시면 됩니다!
     let clickDateJava = [];
@@ -42,37 +41,52 @@ function CalendarModule({ text, subText, }) {
     // 시작일을 저장하기 위한 start 변수
     let start = value[0];
     let startJava = value[0];
-    
-    
+
     // tetz 여행 일정의 길이에 맞춰서 시작일에 + 1 일을 해주는 방법으로 전체 여행 일정을 배열로 만들기!
     // tetz 문자열 형태의 Date 가 필요하면 ClickDate 의 데이터를 사용
-    for(let i = 0; i <= dateLength; i++) {        
-      if(i === 0) {
-        clickDate.push(new Date(start.setDate(start.getDate())));          
-      } else {
-        clickDate.push(new Date(start.setDate(start.getDate() + 1)));              
-      }      
-    }
+    // for (let i = 0; i < dateLength; i++) {
+    //   if (i === 0) {
+    //     clickDateJava.push(new Date(startJava.setDate(startJava.getDate())));
+    //   } else {
+    //     clickDateJava.push(
+    //       new Date(startJava.setDate(startJava.getDate() + 1))
+    //     );
+    //   }
+    // }
 
     // tetz JS Date 형태의 Date 가 필요하면 ClickDateJava 의 데이터를 사용
-    for(let i = 0; i <= dateLength; i++) {        
-      if(i === 0) {        
-        clickDateJava.push(moment(new Date(start.setDate(start.getDate()))).format("YYYY년 MM월 DD일"));
-      } else {        
-        clickDateJava.push(moment(new Date(start.setDate(start.getDate() + 1))).format("YYYY년 MM월 DD일"));
-      }      
+    for (let i = 0; i < dateLength; i++) {
+      if (i === 0) {
+        clickDate.push(
+          moment(new Date(start.setDate(start.getDate()))).format(
+            'YYYY년 MM월 DD일'
+          )
+        );
+      } else {
+        clickDate.push(
+          moment(new Date(start.setDate(start.getDate() + 1))).format(
+            'YYYY년 MM월 DD일'
+          )
+        );
+      }
     }
-  
+
     // 만들어진 clickDate 또는 clickDateJava 를 바로 axios 로 전달하시면 될 것 같습니다!
     // state 를 사용하기 이상하게 처음 선택 완료 클릭 시에, 자꾸 값이 안들어가는 문제가 생겨서 그냥 변수로 처리 했습니다!
-    console.log('JS 형태의 배열', clickDate);
-    console.log('문자열 형태의 배열', clickDateJava);         
+    console.log('JS 형태의 배열', clickDateJava);
+    console.log('문자열 형태의 배열', clickDate);
+    setPlanDate(clickDate);
 
-    // const clickDate 
-    // setPlanDate(clickDate);
-    // console.log(planDate);
-    // setShow(false);
-    //   Navigate('/Plan')
+    dispatch(
+      addPlanDate({
+        startDate: clickDate[0],
+        endDate: clickDate[clickDate.length - 1],
+        period: clickDate,
+      })
+    );
+
+    setShow(false);
+    Navigate(`/Plan/${areaCode}`);
 
     // axios.post('http://localhost4000/users/{user_id}/trips/plan', {
     //   planDate : ''
@@ -84,116 +98,78 @@ function CalendarModule({ text, subText, }) {
     // .catch(()=>{
     //   console.log('실패');
     // })
-  }
-
-
+  };
 
   return (
     <>
-    <LinkBtn 
-      variant="light" 
-      onClick={handleShow}
-      className="m-1 btn btn-light">
-      📆 일정 세우러가기
-    </LinkBtn>
+      <LinkBtn
+        variant="light"
+        onClick={handleShow}
+        className="m-1 btn btn-light"
+      >
+        📆 일정 세우러가기
+      </LinkBtn>
 
-    <Modal
-      show={show}
-      onHide={handleClose}
-      backdrop="static"
-      keyboard={false}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>TripLog</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <div>
-        <h4 className='text-center'>🛫 여행 날짜를 선택해주세요</h4>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>TripLog</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <h4 className="text-center">🛫 여행 날짜를 선택해주세요</h4>
 
-        {value.length > 0 ? (
-        <p className='text-center'>
-          {moment(value[0]).format("YYYY년 MM월 DD일")}
-          <span className='bold'> ~ </span> {moment(value[1]).format("MM월 DD일")}
-        </p>
-      ) : (
-        <p className='text-center'>
-          <span className='bold'>오늘:</span>{' '}
-          {moment(value).format("YYYY년 MM월 DD일")}
-        </p>
-      )}
+            {value.length > 0 ? (
+              <p className="text-center">
+                {moment(value[0]).format('YYYY년 MM월 DD일')}
+                <span className="bold"> ~ </span>{' '}
+                {moment(value[1]).format('MM월 DD일')}
+              </p>
+            ) : (
+              <p className="text-center">
+                <span className="bold">오늘:</span>{' '}
+                {moment(value).format('YYYY년 MM월 DD일')}
+              </p>
+            )}
 
-        <Calendar 
-          minDate = {new Date()} 
-          onChange={onChange} 
-          selectRange={true}
-          formatDay={(locale, date) => moment(date).format("DD")} //'일'글씨 빼기
-          maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-          className='m-auto' />
-    </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button 
-          variant="secondary" 
-          onClick={handleClose}>
-          닫기
-        </Button>
-        {/* <Button 
-          variant="success" 
-          planDate={planDate}
-          startDate={
-            moment(value[0]).format("YYYY년 MM월 DD일")
-          }
-          endDate={
-            moment(value[1]).format("YYYY년 MM월 DD일") 
-          }
-          period={
-            moment('2020-01-04').diff(moment('2020-01-01'),'days')
-          }
-          onClick={(e) => { 
-            const startDate = e.target.getAttribute('startDate');
-            const endDate = e.target.getAttribute('endDate');
-            const period = Array(e.target.getAttribute('period')).fill(1);
-            console.log(startDate, endDate, period);
+            <Calendar
+              minDate={new Date()}
+              onChange={onChange}
+              selectRange={true}
+              formatDay={(locale, date) => moment(date).format('DD')} //'일'글씨 빼기
+              maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+              className="m-auto"
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            닫기
+          </Button>
 
-            dispatch(addPlanDate(
-            {
-              startDate: startDate,
-              endDate: endDate,
-              period: period,
-            },
-          ))
-          setShow(false)
-          Navigate('/Plan')
-          console.log(state.planDate);
-          }}>
+          <Button variant="success" onClick={getDate}>
             선택 완료
-        </Button> */}
-
-        <Button 
-          variant="success" 
-          period={
-            moment('2020-01-04').diff(moment('2020-01-01'),'days')
-          }
-          onClick={getDate}>
-            선택 완료
-        </Button>
-    
-      </Modal.Footer>
-    </Modal>
-  </>
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
 export default CalendarModule;
 
 const LinkBtn = styled.button`
-  background-color: rgba(255, 255, 255, .4);
+  background-color: rgba(255, 255, 255, 0.4);
   border: none;
   font-size: 12px;
   padding: 6px;
   border-radius: 3px;
 
-  &:hover{
-  opacity: 1;
+  &:hover {
+    opacity: 1;
   }
-`
+`;

@@ -6,18 +6,20 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addPlanItem } from '../../store/modules/store'
+import { addPlanItem } from '../../store/modules/triplog'
 
-const PlanItem = ({productItems, planItems, setPlanItems}) => {
+const PlanItem = ({onClick, productItems, planItems, setPlanItems}) => {
 
     // 리듀서의  useSelector, dispatch
-  let state = useSelector((state) => state) 
+  let state = useSelector((state) => state.triplog) 
   let dispatch = useDispatch()
+  const period = (state.planDate.period)
+  console.log(period);
 
   const [productItem, setProductItem] = useState([]); //받아온데이터 담기
   let [itemData] = productItems
 
-
+  if(state.isLogin){
   return planItems.map(({id, firstimage, title, src, addr1, sigungucode }, idx) => (
     <Stack className="d-flex m-3 shadow-sm" direction="horizontal" gap={3} style={{height:"4rem"}}>
     {/* <Badge className='bg-success roundedCircle text-center' style={{width:"1.4rem", height:"1.4rem"}}>
@@ -27,7 +29,7 @@ const PlanItem = ({productItems, planItems, setPlanItems}) => {
   
     <Stack className='col-9 d-flex flex-column my-auto'>
       {/* <Title className='m-1 fs-5'>{title}</Title> */}
-      <Title className='m-1 fs-5'>{state.planItem[0].title}</Title>
+      <Title className='m-1 fs-5'>{title}</Title>
       <Title className='m-1' style={{fontSize:'12px'}}>{addr1}</Title>
     </Stack>
     <Stack>
@@ -42,7 +44,7 @@ const PlanItem = ({productItems, planItems, setPlanItems}) => {
     </Stack>
   </Stack>
   )) 
-}
+}}
 
 
 

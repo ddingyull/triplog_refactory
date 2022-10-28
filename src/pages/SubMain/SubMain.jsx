@@ -1,12 +1,28 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import '../../styles/globalStyle'
 import CalendarMain from './CalendarMain'
 import Items from './Items'
 
+import { useParams } from "react-router-dom";
 
-export default function SubMain({width, height, planDate}) {
-  
+
+export default function SubMain({productItems, width, height, planDate}) {
+  const params = useParams();
+  const areaCode = params.areaCode;
+
+  const [productItem, setProductItem] = useState([]); //받아온데이터 담기
+
+
+  // data 받아오기
+  useEffect (() => {
+    const productItem = axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`)
+    .then((response) => {
+      setProductItem(response.data.response.body.items.item);           
+    })
+  }, []);
   return (
     <>
       <Nav/>

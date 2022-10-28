@@ -1,25 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-// import getProductData from './api/getProductData';
+
 import PlanList from '../../components/Plan/PlanList';
 import SelectList from '../../components/Plan/SelectList';
-
 import styled from 'styled-components';
+
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Welcome from './Welcome';
 import KakaoMap from './KakaoMap';
+const {kakao} = window;
 
 
-export default function Plan() {
+export default function Plan( {}) {
+  const params = useParams();
+  const areaCode = params.areaCode;
+
+  // data 받아오기
+  useEffect (() => {
+    axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`)
+    .then((response) => {
+      setProductItems(response.data.response.body.items.item);           
+    })
+  }, []);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // * 지도
+    // * 지도
   // 검색한 여행지 저장을 위한 State
   const [search, setSearch] = useState([]);
 
@@ -29,31 +41,80 @@ export default function Plan() {
   // 클릭 한 여행지 저장을 위한 State
   const [list, setList] = useState([]);
 
-  // data 받아오기
-  useEffect (() => {
-    const productItems = axios.get('https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=f0bpiY05PaHzNADbGBganvUsTEo1lHKOPHlz5P4%2B6BY8%2F3ou1vetQhG6%2FCuL%2FORR7sE5e5jIHeUr2fFiKHHHUA%3D%3D&numOfRows=12&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=1')
-    .then((response) => {
-      setProductItems(response.data.response.body.items.item);           
-    })
-  }, []);
-
-const [productItems, setProductItems] = useState([]); //받아온데이터 담기
-const [planItems, setPlanItems] = useState([]);
-const [isPlanOpen, setIsPlanOpen] = useState(false);
-let [itemData] = [productItems] 
-
-    const saveToLocalStorage = () => {
-        localStorage.setItem('planState', JSON.stringify(planItems));
+  // Kakao Map 사용을 위한 useEffect
+  useEffect(() => {
+    const container = document.getElementById('map');
+    // 기본이 되는 지도 중앙 위치
+    const options = {
+      center: new kakao.maps.LatLng(33.368, 126.54),
+      // 지도 레벨(높을 수록 멀어진다)
+      level: 11
     };
+    // 지도 생성을 위한 메소드
+    const map = new kakao.maps.Map(container, options);
+    
+    // 지도 드래그 금지
+    map.setDraggable(false);
+    // 지도 줌인 금지
+    map.setZoomable(false);
 
-    const addPlanItem = (e) => {
-      const clickItem = itemData.find((item) => item.sigungucode === e.target.dataset.productid);
-      console.log(clickItem); 
-      console.log(productItems);
-      // const currentItem = productItems[idx];
-      // const newPlanitem = [];
-      // setPlanItems(clickItem);     
-    }; 
+    // 선택한 list에 대한 forEach
+    list.forEach((el, num, arr) => {
+      // 지도에 생성할 마커
+      new kakao.maps.Marker({
+        //마커가 표시 될 지도
+        map: map,
+        //마커가 표시 될 위치
+        position: new kakao.maps.LatLng(el.mapy, el.mapx),
+      });
+      // path 를 주기 위해서 리스트에 저장 된 공간의 좌표를 pathArr 라는 배열에 푸쉬
+      let pathArr = [];
+      for (let i = 0; i < list.length; i++) {
+        pathArr.push(new kakao.maps.LatLng(arr[i].mapy, arr[i].mapx));
+      }
+      // 선을 긋기 위한 메소드
+      const polyline = new kakao.maps.Polyline({
+        // 지도생성
+        map: map,
+        // path의 배열
+        path: pathArr,
+        // 선을 굵기
+        strokeWeight: 3,
+        // 선의 색
+        strokeColor: '#34A853',
+        // 선의 불투명도
+        strokeOpacity: 1,
+        // 선의 스타일
+        strokeStyle: 'solid',
+      });
+
+      // 선 생성
+      polyline.setMap(map)
+      // 선의 배열
+      polyline.getPath();
+      // 선의 길의 계산
+      polyline.getLength();
+    }); 
+    // list가 변경 될 때 마다 실행
+  }, [list])
+
+  const [productItems, setProductItems] = useState([]); //받아온데이터 담기
+  const [planItems, setPlanItems] = useState([]);
+  const [isPlanOpen, setIsPlanOpen] = useState(false);
+  let [itemData] = [productItems] 
+
+  const saveToLocalStorage = () => {
+      localStorage.setItem('planState', JSON.stringify(planItems));
+  };
+
+  const addPlanItem = (e) => {
+    const clickItem = itemData.find((item) => item.sigungucode === e.target.dataset.productid);
+    console.log(clickItem); 
+    console.log(productItems);
+    // const currentItem = productItems[idx];
+    // const newPlanitem = [];
+    // setPlanItems(clickItem);     
+  }; 
     // if(!clickItem)
 
   return (
@@ -103,6 +164,27 @@ let [itemData] = [productItems]
               })
             }}>검색</button>
           </form>
+
+          <div>
+            {
+              // search의 map
+              search.map(function (a, i) {
+                return (
+                  <>
+                  {/* 검색결과나오는 UI컴포넌트 추가필요, 데이터 props받아야하나? */}
+                    <p onClick={() => {
+                      let copy = [...list, {
+                          title: a.title,
+                          mapx: parseFloat(a.mapx),
+                          mapy: parseFloat(a.mapy) 
+                        }];
+                      setList(copy);
+                    }} key={i}>{a.title}</p>
+                  </>
+                )
+              })
+            }
+          </div>
         </Row>
 
         {/* 여행지 리스트 보여주기 */}
@@ -112,7 +194,8 @@ let [itemData] = [productItems]
             <SelectList 
               productItems={productItems} 
               setPlanItems={setPlanItems}
-              planItems={planItems}/>
+              planItems={planItems}
+            />
               : <div>잠시만요!🏖</div> }
           </Row> 
         

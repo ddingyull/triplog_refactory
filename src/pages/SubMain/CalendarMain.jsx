@@ -21,7 +21,8 @@ export default function CalendarMain({ text, planDate, subText, plandate }){
           </Col>
           <Col xs={6} className='position-absolute top-0 start-0 d-block fs-6' style={{marginTop:'27vh', marginLeft:'19.5vw'}}>
             <CalendarModule 
-              planDate={planDate}/>
+              planDate={planDate}
+              />
             <LinkBtn href='' className='btn btn-light ms-1 my-1'>💸 더치페이하기?</LinkBtn>
             <LinkBtn href='' className='btn btn-light d-block ms-1 my-2'>🔖 두고가시는건 없으신가요?</LinkBtn>
           </Col>

@@ -1,7 +1,10 @@
 import React, {useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { login } from '../store/modules/triplog';
 
 export default function KakaoRedirectHandler() {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -53,7 +56,7 @@ export default function KakaoRedirectHandler() {
         console.log(userLoginInfo)
 
         const registerResponse = await fetch(
-          'http://localhost:3000/users/register',
+          'http://localhost:4000/users',
           {
             method: 'POST',
             headers: {
@@ -66,14 +69,27 @@ export default function KakaoRedirectHandler() {
             }),
           }
         );
+
+        if (registerResponse.status === 200) {
+          dispatch(login(userLoginInfo));
+          navigate('/');
+        } else {
+          alert('회원 등록 이상');
+          navigate('/login');
+        }
+      } else {
+        alert('카카오 로그인 회원 정보 획득 실패');
+        navigate('/login');
       }
+      } else {
+        alert('카카오 로그인 토큰 발행 실패');
+        navigate('/login');
       }
     }
     loginFetch();
   }, [])
 
-
-  return (
-    <div>KakaoRedirectHandler</div>
-  )
+  // return (
+  //   // <div>KakaoRedirectHandler</div>
+  // )
 }
