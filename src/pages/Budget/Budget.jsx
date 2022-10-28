@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 
-export default function CheckList() {
+export default function Budget() {
   return(
     <>
       <Nav/>

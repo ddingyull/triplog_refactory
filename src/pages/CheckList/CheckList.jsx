@@ -1,9 +1,139 @@
-import { Container, Accordion, Button, Row  } from 'react-bootstrap';
+import { Container, Accordion, Button, Row, InputGroup  } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CheckList() {
+  const inputRef = useRef();
+  const [checklist, setChecklist] = useState([]);
+
+  const callApi = async () => {
+    axios
+      .get("http://localhost:4000/checklist")
+      .then((res) => {
+        console.log(res.data[0]);
+        console.log(res.data[0].items);
+        let copy = [...checklist, ...res.data];
+        setChecklist(copy);
+      })
+      .catch(() => console.log("실패함"));
+
+    // const check = document.querySelector(".check");
+    // check.checked = checklist[0].checked;
+  };
+
+  useEffect(() => {
+    callApi();
+  }, []);
+
+  if (checklist[0] !== undefined) {
+    return (
+      <>
+        <h2 className="m-3">Check List</h2>
+
+        {checklist[0].items.map(function (a, i) {
+          return (
+            <InputGroup className="p-3">
+              <InputGroup.Checkbox />
+              <input value={checklist[0].items[i].item}></input>
+              <Button
+                variant="success"
+                onClick={() => {
+                  const text = inputRef.current.value;
+                  console.log(text);
+                  axios
+                    .post("http://localhost:4000/checklist/addItem", {
+                      item: text,
+                      checked: true,
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                    })
+                    .catch(() => {
+                      console.log("실패");
+                    });
+                }}
+              >
+                완료
+              </Button>
+              <Button
+                variant="warning"
+                onClick={() => {
+                  axios
+                    .delete("http://localhost:4000/checklist/deleteItem", {
+                      data: {
+                        num: i,
+                        item: checklist[0].items[i].item,
+                        checked: false,
+                      },
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                    })
+                    .catch(() => {
+                      console.log("실패");
+                    });
+                }}
+              >
+                삭제
+              </Button>
+            </InputGroup>
+          );
+        })}
+        <InputGroup className="p-3">
+          <InputGroup.Checkbox />
+          <input ref={inputRef}></input>
+          <Button
+            variant="success"
+            onClick={() => {
+              const text = inputRef.current.value;
+              console.log(text);
+              // let copy = [...item, { id: 2, item: text, checked: true }];
+              // setItem(copy);
+              // let copy = [...checklist[0]];
+              // console.log(copy);
+              axios
+                .post("http://localhost:4000/checklist/addItem", {
+                  item: text,
+                  checked: true,
+                })
+                .then((res) => {
+                  console.log(res.data);
+                })
+                .catch(() => {
+                  console.log("실패");
+                });
+            }}
+          >
+            완료
+          </Button>
+          <Button
+            variant="warning"
+            onClick={() => {
+              axios
+                .delete("http://localhost:4000/checklist/deleteItem", {
+                  data: {
+                    _id: 3,
+                  },
+                })
+                .then((res) => {
+                  console.log(res.data);
+                })
+                .catch(() => {
+                  console.log("실패");
+                });
+            }}
+          >
+            삭제
+          </Button>
+        </InputGroup>
+        <Button className="m-3">추가</Button>
+      </>
+    );
+  }
+
   return(
     <>
       <Nav/>
