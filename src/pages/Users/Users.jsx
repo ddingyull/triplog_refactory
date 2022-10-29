@@ -15,6 +15,36 @@ const ERROR_MSG = {
 };
 
 export default function Users() {
+  // // const [users, setUsers] = useState({nickname:'', useremail:'', userpw:''})
+  // const [ nickname, setNickname ] = useState('');
+  // const [ useremail, setUseremail ] = useState('');
+  // const [ userpw, setUserpw ] = useState('');
+  // const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
+  // const {Navigate} = useNavigate();
+
+  // // let userID = 1;
+  // const register = () => {
+  //   axios.post('http://localhost:4000/user/register', {
+  //       type:'local',
+  //       nickname: nickname,
+  //       email: useremail,
+  //       password: userpw,
+  //       // userID: userID++,
+  //       // user_img: userImg,
+  //       // regDate: new Date(),    
+  // })
+  // .then(response => {
+  //   console.log('회원 등록 성공');
+  //   console.log('유저 정보', response.data.user);
+  //   console.log('user token', response.data.jwt);
+  //   localStorage.setItem('token', response.data.jwt);
+  //   Navigate('/')
+  // })
+  // .catch(error => {
+  //   console.log('error', error.response);
+  // });
+  // }
+
   // const [users, setUsers] = useState({nickname:'', useremail:'', userpw:''})
   const [ nickname, setNickname ] = useState('');
   const [ useremail, setUseremail ] = useState('');
@@ -22,15 +52,16 @@ export default function Users() {
   const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
   const {Navigate} = useNavigate();
 
-  let userID = 1;
+  // let userID = 1;
   const register = () => {
-    axios.post('http://localhost:3000/users', {
-    userID: userID++,
-    nickname: nickname,
-    useremail: useremail,
-    userpw: userpw,
-    // user_img: userImg,
-    regDate: new Date(),
+    axios.post('http://localhost:4000/user/register', {
+        type:'local',
+        nickName: nickname,
+        email: useremail,
+        password: userpw,
+        // userID: userID++,
+        // user_img: userImg,
+        // regDate: new Date(),    
   })
   .then(response => {
     console.log('회원 등록 성공');

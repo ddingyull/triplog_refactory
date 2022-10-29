@@ -9,6 +9,7 @@ import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
 import Users from './pages/Users/Users';
+import KakaoRedirectHandler from './components/KakaoRedirectHandler';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/CheckList" element={<CheckList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler />} />
       </Routes>
     </BrowserRouter>
   );

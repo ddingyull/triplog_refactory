@@ -15,6 +15,10 @@ const ERROR_MSG = {
   invalidUserPW: '8자 이상 영문, 숫자를 사용하세요.',
 };
 
+// 카카오톡 로그인 필요 정보, CLIENT_ID 로 REST API 키 사용 필요
+const KAKAO_CLIENT_ID = '0c33348e34eeceef7d378e029e920c12';
+const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauth/callback/kakao';
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
 export default function Login({text, clickEvent, textColor, backgroundColor, hoverColor}) {
   const [ nickname, setNickname ] = useState('');
@@ -30,7 +34,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
       alert('아이디와 비밀번호를 입력해주세요');
       return;
     }
-    axios.post('http://localhost:3000/users', {
+    axios.post('http://localhost:4000/user/login', {
     identifier: useremail,
     password: userpw,
   })
@@ -126,14 +130,17 @@ const handlePw = (e) => {
           hoverColor='#fff'
           hoverBackgroundColor='#555'>
         </Btn>
+        {/* 카카오 로그인 */}
+        <a href={KAKAO_AUTH_URL}>
         <Btn 
-          onClick={() => {(checkUser())}}
+          // onClick={() => {(checkUser())}}
           text='카카오로그인' 
           textColor='#333' 
           backgroundColor='#ffd503'
           hoverColor='#333'
           hoverBackgroundColor='#d0ad00'>
         </Btn>
+        </a>          
       </Card>
           </Container>
       <Footer/>
