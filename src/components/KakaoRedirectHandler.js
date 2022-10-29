@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import { login } from '../store/modules/triplog';
+import { login } from '../store/modules/users';
 
 export default function KakaoRedirectHandler() {
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ export default function KakaoRedirectHandler() {
         console.log(userLoginInfo)
 
         const registerResponse = await fetch(
-          'http://localhost:4000/users',
+          'http://localhost:4000/user/register',
           {
             method: 'POST',
             headers: {
@@ -88,8 +88,4 @@ export default function KakaoRedirectHandler() {
     }
     loginFetch();
   }, [])
-
-  // return (
-  //   // <div>KakaoRedirectHandler</div>
-  // )
 }
