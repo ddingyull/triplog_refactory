@@ -5,7 +5,7 @@ import Plan from './pages/Plan/Plan';
 import Lists from './pages/Lists/Lists';
 import Detail from './pages/Detail/Detail';
 import MyPage from './pages/MyPage/MyPage';
-import MyPage1 from './pages/Mypage(참고)/Mypage';
+// import MyPage1 from './pages/Mypage(참고)/Mypage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
@@ -33,7 +33,7 @@ function App() {
         <Route path="/lists/:areaCode" element={<Lists />} />
         <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
-        <Route path="/MyPage1" element={<MyPage1 />} />
+        {/* <Route path="/MyPage1" element={<MyPage1 />} /> */}
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />
         <Route path="/login" element={<Login />} />
