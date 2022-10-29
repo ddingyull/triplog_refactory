@@ -38,6 +38,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
       Navigate('/login');
     }
     axios.post('http://localhost:4000/users/register', {
+    type: 'local',
     identifier: useremail,
     password: userpw,
   }

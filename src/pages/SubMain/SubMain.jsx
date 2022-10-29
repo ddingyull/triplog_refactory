@@ -14,17 +14,24 @@ import { useParams } from "react-router-dom";
 export default function SubMain({productItems, width, height, planDate}) {
   const params = useParams();
   const areaCode = params.areaCode;
-  const [areaName, setAreaName] = useState(data);
 
-  // let pickAreaName =
+
+  const [areaName, setAreaName] = useState(data);
+  console.log(areaName[0]); //배열
+  console.log(areaName[0][1]); //주소
+  console.log(areaName[0][2][0].areacode);
+
   let h = 0;
   for(let i = 0; i < areaName.length; i++) {
-    if (areaName[i].find(el => el.areacode == areaCode) != undefined) {
-      h = i;
-    }
-    }
-  let pickAreaName = areaName[h][0];
+    for(let j = 2; j < areaName[i].length; j++) {
+      if (areaName[i][j].find(el => el.areacode === areaCode) !== undefined) {
+        h = i;
+        console.log(h)
+        console.log(areaName[i][j].find(el => el.areacode === areaCode))
+    } } }
 
+  let pickAreaName = areaName[h][0];
+  let pickAreaImg = areaName[h][1];
   const [productItem, setProductItem] = useState([]); //받아온데이터 담기
 
   // data 받아오기
@@ -37,11 +44,25 @@ export default function SubMain({productItems, width, height, planDate}) {
   return (
     <>
       <Nav/>
-        <CalendarMain pickAreaName={pickAreaName} subText="온전히 내 취향대로, 나만의 감성대로" planDate={planDate}/>
-        <Items width='15rem' height='15rem' text="✨ 트립로그 Pick! 이번주 인기 숙소" subText="브이로그 감성 낭낭한 숙소 찾기"/>
-        {/* <Items width='30rem' height='15rem' text="🗂 여행 전 필수 준비항목" subText="트립로그가 챙겨주는 이번 여행!"/> */}
-        <Items width='30rem' height='15rem' text="🗂 여행 전 필수 준비항목" subText="트립로그가 챙겨주는 이번 여행!" />
-        <Items2 width='18rem' height='15rem' pickAreaName={pickAreaName}/>
+        <CalendarMain 
+          pickAreaName={pickAreaName} 
+          pickAreaImg={pickAreaImg} 
+          subText="온전히 내 취향대로, 나만의 감성대로" 
+          planDate={planDate}/>
+        <Items 
+          width='15rem'   
+          height='15rem' 
+          text="✨ 트립로그 Pick! 이번주 인기 숙소" 
+          subText="브이로그 감성 낭낭한 숙소 찾기"/>
+        <Items 
+          width='25rem' 
+          height='15rem' 
+          text="🗂 여행 전 필수 준비항목" 
+          subText="트립로그가 챙겨주는 이번 여행!" />
+        <Items2 
+          width='20rem' 
+          height='20rem'
+          pickAreaName={pickAreaName}/>
       <Footer/>
     </>
   );

@@ -9,7 +9,7 @@ import axios from 'axios';
 const CardItem = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  /* border-radius: .65em; */
+  /* border-radius: 10px; */
   border: none;
 `
 const CardImg = styled.img`
