@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import {Button } from 'react-bootstrap';
-import ReviewAdd from './ReviewAdd';
+import ReviewWrite from './ReviewWrite';
 
 export default function ReviewBox() {
-  const [reviewAdd, setReviewAdd] = useState(false);
-  const text = reviewAdd ? '리뷰닫기'  : '리뷰쓰기';
+  const [reviewWrite, setReviewWrite] = useState(false);
+  const text = reviewWrite ? '리뷰닫기'  : '리뷰쓰기';
 
   const onClick = () => {
-    setReviewAdd(!reviewAdd);
+    setReviewWrite(!reviewWrite);
   };
   
   return (
     <>
-    <Button variant="success" onClick={onClick} className="reviewAdd col-2 m-2" >{text}</Button>
-      {reviewAdd && (
-        <ReviewAdd reviewAdd={reviewAdd} setReviewAdd={setReviewAdd} />
+    <Button variant="success" onClick={onClick} className="reviewWrite col-2 m-2" >{text}</Button>
+      {reviewWrite && (
+        <ReviewWrite reviewAdd={reviewWrite} setReviewAdd={setReviewWrite} />
       )}
     </>
   )
