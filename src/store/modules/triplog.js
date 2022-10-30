@@ -6,6 +6,7 @@ const ADD_PLAN_ITEM = 'triplog/ADD_PLAN_ITEM';
 const SET_DATE_IDX = 'triplog/SET_DATE_IDX';
 
 
+
 // 로그인, 로그아웃 액션 생성 함수
 export function login(loginInfo) {
   return {
@@ -44,13 +45,13 @@ export function setDateIdx(idx) {
 // 초기 상태 설정
 const initState = {
   user: '',
-  isLogin: true, //로그인 끝내고 false로 바꾸기
+  isLogin: true, //로그인 끝내고 false로 바꾸기 -> 빼기
   planDate: {
     startDate: '',
     endDate: '',
     period: [],
   },
-  planItems: [[]],
+  planItems: [[]], //id, title, img는?
   planDateIdx: 0,
   list: [],
 };

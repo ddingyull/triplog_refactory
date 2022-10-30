@@ -23,10 +23,11 @@ export default function Users() {
   const {Navigate} = useNavigate();
 
   const register = () => {
-    axios.post('http://localhost:4000/users', {
+    axios.post('http://localhost:4000/register', {
+    type: 'local',
     nickname: nickname,
-    useremail: useremail,
-    userpw: userpw,
+    email: useremail,
+    password: userpw,
   })
   .then(response => {
     console.log('회원 등록 성공');

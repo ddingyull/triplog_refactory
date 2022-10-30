@@ -1,25 +1,36 @@
 import { useState, useEffect } from 'react';
-import { Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import MypageMain from './MyPageMain';
+import MyTrip from './MyTrip';
+import MyReview from './MyReview';
+import MyPick from './MyPick';
 
 export default function MyPage() {
-    const Navigate = useNavigate();
 
-    const isLogin = localStorage.getItem("token");
+  // useEffect (() => {
+  //   AuthRoute();
+  // }, []);
+  
+  // const AuthRoute = function() {
+  //   return (
+  //     isLogin ? 
+  //       <MyPage/> 
+  //       : alert('로그인이 필요한 페이지입니다'),
+  //         Navigate('/Login')
+  //       )
+  //         }
 
-    const AuthRoute = function() {
-        return (
-          isLogin ? 
-            <MyPage/> 
-            : alert('로그인이 필요한 페이지입니다'),
-              Navigate('/Login')
-            )
-              }
-
-    useEffect (() => {
-        AuthRoute();
-      }, []);
+  // const Navigate = useNavigate();
+  // const isLogin = localStorage.getItem("token");
 
     return (
-        <div>마이페이지 입니다.</div>
+      <>
+      <Routes>
+          <Route path='/' element={ <MypageMain /> } />
+          <Route path='/mytrip' element={<MyTrip />}/>
+          <Route path='/myreview' element={<MyReview />}/>
+          <Route path='/mypick' element={<MyPick />} />
+      </Routes>
+      </>
     );
 }

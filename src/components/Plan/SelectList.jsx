@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Modal, Stack } from 'react-bootstrap';
+import { Card, Modal, Stack, Image } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
-export default function SelectList({productItems, planItems, setPlanItems}) {
+import { useDispatch, useSelector } from 'react-redux';
+import { addPlanItems } from '../../store/modules/triplog';
+
+export default function SelectList({search, setSearch, productItems, planItems, setPlanItems}) {
   
-  // const [productItems, setProductItems] = useState([]); //받아온데이터 담기
-  // let [itemData] = productItems
-  // console.log(productItems);
+    // 리듀서의  useSelector, dispatch
+    let state = useSelector((state) => state.triplog); 
+    let dispatch = useDispatch();
+
+
+    const [clickItem, setClickItem] = useState({}); //받아온데이터 담기
+    // let [itemData] = productItems
+
 
   // 여행계획 컴포넌트에 아이템 추가 (근데 공통으로 됨..)
   const handleAddItem = (idx) => {
-      const currentItem = planItems[idx];
+  console.log(idx);
+      const currentItem = search[idx];
+      console.log(currentItem);
     //   const checkedIdx = planItems.findIndex(
     //         (item) => item.id === currentItem.id
     //     );
@@ -23,8 +33,20 @@ export default function SelectList({productItems, planItems, setPlanItems}) {
     //     } else {
     //     }
     // };
-    const newPlanitems = [...planItems, {...currentItem}];
-    setPlanItems(newPlanitems);
+    const newSearch = [...search, {...currentItem}];
+    setSearch(newSearch);
+
+    dispatch(
+      addPlanItems([
+        [{ 
+          idx: 'e.target.idx',
+          id: '' ,
+          title: '',
+          img: '',
+        }]
+      ]
+      )
+    );
     }
 
   if(productItems.length > 0) {

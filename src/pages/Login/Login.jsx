@@ -37,11 +37,12 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
       alert('아이디와 비밀번호를 입력해주세요');
       Navigate('/login');
     }
-    axios.post('http://localhost:4000/users', [{
+    axios.post('http://localhost:4000/users/register', {
+    type: 'local',
     identifier: useremail,
     password: userpw,
   }
-])
+)
   .then(response => {
     // true면 로그인처리, 아니면 경고창 보여주거나 로그인페이지보여주기
     console.log('로그인 성공');

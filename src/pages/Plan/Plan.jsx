@@ -187,7 +187,7 @@ export default function Plan({}) {
 
           <div>
             {
-              // search의 map
+              //search의 map
               search.map(function (a, i) {
                 return (
                   <>
