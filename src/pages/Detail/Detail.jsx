@@ -11,29 +11,12 @@ import ReviewBox from './contents/Review/ReviewBox';
 export default function Detail() {
   const navigator = useNavigate();
   const params = useParams();
-  const [tourData, setTourData] = useState([]);
-
   const contentId = params.contentId;
-  console.log(contentId);
 
-    /* 지도 */
-    useEffect(() => {
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
-        level: 11
-      };
-  
-      const map = new kakao.maps.Map(container, options);
-      map.setDraggable(false);
-      map.setZoomable(false);
+  const [tourData, setTourData] = useState([]);
+  const [reviewData, setReviewData] =useState([]);
 
-      new kakao.maps.Marker({
-        map:map,
-        position: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
-      })
-    })
-
+  /* 투어 API */
   useEffect (() => {
     axios.get(`https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&contentTypeId=12&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`)
     .then(response => {
@@ -41,6 +24,34 @@ export default function Detail() {
     })
   }, []);
 
+  /* 지도 */
+  useEffect(() => {
+    const container = document.getElementById('map');
+    const options = {
+      center: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
+      level: 11
+    };
+
+    const map = new kakao.maps.Map(container, options);
+    map.setDraggable(false);
+    map.setZoomable(false);
+
+    new kakao.maps.Marker({
+      map:map,
+      position: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
+    })
+  })
+
+  /* 리뷰 */
+  useEffect (() => {
+    axios
+      .get(`http://localhost:4000/review/${contentId}`)
+      .then((res) => {
+        let copy = [...res.data];
+        setReviewData(copy);
+      })
+      .catch(() => console.log("리뷰 실패"));
+  }, []);
 
   return (
     <>
@@ -113,7 +124,7 @@ export default function Detail() {
       <Row className="mt-5 mb-3 mx-5 d-flex">
           <Col className=" text-start">
           <span className='fw-bold fs-4'>리뷰
-            <span className="text-success mx-2">684</span>
+            <span className="text-success mx-2">{reviewData.length}</span>
           </span>
           </Col>
           <Col>
