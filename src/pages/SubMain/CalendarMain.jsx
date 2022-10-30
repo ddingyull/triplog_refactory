@@ -16,12 +16,12 @@ export default function CalendarMain({ text, planDate, subText, plandate, pickAr
       <Container className="position-relative d-flex justify-content-center">
       <Row className='col-lg-10 col-md-12'>
         <Col>
-          <img className="d-block m-auto pt-5" alt="메인이미지" src={pickAreaImg} style={{width:"80%"}}/>
-          <Col xs={6} className='position-absolute top-0 start-0' style={{marginTop:'18vh', marginLeft:'20vw'}}>
+          <img className="d-block m-auto pt-5" alt="메인이미지" src={pickAreaImg} style={{width:"85%"}}/>
+          <Col xs={6} className='position-absolute top-0 start-0' style={{marginTop:'18vh', marginLeft:'25vw'}}>
             <Title className="fw-bold text-dark fs-2 justify-content-start">Always {pickAreaName} With TripLog</Title>
             <p className='m-0 fs-6 text-dark text-center position-absolute top-10 start-0'>{subText}</p>
           </Col>
-          <Col xs={6} className='position-absolute top-0 start-0 d-block fs-6' style={{marginTop:'27vh', marginLeft:'19.5vw'}}>
+          <Col xs={6} className='position-absolute top-0 start-0 d-block fs-6' style={{marginTop:'29vh', marginLeft:'24.5vw'}}>
             <CalendarModule 
               planDate={planDate}
               />

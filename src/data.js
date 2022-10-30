@@ -19,7 +19,7 @@ const seoulStay = [
     readcount: 69209,
     sigungucode: "15",
     tel: "02-571-8100",
-    title: "The-K호텔서울 (더케이호텔서울)",
+    title: "The-K호텔서울",
     zipcode: "06769"
     },
   {
@@ -129,7 +129,7 @@ const seoulStay = [
           readcount: 49120,
           sigungucode: "15",
           tel: "02-6282-6262",
-          title: "JW 메리어트 호텔 서울(JW Marriott Hotel Seoul)",
+          title: "JW 메리어트 호텔",
           zipcode: "06546"
           },
           {
@@ -173,7 +173,7 @@ const seoulStay = [
             readcount: 0,
             sigungucode: "20",
             tel: "",
-            title: "페어몬트 앰배서더 서울 (Fairmont Ambassador Seoul)",
+            title: "페어몬트 앰배서더",
             zipcode: "07335"
             },        
 ]
@@ -1169,11 +1169,11 @@ const jejuTour = [
 
 ]
 
-const seoul = ['서울', '/images/submain/backgroundImg.png', seoulStay, seoulTour ]
-const busan = ['부산', '/images/jeonju/tour/전주동물원.jpeg', busanStay, busanTour ]
-const gangwon = ['강원', '/images/gangwon/tour/남대천 짚라인.png', gangwonStay, gangwonTour ]
-const jeonju = ['전주', '/images/jeonju/tour/전주성당.jpeg', jeonjuFood, jeonjuTour ]
-const jeju = ['제주', '/images/jeju/tour/유수암마을_귤.png', jejuStay, jejuTour ]
+const seoul = ['서울', '/images/submain/seoul.jpeg', seoulStay, seoulTour ]
+const busan = ['부산', '/images/submain/busan.png', busanStay, busanTour ]
+const gangwon = ['강원', '/images/gangwon/tour/등명해변패러글라이딩.jpg', gangwonStay, gangwonTour ]
+const jeonju = ['전주', '/images/submain/스크린샷 2022-10-30 오전 5.27.18.png', jeonjuFood, jeonjuTour ]
+const jeju = ['제주', '/images/submain/jeju.png', jejuStay, jejuTour ]
 
 let data = [seoul, busan, gangwon, jeonju, jeju]
 

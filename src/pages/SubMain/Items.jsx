@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Badge, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import CardItemLink from '../../components/CardItemLink'
@@ -34,7 +34,7 @@ export default function Items ({ text, subText, srcImg, width, height }) {
         h = i;
     } } }         
     return(
-      <Container className="p-3 mb-4 mt-5">
+      <Container className="p-3 mb-4 mt-5 position-relative">
         <Row className='d-block justify-content-start'>
           <Col className='m-3'>
             <Title className="justify-content-start fw-bold">{text}</Title>
@@ -46,9 +46,16 @@ export default function Items ({ text, subText, srcImg, width, height }) {
         <Row >
         <TableContainer>
         { datas.length > 0 ?
-            datas[h][2].map((a,i) => {          
+            datas[h][2].map((a,i) => { 
+              console.log(i);         
               return (
-                <CardItemLink width={width} height={height} src={datas[h][2][i].firstimage}/>
+                <>
+                <CardItemLink 
+                  width={width} 
+                  height={height} 
+                  src={datas[h][2][i].firstimage}
+                  title={datas[h][2][i].title}/>
+                </>
               )
             }) : <div>잠시만요!🏖</div> }
         </TableContainer>

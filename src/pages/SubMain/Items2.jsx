@@ -14,15 +14,6 @@ export default function Items2 ({ text, subText, srcImg, width, height, pickArea
   const params = useParams();
   const areaCode = params.areaCode;
 
-  // const [tourData, setTourData] = useState([]);
-
-  // useEffect (() => {
-  //   axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`)
-  //   .then((response) => {
-  //     setTourData(response.data.response.body.items.item); 
-  //   })
-  // }, []);
-
   const [datas, setData] = useState(data);  
   // let seoulStay = data[0][1];
   // let seoulTour = data[0][2];
@@ -48,7 +39,11 @@ export default function Items2 ({ text, subText, srcImg, width, height, pickArea
         { datas.length > 0 ?
             datas[h][3].map((a,i) => {          
               return (
-                <CardItemLink width={width} height={height} src={datas[h][3][i].firstimage}/>
+                <CardItemLink 
+                  width={width} 
+                  height={height} 
+                  src={datas[h][3][i].firstimage}
+                  title={datas[h][3][i].title}/>
               )
             }) : <div>잠시만요!🏖</div> }
         </TableContainer>
