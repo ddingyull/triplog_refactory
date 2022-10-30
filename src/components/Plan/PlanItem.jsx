@@ -14,7 +14,6 @@ const PlanItem = ({onClick, productItems, planItems, setPlanItems}) => {
   let state = useSelector((state) => state.triplog) 
   let dispatch = useDispatch()
   const period = (state.planDate.period)
-  console.log(period);
 
   const [productItem, setProductItem] = useState([]); //받아온데이터 담기
   let [itemData] = productItems
@@ -28,13 +27,12 @@ const PlanItem = ({onClick, productItems, planItems, setPlanItems}) => {
     <img src={firstimage} style={{width:'2.5rem', height:'2.5rem', borderRadius:'50%'}}></img>
   
     <Stack className='col-9 d-flex flex-column my-auto'>
-      {/* <Title className='m-1 fs-5'>{title}</Title> */}
-      <Title className='m-1 fs-5'>{title}</Title>
+      <Title className='m-1 fs-6'>{title}</Title>
       <Title className='m-1' style={{fontSize:'12px'}}>{addr1}</Title>
     </Stack>
     <Stack>
     <button 
-      className='btn btn-light'
+      className='btn'
       onClick={() => {
         let copy = [...planItems]
         // 선택한 데이터를 삭제

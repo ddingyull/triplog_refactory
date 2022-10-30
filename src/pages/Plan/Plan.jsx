@@ -6,18 +6,27 @@ import PlanList from '../../components/Plan/PlanList';
 import SelectList from '../../components/Plan/SelectList';
 import styled from 'styled-components';
 
-import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal, Stack } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Welcome from './Welcome';
 import KakaoMap from './KakaoMap';
+import { addPlanItems } from '../../store/modules/triplog';
+import { useDispatch, useSelector } from 'react-redux';
+
 const {kakao} = window;
 
 
-export default function Plan( {}) {
+export default function Plan({}) {
   const params = useParams();
   const areaCode = params.areaCode;
+
+  const oldIdx = useRef();
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.triplog);
+
 
   // data 받아오기
   useEffect (() => {
@@ -101,7 +110,9 @@ export default function Plan( {}) {
   const [productItems, setProductItems] = useState([]); //받아온데이터 담기
   const [planItems, setPlanItems] = useState([]);
   const [isPlanOpen, setIsPlanOpen] = useState(false);
-  let [itemData] = [productItems] 
+  let [itemData] = [productItems]; 
+
+  
 
   const saveToLocalStorage = () => {
       localStorage.setItem('planState', JSON.stringify(planItems));
@@ -143,17 +154,26 @@ export default function Plan( {}) {
         </Row>
 
         {/* 여행지 검색 기능 */}
-        <Row className='m-auto py-4'>
-        <form action="">
-            <InputText type="text" placeholder='입력' ref={inputRef}/>
-            <button type='button' onClick={() => {
+        <Row className='m-auto py-4 d-flex text-center'>
+          <form>
+            <div className='text-center fs-4 m-4'>TripLog</div>
+            <div className='text-center fs-6 m-4'>추가하고 싶은 여행지를 검색하세요</div>
+            <input
+              type="text" 
+              placeholder='원하는 여행지 검색' 
+              ref={inputRef}
+              className='m-1'
+              style={{width:'200px', height:'40px', boxSizing:'border-box'}}/>
+            <Button
+              style={{backgroundColor:'#036635'}}
+              className='btn btn-success m-1'
+              onClick={() => {
               // input에 입력한 값 useRef
               const text = (inputRef.current.value)
-              console.log(text)
               // 데이터 요청
               axios.get(`https://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&areaCode=39&keyword=${text}`)
               .then((결과) => {
-                console.log(search)
+                // console.log(search);
                 // 재 검색 마다 search 값을 삭제 시켜줌
                 search.splice(0, search.length)
                 let copy = [...search, ...결과.data.response.body.items.item];
@@ -162,8 +182,8 @@ export default function Plan( {}) {
               .catch(() => {
                 console.log('실패')
               })
-            }}>검색</button>
-          </form>
+            }}>검색</Button>
+            </form>
 
           <div>
             {
@@ -171,15 +191,43 @@ export default function Plan( {}) {
               search.map(function (a, i) {
                 return (
                   <>
-                  {/* 검색결과나오는 UI컴포넌트 추가필요, 데이터 props받아야하나? */}
-                    <p onClick={() => {
-                      let copy = [...list, {
-                          title: a.title,
-                          mapx: parseFloat(a.mapx),
-                          mapy: parseFloat(a.mapy) 
-                        }];
-                      setList(copy);
-                    }} key={i}>{a.title}</p>
+              <SelectBox
+              className="d-block m-auto w-75 p-3"
+              // style={{border:'none'}}
+              data-productid={a.contentid} 
+              onClick={() => {                      
+                let copy = [...list, {
+                    title: a.title,
+                    mapx: parseFloat(a.mapx),
+                    mapy: parseFloat(a.mapy) 
+                  }];                                              
+                setList(copy);
+                dispatch(addPlanItems({copy, idx: state.planDateIdx}));
+              }} 
+              key={i}>
+
+            <div className='d-flex w-100 text-start'>
+            <Stack>
+            <img src={a.firstimage} style={{width:'2rem', height:'2rem', borderRadius:'50%'}}></img>
+            </Stack>
+
+            <Stack className='d-flex flex-column'>
+              <Title className='m-1 fs-6'>{a.title}</Title>
+              <Title className='m-1' style={{fontSize:'12px'}}>{a.addr1}</Title>
+            </Stack>
+
+            <Stack>
+            <button 
+              className='btn'
+              onClick={() => {
+                let copy = [...list]
+                // 선택한 데이터를 삭제
+                copy.splice(i, 1)
+                setPlanItems(copy)
+                }}>x</button>
+            </Stack>
+            </div>
+            </SelectBox>             
                   </>
                 )
               })
@@ -188,13 +236,14 @@ export default function Plan( {}) {
         </Row>
 
         {/* 여행지 리스트 보여주기 */}
-          
           <Row className="m-3 overflow-scroll" style={{height:'20rem'}} gap={3}>
           { productItems.length > 0 ?
             <SelectList 
               productItems={productItems} 
               setPlanItems={setPlanItems}
               planItems={planItems}
+              search={search}
+              setSearch={setSearch}
             />
               : <div>잠시만요!🏖</div> }
           </Row> 
@@ -209,17 +258,18 @@ export default function Plan( {}) {
         </Button>
 
         <Button 
-          variant="success" 
+          style={{backgroundColor:'#036635'}}
+          // variant="success" 
           onClick={handleClose}
           >
-            선택 완료
+          선택 완료
         </Button>
     
       </Modal.Footer>
     </Modal>
 
     {/* 여행계획 짜는 컴포넌트 */}
-    <Container className='d-flex'>
+    <Container className='d-flex flex-wrap justify-content-center'>
       <PlanList 
       productItems={productItems} 
       setPlanItems={setPlanItems}
@@ -239,7 +289,13 @@ const PlanCard = styled.div`
 const Title = styled.p`
   font: 2rem/1 'Inter'
 `
-const InputText = styled.input`
-  width: 200px;
-  height: 50px;
+
+const SelectBox = styled.div`
+  display: flex;
+
+  &:hover{
+    border-radius: 10px;
+    background-color: rgba(3, 102, 53, .3);
+    cursor: pointer;
+  }
 `
