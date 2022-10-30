@@ -11,7 +11,7 @@ const navigator = useNavigate();
   return (
     <>
       <Nav/>
-      <Image src="/images/mainBeach.jpg" fluid/>
+      {/* <Image src="/images/mainBeach.jpg" fluid/> */}
       
       <Container>
         <h1 className='fw-bold lh-base mt-5 mb-5'>Trip님,<br></br>환영합니다!</h1>
