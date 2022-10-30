@@ -1,40 +1,38 @@
 import { useState, useEffect } from 'react';
 import {Container, Row, Col, Card , Image, } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
-import '../pages/Lists/contents/Paging.css';
+import '../styles/Paging.css';
 import axios from 'axios';
 import UserProfile from './UserProfile';
-
+import { useParams } from 'react-router';
 
 
 export default function Review() {
+  const params = useParams();
+  const contentId = params.contentId;
 
-  const [tourData, setTourData] = useState([]);
-  
+  const [reviewData, setReviewData] = useState([]);
+
   /* pagingnation */
   // 첫 번째 페이지
   const [page, setPage] = useState(1);
   // 한 페이지에 보여줄 총 갯수
   const [pagePost] = useState(12);
   
-  useEffect (() => {
-    axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=46&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=32&areaCode=32&sigunguCode=1`)
-    .then(response => {
-      setTourData(response.data.response.body.items.item);
-    })
+  const callApi = async () => {
+    axios
+      .get(`http://localhost:4000/review/${contentId}`)
+      .then((res) => {
+        let copy = [...res.data];
+        setReviewData(copy);
+        console.log(reviewData);
+      })
+      .catch(() => console.log("실패함"));
+  };
+
+  useEffect(() => {
+    callApi();
   }, []);
-
-
-  
-  // 데이터를 요청하는 useEffect
-  // useEffect(() => {
-  //   const reqPost = async () => {
-  //     const res = await axios.get('https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=58&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=38&areaCode=39')
-  //     // setItem(res.data.response.body.items.item)
-
-  //   };
-  //   reqPost();
-  // }, [])
 
   // 페이지 이동 이벤트함수
   const handlePageChange = (page) => {
@@ -46,30 +44,30 @@ export default function Review() {
     <>
     <Container>
       <Row xs={1} md={1} lg={2} className="g-4 mx-3 mb-4">
-        {tourData.length > 0 ? 
-          tourData.slice(
+        {reviewData.length > 0 ? 
+          reviewData.slice(
             pagePost*(page-1),
             pagePost*(page-1)+pagePost
           )
-          .map(function (tourData, i){
+          .map(function (a, i){
             return (
               <Col>
                 <Card>
                   <UserProfile/>
                   <Card.Body>
                     <Card.Text>
-                        {tourData.addr1}
+                        {reviewData[i].review[0].content}
                         </Card.Text>
                       <Col>
-                        <Image src={tourData.firstimage} style={{width:"100px" , height:"100px"}} className="mt-3 mx-1"/>
-                        <Image src={tourData.firstimage2} style={{width:"100px" , height:"100px" }} className="mt-3 mx-1"/>
+                        <Image src="/images/imgSample.jpg" style={{width:"100px" , height:"100px"}} className="mt-3 mx-1"/>
                       </Col>
+                      <p className='text-end mx-4'>리뷰 작성일: {reviewData[i].dateFull.slice(0,10)}</p>
                   </Card.Body>
                 </Card>
               </Col>
             )
           })
-          : null
+          : <p>등록된 리뷰가 없습니다.</p>
         }
       </Row>
 
@@ -81,7 +79,7 @@ export default function Review() {
           // 페이지당 항목 수
           itemsCountPerPage={12}
           // 페이지 총 아이템수
-          totalItemsCount={tourData.length}
+          totalItemsCount={reviewData.length}
           // 페이지 범위
           pageRangeDisplayed={5}
           // 이전 페이지 탐색 버튼의 텍스트
