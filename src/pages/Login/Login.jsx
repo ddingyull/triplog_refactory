@@ -25,7 +25,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
   const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
-  const {Navigate} = useNavigate();
+  const Navigate = useNavigate();
 
   // 로그인 검증 파트
   const checkUser = () => {
@@ -53,7 +53,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
 // 중복로그인 방지 : 로그인된 상태에서 로그인페이지 접근 시 메인페이지로 이동
 useEffect(() => {
   if(localStorage.getItem('token')) {
-    Navigate('/');
+    // Navigate('/');
   }
 }, [])
 

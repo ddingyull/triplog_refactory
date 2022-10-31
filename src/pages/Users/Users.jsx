@@ -54,6 +54,7 @@ export default function Users() {
 
   // let userID = 1;
   const register = () => {
+    console.log(nickname,useremail,userpw );
     axios.post('http://localhost:4000/user/register', {
         type:'local',
         nickName: nickname,
@@ -65,9 +66,10 @@ export default function Users() {
   })
   .then(response => {
     console.log('회원 등록 성공');
-    console.log('유저 정보', response.data.user);
-    console.log('user token', response.data.jwt);
-    localStorage.setItem('token', response.data.jwt);
+    console.log(response.data);
+    // console.log('유저 정보', response.data.user);
+    // console.log('user token', response.data.jwt);
+    // localStorage.setItem('token', response.data.jwt);
     Navigate('/')
   })
   .catch(error => {
