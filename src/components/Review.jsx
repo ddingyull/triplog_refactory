@@ -3,7 +3,7 @@ import {Container, Row, Col, Card , Image, Button, Modal, Form } from 'react-boo
 import Pagination from 'react-js-pagination';
 import '../styles/Paging.css';
 import axios from 'axios';
-import UserProfile from './UserProfile';
+// import UserProfile from './UserProfile';
 import { useParams } from 'react-router';
 import { FaStar } from 'react-icons/fa';
 import styled from "styled-components";
@@ -43,6 +43,7 @@ export default function Review() {
     axios
       .get(`http://localhost:4000/review/${contentId}`)
       .then((res) => {
+        console.log('review의 리뷰성공')
         let copy = [...res.data];
         setReviewData(copy);
       })
@@ -51,7 +52,7 @@ export default function Review() {
 
   useEffect(() => {
     callApi();
-  }, [reviewData]);
+  }, []);
 
   return (
     <>
@@ -88,7 +89,7 @@ export default function Review() {
                 axios.post(`http://localhost:4000/review/emend/${emendId}`, [{emendId, emendContent}])
               .then((결과) => {
                 console.log(결과)
-                console.log('성공')
+                console.log('리뷰 수정 성공')
                 setShow(false);
               })
               .catch(() => {
@@ -107,39 +108,48 @@ export default function Review() {
             return (
               <Col>
                 <Card>                  
-                  <UserProfile/>
+                  <Row className="mt-3 px-2">
+                    <div className="d-flex align-items-center justify-content-start">
+                      <Col className="col-1 mx-4">
+                        <Image src="/images/imgSample.jpg" roundedCircle style={{width:"50px"}} />
+                      </Col>
+                      <Col className="flex-fill"> 
+                        <p className="text-start fw-bold mt-2 mb-0">{a.nickName}</p>
+                      </Col>
+                    </div>
+                  </Row>
                   {/* 별점 */}
                   <div className="d-flex align-items-center justify-content-start">
                   <RaingStar className="text-center mx-2 col-6">
-                  {a.review[0].star === 5? 
+                  {a.star === 5? 
                     <>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
-                    </> : a.review[0].star === 4? 
+                    </> : a.star === 4? 
                     <>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="grayStar"/>
-                    </> : a.review[0].star === 3? 
+                    </> : a.star === 3? 
                     <>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="grayStar"/>
                       <FaStar size="20" className="grayStar"/>
                       <FaStar size="20" className="grayStar"/>
-                    </> : a.review[0].star === 2? 
+                    </> : a.star === 2? 
                                         <>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="grayStar"/>
                       <FaStar size="20" className="grayStar"/>
                       <FaStar size="20" className="grayStar"/>
-                    </> : a.review[0].star === 1? 
+                    </> : a.star === 1? 
                     <>
                       <FaStar size="20" className="yellowStar"/>
                       <FaStar size="20" className="grayStar"/>
@@ -161,7 +171,7 @@ export default function Review() {
                   {/* 리뷰 내용 */}
                   <Card.Body>
                     <Card.Text>
-                        {a.review[0].content}
+                        {a.content}
                         </Card.Text>
                       <Col>
                         <Image src="/images/imgSample.jpg" style={{width:"100px" , height:"100px"}} className="mt-3 mx-1"/>
@@ -175,7 +185,7 @@ export default function Review() {
                             axios.get(`http://localhost:4000/review/emend/${a._id}`)
                             .then((res) => {
                               console.log('성공')
-                              setEmendContent(res.data.review[0].content)
+                              setEmendContent(res.data.content)
                               setEmendId(res.data._id)
                             })
                             .catch(() => {

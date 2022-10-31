@@ -33,11 +33,10 @@ export default function Detail() {
     axios
       .get(`http://localhost:4000/review/${contentId}`)
       .then((res) => {
-        let copy = [...res.data];
-        setReviewData(copy);
+        setReviewData(res.data);
       })
       .catch(() => console.log("리뷰 실패"));
-  }, [reviewData]);
+  }, []);
 
   useEffect(() => {
     axios
@@ -52,16 +51,16 @@ export default function Detail() {
   }, [like]);
 
   // 유저 데이터 가져오기
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/user/getlikes")
-      .then((res) => {
-        setLike(res.data[0].likes);
-      })
-      .catch(() => {
-        console.log("실패");
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/user/getlikes")
+  //     .then((res) => {
+  //       setLike(res.data[0].likes);
+  //     })
+  //     .catch(() => {
+  //       console.log("실패");
+  //     });
+  // }, []);
 
   const handleToggle = (b) => () => {
     console.log(b);
