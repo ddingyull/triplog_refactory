@@ -71,8 +71,8 @@ const KakaoRedirectHandler = () => {
         );
 
         if (registerResponse.status === 200) {
-          // dispatch(login(userLoginInfo));
-          // navigate('/');
+          dispatch(login(userLoginInfo));
+          navigate('/');
           console.log('!!!!');
         } else {
           alert('회원 등록 이상');
