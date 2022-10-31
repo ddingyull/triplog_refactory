@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Container, Row, Col, Form, Button} from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert} from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa';
 
 
@@ -10,6 +10,7 @@ const ARRAY = [0, 1, 2, 3, 4];
 
 export default function ReviewWrite() {
   const params = useParams();
+  const navigate = useNavigate();
 
   const contentId = params.contentId;
   const contentRef = useRef();
@@ -88,10 +89,12 @@ export default function ReviewWrite() {
                       .then((res) => {
                         console.log('성공');
                         contentRef.current.value='';
-                        window.location.reload(); 
+                        alert("댓글 등록을 성공하였습니다. 🙌");
+                        navigate(`/detail/${contentId}`);
                       })
                       .catch(() => {
                         console.log("실패");
+                        alert("댓글 등록을 실패하였습니다. 다시 시도해주세요.");
                       });
                   }}
                     >등록</Button>
