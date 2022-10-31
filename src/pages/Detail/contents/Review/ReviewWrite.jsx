@@ -85,7 +85,7 @@ export default function ReviewWrite() {
                   onClick={() => {
                     const content = contentRef.current.value
                     axios
-                      .post("http://localhost:4000/review/write", [{content, contentId, star }])
+                      .post("http://localhost:4000/review/write", [{ content, contentId, star }])
                       .then((res) => {
                         console.log('성공');
                         contentRef.current.value='';
