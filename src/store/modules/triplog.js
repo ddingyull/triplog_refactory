@@ -3,6 +3,8 @@ const LOGIN = 'triplogr/LOGIN';
 const LOGOUT = 'triplogr/LOGOUT';
 const ADD_PLAN_DATE = 'triplog/ADD_PLAN_DATE';
 const ADD_PLAN_ITEM = 'triplog/ADD_PLAN_ITEM';
+const SET_DATE_IDX = 'triplog/SET_DATE_IDX';
+
 
 
 // 로그인, 로그아웃 액션 생성 함수
@@ -33,6 +35,13 @@ export function addPlanItems(planItems) {
   };
 }
 
+export function setDateIdx(idx) {
+  return {
+    type: SET_DATE_IDX,
+    payload: idx,
+  };
+}
+
 // 초기 상태 설정
 const initState = {
   user: '',
@@ -42,7 +51,9 @@ const initState = {
     endDate: '',
     period: [],
   },
-  planItems: [[{ id: '', title: '', img: '' }]],
+  planItems: [[]], //id, title, img는?
+  planDateIdx: 0,
+  list: [],
 };
 
 // 리듀서
@@ -67,11 +78,16 @@ export default function triplog(state = initState, action) {
         ...state,
         planDate: action.payload,
       };
-      case ADD_PLAN_ITEM:
+    case ADD_PLAN_ITEM:
+      state.planItems[action.payload.idx] = action.payload.copy;
       return {
         ...state,
-        planItems: action.payload,
       };
+    case SET_DATE_IDX:
+      return {
+        ...state,
+        planDateIdx: action.payload,
+      }
     default:
       return state;
   }
