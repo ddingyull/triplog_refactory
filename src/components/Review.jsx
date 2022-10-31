@@ -39,7 +39,7 @@ export default function Review() {
   };
 
 
-  const callApi = async () => {
+  function callApi() {
     axios
       .get(`http://localhost:4000/review/${contentId}`)
       .then((res) => {
