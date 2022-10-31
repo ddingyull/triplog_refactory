@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Container, Card, Badge } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +9,7 @@ import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
+import { login } from '../../store/modules/triplog';
 
 const ERROR_MSG = {
   required: '필수 정보입니다.',
@@ -28,27 +30,25 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
   const Navigate = useNavigate();
 
   // 로그인 검증 파트
-  const checkUser = () => {
-    let nicknameValue
-    if(useremail === "" || userpw === "") {
-      alert('아이디와 비밀번호를 입력해주세요');
-      return;
-    }
-    axios.post('http://localhost:4000/user/login', {
-    identifier: useremail,
-    password: userpw,
-  })
-  .then(response => {
-    console.log('로그인 성공');
-    console.log('user 토큰', response.data.jwt);
-    localStorage.setItem('token', response.data.jwt);
-    nicknameValue = nickname;
-    Navigate('/')
-  })
-  .catch(error => {
-    console.log('error', error.response);
-  });
-  }
+  // const checkUser = () => {
+  //   if(useremail === "" || userpw === "") {
+  //     alert('아이디와 비밀번호를 입력해주세요');
+  //     return;
+  //   }
+  //   axios.post('http://localhost:4000/user/login', {
+  //     email: useremail,
+  //     password: userpw,
+  // })
+  // .then(response => {
+  //   console.log('로그인 성공');
+  //   console.log('user 토큰', response.data.jwt);
+  //   localStorage.setItem('token', response.data.jwt);
+  //   Navigate('/')
+  // })
+  // .catch(error => {
+  //   console.log('error', error.response);
+  // });
+  // }
 
 // 중복로그인 방지 : 로그인된 상태에서 로그인페이지 접근 시 메인페이지로 이동
 useEffect(() => {
@@ -81,6 +81,55 @@ const handlePw = (e) => {
   }
 }
 
+// 테츠님 코드
+const [loginCondition, setLoginCondition] = useState({
+  condition: false,
+  msg: '회원 정보를 정확하게 입력하세요!',
+});
+const [openDialog, setOpenDialog] = useState(false);
+
+const dispatch = useDispatch();
+const navigate = useNavigate();
+
+async function loginUser() {
+  setOpenDialog(false);
+
+  const loginInfo = {
+    email: useremail,
+    password: userpw,
+  };
+
+  if (
+    useremail !== '' &&
+    userpw !== ''
+  ) {
+    const response = await fetch('http://localhost:4000/user/login ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginInfo),
+    });
+
+    if (response.status === 200) {
+      const result = await response.json();
+      console.log(result);
+      if (result.result) {
+        dispatch(login(result));
+      }
+
+      setLoginCondition({
+        condition: result.result,
+        msg: result.msg,
+      });
+
+      setOpenDialog(true);
+    } else {
+      throw new Error('로그인 실패');
+    }
+  } else {
+  }
+}
   return(
     <>
       <Nav/>
@@ -122,8 +171,10 @@ const handlePw = (e) => {
           validText={!UserPwValid && userpw.length > 0 ?
             (errorMsg.invalidUserPW):null}      
         />
+        <div>result : </div>
         <Btn 
-          onClick={() => {(checkUser())}}
+          // onClick={() => {(checkUser())}}
+          onClick={() => {(loginUser())}}
           text='로그인' 
           textColor='#fff' 
           backgroundColor='#333'

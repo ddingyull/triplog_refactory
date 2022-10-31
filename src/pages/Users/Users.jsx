@@ -59,10 +59,7 @@ export default function Users() {
         type:'local',
         nickName: nickname,
         email: useremail,
-        password: userpw,
-        // userID: userID++,
-        // user_img: userImg,
-        // regDate: new Date(),    
+        password: userpw,    
   })
   .then(response => {
     console.log('회원 등록 성공');
