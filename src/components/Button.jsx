@@ -21,11 +21,12 @@ const BtnModule = styled.a`
   }
   `
 
-export default function Btn ({text, onClick, textColor, backgroundColor, hoverColor, hoverBackgroundColor}) {
+export default function Btn ({href, text, onClick, textColor, backgroundColor, hoverColor, hoverBackgroundColor}) {
   
 
   return(
       <BtnModule 
+        href={href}
         type="submit"
         onClick={onClick}
         textColor={textColor}

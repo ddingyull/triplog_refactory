@@ -31,6 +31,7 @@ function App() {
         <Route path="/lists/:areaCode" element={<Lists />} />
         <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
+        {/* <Route path="/MyPage1" element={<MyPage1 />} /> */}
         <Route path="/Budget" element={<Budget />} />
         <Route path="/CheckList" element={<CheckList />} />
         <Route path="/login" element={<Login />} />

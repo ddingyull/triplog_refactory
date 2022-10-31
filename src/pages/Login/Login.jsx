@@ -10,6 +10,8 @@ import Footer from '../../components/Footer'
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
 import { login } from '../../store/modules/triplog';
+import Logout from './Logout'
+import { useDispatch } from 'react-redux';
 
 const ERROR_MSG = {
   required: '필수 정보입니다.',
@@ -49,6 +51,32 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
   //   console.log('error', error.response);
   // });
   // }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // 로그인 검증 파트
+  const checkUser = () => {
+    if(useremail === "" || userpw === "") {
+      alert('아이디와 비밀번호를 입력해주세요');
+      Navigate('/login');
+    }
+    axios.post('http://localhost:4000/users/register', {
+    type: 'local',
+    identifier: useremail,
+    password: userpw,
+  }
+)
+  .then(response => {
+    // true면 로그인처리, 아니면 경고창 보여주거나 로그인페이지보여주기
+    console.log('로그인 성공');
+    console.log('user 토큰', response.data.jwt);
+    localStorage.setItem('token', response.data.jwt);
+    navigate('/')
+  })
+  .catch(error => {
+    console.log('로그인 실패', error.response);
+  });
+  }
 
 // 중복로그인 방지 : 로그인된 상태에서 로그인페이지 접근 시 메인페이지로 이동
 useEffect(() => {
@@ -179,9 +207,11 @@ async function loginUser() {
           hoverColor='#fff'
           hoverBackgroundColor='#555'>
         </Btn>
-        {/* 카카오 로그인 */}
-        <a href={KAKAO_AUTH_URL}>
+        <a 
+          href={KAKAO_AUTH_URL}
+          style={{width:'100%', textDecoration:'none'}}>
         <Btn 
+          // href='KAKAO_CLIENT_ID'
           // onClick={() => {(checkUser())}}
           text='카카오로그인' 
           textColor='#333' 
@@ -190,6 +220,9 @@ async function loginUser() {
           hoverBackgroundColor='#d0ad00'>
         </Btn>
         </a>          
+        {/* <a href={KAKAO_AUTH_URL}>카카오톡로그인</a> */}
+        <Logout/>
+        
       </Card>
           </Container>
       <Footer/>

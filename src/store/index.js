@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import users from './modules/users';
+
+import triplog from './modules/triplog';
 
 export default combineReducers({
-  users,
+    triplog,
 });

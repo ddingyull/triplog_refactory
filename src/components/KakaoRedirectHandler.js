@@ -1,9 +1,10 @@
+
 import {useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { login } from '../store/modules/users';
 
-const KakaoRedirectHandler = () => {
+export default function KakaoRedirectHandler() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
@@ -73,7 +74,6 @@ const KakaoRedirectHandler = () => {
         if (registerResponse.status === 200) {
           dispatch(login(userLoginInfo));
           navigate('/');
-          console.log('!!!!');
         } else {
           alert('회원 등록 이상');
           navigate('/login');
@@ -89,6 +89,8 @@ const KakaoRedirectHandler = () => {
     }
     loginFetch();
   }, [])
+  // return (
+  //   // <div>KakaoRedirectHandler</div>
+  // )
 }
 
-export default KakaoRedirectHandler;
