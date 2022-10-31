@@ -27,7 +27,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
   const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
-  const Navigate = useNavigate();
+  const [ success, setSuccess ] = useState([])
 
   // 로그인 검증 파트
   // const checkUser = () => {
@@ -53,7 +53,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
 // 중복로그인 방지 : 로그인된 상태에서 로그인페이지 접근 시 메인페이지로 이동
 useEffect(() => {
   if(localStorage.getItem('token')) {
-    // Navigate('/');
+    // navigate('/');
   }
 }, [])
 
@@ -94,6 +94,8 @@ const navigate = useNavigate();
 async function loginUser() {
   setOpenDialog(false);
 
+  // {success.result === false ? <p>정보가 잘못되었습니다</p> : <div>로그인성공</div>}
+
   const loginInfo = {
     email: useremail,
     password: userpw,
@@ -116,14 +118,11 @@ async function loginUser() {
       console.log(result);
       if (result.result) {
         dispatch(login(result));
+        navigate('/')
+      } else {
+        alert('해당 정보를 찾을 수 없습니다')
+        navigate('/login')
       }
-
-      setLoginCondition({
-        condition: result.result,
-        msg: result.msg,
-      });
-
-      setOpenDialog(true);
     } else {
       throw new Error('로그인 실패');
     }
@@ -171,7 +170,6 @@ async function loginUser() {
           validText={!UserPwValid && userpw.length > 0 ?
             (errorMsg.invalidUserPW):null}      
         />
-        <div>result : </div>
         <Btn 
           // onClick={() => {(checkUser())}}
           onClick={() => {(loginUser())}}
