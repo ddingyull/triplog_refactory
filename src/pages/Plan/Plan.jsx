@@ -40,7 +40,7 @@ export default function Plan({}) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-    // * 지도
+  // * 지도
   // 검색한 여행지 저장을 위한 State
   const [search, setSearch] = useState([]);
 
@@ -68,44 +68,46 @@ export default function Plan({}) {
     map.setZoomable(false);
 
     // 선택한 list에 대한 forEach
-    list.forEach((el, num, arr) => {
-      // 지도에 생성할 마커
-      new kakao.maps.Marker({
-        //마커가 표시 될 지도
-        map: map,
-        //마커가 표시 될 위치
-        position: new kakao.maps.LatLng(el.mapy, el.mapx),
-      });
-      // path 를 주기 위해서 리스트에 저장 된 공간의 좌표를 pathArr 라는 배열에 푸쉬
-      let pathArr = [];
-      for (let i = 0; i < list.length; i++) {
-        pathArr.push(new kakao.maps.LatLng(arr[i].mapy, arr[i].mapx));
-      }
-      // 선을 긋기 위한 메소드
-      const polyline = new kakao.maps.Polyline({
-        // 지도생성
-        map: map,
-        // path의 배열
-        path: pathArr,
-        // 선을 굵기
-        strokeWeight: 3,
-        // 선의 색
-        strokeColor: '#34A853',
-        // 선의 불투명도
-        strokeOpacity: 1,
-        // 선의 스타일
-        strokeStyle: 'solid',
-      });
+    if (state.planItems[state.planDateIdx]) {
+      state.planItems[state.planDateIdx].forEach((el, num, arr) => {
+        // 지도에 생성할 마커
+        new kakao.maps.Marker({
+          //마커가 표시 될 지도
+          map: map,
+          //마커가 표시 될 위치
+          position: new kakao.maps.LatLng(el.mapy, el.mapx),
+        });
+        // path 를 주기 위해서 리스트에 저장 된 공간의 좌표를 pathArr 라는 배열에 푸쉬
+        let pathArr = [];
+        for (let i = 0; i < list.length; i++) {
+          pathArr.push(new kakao.maps.LatLng(arr[i].mapy, arr[i].mapx));
+        }
+        // 선을 긋기 위한 메소드
+        const polyline = new kakao.maps.Polyline({
+          // 지도생성
+          map: map,
+          // path의 배열
+          path: pathArr,
+          // 선을 굵기
+          strokeWeight: 3,
+          // 선의 색
+          strokeColor: '#34A853',
+          // 선의 불투명도
+          strokeOpacity: 1,
+          // 선의 스타일
+          strokeStyle: 'solid',
+        });
 
-      // 선 생성
-      polyline.setMap(map)
-      // 선의 배열
-      polyline.getPath();
-      // 선의 길의 계산
-      polyline.getLength();
-    }); 
+        // 선 생성
+        polyline.setMap(map);
+        // 선의 배열
+        polyline.getPath();
+        // 선의 길의 계산
+        polyline.getLength();
+      });
+    }
     // list가 변경 될 때 마다 실행
-  }, [list])
+  }, [state])
 
   const [productItems, setProductItems] = useState([]); //받아온데이터 담기
   const [planItems, setPlanItems] = useState([]);
@@ -207,7 +209,22 @@ export default function Plan({}) {
               key={i}>
 
             <div className='d-flex w-100 text-start'>
-            <Stack>
+            <Stack
+            onClick={() => {
+                let copy = [
+                  ...list,
+                  {
+                    title: a.title,
+                    mapx: parseFloat(a.mapx),
+                    mapy: parseFloat(a.mapy),
+                  },
+                ];
+                console.log(copy, state.planDateIdx);
+                dispatch(
+                  addPlanItems({ copy, idx: state.planDateIdx })
+                );
+                // setList(copy);
+              }}>
             <img src={a.firstimage} style={{width:'2rem', height:'2rem', borderRadius:'50%'}}></img>
             </Stack>
 
@@ -253,14 +270,20 @@ export default function Plan({}) {
       <Modal.Footer>
         <Button 
           variant="secondary" 
-          onClick={handleClose}>
+          onClick={()=>{
+            setList([]);
+            handleClose();
+          }}>
           닫기
         </Button>
 
         <Button 
           style={{backgroundColor:'#036635'}}
           // variant="success" 
-          onClick={handleClose}
+          onClick={()=>{
+            setList([]);
+            handleClose();
+          }}
           >
           선택 완료
         </Button>

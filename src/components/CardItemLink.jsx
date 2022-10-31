@@ -19,7 +19,6 @@ const CardImg = styled.img`
 `
 // props 명만 변경
 export default function CardItemLink({width, height, src, title}){   
-  console.log(src); 
   return(
     <CardItem width={width} height={height} className="m-3 d-inline-block border">
       {/* <Card.Img variant="top" src="/images/map_ex.png" /> */}
