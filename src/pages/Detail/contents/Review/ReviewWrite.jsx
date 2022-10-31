@@ -8,7 +8,7 @@ import { FaStar } from 'react-icons/fa';
 
 const ARRAY = [0, 1, 2, 3, 4];
 
-export default function ReviewWrite() {
+export default function ReviewWrite(props) {
   const params = useParams();
   const navigate = useNavigate();
 
@@ -90,7 +90,7 @@ export default function ReviewWrite() {
                         console.log('성공');
                         contentRef.current.value='';
                         alert("댓글 등록을 성공하였습니다. 🙌");
-                        navigate(`/detail/${contentId}`);
+                        // props.setReview(false);
                       })
                       .catch(() => {
                         console.log("실패");

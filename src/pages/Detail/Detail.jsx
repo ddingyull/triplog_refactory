@@ -187,7 +187,7 @@ export default function Detail() {
           <Col className="justify-content-center">
             
           </Col>
-          <ReviewBox className="col-2"/>
+          <ReviewBox className="col-2" setReivew={setReview} />
       </Row>
 
     {review === true ? <Review/> : <Review/>}

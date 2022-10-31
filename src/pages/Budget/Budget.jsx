@@ -1,16 +1,75 @@
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, InputGroup, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function CheckList() {
+export default function Budget() {
+  const [chargeData, setChargeData] = useState();
+  const [okay, setOkay] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/charge")
+      .then((res) => {
+        console.log(res.data[0].chargeList);
+        setChargeData(res.data[0].chargeList);
+        setOkay(true);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  
+  if (okay){
   return(
     <>
       <Nav/>
         <Container>
           <h1 className='fw-bold lh-base mt-5'>장소 여행<br></br>정산내역입니다.</h1>
           <p>일행과 함께 지출한 비용이 있다면,<br/> 총무에게 내야 할 금액을 정산해드려요.</p>
-          <div collapseOnSelect expand="lg" className='shadow-sm p-2'>
+          
+          <div className='col-6' bg="light">
+          
+            <InputGroup size="sm" className="mb-3">
+              <p className='fw-bold'>날짜</p>
+              <Form.Control
+                type='date'
+              />
+            </InputGroup>
+            <br />
+            <InputGroup size="sm" className="mb-3">
+              <p className='fw-bold'>내용</p>
+              <Form.Control
+                type='text'
+              />
+            </InputGroup>
+            <br />
+            <InputGroup size="sm" className="mb-3">
+              <p className='fw-bold'>금액</p>
+              <Form.Control
+                type='number'
+              />
+            </InputGroup>
+          </div>
+
+          <div  className='col-6 ' bg="black">
+          <p className='fw-bold'>내역</p>
+            {chargeData.map(function (a, i){
+              console.log(a);
+              return(
+                <div>
+                <p className='fw-bold'>날짜</p>
+                <p className='fw-bold'>{a.title}</p>
+                <p className='fw-bold'>{a.charge}</p>
+              </div>
+              )
+            })}
+          </div>
+
+
+          {/* <div collapseOnSelect expand="lg" className='shadow-sm p-2'>
+
+            
             <Row className="m-3">
               <div className="d-flex align-items-center justify-content-start mt-3">
                 <Col className="col-2 mx-3">
@@ -60,10 +119,10 @@ export default function CheckList() {
 
           <Col className='d-flex justify-content-center'>
             <h2 className='fw-bold lh-base mt-5'> 총 66,000 지출</h2>
-          </Col>
-
+          </Col> */}
         </Container>
       <Footer/>
     </>
   )
+}
 }
