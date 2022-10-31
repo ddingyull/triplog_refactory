@@ -1,9 +1,11 @@
 // 액션 타입(문자열)
+// import PlanItem from '../../components/Plan/PlanItem';
 const LOGIN = 'triplogr/LOGIN';
 const LOGOUT = 'triplogr/LOGOUT';
 const ADD_PLAN_DATE = 'triplog/ADD_PLAN_DATE';
 const ADD_PLAN_ITEM = 'triplog/ADD_PLAN_ITEM';
 const SET_DATE_IDX = 'triplog/SET_DATE_IDX';
+const DELETE_PLAN_ITEM = 'triplog/DELETE_PLAN_ITEM'
 
 
 // 로그인, 로그아웃 액션 생성 함수
@@ -36,9 +38,17 @@ export function addPlanItems(planItems) {
 }
 
 export function setDateIdx(idx) {
+  console.log('리덕스 아이디엑스', idx);
   return {
     type: SET_DATE_IDX,
     payload: idx,
+  };
+}
+
+export function deletePlanItem(deleteItemObj) {
+  return {
+    type: DELETE_PLAN_ITEM,
+    payload: deleteItemObj,
   };
 }
 
@@ -94,16 +104,24 @@ export default function triplog(state = initState, action) {
         }
       }
       // 새롭게 들어온 데이터를 넣어주기!
-      dummyItem.planItems[action.payload.idx] = action.payload.copy;
-      console.log('@', state);
+      dummyItem.planItems[action.payload.idx] = action.payload.copy;      
       return {
         ...state,
         planItems: dummyItem.planItems,
       };
     case SET_DATE_IDX:
+      console.log('리덕스 idx', action.payload);
       return {
         ...state,
         planDateIdx: action.payload,
+      }    
+      case DELETE_PLAN_ITEM:
+      const deleteIdx = state.planItems[action.payload.idx].findIndex(e => e.title === action.payload.title);
+      console.log("배열", state.planItems[action.payload.idx]);
+      console.log("딜리트", deleteIdx);
+      state.planItems[action.payload.idx].splice(deleteIdx, 1);
+      return {
+        ...state,
       }
     default:
       return state;

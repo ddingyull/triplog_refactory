@@ -14,6 +14,7 @@ import Welcome from './Welcome';
 import KakaoMap from './KakaoMap';
 import { addPlanItems } from '../../store/modules/triplog';
 import { useDispatch, useSelector } from 'react-redux';
+// import data from '../../data'
 
 const {kakao} = window;
 
@@ -27,15 +28,31 @@ export default function Plan({}) {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.triplog);
 
+  const [tourData, setTourData] = useState([]);
+  // const [areaName, setAreaName] = useState(data);
+
+  // let h = 0;
+  // for(let i = 0; i < areaName.length; i++) {
+  //   for(let j = 3; j < areaName[i].length; j++) {
+  //     if (areaName[i][j].find(el => el.areacode === areaCode) !== undefined) {
+  //       h = i;
+  //       console.log(h)
+  //       console.log(areaName[i][j].find(el => el.areacode === areaCode))
+  //   } } }
+
+  // let pickAreaName = areaName[h][0];
+  // let pickAreaImg = areaName[h][1];
+  // let pickAreaMapy = areaName[h][2];
+  // let pickAreaMapx = areaName[h][3];
+
 
   // data 받아오기
   useEffect (() => {
     axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`)
     .then((response) => {
-      setProductItems(response.data.response.body.items.item);           
+      setTourData(response.data.response.body.items.item);           
     })
   }, []);
-
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -113,6 +130,10 @@ export default function Plan({}) {
   const [planItems, setPlanItems] = useState([]);
   const [isPlanOpen, setIsPlanOpen] = useState(false);
   let [itemData] = [productItems]; 
+  // const [show, setShow] = useState(false);
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   
 
@@ -144,6 +165,12 @@ export default function Plan({}) {
     >
       <Modal.Header closeButton>
         <Modal.Title>제주 여행 🍊</Modal.Title>
+        {/* <div
+        onClick={()=>{
+          setList([]);
+          }}>
+          X
+        </div> */}
       </Modal.Header>
       <Modal.Body>
         <Card className="col-sm-10 col-md- overflow-auto m-auto" >
@@ -151,7 +178,10 @@ export default function Plan({}) {
           {/* <Col md={4} className='d-flex m-3 '>
             <p className='fw-6 fs-5 fw-bold me-2'>제주 여행 🍊</p>
           </Col> */}
-          <Col md={{span: 4, offset: 2}} className='text-end d-block '>
+          <Col 
+            md={{span: 4, offset: 2}} 
+            className='text-end d-block'
+            >
           </Col>
         </Row>
 
@@ -173,7 +203,7 @@ export default function Plan({}) {
               // input에 입력한 값 useRef
               const text = (inputRef.current.value)
               // 데이터 요청
-              axios.get(`https://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&areaCode=39&keyword=${text}`)
+              axios.get(`https://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&areaCode=${areaCode}&keyword=${text}`)
               .then((결과) => {
                 // console.log(search);
                 // 재 검색 마다 search 값을 삭제 시켜줌
@@ -200,6 +230,7 @@ export default function Plan({}) {
               onClick={() => {                      
                 let copy = [...list, {
                     title: a.title,
+                    Image: a.firstimage,
                     mapx: parseFloat(a.mapx),
                     mapy: parseFloat(a.mapy) 
                   }];                                              
@@ -215,6 +246,7 @@ export default function Plan({}) {
                   ...list,
                   {
                     title: a.title,
+                    Image: a.firstimage,
                     mapx: parseFloat(a.mapx),
                     mapy: parseFloat(a.mapy),
                   },
@@ -225,7 +257,12 @@ export default function Plan({}) {
                 );
                 // setList(copy);
               }}>
-            <img src={a.firstimage} style={{width:'2rem', height:'2rem', borderRadius:'50%'}}></img>
+            <img 
+              src={a.firstimage?a.firstimage : <div>1</div>} 
+              // onerror={{this.src='/images/backgroundImg.png'}}
+              style={{width:'2rem', height:'2rem', borderRadius:'50%'}}
+            >
+            </img>
             </Stack>
 
             <Stack className='d-flex flex-column'>
