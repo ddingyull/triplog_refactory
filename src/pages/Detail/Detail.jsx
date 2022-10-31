@@ -15,6 +15,10 @@ export default function Detail() {
 
   const [tourData, setTourData] = useState([]);
   const [reviewData, setReviewData] =useState([]);
+  const [details, setDetails] = useState([]);
+  const [like, setLike] = useState([]);
+  const [review, setReview] = useState(true);
+
 
   /* 투어 API */
   useEffect (() => {
@@ -23,24 +27,6 @@ export default function Detail() {
       setTourData(response.data.response.body.items.item[0]);
     })
   }, []);
-
-  /* 지도 */
-  useEffect(() => {
-    const container = document.getElementById('map');
-    const options = {
-      center: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
-      level: 11
-    };
-
-    const map = new kakao.maps.Map(container, options);
-    map.setDraggable(false);
-    map.setZoomable(false);
-
-    new kakao.maps.Marker({
-      map:map,
-      position: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
-    })
-  })
 
   /* 리뷰 */
   useEffect (() => {
@@ -51,7 +37,73 @@ export default function Detail() {
         setReviewData(copy);
       })
       .catch(() => console.log("리뷰 실패"));
+  }, [reviewData]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/detail/${contentId}`)
+      .then((res) => {
+        console.log(res.data);
+        setDetails(res.data);
+      })
+      .catch(() => {
+        console.log("실패");
+      });
+  }, [like]);
+
+  // 유저 데이터 가져오기
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/user/getlikes")
+      .then((res) => {
+        setLike(res.data[0].likes);
+      })
+      .catch(() => {
+        console.log("실패");
+      });
   }, []);
+
+  const handleToggle = (b) => () => {
+    console.log(b);
+    const currentIndex = like.indexOf(b);
+    console.log(currentIndex);
+    const newLike = [...like];
+    console.log(newLike);
+
+    if (currentIndex === -1) {
+      newLike.push(b);
+      axios
+        .post(`http://localhost:4000/detail/inclike/${contentId}`)
+        .then(console.log("좋아요 + 1"));
+    } else {
+      newLike.splice(currentIndex, 1);
+      axios
+        .post(`http://localhost:4000/detail/deletelike/${contentId}`)
+        .then(console.log("좋아요 -1"));
+    }
+    setLike(newLike);
+    axios
+      .post("http://localhost:4000/user/arrlike", newLike)
+      .then((res) => console.log(res.data));
+  };
+
+    /* 지도 */
+    useEffect(() => {
+      const container = document.getElementById('map');
+      const options = {
+        center: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
+        level: 7
+      };
+  
+      const map = new kakao.maps.Map(container, options);
+      map.setDraggable(false);
+      map.setZoomable(false);
+  
+      new kakao.maps.Marker({
+        map:map,
+        position: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
+      })
+    }, [tourData.mapy])
 
   return (
     <>
@@ -64,8 +116,10 @@ export default function Detail() {
             <Card.Body>
               <div className='d-flex justify-content-center mt-2'>
                 <div className="text-center flex-fill">
-                  <h5 >❤</h5>
-                  <p>저장하기</p>
+                  <h5 sytle={{cursor:'pointer'}} onClick={handleToggle(contentId)}>
+                    {like.indexOf(contentId) !== -1 ? "❤" : "🤍"}
+                  </h5>
+                  <p>좋아요</p>
                 </div>
                 <div className="text-center flex-fill"
                   onClick={()=> {
@@ -89,12 +143,12 @@ export default function Detail() {
 
         <Col>
           <Card className="mt-3 " style={{overflowY: "scroll"}}>
-            <Card.Body className="m-2" style={{height: '40vh'}}>
-              <Badge bg="success"className='col-2 mb-2' >맛집</Badge>
+            <Card.Body className="m-2 " style={{height: '40vh'}}>
+              <p className=' mb-2 text-muted' >조회수 <span>{details.view}</span></p>
               <Card.Title className="mb-3">{tourData.title}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">📍 {tourData.addr1}</Card.Subtitle>
-              <Card.Text className='mb-2 text-muted'>
-                ⭐⭐⭐⭐⭐<span>30</span> ❤ <span>2,146</span>
+              <Card.Text className='mb-2'>
+              ⭐⭐⭐⭐⭐<span> 30 </span> ❤ <span>{details.like}</span>
               </Card.Text>
               <Card.Text >
                 <p dangerouslySetInnerHTML={{ __html: tourData.overview }}></p>
@@ -137,7 +191,7 @@ export default function Detail() {
           <ReviewBox className="col-2"/>
       </Row>
 
-    <Review/>
+    {review === true ? <Review/> : <Review/>}
 
     </Container>
     <Footer/>
