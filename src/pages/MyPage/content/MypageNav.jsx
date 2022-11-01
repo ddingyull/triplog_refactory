@@ -10,16 +10,16 @@ export default function MypageNav() {
           <div className="nav_bar">
             <div style={{width:'10rem', height:'10rem'}} className='bg-success rounded text-center'>TripLog</div>
             <span>
-              <p href="/mypage">나의 TripLog</p>
+              <p href="">나의 TripLog</p>
             </span>
             <span>
-              <a href="#">여행 조회</a>
+              <a href="/MyPage/mytrip">여행 조회</a>
             </span>
             <span>
-              <a href="/mypage/cancelinfo">체크리스트 조회</a>
+              <a href="/MyPage/checklist">체크리스트 조회</a>
             </span>
             <span>
-              <a href="/mypage/cancelinfo">가계부 조회</a>
+              <a href="/MyPage/budget">가계부 조회</a>
             </span>
           </div>
 
@@ -28,10 +28,10 @@ export default function MypageNav() {
               <p href="#">활동 내역</p>
             </span>
             <span>
-              <a href="/mypage/reviewinfo">리뷰</a>
+              <a href="/mypage/review">리뷰</a>
             </span>
             <span>
-              <a href="/mypage/reviewinfo">찜한 곳</a>
+              <a href="/mypage/pick">찜한 곳</a>
             </span>
           </div>
 
@@ -40,10 +40,7 @@ export default function MypageNav() {
               <p href="#">회원정보</p>
             </span>
             <span>
-              <a href="#">로그아웃</a>
-            </span>
-            <span>
-              <a href="/mypage/userinfo">회원정보 변경</a>
+              <a href="/logout">로그아웃</a>
             </span>
             <span>
               <a href="#">회원탈퇴</a>
