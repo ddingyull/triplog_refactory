@@ -21,7 +21,8 @@ const reduxDevTool =
 const store = configureStore({ reducer: rootReducer }, reduxDevTool);
 
 function App() {
-  const isLogin = useSelector((state) => state.triplog.isLogin);
+  // const isLogin = useSelector((state) => state.triplog.isLogin);
+
   return (
     <Provider store={store}>
       <BrowserRouter>

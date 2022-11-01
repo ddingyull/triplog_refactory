@@ -9,6 +9,8 @@ import {
   Button,
   Form,
   Card,
+  Accordion,
+  Stack,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
@@ -48,17 +50,29 @@ export default function MyPage() {
     <>
       <PageNav />
       <Container>
-        <Row style={{ marginTop: '50px' }}>
-          <Col sm={10} className="m-auto">
-            <Tab.Container id="left-tabs-example" defaultActiveKey="trip">
+        <Row
+          style={{ marginTop: '50px' }}
+          className="d-block justify-content-center"
+        >
+          <Col sm={12}>
+            <Tab.Container
+              id="left-tabs-example"
+              defaultActiveKey="budget"
+              className="m-auto"
+            >
               <Row>
                 {/* 가로 nav tab */}
-                <Col sm={2}>
-                  <div
-                    style={{ width: '10rem', height: '10rem' }}
-                    className="bg-success rounded text-center mb-5"
-                  ></div>
-                  <Nav variant="pills" className="flex-column">
+                <Col sm={3}>
+                  <img
+                    src="/images/yurim.png"
+                    style={{ width: '13rem', height: '13rem' }}
+                    className="bg-success rounded text-center d-block m-auto"
+                  ></img>
+                  <Nav
+                    variant="pills"
+                    className="flex-column mt-4 text-center"
+                    style={{ color: '#333' }}
+                  >
                     <Nav.Item>
                       <Nav.Link eventKey="trip">여행 조회</Nav.Link>
                     </Nav.Item>
@@ -79,7 +93,7 @@ export default function MyPage() {
 
                 {/* 컨텐츠 */}
                 <Col sm={9}>
-                  <Tab.Content>
+                  <Tab.Content className="m-auto">
                     {/* 여행 조회 */}
                     <Tab.Pane eventKey="trip">
                       <Col sm={11} className="m-auto">
@@ -87,17 +101,68 @@ export default function MyPage() {
                           <p className="text-success d-inline">thals0 님 </p>의
                           TripLog 여행
                         </h4>
-                        <div>1일차 비행기티켓?</div>
-                        <PlanList />
+                        <Container
+                          sm={1}
+                          md={1}
+                          lg={2}
+                          xl={2}
+                          className="overflow-auto"
+                          style={{ height: '20%', width: '350px' }}
+                          // key={idx}
+                        >
+                          <Card className="col-md-12 overflow-auto">
+                            <Row className="d-flex justify-content-center">
+                              <Col md={4} className="d-flex m-3">
+                                <p className="fw-6 fw-bold me-2">day 1</p>
+                                <p className="fw-6">1일차</p>
+                              </Col>
+                            </Row>
+                            <Row className="m-3">
+                              <Stack className="col-9 d-flex flex-column my-auto">
+                                <Title className="m-1 fs-6">title</Title>
+                                <Title
+                                  className="m-1"
+                                  style={{ fontSize: '12px' }}
+                                >
+                                  주소
+                                </Title>
+                              </Stack>
+                            </Row>
+                          </Card>
+                        </Container>
                       </Col>
                     </Tab.Pane>
-
                     {/* 체크리스트 조회 */}
                     <Tab.Pane eventKey="checklist">
                       <h4 className="fw-bold fs-3 text-center p-4">
                         <p className="text-success d-inline">thals0 님 </p>의
                         체크리스트
                       </h4>
+                      <Container className="m-auto mt-5">
+                        <Accordion defaultActiveKey="0">
+                          <Accordion.Item>
+                            <Accordion.Header>
+                              db에서 데이터 받아와서 보여주기
+                            </Accordion.Header>
+                            <Accordion.Body>
+                              <Form>
+                                <Form.Check
+                                  type="checkbox"
+                                  className="d-flex justify-content-between"
+                                >
+                                  <Form.Check.Input
+                                    type="checkbox"
+                                    // onClick={handleToggle(b)}
+                                    // checked={checked.indexOf(b) !== -1}
+                                  />
+                                  <Form.Check.Label>11</Form.Check.Label>
+                                  <FaTrash style={{ color: 'grey' }} />
+                                </Form.Check>
+                              </Form>
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        </Accordion>
+                      </Container>
                     </Tab.Pane>
 
                     {/* 가계부 조회*/}
@@ -191,8 +256,38 @@ export default function MyPage() {
                       </Col>
                       ;
                     </Tab.Pane>
-                    <Tab.Pane eventKey="pick">
+
+                    {/* 찜한 곳 조회*/}
+                    <Tab.Pane eventKey="pick" className="container">
                       <h4 className="fw-bold fs-3 text-center p-4">찜한 곳</h4>
+                      <Container className="d-flex flex-wrap">
+                        {[1, 2, 3, 4].map((a, i) => {
+                          return (
+                            <Card
+                              className="m-3"
+                              style={{ width: '29%' }}
+                              // onClick={() => {navigate(`/detail/${tourData.contentid}`);}}
+                            >
+                              <Card.Img
+                                variant="top"
+                                // src={tourData.firstimage}
+                                src="/images/jeju/tour/유수암마을_귤.png"
+                              />
+                              <Card.Body>
+                                {/* <Card.Title>{tourData.title}</Card.Title> */}
+                                <Card.Title>제목제목제목</Card.Title>
+                                <Card.Text className="text-muted">
+                                  {/* {tourData.addr1} */}
+                                  서울시 서초구 방배1동
+                                </Card.Text>
+                                <Card.Text className="text-muted">
+                                  ⭐⭐⭐⭐⭐ <span>30</span>
+                                </Card.Text>
+                              </Card.Body>
+                            </Card>
+                          );
+                        })}
+                      </Container>
                     </Tab.Pane>
 
                     {/* 리뷰 조회 */}
@@ -263,3 +358,20 @@ const Stars = styled.div`
     color: #fcc419;
   }
 `;
+
+const Title = styled.p`
+  font: 2rem/1 'Inter';
+`;
+
+// const NavCol = styled.li`
+//   list-style: none;
+//   color: #333;
+// `;
+
+// const NavLink = styled.li`
+//   list-style: none;
+//   &:hover {
+//     box-flex-group: #036635;
+//     color: #fff;
+//   }
+// `;
