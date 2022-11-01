@@ -95,6 +95,10 @@ export default function Plan() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/submain/경주.png';
+  };
+
   // * 지도
   // 검색한 여행지 저장을 위한 State
   const [search, setSearch] = useState([]);
@@ -254,6 +258,7 @@ export default function Plan() {
                                   height: '2rem',
                                   borderRadius: '50%',
                                 }}
+                                onError={onErrorImg}
                               ></img>
                             </Stack>
 
