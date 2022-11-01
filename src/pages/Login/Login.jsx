@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Container, Card, Badge } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,9 +9,10 @@ import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
+import { login } from '../../store/modules/triplog';
 import Logout from './Logout'
-
 import { useDispatch } from 'react-redux';
+
 const ERROR_MSG = {
   required: '필수 정보입니다.',
   invalidUserEmail: '@ 를 사용하세요',
@@ -22,13 +24,34 @@ const KAKAO_CLIENT_ID = '0c33348e34eeceef7d378e029e920c12';
 const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauth/callback/kakao';
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
-
 export default function Login({text, clickEvent, textColor, backgroundColor, hoverColor}) {
   const [ nickname, setNickname ] = useState('');
   const [ useremail, setUseremail ] = useState('');
   const [ userpw, setUserpw ] = useState('');
   const [ errorMsg, setErrMsg] = useState(ERROR_MSG)
-  const {Navigate} = useNavigate();
+  const [ success, setSuccess ] = useState([])
+
+  // 로그인 검증 파트
+  // const checkUser = () => {
+  //   if(useremail === "" || userpw === "") {
+  //     alert('아이디와 비밀번호를 입력해주세요');
+  //     return;
+  //   }
+  //   axios.post('http://localhost:4000/user/login', {
+  //     email: useremail,
+  //     password: userpw,
+  // })
+  // .then(response => {
+  //   console.log('로그인 성공');
+  //   console.log('user 토큰', response.data.jwt);
+  //   localStorage.setItem('token', response.data.jwt);
+  //   Navigate('/')
+  // })
+  // .catch(error => {
+  //   console.log('error', error.response);
+  // });
+  // }
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // 로그인 검증 파트
@@ -38,6 +61,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
       Navigate('/login');
     }
     axios.post('http://localhost:4000/users/register', {
+    type: 'local',
     identifier: useremail,
     password: userpw,
   }
@@ -47,7 +71,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
     console.log('로그인 성공');
     console.log('user 토큰', response.data.jwt);
     localStorage.setItem('token', response.data.jwt);
-    Navigate('/')
+    navigate('/')
   })
   .catch(error => {
     console.log('로그인 실패', error.response);
@@ -57,7 +81,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
 // 중복로그인 방지 : 로그인된 상태에서 로그인페이지 접근 시 메인페이지로 이동
 useEffect(() => {
   if(localStorage.getItem('token')) {
-    Navigate('/');
+    // navigate('/');
   }
 }, [])
 
@@ -85,6 +109,54 @@ const handlePw = (e) => {
   }
 }
 
+// 테츠님 코드
+const [loginCondition, setLoginCondition] = useState({
+  condition: false,
+  msg: '회원 정보를 정확하게 입력하세요!',
+});
+const [openDialog, setOpenDialog] = useState(false);
+
+const dispatch = useDispatch();
+const navigate = useNavigate();
+
+async function loginUser() {
+  setOpenDialog(false);
+
+  // {success.result === false ? <p>정보가 잘못되었습니다</p> : <div>로그인성공</div>}
+
+  const loginInfo = {
+    email: useremail,
+    password: userpw,
+  };
+
+  if (
+    useremail !== '' &&
+    userpw !== ''
+  ) {
+    const response = await fetch('http://localhost:4000/user/login ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginInfo),
+    });
+
+    if (response.status === 200) {
+      const result = await response.json();
+      console.log(result);
+      if (result.result) {
+        dispatch(login(result));
+        navigate('/')
+      } else {
+        alert('해당 정보를 찾을 수 없습니다')
+        navigate('/login')
+      }
+    } else {
+      throw new Error('로그인 실패');
+    }
+  } else {
+  }
+}
   return(
     <>
       <Nav/>
@@ -127,14 +199,14 @@ const handlePw = (e) => {
             (errorMsg.invalidUserPW):null}      
         />
         <Btn 
-          onClick={() => {(checkUser())}}
+          // onClick={() => {(checkUser())}}
+          onClick={() => {(loginUser())}}
           text='로그인' 
           textColor='#fff' 
           backgroundColor='#333'
           hoverColor='#fff'
           hoverBackgroundColor='#555'>
         </Btn>
-
         <a 
           href={KAKAO_AUTH_URL}
           style={{width:'100%', textDecoration:'none'}}>
@@ -147,7 +219,7 @@ const handlePw = (e) => {
           hoverColor='#333'
           hoverBackgroundColor='#d0ad00'>
         </Btn>
-        </a>
+        </a>          
         {/* <a href={KAKAO_AUTH_URL}>카카오톡로그인</a> */}
         <Logout/>
         

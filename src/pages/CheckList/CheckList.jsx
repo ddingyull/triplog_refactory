@@ -1,78 +1,157 @@
-import { Container, Accordion, Button, Row  } from 'react-bootstrap';
+import { Container, Accordion, Button, Row, InputGroup, Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
 
 export default function CheckList() {
-  return(
-    <>
-      <Nav/>
-        <Container style={{width:'30rem'}} className='m-auto mt-5'>
+  const inputRef = useRef();
+  const [checked, setChecked] = useState([]);
+  const [checklist, setChecklist] = useState([]);
+  const [okay, setOkay] = useState(false);
+
+  const callApi = async () => {
+    axios
+      .get("http://localhost:4000/checklist")
+      .then((res) => {
+        console.log(res.data[0].items);
+        let copy = [...checklist, ...res.data];
+        setChecklist(copy);
+        setChecked(res.data[0].checked);
+        setOkay(true);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    callApi();
+  }, []);
+
+  useEffect(() => {
+    console.log(checked);
+  }, [checked]);
+
+  const handleToggle = (b) => () => {
+    // console.log(b);
+    const currentIndex = checked.indexOf(b);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(b);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
+
+  /* 추가 인풋 */
+  let input = "";
+  const changeHandler = (e) => {
+    console.log(e.target.value);
+    input = e.target.value;
+  };
+
+
+  if (okay){
+
+    return (
+      <>
+        <Nav/>
+        <Container className='m-auto mt-5'>
           <h1 className='fw-bold lh-base mt-5 mb-5'>여행 준비<br></br>체크리스트</h1>
           <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>기본 짐싸기</Accordion.Header>
-                <Accordion.Body>
-                  <ul>
-                    <li>의류</li>
-                    <li>전자기기 챙기기</li>
-                    <li>세안용품</li>
-                    <li>상비약</li>
-                    <li>신분증/면허증</li>
-                    <li>필기구</li>
-                    <li>마스크/손 소독제</li>
-                    <li>➕ 아이템 추가</li>
-                  </ul>
-                </Accordion.Body>
-              </Accordion.Item>
-
-            <Accordion.Item eventKey="1">
-              <Accordion.Header>필수 준비물</Accordion.Header>
-              <Accordion.Body>
-                <ul>
-                  <li>숙소</li>
-                  <li>➕ 아이템 추가</li>
-                </ul>
-              </Accordion.Body>
-            </Accordion.Item>
-
-            <Accordion.Item eventKey="2">
-              <Accordion.Header>트립로그에서 챙기기</Accordion.Header>
-              <Accordion.Body>
-                <ul>
-                  <li>여행 일정 짜기</li>
-                  <li>가계부 짜기</li>
-                  <li>➕ 아이템 추가</li>
-                </ul>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3">
-              <Accordion.Header>통신/교통 준비</Accordion.Header>
-              <Accordion.Body>
-                <ul>
-                  <li>여행지 교통편</li>
-                  <li>➕ 아이템 추가</li>
-                </ul>
-              </Accordion.Body>
-            </Accordion.Item>
-
-            <Accordion.Item eventKey="4">
-              <Accordion.Header>즐길거리 준비</Accordion.Header>
-              <Accordion.Body>
-                <ul>
-                  <li>관광 정보 확인하기</li>
-                  <li>맛집 정보 확인하기</li>
-                  <li>➕ 아이템 추가</li>
-                </ul>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Row className="justify-content-center ">
-              <Button variant="primary" className='col-4 mt-4' >카테고리 추가</Button>              
-            </Row>
+  
+              {checklist[0].items.map(function(a, i){
+                return(
+                  <>
+                    <Accordion.Item eventKey={i}>
+                      <Accordion.Header>{checklist[0].items[i].title}</Accordion.Header>
+                        <Accordion.Body>
+                          <Form>
+                            {checklist[0].items[i].content.map(function(b, j){
+                                return(
+                                  <>
+                                    <Form.Check type='checkbox' className="d-flex justify-content-between">
+                                      <Form.Check.Input type='checkbox' 
+                                        onClick={handleToggle(b)} 
+                                        checked={checked.indexOf(b) !== -1} />
+                                      <Form.Check.Label>{checklist[0].items[i].content[j]}</Form.Check.Label>
+                                      <FaTrash style={{color: 'grey'}}
+                                        onClick={() => {
+                                          axios
+                                            .delete(
+                                              "http://localhost:4000/checklist/deleteItem",
+                                              {
+                                                data: {
+                                                  userId: "test",
+                                                  title: checklist[0].items[i].title,
+                                                  item: checklist[0].items[i].content[j],
+                                                },
+                                              }
+                                            )
+                                            .then((res) => {
+                                              console.log(res.data);
+                                            })
+                                            .catch(() => {
+                                              console.log("실패");
+                                            });
+                                        }}
+                                      />
+                                    </Form.Check>
+                                  </>
+                                )
+                              })
+                            }
+                            <InputGroup className="mt-3">
+                              <Form.Control
+                                placeholder="아이템 추가하기🤗"
+                                // aria-label="Recipient's username"
+                                // aria-describedby="basic-addon2"
+                                onChange={(e)=> changeHandler(e)}
+                              />
+                              <Button variant="success" id="button-addon2"
+                                onClick={() => {
+                                  axios
+                                    .post("http://localhost:4000/checklist/addItem", {
+                                      title: checklist[0].items[i].title,
+                                      item: input,
+                                    })
+                                    .then((res) => {
+                                      console.log(res.data);
+                                    })
+                                    .catch(() => {
+                                      console.log("실패");
+                                    });
+                                }}>
+                                추가
+                              </Button>
+                            </InputGroup>
+                          </Form>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                  </>
+                )
+              })}             
           </Accordion>
-
+          <h4>내 체크리스트 저장하기!</h4>
+            <Button variant="success"
+              onClick={() => {
+                axios
+                  .post("http://localhost:4000/checklist/checked", {
+                    userId: "test",
+                    checked: checked,
+                  })
+                  .then((res) => console.log(res.data))
+                  .catch(() => console.log("실패"));
+              }}>
+              저장
+            </Button>
         </Container>
-      <Footer/>
-    </>
-  )
+        <Footer/>
+      </>
+    );
+  }
 }

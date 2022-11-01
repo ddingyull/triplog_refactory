@@ -9,7 +9,7 @@ import axios from 'axios';
 
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux'
-import { addPlanItem } from '../../store/modules/triplog'
+import { setDateIdx } from '../../store/modules/triplog'
 
 const PlanList = ({ productItems, planItems, setPlanItems, onClick}) => {
   let [itemData] = productItems
@@ -24,11 +24,11 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick}) => {
     <Container 
       sm={1} md={1} lg={2} xl={2} 
       className='overflow-auto'
-      style={{height:'20%'}}
+      style={{height:'20%', width:'350px'}}
       key={idx}>
                 
     <Card className="col-md-12 overflow-auto">
-    <KakaoMap className='col-6 m-auto'/>
+    <KakaoMap className='col-6 m-auto' idx={idx}/>
     <Row className='d-flex justify-content-center'>
       <Col md={4} className='d-flex m-3'>
         <p className='fw-6 fw-bold me-2'>day {idx+1}</p>
@@ -37,21 +37,24 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick}) => {
       <Col md={{span: 4, offset: 2}} className='text-end d-block '>
         <a href="#" className="btn btn-light p-0" style={{width:"50%"}}>완료</a>
       </Col>
-    </Row>
-
+    </Row>    
     <Row className="m-3">
     <PlanItem 
       productItems={productItems} 
       setPlanItems={setPlanItems}
       planItems={planItems}
+      idx={idx}
       />
     </Row>
 
     <Col className='m-auto d-flex mt-2 mb-2 col-10'>
       <Button 
-        onClick={onClick}
+        onClick={() => {
+          onClick();
+          dispatch(setDateIdx(idx));
+        }}
         className="btn btn-light mx-1" 
-        style={{width:"70%"}}>
+        style={{width:"70%"}}>          
         장소 추가
       </Button>
 

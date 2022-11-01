@@ -1,4 +1,4 @@
-import { Container, Row, Col, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
@@ -16,18 +16,24 @@ export default function Welcome () {
 
   if(state.isLogin){
     return(
-      <Container className="p-3 mb-4">
+      <Container className="p-3">
         <Row className='d-block justify-content-start'>
           <Col className='m-3'>
-            <Title className="justify-content-start fw-bold">{state.user}의 여행계획 세우기 ✏️</Title>
-            <p className='m-0 fs-6'> {state.planDate.startDate + ' ~ ' + state.planDate.endDate} </p>
-            <p className='m-0 fs-6'>여행에 필요한 모든 것</p>
+            {/* <Title className="justify-content-start fw-bold">{state.user}의 여행계획 세우기 ✏️</Title> */}
+            <Title className="justify-content-start fw-bold fs-3">
+            <p className='my-3 fs-6 d-block'>여행에 필요한 모든 것, TripLog</p>
+              <p 
+                style={{color:'#036635', display:'inline-block'}}>
+                  thals0님</p>의 여행계획 세우기 ✏️
+              
+            </Title>
+            <div className='fs-6 d-inline p-2'> 📆 여행 날짜 : {state.planDate.startDate + ' ~ ' + state.planDate.endDate} </div>
           </Col>
-          <Col class="d-flex justify-content-start mt-3 mb-3">
-            <Plan_li><a href="/Plan"><Badge bg="success" text="light" className='fs-9'>일행과 함께하는 여행짜기</Badge>{' '}</a></Plan_li>
-            <Plan_li><a href="/CheckList"><Badge bg="dark" text="light" className='fs-9'>체크리스트</Badge>{' '}</a></Plan_li>
-            <Plan_li><a href="/Budget"><Badge bg="dark" text="light" className='fs-9'>가계부</Badge>{' '}</a></Plan_li>
-            <Plan_li><a href="/"><Badge bg="dark" text="light" className='fs-9'>숙소</Badge>{' '}</a></Plan_li>
+          <Col class="d-flex justify-content-start m-3 mb-0">
+            <Plan_li><a href="/Plan/:areaCode"><Badge style={{backgroundColor:'#036635'}} bg="success" text="light" className='fs-8'>📆 일행과 함께하는 여행짜기</Badge>{' '}</a></Plan_li>
+            <Plan_li><a href="/CheckList"><Badge bg="dark" text="light" className='fs-9'>🔖 나의 체크리스트</Badge>{' '}</a></Plan_li>
+            <Plan_li><a href="/Budget"><Badge bg="dark" text="light" className='fs-9'>💸 가계부 작성하러가기</Badge>{' '}</a></Plan_li>
+            <Plan_li><a href="/"><Badge bg="dark" text="light" className='fs-9'>구경하러가기</Badge>{' '}</a></Plan_li>
           </Col>
         </Row>
       </Container>
