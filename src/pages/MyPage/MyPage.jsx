@@ -4,12 +4,14 @@ import { Container, Tab, Row, Col, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from '../../components/Footer'
 import PageNav from '../../components/Nav'
-import MypageMain from './MyPageMain';
+// import MypageMain from './MyPageMain';
 import MyTrip from './MyTrip';
 import MyReview from './MyReview';
 import MyPick from './MyPick';
-import Budget from './Budget';
-import CheckList from './content/CheckList';
+// import Budget from './Budget';
+// import CheckList from './content/CheckList';
+import CheckList from '../../pages/CheckList/CheckList';
+import Budget from '../../pages/Budget/Budget';
 import Review from '../../components/Review';
 import PlanList from '../../components/Plan/PlanList'
 
@@ -40,7 +42,7 @@ export default function MyPage() {
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
       <Row>
         <Col sm={2}>
-        <div style={{width:'10rem', height:'10rem'}} className='bg-success rounded text-center'>TripLog</div>
+        <div style={{width:'10rem', height:'10rem'}} className='bg-success rounded text-center mb-5'></div>
           <Nav 
             variant="pills" 
             className="flex-column">
@@ -64,6 +66,7 @@ export default function MyPage() {
         <Col sm={9}>
           <Tab.Content>
             <Tab.Pane eventKey="trip">
+            <h4 className='fw-bold fs-3 text-center p-4'>TripLog</h4>
               <PlanList/>
             </Tab.Pane>
             <Tab.Pane eventKey="checklist">
@@ -71,10 +74,12 @@ export default function MyPage() {
               <CheckList/>
             </Tab.Pane>
             <Tab.Pane eventKey="budget">
-              
+            <h4 className='fw-bold fs-3 text-center p-4'>TripLog 가계부</h4>
+              <Budget/>
             </Tab.Pane>
             <Tab.Pane eventKey="pick">
-              
+            <h4 className='fw-bold fs-3 text-center p-4'>찜한 곳</h4>
+              {/* <></ㅖ> */}
             </Tab.Pane>
             <Tab.Pane eventKey="review">
               <h4 className='fw-bold fs-3 text-center p-4' > 꼬부기님의 리뷰 </h4>

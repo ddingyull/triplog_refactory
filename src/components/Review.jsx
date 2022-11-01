@@ -43,7 +43,7 @@ export default function Review() {
     axios
       .get(`http://localhost:4000/review/${contentId}`)
       .then((res) => {
-        console.log('review의 리뷰성공')
+        // console.log('review의 리뷰성공')
         let copy = [...res.data];
         setReviewData(copy);
       })

@@ -11,7 +11,6 @@ import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button'
 import { login } from '../../store/modules/triplog';
 import Logout from './Logout'
-import { useDispatch } from 'react-redux';
 
 const ERROR_MSG = {
   required: '필수 정보입니다.',
@@ -58,7 +57,7 @@ export default function Login({text, clickEvent, textColor, backgroundColor, hov
   const checkUser = () => {
     if(useremail === "" || userpw === "") {
       alert('아이디와 비밀번호를 입력해주세요');
-      Navigate('/login');
+      navigate('/login');
     }
     axios.post('http://localhost:4000/users/register', {
     type: 'local',
@@ -116,8 +115,6 @@ const [loginCondition, setLoginCondition] = useState({
 });
 const [openDialog, setOpenDialog] = useState(false);
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
 
 async function loginUser() {
   setOpenDialog(false);

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setDateIdx } from '../../store/modules/triplog'
 
 const PlanList = ({ productItems, planItems, setPlanItems, onClick}) => {
-  let [itemData] = productItems
+  // let [itemData] = productItems
 
   // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog) 
