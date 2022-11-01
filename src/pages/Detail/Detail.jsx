@@ -126,7 +126,7 @@ export default function Detail() {
                 src={tourData.firstimage}
                 onError={onErrorImg}
                 style={{ height: '35vh', objectFit: 'cover' }}
-                className="fluid"
+                className="fluid border"
               />
               <Card.Body>
                 <div className="d-flex justify-content-center mt-2">
