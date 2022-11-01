@@ -27,8 +27,8 @@ export default function SubMain({productItems, width, height, planDate}) {
     for(let j = 2; j < areaName[i].length; j++) {
       if (areaName[i][j].find(el => el.areacode === areaCode) !== undefined) {
         h = i;
-        console.log(h)
-        console.log(areaName[i][j].find(el => el.areacode === areaCode))
+        // console.log(h)
+        // console.log(areaName[i][j].find(el => el.areacode === areaCode))
     } } }
 
   let pickAreaName = areaName[h][0];

@@ -18,9 +18,13 @@ const CardImg = styled.img`
 
 `
 // props 명만 변경
-export default function CardItemLink({width, height, src, title}){   
+export default function CardItemLink({width, height, src, title, onClick}){   
   return(
-    <CardItem width={width} height={height} className="m-3 d-inline-block border rounded">
+    <CardItem 
+      width={width} 
+      height={height} 
+      onClick={onClick}
+      className="m-3 d-inline-block border rounded">
       <Card.Title className='fs-6 p-2 text-center'>{title}</Card.Title>
       <CardImg variant="top" src={src} className='rounded'/>
       <Card.Body>
