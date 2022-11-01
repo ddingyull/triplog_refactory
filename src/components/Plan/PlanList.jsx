@@ -38,7 +38,7 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
                 <p className="fw-6 fw-bold me-2">day {idx + 1}</p>
                 <p className="fw-6">{idx + 1}일차</p>
               </Col>
-              <Col md={{ span: 4, offset: 2 }} className="text-end d-block ">
+              {/* <Col md={{ span: 4, offset: 2 }} className="text-end d-block ">
                 <a
                   href="#"
                   className="btn btn-light p-0"
@@ -46,7 +46,7 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
                 >
                   완료
                 </a>
-              </Col>
+              </Col> */}
             </Row>
             <Row className="m-3">
               <PlanItem
