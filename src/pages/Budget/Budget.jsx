@@ -13,18 +13,28 @@ import Footer from '../../components/Footer';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { FaArrowAltCircleUp, FaPencilAlt, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { chargeUpdate } from '../../store/modules/budget';
 
 export default function Budget() {
-  const [chargeData, setChargeData] = useState();
-  const [updateCharge, setUpdateCharge] = useState();
+  const dispatch = useDispatch();
   const textRef = useRef();
   const chargeRef = useRef();
+  const dateRef = useRef();
+
+  const [chargeData, setChargeData] = useState();
+  const [updateChargeTitle, setUpdateChargeTitle] = useState();
+  const [updateCharge, setUpdateCharge] = useState();
+  const [users, setUsers] = useState(0);
+
   const [okay, setOkay] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  // const totalCharge = chargeData.chargeList?.reduce((acc, cur, i) => {
-  //   return (cur.charge + acc);
-  // }, 0);
+
+  const chargeUpdate = useSelector((state) => state.budget.chargeUpdate);
+  const totalCharge = chargeData?.reduce((acc, cur, i) => {
+    return cur.charge + acc;
+  }, 0);
 
   useEffect(() => {
     axios
@@ -33,9 +43,10 @@ export default function Budget() {
         console.log(res.data[0].chargeList);
         setChargeData(res.data[0].chargeList);
         setOkay(true);
+        dispatch(chargeUpdate());
       })
       .catch((err) => console.log(err));
-  }, [chargeData]);
+  }, [chargeUpdate]);
 
   if (show) {
     return (
@@ -109,19 +120,70 @@ export default function Budget() {
 
               <p className="fw-bold">날짜</p>
               <InputGroup size="md" className="mb-1 ">
-                <Form.Control type="date" />
+                <Form.Control type="date" required ref={dateRef} />
               </InputGroup>
               <br />
               <p className="fw-bold">내용</p>
               <InputGroup size="md" className="mb-3">
-                <Form.Control type="text" />
+                <Form.Control type="text" required ref={textRef} />
               </InputGroup>
               <br />
               <p className="fw-bold">금액</p>
               <InputGroup size="md" className="mb-3">
-                <Form.Control type="number" placeholder="숫자만 입력됩니다." />
+                <Form.Control
+                  type="number"
+                  placeholder="숫자만 입력됩니다."
+                  required
+                  ref={chargeRef}
+                />
               </InputGroup>
-              <Button variant="success">등록</Button>
+              <Row className="d-flex justify-content-between ">
+                <Col>
+                  <Button
+                    variant="success"
+                    onClick={() => {
+                      // const date = dateRef.current.value;
+                      const title = textRef.current.value;
+                      const charge = chargeRef.current.value;
+
+                      let obj = {
+                        title: title,
+                        charge: parseInt(charge),
+                      };
+
+                      if (chargeData.chargeList === undefined)
+                        chargeData.chargeList = [];
+                      chargeData.chargeList.push(obj);
+
+                      console.log('@@', chargeData);
+
+                      setChargeData(chargeData);
+
+                      axios
+                        .post(`http://localhost:4000/charge/write`, [
+                          chargeData,
+                        ])
+                        .then((res) => {
+                          console.log(res);
+                          console.log('charge 등록 성공');
+                          alert('여행 지출 내역 등록을 성공하였습니다🙌');
+                          dispatch(chargeUpdate());
+                        })
+                        .catch(() => {
+                          console.log('charge 등록 실패');
+                          alert(
+                            '여행 지출 내역 등록을 실패하였습니다. 다시 시도해주세요.'
+                          );
+                        });
+                    }}
+                  >
+                    등록
+                  </Button>
+                </Col>
+                <Col className="text-end">
+                  <Button variant="success">수정</Button>
+                </Col>
+              </Row>
             </Col>
 
             {/* 오른쪽 영수증 */}
@@ -188,22 +250,28 @@ export default function Budget() {
                 <Col sm md lg="auto" className="fw-bold">
                   ITEM COUNT :
                 </Col>
-                <Col className="text-end">10개</Col>
+                <Col className="text-end">{chargeData.length} 개</Col>
               </Row>
 
               <Row>
                 <Col className="fw-bold">
-                  인원수 : 8 명 <FaArrowAltCircleUp />
+                  정산 : {users} 명 {'\u00A0'}
+                  <FaArrowAltCircleUp
+                    onClick={() => {
+                      setUsers(users + 1);
+                    }}
+                    style={{ cursor: 'pointer', color: '#198754' }}
+                  />
                 </Col>
                 <Col sm md lg="auto" className="text-end">
-                  인당 20000원
+                  1인당 {parseInt(totalCharge / users)}
                 </Col>
               </Row>
 
               <Row>
-                <Col className="fw-bold">총 합계 :</Col>
+                <Col className="fw-bold">총 합계 : </Col>
                 <Col sm md lg="auto" className="text-end">
-                  오조오억원
+                  {totalCharge}
                 </Col>
               </Row>
 
