@@ -4,17 +4,17 @@ import {Container, Row, Col, Badge, Card } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from '../../components/Footer';
 import Nav from '../../components/Nav';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Review from '../../components/Review';
 import ReviewBox from './contents/Review/ReviewBox';
 
 export default function Detail() {
+  const navigator = useNavigate();
   const params = useParams();
   const [tourData, setTourData] = useState([]);
 
   const contentId = params.contentId;
   console.log(contentId);
-
 
     /* 지도 */
     useEffect(() => {
@@ -42,7 +42,6 @@ export default function Detail() {
   }, []);
 
 
-
   return (
     <>
     <Nav/>
@@ -57,9 +56,12 @@ export default function Detail() {
                   <h5 >❤</h5>
                   <p>저장하기</p>
                 </div>
-                <div className="text-center flex-fill">
+                <div className="text-center flex-fill"
+                  onClick={()=> {
+                    navigator('/plan');
+                  }} style={{ cursor: 'pointer'}}>
                   <h5>📆</h5>
-                  <p>일정추가</p>
+                  <p>일정짜기</p>
                 </div>
                 <div className="text-center flex-fill">
                   <h5>⭐</h5>
@@ -77,7 +79,7 @@ export default function Detail() {
         <Col>
           <Card className="mt-3 " style={{overflowY: "scroll"}}>
             <Card.Body className="m-2" style={{height: '40vh'}}>
-              <Badge bg="dark"className='col-2 mb-2' >맛집</Badge>
+              <Badge bg="success"className='col-2 mb-2' >맛집</Badge>
               <Card.Title className="mb-3">{tourData.title}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">📍 {tourData.addr1}</Card.Subtitle>
               <Card.Text className='mb-2 text-muted'>

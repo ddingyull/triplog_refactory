@@ -8,6 +8,7 @@ const SET_DATE_IDX = 'triplog/SET_DATE_IDX';
 const DELETE_PLAN_ITEM = 'triplog/DELETE_PLAN_ITEM'
 
 
+
 // 로그인, 로그아웃 액션 생성 함수
 export function login(loginInfo) {
   return {
@@ -55,7 +56,7 @@ export function deletePlanItem(deleteItemObj) {
 // 초기 상태 설정
 const initState = {
   user: '',
-  isLogin: true, //로그인 끝내고 false로 바꾸기
+  isLogin: true, //로그인 끝내고 false로 바꾸기 -> 빼기
   planDate: {
     startDate: '',
     endDate: '',

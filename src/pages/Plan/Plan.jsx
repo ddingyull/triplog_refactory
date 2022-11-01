@@ -14,12 +14,48 @@ import Welcome from './Welcome';
 import KakaoMap from './KakaoMap';
 import { addPlanItems } from '../../store/modules/triplog';
 import { useDispatch, useSelector } from 'react-redux';
-// import data from '../../data'
 
 const {kakao} = window;
 
+// const seoul = ['127.04', '37.59' ]
+// const busan = ['부산', '/images/submain/busan.png' ]
+// const gangwon = ['강원', '/images/gangwon/tour/등명해변패러글라이딩.jpg' ]
+// const jeonju = ['전주', '/images/submain/스크린샷 2022-10-30 오전 5.27.18.png' ]
+// const jeju = ['33.368', '126.54' ]
 
-export default function Plan({}) {
+let pickMap = [
+  {areacode: '1', MapY: '127.04',  MapX: '37.59'},
+  {areacode: '6', MapY: '127.04',  MapX: '37.59'}, //부산
+  {areacode: '32', MapY: '127.04',  MapX: '37.59'}, //강원
+  {areacode: '32', MapY: '127.04',  MapX: '37.59'}, //강원
+  {areacode: '35', MapY: '127.04',  MapX: '37.59'}, //경주
+  {areacode: '39',MapY: '33.368',  MapX: '126.54'}, //제주
+  ]
+// let pickMap = [
+//   ['1', '127.04', '37.59'],
+//   ['6', '127.04', '37.59'], //부산
+//   ['32', '127.04', '37.59'], //강원
+//   ['32', '127.04', '37.59'], //강원
+//   ['35', '127.04', '37.59'], //경주
+//   ['39', '33.368', '126.54'], //제주
+//   ]
+
+export default function Plan() {
+  let h = 0;
+  for(let i = 0; i < pickMap.length; i++) {
+    for(let j = 0; j < pickMap[i].length; j++){
+      if (pickMap[i][j].find(el => el.areacode === areaCode) !== undefined) {
+        h = i;
+        console.log(h)
+        console.log(pickMap[i].find(el => el.areacode === areaCode))
+  }
+    }
+      }
+
+let pickMapY = parseFloat(pickMap[h].MapY);
+let pickMapX = parseFloat(pickMap[h].MapX);
+console.log('@', pickMapY, pickMapX);
+
   const params = useParams();
   const areaCode = params.areaCode;
 
@@ -29,21 +65,6 @@ export default function Plan({}) {
   const state = useSelector((state) => state.triplog);
 
   const [tourData, setTourData] = useState([]);
-  // const [areaName, setAreaName] = useState(data);
-
-  // let h = 0;
-  // for(let i = 0; i < areaName.length; i++) {
-  //   for(let j = 3; j < areaName[i].length; j++) {
-  //     if (areaName[i][j].find(el => el.areacode === areaCode) !== undefined) {
-  //       h = i;
-  //       console.log(h)
-  //       console.log(areaName[i][j].find(el => el.areacode === areaCode))
-  //   } } }
-
-  // let pickAreaName = areaName[h][0];
-  // let pickAreaImg = areaName[h][1];
-  // let pickAreaMapy = areaName[h][2];
-  // let pickAreaMapx = areaName[h][3];
 
 
   // data 받아오기
@@ -72,7 +93,8 @@ export default function Plan({}) {
     const container = document.getElementById('map');
     // 기본이 되는 지도 중앙 위치
     const options = {
-      center: new kakao.maps.LatLng(33.368, 126.54),
+      // center: new kakao.maps.LatLng(33.368, 126.54),
+      center: new kakao.maps.LatLng(pickMapY, pickMapX),
       // 지도 레벨(높을 수록 멀어진다)
       level: 11
     };
@@ -219,7 +241,7 @@ export default function Plan({}) {
 
           <div>
             {
-              // search의 map
+              //search의 map
               search.map(function (a, i) {
                 return (
                   <>

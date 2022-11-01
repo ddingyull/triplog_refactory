@@ -38,7 +38,7 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick}) => {
         <a href="#" className="btn btn-light p-0" style={{width:"50%"}}>완료</a>
       </Col>
     </Row>    
-    <Row className="m-3 overflow-scroll" style={{height:'100px'}}>
+    <Row className="m-3">
     <PlanItem 
       productItems={productItems} 
       setPlanItems={setPlanItems}

@@ -18,7 +18,11 @@ const PlanItem = ({onClick, productItems, idx}) => {
   
   if(state.planItems.length > 0) {    
     return state.planItems[idx].map(({id, firstimage, title, src, addr1, sigungucode }, i) => (
-    <Stack className="d-flex m-3 shadow-sm" direction="horizontal" gap={3} style={{height:"4rem"}}>
+    <Stack 
+      className="d-flex m-3 shadow-sm" 
+      direction="horizontal" 
+      gap={3} 
+      style={{height:"4rem"}}>
     {/* <Badge className='bg-success roundedCircle text-center' style={{width:"1.4rem", height:"1.4rem"}}>
       {sigungucode}
     </Badge> */}

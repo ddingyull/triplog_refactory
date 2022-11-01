@@ -11,7 +11,7 @@ const navigator = useNavigate();
   return (
     <>
       <Nav/>
-      <Image src="/images/mainBeach.jpg" fluid/>
+      {/* <Image src="/images/mainBeach.jpg" fluid/> */}
       
       <Container>
         <h1 className='fw-bold lh-base mt-5 mb-5'>Trip님,<br></br>환영합니다!</h1>
@@ -47,19 +47,19 @@ const navigator = useNavigate();
             <p className='fw-bold'>강원</p>
           </Col>
           <Col onClick={()=> {
-              navigator('/lists/35');
+              navigator('/submain/35');
             }}>
             <p className='fs-2 mb-1'>🎢</p>
             <p className='fw-bold'>경주</p>
           </Col>
           <Col onClick={()=> {
-              navigator('/lists/37');
+              navigator('/submain/37');
             }}>
             <p className='fs-2 mb-1'>🍚</p>
             <p className='fw-bold'>전주</p>
           </Col>
           <Col onClick={()=> {
-              navigator('/lists/39');
+              navigator('/submain/39');
             }}>
             <p className='fs-2 mb-1'>🍊</p>
             <p className='fw-bold'>제주</p>
