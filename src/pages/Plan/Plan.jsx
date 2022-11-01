@@ -242,7 +242,6 @@ export default function Plan() {
                                 dispatch(
                                   addPlanItems({ copy, idx: state.planDateIdx })
                                 );
-                                // setList(copy);
                               }}
                             >
                               <img
