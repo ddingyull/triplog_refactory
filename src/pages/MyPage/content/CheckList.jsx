@@ -1,7 +1,5 @@
 import { Container, Accordion, Button, Row, InputGroup, Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Nav from '../../components/Nav'
-import Footer from '../../components/Footer'
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
@@ -34,7 +32,7 @@ export default function CheckList() {
   }, [checked]);
 
   const handleToggle = (b) => () => {
-    // console.log(b);
+    console.log(b);
     const currentIndex = checked.indexOf(b);
     const newChecked = [...checked];
 
@@ -47,7 +45,7 @@ export default function CheckList() {
     setChecked(newChecked);
   };
 
-  /* 추가 인풋 */
+  // /* 추가 인풋 */
   let input = "";
   const changeHandler = (e) => {
     console.log(e.target.value);
@@ -59,9 +57,7 @@ export default function CheckList() {
 
     return (
       <>
-        <Nav/>
         <Container className='m-auto mt-5'>
-          <h1 className='fw-bold lh-base mt-5 mb-5'>여행 준비<br></br>체크리스트</h1>
           <Accordion defaultActiveKey="0">
   
               {checklist[0].items.map(function(a, i){
@@ -150,7 +146,6 @@ export default function CheckList() {
               저장
             </Button>
         </Container>
-        <Footer/>
       </>
     );
   }

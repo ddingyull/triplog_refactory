@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {Button } from 'react-bootstrap';
 import ReviewWrite from './ReviewWrite';
 
-export default function ReviewBox() {
+export default function ReviewBox(props) {
   const [reviewWrite, setReviewWrite] = useState(false);
   const text = reviewWrite ? '리뷰닫기'  : '리뷰쓰기';
 
@@ -14,7 +14,7 @@ export default function ReviewBox() {
     <>
     <Button variant="success" onClick={onClick} className="reviewWrite col-2 m-2" >{text}</Button>
       {reviewWrite && (
-        <ReviewWrite reviewAdd={reviewWrite} setReviewAdd={setReviewWrite} />
+        <ReviewWrite reviewAdd={reviewWrite} setReviewAdd={setReviewWrite} setReivew={props.setReivew} />
       )}
     </>
   )
