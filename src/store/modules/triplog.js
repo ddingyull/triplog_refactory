@@ -51,7 +51,7 @@ export function deletePlanItem(deleteItemObj) {
 // 초기 상태 설정
 const initState = {
   user: '',
-  isLogin: true, //로그인 끝내고 false로 바꾸기
+  isLogin: false, //로그인 끝내고 false로 바꾸기
   planDate: {
     startDate: '',
     endDate: '',
