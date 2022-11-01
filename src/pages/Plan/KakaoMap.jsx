@@ -1,11 +1,38 @@
 /* global kakao */
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import SelectList from '../../components/Plan/SelectList';
 import { useSelector } from 'react-redux';
 
+let pickMap = [
+  { areacode: '1', MapY: '127.04', MapX: '37.59' },
+  { areacode: '6', MapY: '129.16', MapX: '35.15' }, //부산
+  { areacode: '32', MapY: '128.89', MapX: '37.79' }, //강원
+  { areacode: '35', MapY: '129.33', MapX: '35.78' }, //경주
+  { areacode: '37', MapY: '127.15', MapX: '35.81' }, //전주
+  { areacode: '39', MapY: '33.368', MapX: '126.54' }, //제주
+];
+
 export default function KakaoMap(props) {
+  const params = useParams();
+  const areaCode = params.areaCode;
+
+  let h = 0;
+  for (let i = 0; i < pickMap.length; i++) {
+    for (let j = 0; j < pickMap[i].length; j++) {
+      if (pickMap[i][j].find((el) => el.areacode === areaCode) !== undefined) {
+        h = i;
+        console.log(h);
+        console.log(pickMap[i].find((el) => el.areacode === areaCode));
+      }
+    }
+  }
+
+  let pickMapY = parseFloat(pickMap[h].MapY);
+  let pickMapX = parseFloat(pickMap[h].MapX);
+  console.log('@', pickMapY, pickMapX);
   const state = useSelector((state) => state.triplog);
 
   // Kakao Map 사용을 위한 useEffect
@@ -13,9 +40,9 @@ export default function KakaoMap(props) {
     const container = document.getElementById(`map${props.idx}`);
     // 기본이 되는 지도 중앙 위치
     const options = {
-      center: new kakao.maps.LatLng(33.368, 126.54),
+      center: new kakao.maps.LatLng(pickMapX, pickMapY),
       // 지도 레벨(높을 수록 멀어진다)
-      level: 11,
+      level: 8,
     };
     // 지도 생성을 위한 메소드
     const map = new kakao.maps.Map(container, options);
@@ -86,7 +113,7 @@ export default function KakaoMap(props) {
                 return (
                   <>
                     <p onClick={() => {
-                      let copy = [...list, { title: a.title, mapx: parseFloat(a.mapx), mapy: parseFloat(a.mapy) }];
+                      let copy = […list, { title: a.title, mapx: parseFloat(a.mapx), mapy: parseFloat(a.mapy) }];
                       setList(copy);
                     }} key={i}>{a.title}</p>
                   </>
