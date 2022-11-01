@@ -76,7 +76,7 @@ export default function Plan() {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.triplog);
-  console.log(state);
+  // console.log(state);
 
   const [tourData, setTourData] = useState([]);
 
