@@ -1,6 +1,6 @@
 // 액션 타입(문자열)
-const LOGIN = 'triplogr/LOGIN';
-const LOGOUT = 'triplogr/LOGOUT';
+const LOGIN = 'triplog/LOGIN';
+const LOGOUT = 'triplog/LOGOUT';
 const ADD_PLAN_DATE = 'triplog/ADD_PLAN_DATE';
 const ADD_PLAN_ITEM = 'triplog/ADD_PLAN_ITEM';
 const SET_DATE_IDX = 'triplog/SET_DATE_IDX';
