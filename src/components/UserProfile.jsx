@@ -1,6 +1,5 @@
 import { Row, Col, Image } from "react-bootstrap"
-import { FaStar } from 'react-icons/fa';
-import styled from "styled-components";
+
 
 export default function UserProfile () {
   return (
@@ -11,21 +10,9 @@ export default function UserProfile () {
         </Col>
         <Col className="flex-fill"> 
           <p className="text-start fw-bold mt-2 mb-0">유저닉네임</p>
-          <RaingStar className="text-start">
-            <FaStar size="20" className="yellowStar"/>
-            <FaStar size="20" className="yellowStar"/>
-            <FaStar size="20" className="yellowStar"/>
-            <FaStar size="20" className="yellowStar"/>
-            <FaStar size="20" className="yellowStar"/>
-          </RaingStar>
         </Col>
       </div>
     </Row>
   )
 }
 
-const RaingStar = styled.p`
-  .yellowStar {
-    color: #fcc419;
-  }
-`

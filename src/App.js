@@ -5,7 +5,6 @@ import Plan from './pages/Plan/Plan';
 import Lists from './pages/Lists/Lists';
 import Detail from './pages/Detail/Detail';
 import MyPage from './pages/MyPage/MyPage';
-// import MyPage1 from './pages/Mypage(참고)/Mypage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
@@ -21,7 +20,6 @@ const reduxDevTool =
 
 const store = configureStore({ reducer: rootReducer }, reduxDevTool);
 
-
 function App() {
   return (
     <Provider store={store}>
@@ -29,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/SubMain/:areaCode" element={<SubMain />} />
-        <Route path="/Plan/:areaCode" element={<Plan />} />\
+        <Route path="/Plan/:areaCode" element={<Plan />} />
         <Route path="/lists/:areaCode" element={<Lists />} />
         <Route path="/detail/:contentId" element={<Detail />} />
         <Route path="/MyPage" element={<MyPage />} />
