@@ -1169,11 +1169,11 @@ const jejuTour = [
 
 ]
 
-const seoul = ['서울', '/images/submain/seoul.jpeg', seoulStay, seoulTour ]
-const busan = ['부산', '/images/submain/busan.png', busanStay, busanTour ]
-const gangwon = ['강원', '/images/gangwon/tour/등명해변패러글라이딩.jpg', gangwonStay, gangwonTour ]
-const jeonju = ['전주', '/images/submain/스크린샷 2022-10-30 오전 5.27.18.png', jeonjuFood, jeonjuTour ]
-const jeju = ['제주', '/images/submain/jeju.png', jejuStay, jejuTour ]
+const seoul = ['서울', '/images/submain/사진5.jpg', seoulStay, seoulTour ]
+const busan = ['부산', '/images/submain/부산2.jpg', busanStay, busanTour ]
+const gangwon = ['강원', '/images/submain/사진2.jpg', gangwonStay, gangwonTour ]
+const jeonju = ['전주', '/images/submain/전주3.jpg', jeonjuFood, jeonjuTour ]
+const jeju = ['제주', '/images/submain/사진1.jpg', jejuStay, jejuTour ]
 
 let data = [seoul, busan, gangwon, jeonju, jeju]
 
