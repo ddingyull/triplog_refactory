@@ -24,12 +24,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const { kakao } = window;
 
-// const seoul = ['127.04', '37.59' ]
-// const busan = ['부산', '/images/submain/busan.png' ]
-// const gangwon = ['강원', '/images/gangwon/tour/등명해변패러글라이딩.jpg' ]
-// const jeonju = ['전주', '/images/submain/스크린샷 2022-10-30 오전 5.27.18.png' ]
-// const jeju = ['33.368', '126.54' ]
-
 let pickMap = [
   { areacode: '1', MapY: '127.04', MapX: '37.59' },
   { areacode: '6', MapY: '127.04', MapX: '37.59' }, //부산
@@ -63,6 +57,18 @@ export default function Plan() {
   let pickMapX = parseFloat(pickMap[h].MapX);
   console.log('@', pickMapY, pickMapX);
 
+  const savehandler = () => {
+    axios
+      .post('http://localhost:4000/plan', { state })
+      .then((res) => {
+        console.log(res.data);
+        console.log('여행 계획 일정 전송 성공!!');
+      })
+      .catch(() => {
+        console.log('여행 계획 일정 전송실패');
+      });
+  };
+
   const params = useParams();
   const areaCode = params.areaCode;
 
@@ -70,6 +76,7 @@ export default function Plan() {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.triplog);
+  console.log(state);
 
   const [tourData, setTourData] = useState([]);
 
@@ -83,6 +90,7 @@ export default function Plan() {
         setTourData(response.data.response.body.items.item);
       });
   }, []);
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -99,10 +107,8 @@ export default function Plan() {
 
   const [productItems, setProductItems] = useState([]); //받아온데이터 담기
   const [planItems, setPlanItems] = useState([]);
-  // const [isPlanOpen, setIsPlanOpen] = useState(false);
   let [itemData] = [productItems];
   // const [show, setShow] = useState(false);
-
   // const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
 
@@ -116,9 +122,6 @@ export default function Plan() {
     );
     console.log(clickItem);
     console.log(productItems);
-    // const currentItem = productItems[idx];
-    // const newPlanitem = [];
-    // setPlanItems(clickItem);
   };
 
   return (
@@ -328,6 +331,16 @@ export default function Plan() {
         </Modal.Footer>
       </Modal>
 
+      <Container className="d-flex justify-content-end">
+        <Button
+          className="btn d-block btn-dark m-3"
+          onClick={() => {
+            savehandler();
+          }}
+        >
+          여행 계획 저장하기
+        </Button>
+      </Container>
       {/* 여행계획 짜는 컴포넌트 */}
       <Container className="d-flex flex-wrap justify-content-center">
         <PlanList
