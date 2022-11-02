@@ -81,7 +81,7 @@ export default function triplog(state = initState, action) {
     case LOGIN:
       return {
         ...state,
-        user: action.payload.user,
+        user: action.payload.nickName,
         isLogin: true,
       };
     case LOGOUT:
@@ -98,6 +98,13 @@ export default function triplog(state = initState, action) {
       return {
         ...state,
         areaCode: action.payload,
+        planDate: {
+          startDate: '',
+          endDate: '',
+          period: [],
+        },
+        planItems: [],
+        planDateIdx: 0,
       };
     case ADD_PLAN_ITEM:
       // 10.30 state 값에 바로 배열 처리를 하면 mutation 에러 발생
