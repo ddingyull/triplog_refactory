@@ -32,7 +32,11 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
         >
           <Card className="col-md-12 overflow-scroll">
             {/* 각기 다른 id를 가져와야하기 때문에 idx props로 전달 */}
-            <KakaoMap className="col-6 m-auto" idx={idx} />
+            <KakaoMap
+              className="col-6 m-auto"
+              idx={idx}
+              areaCode={state.areaCode}
+            />
             <Row className="d-flex justify-content-center">
               <Col md={4} className="d-flex m-3">
                 <p className="fw-6 fw-bold me-2">day {idx + 1}</p>

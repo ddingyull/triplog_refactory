@@ -40,15 +40,15 @@ export default function Plan() {
     for (let j = 0; j < pickMap[i].length; j++) {
       if (pickMap[i][j].find((el) => el.areacode === areaCode) !== undefined) {
         h = i;
-        console.log(h);
-        console.log(pickMap[i].find((el) => el.areacode === areaCode));
+        // console.log(h);
+        // console.log(pickMap[i].find((el) => el.areacode === areaCode));
       }
     }
   }
 
-  let pickMapY = parseFloat(pickMap[h].MapY);
-  let pickMapX = parseFloat(pickMap[h].MapX);
-  console.log('@', pickMapY, pickMapX);
+  // let pickMapY = parseFloat(pickMap[h].MapY);
+  // let pickMapX = parseFloat(pickMap[h].MapX);
+  // console.log('@', pickMapY, pickMapX);
 
   const savehandler = () => {
     axios

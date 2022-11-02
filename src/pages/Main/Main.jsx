@@ -12,9 +12,14 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
+// 리듀서
+import { useDispatch } from 'react-redux';
+import { setAreaCode } from '../../store/modules/triplog';
+
 import MainScroll from './MainScroll';
 
 export default function Main() {
+  const dispatch = useDispatch();
   const navigator = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -32,7 +37,6 @@ export default function Main() {
 
         <div className="d-flex justify-content-center col-8 mx-auto mb-4">
           <Button
-            variant="success mx-2 col-5"
             onClick={() => {
               navigator('/budget');
             }}
@@ -40,7 +44,6 @@ export default function Main() {
             💸 가계부
           </Button>
           <Button
-            variant="success col-5"
             onClick={() => {
               navigator('/checklist');
             }}
@@ -52,6 +55,7 @@ export default function Main() {
         <Row className="d-flex col-8 mx-auto text-center">
           <Col
             onClick={() => {
+              dispatch(setAreaCode(1));
               navigator('/submain/1');
             }}
             style={{ cursor: 'pointer' }}
@@ -61,6 +65,7 @@ export default function Main() {
           </Col>
           <Col
             onClick={() => {
+              dispatch(setAreaCode(6));
               navigator('/submain/6');
             }}
             style={{ cursor: 'pointer' }}
@@ -70,6 +75,7 @@ export default function Main() {
           </Col>
           <Col
             onClick={() => {
+              dispatch(setAreaCode(32));
               navigator('/submain/32');
             }}
             style={{ cursor: 'pointer' }}
@@ -79,6 +85,7 @@ export default function Main() {
           </Col>
           <Col
             onClick={() => {
+              dispatch(setAreaCode(35));
               navigator('/submain/35');
             }}
             style={{ cursor: 'pointer' }}
@@ -88,6 +95,7 @@ export default function Main() {
           </Col>
           <Col
             onClick={() => {
+              dispatch(setAreaCode(37));
               navigator('/submain/37');
             }}
             style={{ cursor: 'pointer' }}
@@ -97,6 +105,7 @@ export default function Main() {
           </Col>
           <Col
             onClick={() => {
+              dispatch(setAreaCode(39));
               navigator('/submain/39');
             }}
             style={{ cursor: 'pointer' }}
