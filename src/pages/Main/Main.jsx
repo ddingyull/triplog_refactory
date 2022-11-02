@@ -23,7 +23,7 @@ export default function Main() {
   const navigator = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const nickName = useSelector((state) => state.triplog.user);
+  const nickName = useSelector((state) => state.users.userNickName);
 
   return (
     <>

@@ -35,6 +35,11 @@ let pickMap = [
 ];
 
 export default function Plan() {
+  const nickName = useSelector((state) => state.users.userNickName);
+  const state = useSelector((state) => state.triplog);
+  const dispatch = useDispatch();
+  console.log(state.triplog);
+
   let h = 0;
   for (let i = 0; i < pickMap.length; i++) {
     for (let j = 0; j < pickMap[i].length; j++) {
@@ -52,7 +57,7 @@ export default function Plan() {
 
   const savehandler = () => {
     axios
-      .post('http://localhost:4000/plan', { state })
+      .post('http://localhost:4000/plan', { state, nickName })
       .then((res) => {
         console.log(res.data);
         console.log('여행 계획 일정 전송 성공!!');
@@ -66,10 +71,6 @@ export default function Plan() {
   const areaCode = params.areaCode;
 
   // const oldIdx = useRef();
-
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.triplog);
-  console.log(state);
 
   const [tourData, setTourData] = useState([]);
 

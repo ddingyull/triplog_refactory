@@ -69,7 +69,11 @@ export default function CheckList() {
           <h1 className="fw-bold lh-base mt-5 mb-5">
             여행 준비<br></br>체크리스트
           </h1>
-          <Accordion defaultActiveKey={[0]} alwaysOpen>
+          <Accordion
+            defaultActiveKey={[0]}
+            alwaysOpen
+            className="container col-lg-6"
+          >
             {checklist[0].items.map(function (a, i) {
               return (
                 <>

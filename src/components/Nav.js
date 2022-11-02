@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Logout from '../pages/Login/Logout.jsx';
 
 export default function NavHeader() {
-  const state = useSelector((state) => state.triplog);
+  const state = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
