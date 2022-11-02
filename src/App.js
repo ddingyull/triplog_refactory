@@ -22,8 +22,6 @@ import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 
 function App() {
   return (
-    // <Provider store={store}>
-    // <BrowserRouter>
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/SubMain/:areaCode" element={<SubMain />} />
@@ -38,8 +36,6 @@ function App() {
       <Route path="/users" element={<Users />} />
       <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler />} />
     </Routes>
-    // </BrowserRouter>
-    // </Provider>
   );
 }
 

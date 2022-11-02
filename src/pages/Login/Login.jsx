@@ -9,7 +9,7 @@ import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button';
-import { login } from '../../store/modules/triplog';
+import { login } from '../../store/modules/users';
 import Logout from './Logout';
 
 const ERROR_MSG = {

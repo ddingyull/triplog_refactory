@@ -38,13 +38,14 @@ export default function MyPage() {
   const [user, setUser] = useState([]);
   const [tourData, setTourData] = useState([]);
   const [okay, setOkay] = useState(false);
-  const nickName = 'test';
-  console.log('리뷰', review);
+  const [plan, setPlan] = useState([]);
+  // const nickName = 'test';
+  const userName = '유림테스트';
 
   // 리뷰 데이터 가져오기
   useEffect(() => {
     axios
-      .post('http://localhost:4000/review', { nickName })
+      .post('http://localhost:4000/review', { userName })
       .then((res) => {
         // console.log(res.data);
         setReview(res.data);
@@ -55,7 +56,19 @@ export default function MyPage() {
         console.log('실패');
       });
   }, []);
-  console.log(review);
+
+  // plan 가져오기
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/plan/getplan', { userName })
+      .then((res) => {
+        // console.log(res.data);
+        setPlan(res.data);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []);
   return (
     <>
       <PageNav />
@@ -111,35 +124,47 @@ export default function MyPage() {
                           <p className="text-success d-inline">thals0 님 </p>의
                           TripLog 여행
                         </h4>
-                        <Container
-                          sm={1}
-                          md={1}
-                          lg={2}
-                          xl={2}
-                          className="overflow-auto"
-                          style={{ height: '20%', width: '350px' }}
-                          // key={idx}
-                        >
-                          <Card className="col-md-12 overflow-auto">
-                            <Row className="d-flex justify-content-center">
-                              <Col md={4} className="d-flex m-3">
-                                <p className="fw-6 fw-bold me-2">day 1</p>
-                                <p className="fw-6">1일차</p>
-                              </Col>
-                            </Row>
-                            <Row className="m-3">
-                              <Stack className="col-9 d-flex flex-column my-auto">
-                                <Title className="m-1 fs-6">title</Title>
-                                <Title
-                                  className="m-1"
-                                  style={{ fontSize: '12px' }}
-                                >
-                                  주소
+
+                        {plan.state.planDate.period.map(function (a, i) {
+                          return (
+                            <Container
+                              sm={1}
+                              md={1}
+                              lg={2}
+                              xl={2}
+                              className="overflow-auto"
+                              style={{ height: '20%', width: '350px' }}
+                              // key={idx}
+                            >
+                              <Card className="col-md-12 overflow-auto">
+                                <Row className="d-flex justify-content-center">
+                                  <Col md={4} className="d-flex m-3">
+                                    <p className="fw-6 fw-bold me-2">day 1</p>
+                                    <p className="fw-6">
+                                      {i + 1}일차{' '}
+                                      {plan.state.planDate.period[i]}
+                                    </p>
+                                  </Col>
+                                </Row>
+                                <Row className="m-3">
+                                  <Stack className="col-9 d-flex flex-column my-auto">
+                                    {/* {plan.state.planItems[i].map(function (b, j) {
+                                    return (
+                                  <Title className="m-1 fs-6">{plan.state.planItems[i][j].title}</Title>
+                                  <Title
+                                    className="m-1"
+                                    style={{ fontSize: '12px' }}
+                                  > 주소
                                 </Title>
-                              </Stack>
-                            </Row>
-                          </Card>
-                        </Container>
+                            
+                                );
+                              })} */}
+                                  </Stack>
+                                </Row>
+                              </Card>
+                            </Container>
+                          );
+                        })}
                       </Col>
                     </Tab.Pane>
                     {/* 체크리스트 조회 */}
