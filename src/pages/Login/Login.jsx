@@ -228,7 +228,6 @@ export default function Login({
             ></Btn>
           </a>
           {/* <a href={KAKAO_AUTH_URL}>카카오톡로그인</a> */}
-          <Logout />
         </Card>
       </Container>
       <Footer />

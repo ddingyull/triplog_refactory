@@ -15,14 +15,13 @@ import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 import { Provider, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './store';
+import Test from './pages/MyPage/Test';
 const reduxDevTool =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 const store = configureStore({ reducer: rootReducer }, reduxDevTool);
 
 function App() {
-  // const isLogin = useSelector((state) => state.triplog.isLogin);
-
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -32,7 +31,6 @@ function App() {
           <Route path="/Plan/:areaCode" element={<Plan />} />
           <Route path="/lists/:areaCode" element={<Lists />} />
           <Route path="/detail/:contentId" element={<Detail />} />
-          {/* <Route path="/MyPage" element={ isLogin ? <MyPage /> : <Login/>} /> */}
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/Budget" element={<Budget />} />
           <Route path="/CheckList" element={<CheckList />} />
@@ -43,6 +41,7 @@ function App() {
             path="/oauth/callback/kakao"
             element={<KakaoRedirectHandler />}
           />
+          {/* <Route path="/" element={<Test />} /> */}
         </Routes>
       </BrowserRouter>
     </Provider>

@@ -29,23 +29,33 @@ import {
   FaTrash,
   FaStar,
 } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 export default function MyPage() {
-  // useEffect (() => {
-  //   AuthRoute();
-  // }, []);
+  const state = useSelector((state) => state.triplog);
+  const [review, setReview] = useState([]);
+  const [like, setLike] = useState([]);
+  const [user, setUser] = useState([]);
+  const [tourData, setTourData] = useState([]);
+  const [okay, setOkay] = useState(false);
+  const nickName = 'test';
+  console.log('리뷰', review);
 
-  // const AuthRoute = function() {
-  //   return (
-  //     isLogin ?
-  //       <MyPage/>
-  //       : alert('로그인이 필요한 페이지입니다'),
-  //         Navigate('/Login')
-  //       )
-  //         }
-
-  // const Navigate = useNavigate();
-  // const isLogin = localStorage.getItem("token");
+  // 리뷰 데이터 가져오기
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/review', { nickName })
+      .then((res) => {
+        // console.log(res.data);
+        setReview(res.data);
+        // setOkay(true);
+        console.log(review);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []);
+  console.log(review);
   return (
     <>
       <PageNav />
@@ -164,7 +174,6 @@ export default function MyPage() {
                         </Accordion>
                       </Container>
                     </Tab.Pane>
-
                     {/* 가계부 조회*/}
                     <Tab.Pane eventKey="budget">
                       <h4 className="fw-bold fs-3 text-center p-4">
@@ -256,7 +265,6 @@ export default function MyPage() {
                       </Col>
                       ;
                     </Tab.Pane>
-
                     {/* 찜한 곳 조회*/}
                     <Tab.Pane eventKey="pick" className="container">
                       <h4 className="fw-bold fs-3 text-center p-4">찜한 곳</h4>
@@ -289,40 +297,46 @@ export default function MyPage() {
                         })}
                       </Container>
                     </Tab.Pane>
-
-                    {/* 리뷰 조회 */}
                     <Tab.Pane eventKey="review">
-                      <h4 className="fw-bold fs-3 text-center p-4">
-                        <p className="text-success d-inline">thals0 님 </p>의
-                        리뷰
-                      </h4>
-                      <Container className=" border border-success rounded">
-                        <Col>
-                          <Card
-                            className="mt-3 "
-                            style={{ overflowY: 'scroll' }}
-                          >
-                            <Card.Body
-                              className="m-2 "
-                              style={{ height: '40vh' }}
-                            >
-                              <p className=" mb-2 text-muted">
-                                조회수 <span>100</span>
+                      {/* 리뷰 조회 */}
+                      {review.map(function (b, j) {
+                        return (
+                          <>
+                            <h4 className="fw-bold fs-3 text-center p-4">
+                              <p className="text-success d-inline">
+                                {state.user} 님
                               </p>
-                              <Card.Title className="mb-3">
-                                {/* {tourData.title} */}
-                              </Card.Title>
-                              <Card.Subtitle className="mb-2 text-muted">
-                                {/* 📍 {tourData.addr1} */}
-                              </Card.Subtitle>
-                              <Card.Text className="mb-2">
-                                ⭐⭐⭐⭐⭐<span> 30 </span> ❤{' '}
-                                {/* <span>{details.like}</span> */}
-                              </Card.Text>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      </Container>
+                              의 리뷰
+                            </h4>
+                            <Col>
+                              <Card
+                                className="mt-3 "
+                                style={{ overflowY: 'scroll' }}
+                              >
+                                <Card.Body
+                                  className="m-2 "
+                                  style={{ height: '40vh' }}
+                                >
+                                  <p className=" mb-2 text-muted">
+                                    조회수 <span>100</span>
+                                  </p>
+                                  <Card.Title className="mb-3">
+                                    {review[j].contentId} title
+                                  </Card.Title>
+                                  <Card.Subtitle className="mb-2 text-muted">
+                                    {review[j].dateFull}
+                                  </Card.Subtitle>
+                                  <Card.Text className="mb-2">
+                                    ⭐⭐⭐⭐⭐<span> {review[j].star} </span> ❤{' '}
+                                    {review[j].dateFull}
+                                  </Card.Text>
+                                  <Card.Text>{review[j].content}</Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Col>
+                          </>
+                        );
+                      })}
                     </Tab.Pane>
                   </Tab.Content>
                 </Col>
