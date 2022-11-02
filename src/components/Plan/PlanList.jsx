@@ -16,9 +16,11 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
 
   // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog);
+  const nickName = useSelector((state) => state.users.userNickName);
+  const users = useSelector((state) => state.users);
   let dispatch = useDispatch();
 
-  if (state.isLogin) {
+  if (users.isLogin) {
     return state.planDate.period.map(
       ({ id, firstimage, title, src, addr1, sigungucode }, idx) => (
         <Container

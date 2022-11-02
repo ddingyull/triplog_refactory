@@ -1,6 +1,6 @@
 // 액션 타입(문자열)
-const LOGIN = 'triplog/LOGIN';
-const LOGOUT = 'triplog/LOGOUT';
+// const LOGIN = 'triplog/LOGIN';
+// const LOGOUT = 'triplog/LOGOUT';
 const ADD_PLAN_DATE = 'triplog/ADD_PLAN_DATE';
 const ADD_PLAN_ITEM = 'triplog/ADD_PLAN_ITEM';
 const SET_DATE_IDX = 'triplog/SET_DATE_IDX';
@@ -8,18 +8,18 @@ const DELETE_PLAN_ITEM = 'triplog/DELETE_PLAN_ITEM';
 const SET_AREA_CODE = 'triplog/SET_AREA_CODE';
 
 // 로그인, 로그아웃 액션 생성 함수
-export function login(loginInfo) {
-  return {
-    type: LOGIN,
-    payload: loginInfo,
-  };
-}
+// export function login(loginInfo) {
+//   return {
+//     type: LOGIN,
+//     payload: loginInfo,
+//   };
+// }
 
-export function logout() {
-  return {
-    type: LOGOUT,
-  };
-}
+// export function logout() {
+//   return {
+//     type: LOGOUT,
+//   };
+// }
 
 export function addPlanDate(planDate) {
   return {
@@ -58,8 +58,8 @@ export function setAreaCode(areaCode) {
 
 // 초기 상태 설정
 const initState = {
-  user: '',
-  isLogin: false, //로그인 끝내고 false로 바꾸기
+  // user: '',
+  // isLogin: false, //로그인 끝내고 false로 바꾸기
   planDate: {
     startDate: '',
     endDate: '',
@@ -78,17 +78,17 @@ export default function triplog(state = initState, action) {
     // login 함수가 dipatch 에 의해 전달 되면 백엔드 서로 부터 받은 email, nickname 정보를 세팅하고
     // 제일 중요한 isLogin 값을 true 로 변경, 해당 값은 Header 및 Item 페이지에서 로그인 여부를 판단하는
     // 값이 되어 해당 값에 따라 조건부 처리
-    case LOGIN:
-      return {
-        ...state,
-        user: action.payload.nickName,
-        isLogin: true,
-      };
-    case LOGOUT:
-      return {
-        ...state,
-        isLogin: false,
-      };
+    // case LOGIN:
+    //   return {
+    //     ...state,
+    //     user: action.payload.nickName,
+    //     isLogin: true,
+    //   };
+    // case LOGOUT:
+    //   return {
+    //     ...state,
+    //     isLogin: false,
+    //   };
     case ADD_PLAN_DATE:
       return {
         ...state,
