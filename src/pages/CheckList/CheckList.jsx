@@ -12,8 +12,13 @@ import Footer from '../../components/Footer';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+// 리듀서
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function CheckList() {
+  const dispatch = useDispatch();
+  const nickName = useSelector((state) => state.users.userNickName);
+
   const inputRef = useRef();
   const [checked, setChecked] = useState([]);
   const [checklist, setChecklist] = useState([]);
@@ -21,7 +26,7 @@ export default function CheckList() {
 
   const callApi = async () => {
     axios
-      .get('http://localhost:4000/checklist')
+      .get('http://localhost:4000/checklist', { nickName })
       .then((res) => {
         console.log(res.data[0].items);
         let copy = [...checklist, ...res.data];
@@ -67,7 +72,8 @@ export default function CheckList() {
         <Nav />
         <Container className="m-auto mt-5 ">
           <h1 className="fw-bold lh-base mt-5 mb-5">
-            여행 준비<br></br>체크리스트
+            <span style={{ color: '#198754' }}>{nickName}</span>님, 여행 준비
+            <br></br>체크리스트
           </h1>
           <Accordion
             defaultActiveKey={[0]}
@@ -163,21 +169,23 @@ export default function CheckList() {
               );
             })}
           </Accordion>
-          <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
-          <Button
-            variant="success"
-            onClick={() => {
-              axios
-                .post('http://localhost:4000/checklist/checked', {
-                  userId: 'test',
-                  checked: checked,
-                })
-                .then((res) => console.log(res.data))
-                .catch(() => console.log('실패'));
-            }}
-          >
-            저장
-          </Button>
+          <div className="container ">
+            <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
+            <Button
+              variant="success"
+              onClick={() => {
+                axios
+                  .post('http://localhost:4000/checklist/checked', {
+                    userId: 'test',
+                    checked: checked,
+                  })
+                  .then((res) => console.log(res.data))
+                  .catch(() => console.log('실패'));
+              }}
+            >
+              저장
+            </Button>
+          </div>
         </Container>
         <Footer />
       </>
