@@ -22,6 +22,8 @@ import { setAreaCode } from '../../store/modules/triplog';
 // gsap.reigisterPlugin(ScrollTrigger);
 
 export default function Main() {
+  let state = useSelector((state) => state.users.isLogin);
+
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [show, setShow] = useState(false);
@@ -79,9 +81,7 @@ export default function Main() {
         >
           <Button
             className="flex-fill mx-3 mb-2"
-            onClick={() => {
-              navigator('/budget');
-            }}
+            onClick={() => navigator('/budget')}
             variant="success"
           >
             💸 가계부
@@ -89,7 +89,7 @@ export default function Main() {
           <Button
             className="flex-fill  mx-3"
             onClick={() => {
-              navigator('/checklist');
+              state.isLogin ? navigator('/checklist') : navigator('/login');
             }}
             variant="success"
           >
@@ -105,7 +105,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-2 mb-1">🏙</p>
+            <p className="fs-1 mb-1">🏙</p>
             <p className="fw-bold">서울</p>
           </Col>
           <Col
@@ -115,7 +115,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-2 mb-1">⛴ </p>
+            <p className="fs-1 mb-1">⛴ </p>
             <p className="fw-bold">부산</p>
           </Col>
           <Col
@@ -125,7 +125,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-2 mb-1">🥔</p>
+            <p className="fs-1 mb-1">🥔</p>
             <p className="fw-bold">강원</p>
           </Col>
           <Col
@@ -135,7 +135,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-2 mb-1">🎢</p>
+            <p className="fs-1 mb-1">🎢</p>
             <p className="fw-bold">경주</p>
           </Col>
           <Col
@@ -145,7 +145,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-2 mb-1">🍛</p>
+            <p className="fs-1 mb-1">🍛</p>
             <p className="fw-bold">전주</p>
           </Col>
           <Col
@@ -155,7 +155,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-2 mb-1">🍊</p>
+            <p className="fs-1 mb-1">🍊</p>
             <p className="fw-bold">제주</p>
           </Col>
         </Row>
