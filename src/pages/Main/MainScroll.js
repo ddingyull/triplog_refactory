@@ -1,6 +1,6 @@
 import { Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap';
 import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
 
@@ -14,17 +14,17 @@ const Box = ({ children, className }) => {
 export default function MainScroll({}) {
   const comp = useRef(); // create a ref for the root level element (we'll use it later)
 
-  useEffect(() => {
-    // -- ANIMATION CODE HERE --
-    let ctx = gsap.context(() => {
-      // all our animations can use selector text like ".box"
-      // and it's properly scoped to our component
-      gsap.to('.box', { rotation: '+=360' });
-      // ScrollTrigger.create({ trigger: '#my-id' });
-    }, comp); // <- IMPORTANT! Scopes selector text
+  // useEffect(() => {
+  //   // -- ANIMATION CODE HERE --
+  //   // let ctx = gsap.context(() => {
+  //   //   // all our animations can use selector text like ".box"
+  //   //   // and it's properly scoped to our component
+  //   //   gsap.to('.box', { rotation: '+=360' });
+  //     // ScrollTrigger.create({ trigger: '#my-id' });
+  //   }, comp); // <- IMPORTANT! Scopes selector text
 
-    return () => ctx.revert();
-  }, []); // <- empty dependency Array so it doesn't re-run on every render!
+  //   return () => ctx.revert();
+  // }, []); // <- empty dependency Array so it doesn't re-run on every render!
 
   return (
     <>
