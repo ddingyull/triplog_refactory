@@ -13,7 +13,7 @@ import axios from 'axios';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 // 리듀서
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAreaCode } from '../../store/modules/triplog';
 
 import MainScroll from './MainScroll';
@@ -23,6 +23,7 @@ export default function Main() {
   const navigator = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const nickName = useSelector((state) => state.triplog.user);
 
   return (
     <>
@@ -31,7 +32,7 @@ export default function Main() {
 
       <Container>
         <h1 className="fw-bold lh-base mt-5 mb-5">
-          <span style={{ color: '#198754' }}>Trip</span>님,
+          <span style={{ color: '#198754' }}>{nickName}</span>님,
           <br></br>환영합니다!
         </h1>
 
