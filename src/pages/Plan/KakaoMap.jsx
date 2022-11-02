@@ -7,7 +7,7 @@ import SelectList from '../../components/Plan/SelectList';
 import { useSelector } from 'react-redux';
 
 let pickMap = [
-  { areacode: '1', MapY: '127.04', MapX: '37.59' },
+  { areacode: '1', MapY: '127.04', MapX: '37.59' }, //서울
   { areacode: '6', MapY: '129.16', MapX: '35.15' }, //부산
   { areacode: '32', MapY: '128.89', MapX: '37.79' }, //강원
   { areacode: '35', MapY: '129.33', MapX: '35.78' }, //경주
@@ -24,14 +24,14 @@ export default function KakaoMap(props) {
     for (let j = 0; j < pickMap[i].length; j++) {
       if (pickMap[i][j].find((el) => el.areacode === areaCode) !== undefined) {
         h = i;
-        console.log(h);
-        console.log(pickMap[i].find((el) => el.areacode === areaCode));
+        // console.log(h);
+        // console.log(pickMap[i].find((el) => el.areacode === areaCode));
       }
     }
   }
 
-  let pickMapY = parseFloat(pickMap[h].MapY);
   let pickMapX = parseFloat(pickMap[h].MapX);
+  let pickMapY = parseFloat(pickMap[h].MapY);
   console.log('@', pickMapY, pickMapX);
   const state = useSelector((state) => state.triplog);
 
@@ -42,7 +42,7 @@ export default function KakaoMap(props) {
     const options = {
       center: new kakao.maps.LatLng(pickMapX, pickMapY),
       // 지도 레벨(높을 수록 멀어진다)
-      level: 8,
+      level: 10,
     };
     // 지도 생성을 위한 메소드
     const map = new kakao.maps.Map(container, options);
