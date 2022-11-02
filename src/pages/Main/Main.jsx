@@ -37,16 +37,20 @@ export default function Main() {
 
         <div className="d-flex justify-content-center col-8 mx-auto mb-4">
           <Button
+            className="flex-fill mx-3"
             onClick={() => {
               navigator('/budget');
             }}
+            variant="success"
           >
             💸 가계부
           </Button>
           <Button
+            className="flex-fill  mx-3"
             onClick={() => {
               navigator('/checklist');
             }}
+            variant="success"
           >
             📝 여행체크리스트
           </Button>
@@ -123,9 +127,11 @@ export default function Main() {
                   variant="top"
                   src={`/images/main/main_grid${idx}.jpg`}
                 />
-                <Card.Body>
-                  <Card.Text className="fw-bold">홍보 Card 제목 ✨</Card.Text>
-                </Card.Body>
+                <Card.ImgOverlay>
+                  <Card.Body>
+                    <Card.Text className="fw-bold">홍보 Card 제목 ✨</Card.Text>
+                  </Card.Body>
+                </Card.ImgOverlay>
               </Card>
             </Col>
           ))}
