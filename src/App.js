@@ -12,7 +12,7 @@ import Logout from './pages/Login/Logout';
 import Users from './pages/Users/Users';
 import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 // 리덕스 세팅
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './store';
 const reduxDevTool =
@@ -21,25 +21,30 @@ const reduxDevTool =
 const store = configureStore({ reducer: rootReducer }, reduxDevTool);
 
 function App() {
+  // const isLogin = useSelector((state) => state.triplog.isLogin);
+
   return (
     <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/SubMain/:areaCode" element={<SubMain />} />
-        <Route path="/Plan/:areaCode" element={<Plan />} />
-        <Route path="/lists/:areaCode" element={<Lists />} />
-        <Route path="/detail/:contentId" element={<Detail />} />
-        <Route path="/MyPage" element={<MyPage />} />
-        {/* <Route path="/MyPage1" element={<MyPage1 />} /> */}
-        <Route path="/Budget" element={<Budget />} />
-        <Route path="/CheckList" element={<CheckList />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler />} />
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/SubMain/:areaCode" element={<SubMain />} />
+          <Route path="/Plan/:areaCode" element={<Plan />} />
+          <Route path="/lists/:areaCode" element={<Lists />} />
+          <Route path="/detail/:contentId" element={<Detail />} />
+          {/* <Route path="/MyPage" element={ isLogin ? <MyPage /> : <Login/>} /> */}
+          <Route path="/MyPage" element={<MyPage />} />
+          <Route path="/Budget" element={<Budget />} />
+          <Route path="/CheckList" element={<CheckList />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/users" element={<Users />} />
+          <Route
+            path="/oauth/callback/kakao"
+            element={<KakaoRedirectHandler />}
+          />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   );
 }

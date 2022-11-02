@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDateIdx } from '../../store/modules/triplog';
 
 const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
-  let [itemData] = productItems;
+  // let [itemData] = productItems
 
   // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog);
@@ -30,7 +30,7 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
           style={{ height: '20%', width: '350px' }}
           key={idx}
         >
-          <Card className="col-md-12 overflow-auto">
+          <Card className="col-md-12 overflow-scroll">
             {/* 각기 다른 id를 가져와야하기 때문에 idx props로 전달 */}
             <KakaoMap className="col-6 m-auto" idx={idx} />
             <Row className="d-flex justify-content-center">

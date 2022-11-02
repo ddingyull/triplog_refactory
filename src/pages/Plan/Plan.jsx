@@ -5,6 +5,7 @@ import axios from 'axios';
 import PlanList from '../../components/Plan/PlanList';
 import SelectList from '../../components/Plan/SelectList';
 import styled from 'styled-components';
+import data from '../../data';
 
 import {
   Container,
@@ -26,20 +27,12 @@ const { kakao } = window;
 
 let pickMap = [
   { areacode: '1', MapY: '127.04', MapX: '37.59' },
-  { areacode: '6', MapY: '127.04', MapX: '37.59' }, //부산
-  { areacode: '32', MapY: '127.04', MapX: '37.59' }, //강원
-  { areacode: '32', MapY: '127.04', MapX: '37.59' }, //강원
-  { areacode: '35', MapY: '127.04', MapX: '37.59' }, //경주
+  { areacode: '6', MapY: '129.16', MapX: '35.15' }, //부산
+  { areacode: '32', MapY: '128.89', MapX: '37.79' }, //강원
+  { areacode: '35', MapY: '129.33', MapX: '35.78' }, //경주
+  { areacode: '37', MapY: '127.15', MapX: '35.81' }, //전주
   { areacode: '39', MapY: '33.368', MapX: '126.54' }, //제주
 ];
-// let pickMap = [
-//   ['1', '127.04', '37.59'],
-//   ['6', '127.04', '37.59'], //부산
-//   ['32', '127.04', '37.59'], //강원
-//   ['32', '127.04', '37.59'], //강원
-//   ['35', '127.04', '37.59'], //경주
-//   ['39', '33.368', '126.54'], //제주
-//   ]
 
 export default function Plan() {
   let h = 0;
@@ -95,6 +88,10 @@ export default function Plan() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/submain/경주.png';
+  };
+
   // * 지도
   // 검색한 여행지 저장을 위한 State
   const [search, setSearch] = useState([]);
@@ -123,6 +120,8 @@ export default function Plan() {
     console.log(clickItem);
     console.log(productItems);
   };
+  const [areaName, setAreaName] = useState(data);
+  let pickAreaName = areaName[h][0];
 
   return (
     <>
@@ -139,7 +138,7 @@ export default function Plan() {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>제주 여행 🍊</Modal.Title>
+          <Modal.Title>TripLog</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Card className="col-sm-10 col-md- overflow-auto m-auto">
@@ -156,7 +155,10 @@ export default function Plan() {
             {/* 여행지 검색 기능 */}
             <Row className="m-auto py-4 d-flex text-center">
               <form>
-                <div className="text-center fs-4 m-4">TripLog</div>
+                <div className="text-center fs-4 m-4">
+                  {' '}
+                  🛫 {pickAreaName} 여행
+                </div>
                 <div className="text-center fs-6 m-4">
                   추가하고 싶은 여행지를 검색하세요
                 </div>
@@ -244,7 +246,6 @@ export default function Plan() {
                                 dispatch(
                                   addPlanItems({ copy, idx: state.planDateIdx })
                                 );
-                                // setList(copy);
                               }}
                             >
                               <img
@@ -254,6 +255,7 @@ export default function Plan() {
                                   height: '2rem',
                                   borderRadius: '50%',
                                 }}
+                                onError={onErrorImg}
                               ></img>
                             </Stack>
 
@@ -290,11 +292,7 @@ export default function Plan() {
             </Row>
 
             {/* 여행지 리스트 보여주기 */}
-            <Row
-              className="m-3 overflow-scroll"
-              style={{ height: '20rem' }}
-              gap={3}
-            >
+            <Row className="m-3" gap={3}>
               {productItems.length > 0 ? (
                 <SelectList
                   productItems={productItems}
@@ -303,9 +301,7 @@ export default function Plan() {
                   search={search}
                   setSearch={setSearch}
                 />
-              ) : (
-                <div>잠시만요!🏖</div>
-              )}
+              ) : null}
             </Row>
           </Card>
         </Modal.Body>
@@ -342,7 +338,7 @@ export default function Plan() {
         </Button>
       </Container>
       {/* 여행계획 짜는 컴포넌트 */}
-      <Container className="d-flex flex-wrap justify-content-center">
+      <Container className="d-flex flex-wrap justify-content-center overflow-scroll">
         <PlanList
           productItems={productItems}
           setPlanItems={setPlanItems}
