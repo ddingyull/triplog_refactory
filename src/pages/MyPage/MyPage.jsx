@@ -16,11 +16,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import Footer from '../../components/Footer';
 import PageNav from '../../components/Nav';
-import CheckList from '../../pages/CheckList/CheckList';
-import Review from '../../components/Review';
-import PlanList from '../../components/Plan/PlanList';
-import Budget from './content/Budget';
-import PlanLIst from '../../components/Plan/PlanList';
+// import CheckList from '../../pages/CheckList/CheckList';
+// import Review from '../../components/Review';
+// import PlanList from '../../components/Plan/PlanList';
+// import Budget from './content/Budget';
+// import PlanLIst from '../../components/Plan/PlanList';
 import axios from 'axios';
 
 import {
@@ -42,6 +42,19 @@ export default function MyPage() {
   // const nickName = 'test';
   const userName = '유림테스트';
 
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/plan/getplan', { userName })
+      .then((res) => {
+        console.log(res.data);
+        setPlan(res.data);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []);
+  console.log(plan);
+
   // 리뷰 데이터 가져오기
   useEffect(() => {
     axios
@@ -58,17 +71,21 @@ export default function MyPage() {
   }, []);
 
   // plan 가져오기
-  useEffect(() => {
-    axios
-      .post('http://localhost:4000/plan/getplan', { userName })
-      .then((res) => {
-        // console.log(res.data);
-        setPlan(res.data);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .post('http://localhost:4000/plan/getplan', { userName })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       console.log(';;');
+  //       setPlan(res.data);
+  //     })
+  //     .catch(() => {
+  //       console.log('실패');
+  //     });
+  // }, []);
+
+  // console.log(plan);
   return (
     <>
       <PageNav />
@@ -125,7 +142,7 @@ export default function MyPage() {
                           TripLog 여행
                         </h4>
 
-                        {plan.state.planDate.period.map(function (a, i) {
+                        {/* {plan.state.planDate.period.map(function (a, i) {
                           return (
                             <Container
                               sm={1}
@@ -134,21 +151,21 @@ export default function MyPage() {
                               xl={2}
                               className="overflow-auto"
                               style={{ height: '20%', width: '350px' }}
-                              // key={idx}
+                              key={i}
                             >
                               <Card className="col-md-12 overflow-auto">
                                 <Row className="d-flex justify-content-center">
                                   <Col md={4} className="d-flex m-3">
                                     <p className="fw-6 fw-bold me-2">day 1</p>
                                     <p className="fw-6">
-                                      {i + 1}일차{' '}
+                                      {i + 1}일차:
                                       {plan.state.planDate.period[i]}
                                     </p>
                                   </Col>
                                 </Row>
                                 <Row className="m-3">
-                                  <Stack className="col-9 d-flex flex-column my-auto">
-                                    {/* {plan.state.planItems[i].map(function (b, j) {
+                                  <Stack className="col-9 d-flex flex-column my-auto"> */}
+                        {/* {plan.state.planItems[i].map(function (b, j) {
                                     return (
                                   <Title className="m-1 fs-6">{plan.state.planItems[i][j].title}</Title>
                                   <Title
@@ -159,12 +176,12 @@ export default function MyPage() {
                             
                                 );
                               })} */}
-                                  </Stack>
+                        {/* </Stack>
                                 </Row>
                               </Card>
                             </Container>
                           );
-                        })}
+                        })} */}
                       </Col>
                     </Tab.Pane>
                     {/* 체크리스트 조회 */}

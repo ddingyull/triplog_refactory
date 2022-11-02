@@ -35,11 +35,6 @@ let pickMap = [
 ];
 
 export default function Plan() {
-  const nickName = useSelector((state) => state.users.userNickName);
-  const state = useSelector((state) => state.triplog);
-  const dispatch = useDispatch();
-  console.log(state.triplog);
-
   let h = 0;
   for (let i = 0; i < pickMap.length; i++) {
     for (let j = 0; j < pickMap[i].length; j++) {
@@ -71,6 +66,10 @@ export default function Plan() {
   const areaCode = params.areaCode;
 
   // const oldIdx = useRef();
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.triplog);
+  const nickName = useSelector((state) => state.users.userNickName);
 
   const [tourData, setTourData] = useState([]);
 

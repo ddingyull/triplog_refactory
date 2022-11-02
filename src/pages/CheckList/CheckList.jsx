@@ -12,8 +12,13 @@ import Footer from '../../components/Footer';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+// 리듀서
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function CheckList() {
+  const dispatch = useDispatch();
+  const nickName = useSelector((state) => state.users.userNickName);
+
   const inputRef = useRef();
   const [checked, setChecked] = useState([]);
   const [checklist, setChecklist] = useState([]);
@@ -21,7 +26,7 @@ export default function CheckList() {
 
   const callApi = async () => {
     axios
-      .get('http://localhost:4000/checklist')
+      .get('http://localhost:4000/checklist', { nickName })
       .then((res) => {
         console.log(res.data[0].items);
         let copy = [...checklist, ...res.data];
