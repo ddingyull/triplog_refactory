@@ -19,81 +19,80 @@ export default function CalendarMain({
   const [areaImg, setAreaImg] = useState(data);
 
   return (
-    <Container className="position-relative justify-content-center">
+    <Container className="justify-content-center">
       <Row className="col-lg-10 m-auto">
         <Col>
           <img
-            className="d-block m-auto pt-5"
+            className="d-block m-auto pt-5 position-relative"
             alt="메인이미지"
             src={pickAreaImg}
             style={{ width: '100%' }}
           />
-          <Col
+
+          <ColTitle
             xs={6}
-            className="position-absolute top-0 start-0"
+            // className="position-absolute top-0 start-0"
             style={{ marginTop: '50vh', marginLeft: '15vw' }}
           >
-            {/* <Title
-              className="fw-bold justify-content-start small-font-size"
-              style={{ fontSize: '2.5rem', color: '#333' }}
-            >
-              Always {pickAreaName} With TripLog
-            </Title> */}
-            <Title
-              className="fw-bold justify-content-start small-font-size"
-              style={{
-                fontSize: '8rem',
-                color: '#fff',
-                fontFamily: 'ChosunBg',
-              }}
-            >
+            <p className="fw-bold justify-content-start small-font-size">
               {pickAreaName}
-            </Title>
+            </p>
             <p
-              className="m-0 fs-5 text-center position-absolute top-10 start-0"
-              style={{ color: '#fff' }}
+              className="text-center "
+              style={{ color: '#fff', fontSize: '18px' }}
             >
               {subText}
             </p>
-          </Col>
-          <Col
+          </ColTitle>
+          <ColBtn
             xs={6}
             className="position-absolute top-0 start-0 d-block fs-6"
-            style={{
-              marginTop: '44vh',
-              marginLeft: '16vw',
-            }}
+            style={
+              {
+                // marginTop: '55vh',
+                // marginLeft: '20vw',
+              }
+            }
           >
             <CalendarModule planDate={planDate} />
-            {/* <LinkBtn href="/Budget" className="btn btn-light ms-2 my-1 fs-6">
-              💸 더치페이하기?
-            </LinkBtn>
-            <LinkBtn
-              href="/CheckList"
-              className="btn btn-light d-block ms-1 my-2 fs-6"
-            >
-              🔖 두고가시는건 없으신가요?
-            </LinkBtn> */}
-          </Col>
+          </ColBtn>
         </Col>
       </Row>
-      {/* <Row className="m-5">
-        <CalendarModule planDate={planDate} />
-      </Row> */}
     </Container>
   );
 }
-const Title = styled.div`
-  font: 2rem/1 'Inter';
-`;
-const LinkBtn = styled.button`
-  background-color: rgba(255, 255, 255, 0.7);
-  border: none;
-  font-size: 14px;
-  padding: 6px;
-  border-radius: 3px;
+const ColTitle = styled.div`
+  font: 8.5rem/1 'ChosunBg';
+  color: #fff;
+  position: absolute;
+  top: 90px;
+  left: 40px;
 
-  &:hover {
-    /* background-color: green; */
+  @media only screen and (max-width: 1140px) {
+    font: 5rem/1 'ChosunBg';
+    top: 70px;
+    left: 40px;
+  }
+
+  @media only screen and (max-width: 992px) {
+    font: 3rem/1 'ChosunBg';
+    top: 50px;
+    left: 40px;
+  }
+
+  @media only screen and (max-width: 720px) {
+    display: none;
+  }
+`;
+
+const ColBtn = styled.div`
+  position: absolute;
+  margin-top: 55vh;
+  margin-left: 20vw;
+
+  @media only screen and (max-width: 1140px) {
+    font: 0.5rem/1 'ChosunBg';
+    top: 30px;
+    left: 60px;
   }
 `;
