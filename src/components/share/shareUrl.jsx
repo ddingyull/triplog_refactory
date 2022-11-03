@@ -1,19 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FaShare } from 'react-icons/fa';
 
 const URLShareButton = styled.button`
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   color: white;
   border-radius: 24px;
   border: 0px;
   font-weight: 800;
-  font-size: 18px;
+  font-size: 10px;
+  margin-bottom: 7px;
   cursor: pointer;
-  background-color: #7362ff;
+  background-color: #198754;
   &:hover {
-    background-color: #a99fee;
+    background-color: #157347;
+    border: 1px solid #146c43;
   }
 `;
 
@@ -24,7 +27,9 @@ export default function ShareUrl() {
   return (
     <>
       <CopyToClipboard text={currentUrl}>
-        <URLShareButton>URL</URLShareButton>
+        <URLShareButton>
+          <FaShare />
+        </URLShareButton>
       </CopyToClipboard>
     </>
   );

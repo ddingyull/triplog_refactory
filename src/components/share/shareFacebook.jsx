@@ -4,7 +4,7 @@ import { FacebookShareButton, FacebookIcon } from 'react-share';
 // window 객체에서 현재 url 가져오기
 const currentUrl = window.location.href;
 
-export default function shareFacebook() {
+export default function ShareFacebook() {
   return (
     <>
       <FacebookShareButton style={{ marginRight: '20px' }} url={currentUrl}>
