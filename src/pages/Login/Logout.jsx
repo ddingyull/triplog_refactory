@@ -11,9 +11,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Logout({ logout }) {
-  return (
-    <Button onClick={logout}>
-      <FontAwesomeIcon icon={faArrowRightFromBracket} />
-    </Button>
-  );
+  const navigate = useNavigate();
+
+  // return (
+  //   <logoutRtn onClick={logout}>
+  //     <FontAwesomeIcon icon={faArrowRightFromBracket} />
+  //   </logoutRtn>
+  // );
 }
+
+const logoutRtn = styled.button``;

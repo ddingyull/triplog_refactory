@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Container,
   Nav,
@@ -8,7 +9,11 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faFaceSmile,
+  faArrowRightFromBracket,
+} from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Logout from '../pages/Login/Logout';
@@ -19,6 +24,7 @@ export default function NavHeader() {
   console.log(state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
 
   const reduxLogout = () => {
     dispatch(logout());
@@ -29,7 +35,7 @@ export default function NavHeader() {
     <>
       <Navbar expand="lg" className="shadow-sm">
         <Container className="text-center">
-          <Navbar.Brand href="#" className="fw-bolder col-4">
+          <Navbar.Brand href="/" className="fw-bolder col-4">
             TripLog
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -67,14 +73,31 @@ export default function NavHeader() {
                 href="/Login"
                 variant="outline-success"
                 className="fs-5"
+                // onClick={() => setShow(!show)}
               >
-                {state.isLogin === true && <Logout logout={reduxLogout} />}
-                {state.isLogin === false && <FontAwesomeIcon icon={faUser} />}
+                {/* {state.isLogin === true ? null : (
+                  <FontAwesomeIcon icon={faUser} />
+                )} */}
+                {state.isLogin === true ? null : setShow(show)}
               </Nav.Link>
-              <button onClick={reduxLogout}>ttttttt</button>
-              <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
+
+              <Nav.Link
+                href="/Logout"
+                variant="outline-success"
+                className="fs-5"
+                onClick={() => setShow(show)}
+              >
+                {/* {show ? <Logout logout={reduxLogout} /> : null} */}
+                {state.isLogin === true ? (
+                  <FontAwesomeIcon
+                    icon={faArrowRightFromBracket}
+                    logout={reduxLogout}
+                  />
+                ) : null}
+              </Nav.Link>
+              {/* <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
                 <FontAwesomeIcon icon={faFaceSmile} />
-              </Nav.Link>
+              </Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
