@@ -32,36 +32,26 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
           style={{ height: '20%', width: '350px' }}
           key={idx}
         >
-          <Card className="col-md-12 overflow-scroll">
+          <PlanCard className="col-md-12 mt-4">
             {/* 각기 다른 id를 가져와야하기 때문에 idx props로 전달 */}
             <KakaoMap
               className="col-6 m-auto"
               idx={idx}
               areaCode={state.areaCode}
             />
-            <Row className="d-flex justify-content-center">
-              <Col md={4} className="d-flex m-3">
-                <p className="fw-6 fw-bold me-2">day {idx + 1}</p>
-                <p className="fw-6">{idx + 1}일차</p>
+            <Row className="d-flex justify-content-center overflow-scroll">
+              <Col md={12} className="d-flex m-3">
+                <p className="fw-6 fw-bold ms-2 ">day {idx + 1}</p>
               </Col>
-              {/* <Col md={{ span: 4, offset: 2 }} className="text-end d-block ">
-                <a
-                  href="#"
-                  className="btn btn-light p-0"
-                  style={{ width: '50%' }}
-                >
-                  완료
-                </a>
-              </Col> */}
             </Row>
-            <Row className="m-3">
+            <PlanBox className="m-3 m-auto" style={{ height: '270px' }}>
               <PlanItem
                 productItems={productItems}
                 setPlanItems={setPlanItems}
                 planItems={planItems}
                 idx={idx}
               />
-            </Row>
+            </PlanBox>
 
             <Col className="m-auto d-flex mt-2 mb-2 col-10">
               <Button
@@ -69,17 +59,13 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
                   onClick();
                   dispatch(setDateIdx(idx));
                 }}
-                className="btn btn-light mx-1"
-                style={{ width: '70%' }}
+                className="btn btn-dark mx-1"
+                style={{ width: '100%' }}
               >
                 장소 추가
               </Button>
-
-              <Button className="btn btn-light mx-1" style={{ width: '70%' }}>
-                메모 추가
-              </Button>
             </Col>
-          </Card>
+          </PlanCard>
         </Container>
       )
     );
@@ -90,4 +76,14 @@ export default PlanList;
 
 const Title = styled.p`
   font: 2rem/1 'Inter';
+`;
+
+const PlanBox = styled.div``;
+
+const PlanCard = styled.div`
+  border: 0.5px solid #c9c9c9;
+  border-radius: 5px;
+  box-shadow: 2px 3px 2px 2px rgba(200, 200, 200, 0.1);
+  padding: 17px;
+  background-color: #fff;
 `;

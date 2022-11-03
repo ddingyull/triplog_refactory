@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ScrollToTop from './components/scrollTop';
 
 // 리덕스 세팅
 import rootReducer from './store';
@@ -30,6 +31,7 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <BrowserRouter>
+      <ScrollToTop />
       <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
