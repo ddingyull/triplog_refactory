@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Logout from '../pages/Login/Logout';
+// import Logout from '../pages/Login/Logout';
 import { logout } from '../store/modules/users';
 
 export default function NavHeader() {
@@ -75,29 +75,24 @@ export default function NavHeader() {
                 className="fs-5"
                 // onClick={() => setShow(!show)}
               >
-                {/* {state.isLogin === true ? null : (
+                {state.isLogin === false ? (
                   <FontAwesomeIcon icon={faUser} />
-                )} */}
-                {state.isLogin === true ? null : setShow(show)}
+                ) : null}
               </Nav.Link>
 
-              <Nav.Link
-                href="/Logout"
-                variant="outline-success"
-                className="fs-5"
-                onClick={() => setShow(show)}
-              >
-                {/* {show ? <Logout logout={reduxLogout} /> : null} */}
+              <Nav.Link variant="outline-success" className="fs-5">
                 {state.isLogin === true ? (
                   <FontAwesomeIcon
                     icon={faArrowRightFromBracket}
-                    logout={reduxLogout}
+                    onClick={() => {
+                      reduxLogout();
+                    }}
                   />
                 ) : null}
               </Nav.Link>
-              {/* <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
+              <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
                 <FontAwesomeIcon icon={faFaceSmile} />
-              </Nav.Link> */}
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

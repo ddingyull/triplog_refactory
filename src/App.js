@@ -8,7 +8,6 @@ import MyPage from './pages/MyPage/MyPage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
-import Logout from './pages/Login/Logout';
 import Users from './pages/Users/Users';
 import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 // // 리덕스 세팅
@@ -32,7 +31,6 @@ function App() {
       <Route path="/Budget" element={<Budget />} />
       <Route path="/CheckList" element={<CheckList />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
       <Route path="/users" element={<Users />} />
       <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler />} />
     </Routes>

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 // import { addPlanDate } from '../../store/modules/triplog';
 import { users } from '../../store/modules/users';
+import PlanKakao from '../../components/share/PlanKakao';
 
 // detail 페이지의 submenu 부분
 export default function Welcome() {
@@ -37,16 +38,18 @@ export default function Welcome() {
           <Col class="d-flex justify-content-start m-3 mb-0">
             <Plan_li>
               <a href="/Plan/:areaCode">
-                <Badge
+                <PlanKakao />
+                {/* <Badge
                   style={{ backgroundColor: '#036635' }}
                   bg="success"
                   text="light"
                   className="fs-8"
                 >
                   💌 공유하기
-                </Badge>{' '}
+                </Badge>{' '} */}
               </a>
             </Plan_li>
+
             <Plan_li>
               <a href="/CheckList">
                 <Badge bg="dark" text="light" className="fs-9">
