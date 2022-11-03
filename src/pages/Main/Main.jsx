@@ -15,6 +15,7 @@ import Footer from '../../components/Footer';
 // 리듀서
 import { useDispatch, useSelector } from 'react-redux';
 import { setAreaCode } from '../../store/modules/triplog';
+import MainIntro from './MainIntro';
 
 // import { useEffect } from 'react';
 // import { gsap } from 'gsap';
@@ -49,7 +50,9 @@ export default function Main() {
   return (
     <>
       {/* <MainScroll /> */}
+      <MainIntro />
       <Nav />
+
       {/* <section class="slide1">
         <img
           src={process.env.PUBLIC_URL + '/images/mainBeach.jpg'}

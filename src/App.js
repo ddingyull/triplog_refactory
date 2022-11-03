@@ -11,6 +11,7 @@ import Login from './pages/Login/Login';
 import Logout from './pages/Login/Logout';
 import Users from './pages/Users/Users';
 import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
+import MainIntro from './pages/Main/MainIntro';
 // // 리덕스 세팅
 // import { Provider, useSelector } from 'react-redux';
 // import { configureStore } from '@reduxjs/toolkit';
@@ -23,6 +24,7 @@ import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 function App() {
   return (
     <Routes>
+      <Route path="/MainIntro" element={<MainIntro />} />
       <Route path="/" element={<Main />} />
       <Route path="/SubMain/:areaCode" element={<SubMain />} />
       <Route path="/Plan/:areaCode" element={<Plan />} />
