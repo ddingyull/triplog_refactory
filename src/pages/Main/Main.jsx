@@ -69,8 +69,11 @@ export default function Main() {
         />
       </section> */}
       <Container className="col-9">
-        <h1 className="fw-bold lh-base mt-5 mb-5 mx-5">
-          <span style={{ color: '#198754' }}>{nickName}</span>님,
+        <h1 className="fw-bold lh-base mt-5 mb-5 mx-5 fs-md-6">
+          <span style={{ color: '#198754' }}>
+            {nickName === undefined ? nickName : '여행자'}
+          </span>
+          님,
           <br></br>환영합니다 👋!
         </h1>
 
@@ -165,7 +168,7 @@ export default function Main() {
         </Row>
 
         <Row sm xs={1} md={2} lg={4} className="g-4 mt-5">
-          {Array.from({ length: 6 }).map((_, idx) => (
+          {Array.from({ length: 4 }).map((_, idx) => (
             <Col>
               <Card>
                 <Card.Img
