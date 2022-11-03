@@ -13,6 +13,7 @@ import {
   faUser,
   faFaceSmile,
   faArrowRightFromBracket,
+  faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -68,29 +69,38 @@ export default function NavHeader() {
                 제주
               </Nav.Link>
             </Nav>
-            
-            <Nav className="d-flex">
+
+            <Nav
+              className="d-flex flex-sm-row justify-content-sm-center"
+              style={{ fontSize: '20px' }}
+            >
               <Nav.Link
                 href="/Login"
                 variant="outline-success"
                 className="fs-5"
+                style={{ marginRight: '15px' }}
               >
                 {state.isLogin === false ? (
                   <FontAwesomeIcon icon={faUser} />
                 ) : null}
               </Nav.Link>
 
-              <Nav.Link variant="outline-success" className="fs-5">
-              {state.isLogin === true ?
+              <Nav.Link
+                variant="outline-success"
+                className="fs-5"
+                style={{ marginRight: '15px' }}
+              >
+                {state.isLogin === true ? (
                   <FontAwesomeIcon
                     icon={faArrowRightFromBracket}
                     onClick={() => {
                       reduxLogout();
                     }}
-                  /> : null }
+                  />
+                ) : null}
               </Nav.Link>
               <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
-                <FontAwesomeIcon icon={faFaceSmile} />
+                <FontAwesomeIcon icon={faCircleUser} />
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

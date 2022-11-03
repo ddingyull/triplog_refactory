@@ -92,6 +92,9 @@ export default function Login({
   const [UserEmailValid, setUserEmailValid] = useState(false);
   const [UserPwValid, setUserPwValid] = useState(false);
 
+  const [fixEmailValue, setFixEmailValue] = useState('thals0@gmail.com');
+  const [fixPwlValue, setFixPwValue] = useState('11111111aa');
+
   const handleEmail = (e) => {
     setUseremail(e.target.value);
     const USEREMAIL_REGEX =

@@ -66,14 +66,16 @@ export default function CheckListRe() {
     return (
       <>
         <Container className="m-auto mt-5 ">
-          <h1 className="fw-bold lh-base mt-5 mb-5">
-            <span style={{ color: '#198754' }}>{nickName}</span>님, 여행 준비
-            <br></br>체크리스트
+          <h1 className="fw-bold lh-base mt-5 mb-4">
+            <span style={{ color: '#198754' }}>{nickName}</span>
+            <span>님의</span>
+            <br></br>
+            <span>체크리스트📝 입니다</span>
           </h1>
           <Accordion
             defaultActiveKey={[0]}
             alwaysOpen
-            className="container col-lg-6"
+            className="container col-lg-10"
           >
             {checklist.items.map(function (a, i) {
               return (
@@ -163,7 +165,7 @@ export default function CheckListRe() {
               );
             })}
           </Accordion>
-          <div className="container ">
+          {/* <div className="container ">
             <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
             <Button
               variant="success"
@@ -179,9 +181,8 @@ export default function CheckListRe() {
             >
               저장
             </Button>
-          </div>
+          </div> */}
         </Container>
-        <Footer />
       </>
     );
   }

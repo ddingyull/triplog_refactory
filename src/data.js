@@ -818,7 +818,6 @@ const gangwonTour = [
   },
 ];
 
-// api없음, 추후에 넣을 예정
 const jeonjuFood = [
   {
     addr1: '전라북도 전주시 덕진구 송천중앙로 33',
