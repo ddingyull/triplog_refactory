@@ -33,9 +33,6 @@ const PlanItem = ({ onClick, productItems, idx }) => {
             backgroundColor: 'rgba(200, 200, 200, .2)',
           }}
         >
-          {/* <Badge className='bg-success roundedCircle text-center' style={{width:"1.4rem", height:"1.4rem"}}>
-      {sigungucode}
-    </Badge> */}
           <img
             src={state.planItems[idx][i].Image}
             style={{ width: '2.5rem', height: '2.5rem', borderRadius: '50%' }}

@@ -10,7 +10,6 @@ import Footer from '../../components/Footer';
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button';
 import { login } from '../../store/modules/users';
-import Logout from './Logout';
 
 const ERROR_MSG = {
   required: '필수 정보입니다.',

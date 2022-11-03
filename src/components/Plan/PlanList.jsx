@@ -39,12 +39,15 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
               idx={idx}
               areaCode={state.areaCode}
             />
-            <Row className="d-flex justify-content-center overflow-scroll">
+            <Row className="d-flex justify-content-center ">
               <Col md={12} className="d-flex m-3">
                 <p className="fw-6 fw-bold ms-2 ">day {idx + 1}</p>
               </Col>
             </Row>
-            <PlanBox className="m-3 m-auto" style={{ height: '270px' }}>
+            <PlanBox
+              className="m-3 m-auto overflow-scroll"
+              style={{ height: '270px' }}
+            >
               <PlanItem
                 productItems={productItems}
                 setPlanItems={setPlanItems}
