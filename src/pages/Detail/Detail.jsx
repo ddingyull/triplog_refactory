@@ -1,15 +1,17 @@
 /* global kakao */
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Badge, Card } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Card, Image } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from '../../components/Footer';
 import Nav from '../../components/Nav';
 import { useNavigate, useParams } from 'react-router-dom';
 import Review from '../../components/Review';
 import ReviewBox from './contents/Review/ReviewBox';
+import ShareKakao from '../../components/share/ShareKakao';
 
 // redux 에서 review 업데이트 여부를 받아옴
 import { useSelector } from 'react-redux';
+import ShareUrl from '../../components/share/ShareUrl';
 
 export default function Detail() {
   const navigator = useNavigate();
@@ -49,17 +51,17 @@ export default function Detail() {
       .catch(() => console.log('리뷰 실패'));
   }, [reviewUpdate]);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/detail/${contentId}`)
-      .then((res) => {
-        console.log(res.data);
-        setDetails(res.data);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, [like]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:4000/detail/${contentId}`)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setDetails(res.data);
+  //     })
+  //     .catch(() => {
+  //       console.log('실패');
+  //     });
+  // }, [like]);
 
   // 유저 데이터 가져오기
   // useEffect(() => {
@@ -146,12 +148,9 @@ export default function Detail() {
                   <div
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      alert('서비스 구현예정입니다. 🙏');
-                    }}
                   >
-                    <h5>📆</h5>
-                    <p>일정짜기</p>
+                    <ShareKakao tourData={tourData} />
+                    <p>카카오 공유</p>
                   </div>
                   <div
                     className="text-center flex-fill"
@@ -167,11 +166,11 @@ export default function Detail() {
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      alert('서비스 구현예정입니다. 🙏');
+                      alert('url이 복사되었습니다.');
                     }}
                   >
-                    <h5>⬆</h5>
-                    <p>공유하기</p>
+                    <ShareUrl />
+                    <p style={{ fontSize: '1rem' }}>URL공유</p>
                   </div>
                 </div>
               </Card.Body>

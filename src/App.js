@@ -11,6 +11,7 @@ import Login from './pages/Login/Login';
 import Users from './pages/Users/Users';
 import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 import MainIntro from './pages/Main/MainIntro';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // // 리덕스 세팅
 // import { Provider, useSelector } from 'react-redux';
 // import { configureStore } from '@reduxjs/toolkit';
