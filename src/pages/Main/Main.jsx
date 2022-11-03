@@ -69,42 +69,46 @@ export default function Main() {
         />
       </section> */}
       <Container className="col-9">
-        <h1 className="fw-bold lh-base mt-5 mb-5 mx-5 fs-md-6">
-          <span style={{ color: '#198754' }}>
-            {nickName === undefined ? nickName : '여행자'}
-          </span>
-          님,
-          <br></br>환영합니다 👋!
-        </h1>
+        <Container>
+          <h1 className="fw-bold lh-base mt-5 mx-5 fs-md-6">
+            <span style={{ color: '#198754' }}>
+              {nickName === undefined ? nickName : '여행자'}
+            </span>
+            님,
+            <br></br>TripLog에 오신걸 환영합니다 👋!
+          </h1>
 
-        <div
+          <div className="mx-5 mt-3">
+            <Button
+              size="sm"
+              className="flex-fill mx-1 mb-2 border"
+              onClick={() => {
+                state.isLogin ? navigator('/budget') : navigator('/login');
+              }}
+              variant="outline-success"
+            >
+              #가계부 💸
+            </Button>
+            <Button
+              size="sm"
+              className="flex-fill mb-2 mx-1 border "
+              onClick={() => {
+                state.isLogin ? navigator('/checklist') : navigator('/login');
+              }}
+              variant="outline-success"
+            >
+              #여행체크리스트 📝
+            </Button>
+          </div>
+        </Container>
+
+        <Row
           lg
-          md={2}
+          md={6}
           sm
-          xs={1}
-          className="d-flex flex-wrap justify-content-center col-8 mx-auto mb-4"
+          xs={3}
+          className="d-flex col-8 mx-auto text-center mt-5"
         >
-          <Button
-            className="flex-fill mx-3 mb-2"
-            onClick={() => {
-              state.isLogin ? navigator('/budget') : navigator('/login');
-            }}
-            variant="success"
-          >
-            💸 가계부
-          </Button>
-          <Button
-            className="flex-fill  mx-3"
-            onClick={() => {
-              state.isLogin ? navigator('/checklist') : navigator('/login');
-            }}
-            variant="success"
-          >
-            📝 여행체크리스트
-          </Button>
-        </div>
-
-        <Row lg md={6} sm xs={3} className="d-flex col-8 mx-auto text-center">
           <Col
             onClick={() => {
               dispatch(setAreaCode(1));
@@ -167,19 +171,25 @@ export default function Main() {
           </Col>
         </Row>
 
-        <Row sm xs={1} md={2} lg={4} className="g-4 mt-5">
+        <Row sm xs={1} md={2} lg={4} className="g-4 mt-3">
           {Array.from({ length: 4 }).map((_, idx) => (
             <Col>
-              <Card>
+              <Card style={{ border: 'none' }}>
                 <Card.Img
                   variant="top"
                   src={`/images/main/main_grid${idx}.jpg`}
+                  className="p-0"
                 />
-                <Card.ImgOverlay>
-                  <Card.Body>
+                <Card.ImgOverlay className="p-0">
+                  <Card.Body className="p-0">
                     <Card.Text
-                      className="fw-bold fs-4 text-light"
-                      // style={{ color: '#f7f7f7' }}
+                      className="fw-bold fs-5 rounded p-4"
+                      style={{
+                        backgroundImage:
+                          'linear-gradient(0deg, rgba(0, 0, 0, 0), #c8c8c8) ',
+                        color: '#f6f6f6',
+                      }}
+
                       // fontFamily: 'ChosunBg',
                     >
                       {cardText[idx]}

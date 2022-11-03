@@ -37,6 +37,7 @@ export default function NavHeader() {
       <Navbar expand="lg" className="shadow-sm">
         <Container className="text-center">
           <Navbar.Brand href="/" className="fw-bolder col-4">
+            <img src="/images/tripLogLogo.png" style={{ width: '30px' }}></img>{' '}
             TripLog
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -99,7 +100,10 @@ export default function NavHeader() {
                   />
                 ) : null}
               </Nav.Link>
-              <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
+              <Nav.Link
+                href="/MyPage"
+                className="d-sm-none d-md-inline-block text-success"
+              >
                 {state.isLogin === true ? (
                   <FontAwesomeIcon icon={faCircleUser} />
                 ) : null}
