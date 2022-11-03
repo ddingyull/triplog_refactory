@@ -21,6 +21,7 @@ export default function Detail() {
   const [details, setDetails] = useState([]);
   const [like, setLike] = useState([]);
   const [review, setReview] = useState(true);
+  const nickName = useSelector((state) => state.users.userNickName);
   // 리덕스 detail store 에서 리뷰 업데이트 현황 받아오기
   const reviewUpdate = useSelector((state) => state.detail.reviewUpdate);
   // 이미지 로딩 실패시
@@ -105,8 +106,8 @@ export default function Detail() {
     };
 
     const map = new kakao.maps.Map(container, options);
-    // map.setDraggable(false);
-    // map.setZoomable(false);
+    map.setDraggable(false);
+    map.setZoomable(false);
 
     new kakao.maps.Marker({
       map: map,

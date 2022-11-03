@@ -26,12 +26,12 @@ export default function CheckList() {
 
   const callApi = async () => {
     axios
-      .get('http://localhost:4000/checklist', { nickName })
+      .post('http://localhost:4000/checklist', { nickName })
+
       .then((res) => {
-        console.log(res.data[0].items);
-        let copy = [...checklist, ...res.data];
-        setChecklist(copy);
-        setChecked(res.data[0].checked);
+        console.log(res.data);
+        setChecklist(res.data);
+        setChecked(res.data.checked);
         setOkay(true);
       })
       .catch((err) => console.log(err));
@@ -40,10 +40,6 @@ export default function CheckList() {
   useEffect(() => {
     callApi();
   }, []);
-
-  useEffect(() => {
-    console.log(checked);
-  }, [checked]);
 
   const handleToggle = (b) => () => {
     // console.log(b);
@@ -72,23 +68,24 @@ export default function CheckList() {
         <Nav />
         <Container className="m-auto mt-5 ">
           <h1 className="fw-bold lh-base mt-5 mb-5">
-            여행 준비<br></br>체크리스트
+            <span style={{ color: '#198754' }}>{nickName}</span>님, 여행 준비
+            <br></br>체크리스트
           </h1>
           <Accordion
             defaultActiveKey={[0]}
             alwaysOpen
             className="container col-lg-6"
           >
-            {checklist[0].items.map(function (a, i) {
+            {checklist.items.map(function (a, i) {
               return (
                 <>
                   <Accordion.Item eventKey={i}>
                     <Accordion.Header>
-                      {checklist[0].items[i].title}
+                      {checklist.items[i].title}
                     </Accordion.Header>
                     <Accordion.Body>
                       <Form>
-                        {checklist[0].items[i].content.map(function (b, j) {
+                        {checklist.items[i].content.map(function (b, j) {
                           return (
                             <>
                               <Form.Check
@@ -101,7 +98,7 @@ export default function CheckList() {
                                   checked={checked.indexOf(b) !== -1}
                                 />
                                 <Form.Check.Label>
-                                  {checklist[0].items[i].content[j]}
+                                  {checklist.items[i].content[j]}
                                 </Form.Check.Label>
                                 <FaTrash
                                   style={{ color: 'grey' }}
@@ -111,11 +108,9 @@ export default function CheckList() {
                                         'http://localhost:4000/checklist/deleteItem',
                                         {
                                           data: {
-                                            userId: 'test',
-                                            title: checklist[0].items[i].title,
-                                            item: checklist[0].items[i].content[
-                                              j
-                                            ],
+                                            nickName: nickName,
+                                            title: checklist.items[i].title,
+                                            item: checklist.items[i].content[j],
                                           },
                                         }
                                       )
@@ -146,7 +141,8 @@ export default function CheckList() {
                                 .post(
                                   'http://localhost:4000/checklist/addItem',
                                   {
-                                    title: checklist[0].items[i].title,
+                                    nickName: nickName,
+                                    title: checklist.items[i].title,
                                     item: input,
                                   }
                                 )
@@ -168,21 +164,23 @@ export default function CheckList() {
               );
             })}
           </Accordion>
-          <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
-          <Button
-            variant="success"
-            onClick={() => {
-              axios
-                .post('http://localhost:4000/checklist/checked', {
-                  userId: 'test',
-                  checked: checked,
-                })
-                .then((res) => console.log(res.data))
-                .catch(() => console.log('실패'));
-            }}
-          >
-            저장
-          </Button>
+          <div className="container ">
+            <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
+            <Button
+              variant="success"
+              onClick={() => {
+                axios
+                  .post('http://localhost:4000/checklist/checked', {
+                    nickName: nickName,
+                    checked: checked,
+                  })
+                  .then((res) => console.log(res.data))
+                  .catch(() => console.log('실패'));
+              }}
+            >
+              저장
+            </Button>
+          </div>
         </Container>
         <Footer />
       </>
