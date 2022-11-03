@@ -5,13 +5,19 @@ import {
   Row,
   InputGroup,
   Form,
+  Col,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { FaTrash } from 'react-icons/fa';
+import {
+  FaArrowAltCircleRight,
+  FaArrowRight,
+  FaRegArrowAltCircleRight,
+  FaTrash,
+} from 'react-icons/fa';
 // 리듀서
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -163,24 +169,31 @@ export default function CheckList() {
                 </>
               );
             })}
+            <Row className="mt-3 mx-1">
+              <Col>
+                <h5 calssName="fw-bold text-center">
+                  체크리스트 저장하기{' '}
+                  <FaArrowRight style={{ color: '#198754' }} />
+                </h5>
+              </Col>
+              <Col className="text-end">
+                <Button
+                  variant="success"
+                  onClick={() => {
+                    axios
+                      .post('http://localhost:4000/checklist/checked', {
+                        nickName: nickName,
+                        checked: checked,
+                      })
+                      .then((res) => console.log(res.data))
+                      .catch(() => console.log('실패'));
+                  }}
+                >
+                  저장
+                </Button>
+              </Col>
+            </Row>
           </Accordion>
-          <div className="container ">
-            <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
-            <Button
-              variant="success"
-              onClick={() => {
-                axios
-                  .post('http://localhost:4000/checklist/checked', {
-                    nickName: nickName,
-                    checked: checked,
-                  })
-                  .then((res) => console.log(res.data))
-                  .catch(() => console.log('실패'));
-              }}
-            >
-              저장
-            </Button>
-          </div>
         </Container>
         <Footer />
       </>
