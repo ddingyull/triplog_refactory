@@ -60,7 +60,7 @@ export default function PlanKakao() {
           shareKakao();
         }}
       >
-        💌 공유하기
+        #공유하기💌
       </Badge>
     </>
   );

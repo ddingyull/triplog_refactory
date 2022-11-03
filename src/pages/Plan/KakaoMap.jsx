@@ -48,7 +48,7 @@ export default function KakaoMap(props) {
     if (state.planItems[props.idx]) {
       state.planItems[props.idx].forEach((el, num, arr) => {
         let imageSrc = '/images/marker.png', // 마커이미지의 주소입니다
-          imageSize = new kakao.maps.Size(23, 30), // 마커이미지의 크기입니다
+          imageSize = new kakao.maps.Size(26, 30), // 마커이미지의 크기입니다
           imageOption = { offset: new kakao.maps.Point(13, 28) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
         // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
@@ -88,7 +88,7 @@ export default function KakaoMap(props) {
           // 선을 굵기
           strokeWeight: 3,
           // 선의 색
-          strokeColor: '#2e7c5d',
+          strokeColor: '#60907a',
           // 선의 불투명도
           strokeOpacity: 0.8,
           // 선의 스타일

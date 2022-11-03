@@ -148,7 +148,8 @@ export default function Plan() {
 
             {/* 여행지 검색 기능 */}
             <Row className="m-auto py-4 d-flex text-center">
-              <form>
+              {/* <form onSubmit={'reuturn false'}> */}
+              <div className="text-center">
                 <div
                   className="text-center fs-4 m-4"
                   style={{ fontFamily: 'ChosunBg' }}
@@ -159,17 +160,21 @@ export default function Plan() {
                   가고 싶은 여행지를 추가해보세요
                 </div>
                 <input
+                  onkeypress={'if(event.keyCode == 13){enterKey()}'}
                   type="text"
                   placeholder=" 여행지 검색"
                   ref={inputRef}
-                  className="m-1"
+                  className="m-1 d-inline"
                   style={{
                     width: '200px',
                     height: '40px',
                     boxSizing: 'border-box',
+                    outlineWidth: '2px',
+                    outlineColor: '#198754',
                   }}
                 />
                 <Button
+                  type="button"
                   style={{ backgroundColor: '#036635' }}
                   className="btn btn-success m-1"
                   onClick={() => {
@@ -197,7 +202,8 @@ export default function Plan() {
                 >
                   검색
                 </Button>
-              </form>
+              </div>
+              {/* </form> */}
 
               <div>
                 {
@@ -324,9 +330,9 @@ export default function Plan() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Container className="d-flex justify-content-start">
+      <Container className="d-flex justify-content-start col-9">
         <Button
-          className="btn d-block btn-dark mt-4 mb-3"
+          className="btn d-block btn-dark mt-3 mb-1"
           onClick={() => {
             savehandler();
             alert('여행 계획이 저장되었습니다');
@@ -336,7 +342,7 @@ export default function Plan() {
         </Button>
       </Container>
       {/* 여행계획 짜는 컴포넌트 */}
-      <Container className="d-flex flex-wrap justify-content-center overflow-scroll">
+      <Container className="d-flex flex-wrap justify-content-center overflow-scroll col-10">
         <PlanList
           productItems={productItems}
           setPlanItems={setPlanItems}

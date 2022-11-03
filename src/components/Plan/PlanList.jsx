@@ -40,8 +40,11 @@ const PlanList = ({ productItems, planItems, setPlanItems, onClick }) => {
               areaCode={state.areaCode}
             />
             <Row className="d-flex justify-content-center ">
-              <Col md={12} className="d-flex m-3">
-                <p className="fw-6 fw-bold ms-2 ">day {idx + 1}</p>
+              <Col md={12} className="d-flex m-3 ">
+                <p className="fw-6 fw-bold ms-2 ">
+                  day
+                  <span className="text-success"> {idx + 1}</span>
+                </p>
               </Col>
             </Row>
             <PlanBox

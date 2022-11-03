@@ -16,15 +16,18 @@ export default function Welcome() {
 
   if (users.isLogin) {
     return (
-      <Container className="p-3">
+      <Container className="p-3 col-9">
         <Row className="d-block justify-content-start">
-          <Col className="m-3">
+          <Col className="my-3">
             {/* <Title className="justify-content-start fw-bold">{state.user}의 여행계획 세우기 ✏️</Title> */}
             <Title className="justify-content-start fw-bold fs-3">
-              <p className="my-3 fs-6 d-block">
+              <p className="mt-3 fs-6 d-block">
                 여행에 필요한 모든 것, TripLog
               </p>
-              <p style={{ color: '#036635', display: 'inline-block' }}>
+              <p
+                className="mb-3"
+                style={{ color: '#036635', display: 'inline-block' }}
+              >
                 {users.userNickName}
               </p>
               의 여행계획 세우기 ✏️
@@ -49,25 +52,25 @@ export default function Welcome() {
                 </Badge>{' '} */}
               </a>
             </Plan_li>
+            <Plan_li>
+              <a href="/lists/1">
+                <Badge bg="success" text="light" className="fs-9">
+                  #구경하러가기👀
+                </Badge>{' '}
+              </a>
+            </Plan_li>
 
             <Plan_li>
               <a href="/CheckList">
                 <Badge bg="dark" text="light" className="fs-9">
-                  🔖 나의 체크리스트
+                  #나의 체크리스트🔖
                 </Badge>{' '}
               </a>
             </Plan_li>
             <Plan_li>
               <a href="/Budget">
                 <Badge bg="dark" text="light" className="fs-9">
-                  💸 가계부 작성하러가기
-                </Badge>{' '}
-              </a>
-            </Plan_li>
-            <Plan_li>
-              <a href="/lists/1">
-                <Badge bg="dark" text="light" className="fs-9">
-                  구경하러가기
+                  #가계부 작성하러가기💸
                 </Badge>{' '}
               </a>
             </Plan_li>
