@@ -59,6 +59,8 @@ export default function SubMain({ productItems, width, height, planDate }) {
         subText="브이로그 감성 낭낭한 여행일지, 트립로그와 함께라면 가능합니다"
       />
 
+      <Items2 width="18rem" height="18rem" pickAreaName={pickAreaName} />
+
       <Container className="p-3 mb-4 mt-5">
         <Row className="d-block justify-content-start">
           <Col className="m-3">
@@ -71,31 +73,19 @@ export default function SubMain({ productItems, width, height, planDate }) {
           </Col>
         </Row>
         <Row>
-          <TableContainer className="d-block justify-content-center">
-            <CardItemLink
-              width="24.5rem"
-              height="15rem"
-              title="내 여행 일정짜기"
-              // src="/images/icons/일정짜기.png"
-            />
-            <CardItemLink
-              width="24.5rem"
-              height="15rem"
-              title="우리 여행 가계부"
-              // src="/images/icons/가계부.png"
-            />
-            <CardItemLink
-              width="24.5rem"
-              height="15rem"
-              title="여행 전 체크리스트"
-              // src="/images/icons/체크리스트.png"
-            />
+          <TableContainer className="d-block rounded text-center">
+            <a href="/plan/1">
+              <img src="/images/icons/여행 계획하기.png"></img>
+            </a>
+            <a href="/budget">
+              <img src="/images/icons/가계부.png"></img>
+            </a>
+            <a href="/checklist">
+              <img src="/images/icons/체크리스트.png"></img>
+            </a>
           </TableContainer>
         </Row>
       </Container>
-
-      <Items2 width="18rem" height="18rem" pickAreaName={pickAreaName} />
-
       <Footer />
     </>
   );

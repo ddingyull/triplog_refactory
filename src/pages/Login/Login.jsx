@@ -9,8 +9,7 @@ import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button';
-import { login } from '../../store/modules/triplog';
-import Logout from './Logout';
+import { login } from '../../store/modules/users';
 
 const ERROR_MSG = {
   required: '필수 정보입니다.',
@@ -92,6 +91,9 @@ export default function Login({
 
   const [UserEmailValid, setUserEmailValid] = useState(false);
   const [UserPwValid, setUserPwValid] = useState(false);
+
+  const [fixEmailValue, setFixEmailValue] = useState('thals0@gmail.com');
+  const [fixPwlValue, setFixPwValue] = useState('11111111aa');
 
   const handleEmail = (e) => {
     setUseremail(e.target.value);
@@ -228,7 +230,6 @@ export default function Login({
             ></Btn>
           </a>
           {/* <a href={KAKAO_AUTH_URL}>카카오톡로그인</a> */}
-          <Logout />
         </Card>
       </Container>
       <Footer />

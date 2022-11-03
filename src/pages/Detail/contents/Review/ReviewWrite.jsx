@@ -2,25 +2,36 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Container, Row, Col, Form, Button, Alert} from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa';
-
+// 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
+// dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
+import { useDispatch, useSelector } from 'react-redux';
+import { reviewUpdate } from '../../../../store/modules/detail';
 
 const ARRAY = [0, 1, 2, 3, 4];
+const formData = new FormData();
 
-export default function ReviewWrite(props) {
+export default function ReviewWrite() {
   const params = useParams();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  //dispatch 변수에 할당
+  const dispatch = useDispatch();
+  const nickName = useSelector((state) => state.users.userNickName);
   const contentId = params.contentId;
   const contentRef = useRef();
   const imgRef = useRef();
+  //이미지 함수
+  const handleImg = (e) => {
+    formData.append('img', e.target.files[0]);
+  };
 
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const [star, setStar] = useState(0);
 
   /* 별점 등록 */
-  const handleStarClick = index => {
+  const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
       clickStates[i] = i <= index ? true : false;
@@ -31,24 +42,21 @@ export default function ReviewWrite(props) {
   const sendReview = () => {
     setStar(clicked.filter(Boolean).length);
   };
-  
-  useEffect(() => {
-    sendReview();
-  }, [clicked]); 
 
   useEffect(() => {
-    
-  }, [contentRef]);
+    sendReview();
+  }, [clicked]);
+
+  useEffect(() => {}, [contentRef]);
 
   return (
     <>
       {ReviewWrite ? (
         <Container className=" border border-success rounded">
-
           <Form.Group className="position-relative">
-            <div className='mt-3 mb-3 mx-3'>
+            <div className="mt-3 mb-3 mx-3">
               {/* 별점 등록 */}
-              <Stars className='mb-4 justify-content-center' >
+              <Stars className="mb-4 justify-content-center">
                 {ARRAY.map((el, idx) => {
                   return (
                     <FaStar
@@ -74,37 +82,67 @@ export default function ReviewWrite(props) {
               <Form.Control
                 type="file"
                 name="file"
-                size="sm" 
+                size="sm"
                 className="mb-3"
-                ref={imgRef}/>
+                ref={imgRef}
+                onChange={handleImg}
+              />
             </div>
 
             <Row className="d-flex justify-content-end">
               <Col className=" text-end mb-3 mx-2">
-                <Button variant="success" className="reviewSubmitBtn" 
+                <Button
+                  variant="success"
+                  className="reviewSubmitBtn"
                   onClick={() => {
-                    const content = contentRef.current.value
-                    axios
-                      .post("http://localhost:4000/review/write", [{ content, contentId, star }])
-                      .then((res) => {
-                        console.log('성공');
-                        contentRef.current.value='';
-                        alert("댓글 등록을 성공하였습니다. 🙌");
-                        // props.setReview(false);
-                      })
-                      .catch(() => {
-                        console.log("실패");
-                        alert("댓글 등록을 실패하였습니다. 다시 시도해주세요.");
-                      });
+                    console.log(nickName);
+                    const content = contentRef.current.value;
+                    nickName === ''
+                      ? alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!')
+                      : fetch('http://localhost:4000/review/img', {
+                          method: 'post',
+                          headers: {},
+                          body: formData,
+                        })
+                          .then((res) => res.json())
+                          .then((data) => {
+                            console.log(data);
+                            axios
+                              .post('http://localhost:4000/review/write', [
+                                {
+                                  nickName,
+                                  content,
+                                  contentId,
+                                  star,
+                                  img: data,
+                                },
+                              ])
+                              .then((res) => {
+                                console.log('댓글 등록 성공');
+                                contentRef.current.value = '';
+                                imgRef.current.value = '';
+                                alert('댓글 등록을 성공하였습니다. 🙌');
+                                // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
+                                dispatch(reviewUpdate());
+                              })
+                              .catch(() => {
+                                console.log('댓글 등록 실패');
+                                alert(
+                                  '댓글 등록을 실패하였습니다. 다시 시도해주세요.'
+                                );
+                              });
+                          });
                   }}
-                    >등록</Button>
+                >
+                  등록
+                </Button>
               </Col>
             </Row>
           </Form.Group>
         </Container>
       ) : null}
     </>
-  )
+  );
 }
 
 const Stars = styled.div`

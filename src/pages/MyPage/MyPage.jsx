@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -16,324 +16,360 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import Footer from '../../components/Footer';
 import PageNav from '../../components/Nav';
-import CheckList from '../../pages/CheckList/CheckList';
+import CheckListRe from '../CheckList/CheckList_re';
+import BudgetRe from '../Budget/Budget_re';
 import Review from '../../components/Review';
 // import PlanList from '../../components/Plan/PlanList';
-import Budget from './content/Budget';
 import axios from 'axios';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import {
   FaArrowAltCircleUp,
   FaPencilAlt,
   FaTrash,
   FaStar,
 } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+
+const formData = new FormData();
 
 export default function MyPage() {
-  // useEffect (() => {
-  //   AuthRoute();
-  // }, []);
+  let [tab, setTab] = useState(0);
 
-  // const AuthRoute = function() {
-  //   return (
-  //     isLogin ?
-  //       <MyPage/>
-  //       : alert('로그인이 필요한 페이지입니다'),
-  //         Navigate('/Login')
-  //       )
-  //         }
+  const dispatch = useDispatch();
+  const nickName = useSelector((state) => state.users.userNickName);
+  const [okay, setOkay] = useState(false);
+  const [yes, setYes] = useState(false);
+  const [good, setGood] = useState(false);
+  const [tourData, setTourData] = useState([]);
+  const [like, setLike] = useState([]);
+  const [user, setUser] = useState([]);
+  const [review, setReview] = useState([]);
+  const [plan, setPlan] = useState([]);
+  // 이미지 저장
+  const [userData, setUserData] = useState([]);
+  const [imgUpload, setImgUpload] = useState(false);
+  // islogin
+  const users = useSelector((state) => state.users);
 
-  // const Navigate = useNavigate();
-  // const isLogin = localStorage.getItem("token");
-  return (
-    <>
-      <PageNav />
-      <Container>
-        <Row
-          style={{ marginTop: '50px' }}
-          className="d-block justify-content-center"
-        >
-          <Col sm={12}>
-            <Tab.Container
-              id="left-tabs-example"
-              defaultActiveKey="budget"
-              className="m-auto"
-            >
-              <Row>
-                {/* 가로 nav tab */}
-                <Col sm={3}>
-                  <img
-                    src="/images/yurim.png"
-                    style={{ width: '13rem', height: '13rem' }}
-                    className="bg-success rounded text-center d-block m-auto"
-                  ></img>
-                  <Nav
-                    variant="pills"
-                    className="flex-column mt-4 text-center"
-                    style={{ color: '#333' }}
-                  >
-                    <Nav.Item>
-                      <Nav.Link eventKey="trip">여행 조회</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="budget">가계부</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="pick">찜한 곳</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="review">리뷰</Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                </Col>
+  // 이미지 업로드
+  const imgRef = useRef();
+  const handleImg = (e) => {
+    formData.append('img', e.target.files[0]);
+  };
+  const userImg = async () => {
+    await fetch('http://localhost:4000/user/img', {
+      method: 'post',
+      headers: {},
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        axios
+          .post('http://localhost:4000/user/upload', [{ nickName, img: data }])
+          .then((결과) => {
+            // 백엔드 콘솔 결과
+            console.log(결과);
+            console.log('성공');
+            setImgUpload(true);
+          })
+          .catch(() => {
+            console.log('실패');
+          });
+      });
+  };
 
-                {/* 컨텐츠 */}
-                <Col sm={9}>
-                  <Tab.Content className="m-auto">
-                    {/* 여행 조회 */}
-                    <Tab.Pane eventKey="trip">
-                      <Col sm={11} className="m-auto">
-                        <h4 className="fw-bold fs-3 text-center p-4">
-                          <p className="text-success d-inline">thals0 님 </p>의
-                          TripLog 여행
-                        </h4>
-                        <Container
-                          sm={1}
-                          md={1}
-                          lg={2}
-                          xl={2}
-                          className="overflow-auto"
-                          style={{ height: '20%', width: '350px' }}
-                          // key={idx}
-                        >
-                          <Card className="col-md-12 overflow-auto">
-                            <Row className="d-flex justify-content-center">
-                              <Col md={4} className="d-flex m-3">
-                                <p className="fw-6 fw-bold me-2">day 1</p>
-                                <p className="fw-6">1일차</p>
-                              </Col>
-                            </Row>
-                            <Row className="m-3">
-                              <Stack className="col-9 d-flex flex-column my-auto">
-                                <Title className="m-1 fs-6">title</Title>
-                                <Title
-                                  className="m-1"
-                                  style={{ fontSize: '12px' }}
-                                >
-                                  주소
-                                </Title>
-                              </Stack>
-                            </Row>
-                          </Card>
-                        </Container>
-                      </Col>
-                    </Tab.Pane>
-                    {/* 체크리스트 조회 */}
-                    <Tab.Pane eventKey="checklist">
-                      <h4 className="fw-bold fs-3 text-center p-4">
-                        <p className="text-success d-inline">thals0 님 </p>의
-                        체크리스트
-                      </h4>
-                      <Container className="m-auto mt-5">
-                        <Accordion defaultActiveKey="0">
-                          <Accordion.Item>
-                            <Accordion.Header>
-                              db에서 데이터 받아와서 보여주기
-                            </Accordion.Header>
-                            <Accordion.Body>
-                              <Form>
-                                <Form.Check
-                                  type="checkbox"
-                                  className="d-flex justify-content-between"
-                                >
-                                  <Form.Check.Input
-                                    type="checkbox"
-                                    // onClick={handleToggle(b)}
-                                    // checked={checked.indexOf(b) !== -1}
-                                  />
-                                  <Form.Check.Label>11</Form.Check.Label>
-                                  <FaTrash style={{ color: 'grey' }} />
-                                </Form.Check>
-                              </Form>
-                            </Accordion.Body>
-                          </Accordion.Item>
-                        </Accordion>
-                      </Container>
-                    </Tab.Pane>
+  // 디테일 데이터 받아오기
+  useEffect(() => {
+    axios.get('http://localhost:4000/detail').then((res) => {
+      // console.log(res.data[0].data.title);
+      console.log(res.data);
+      setTourData(res.data);
+      setOkay(true);
+    });
+  }, []);
 
-                    {/* 가계부 조회*/}
-                    <Tab.Pane eventKey="budget">
-                      <h4 className="fw-bold fs-3 text-center p-4">
-                        <p className="text-success d-inline">thals0 님 </p>의
-                        가계부
-                      </h4>
-                      <Col
-                        className="col-6 p-5 rounded border m-auto"
-                        style={{ backgroundColor: '#fafafa', width: '70%' }}
-                      >
-                        <h6
-                          className="fw-bold text-center"
-                          style={{ color: '#198754' }}
-                        >
-                          TripLog
-                        </h6>
-                        <h2 className="fw-bold text-center fs-4">RECEIPT</h2>
+  // plan
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/plan/getplan', { nickName })
+      .then((res) => {
+        console.log('%%%%%%', res.data);
+        setPlan(res.data);
+        setYes(true);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []);
 
-                        <hr
-                          class="solid"
-                          style={{ borderTopWidth: '2px' }}
-                        ></hr>
+  // 리뷰 데이터 가져오기
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/review', { nickName })
+      .then((res) => {
+        // console.log(res.data);
+        setReview(res.data);
+        setGood(true);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []);
 
-                        <Row className=" mb-2 mx-1">
-                          <Col className="fw-bold col-2 fs-6">Day</Col>
-                          <Col className="fw-bold col-6 text-center fs-6">
-                            ITEM
-                          </Col>
-                          <Col className="fw-bold col-2 text-center fs-6 ">
-                            Price
-                          </Col>
-                          <Col className="fw-bold col-1 fs-6">Edit</Col>
-                          <Col className="fw-bold col-1 fs-6">Del</Col>
+  // 저장 목록 데이터 가져오기
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/like/getlikes', { nickName })
+      .then((res) => {
+        console.log(res.data);
+        // console.log(res.data[0].likes);
+        setLike(res.data.likes);
+        // setOkay(true);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []);
+
+  // 이미지 가져오기
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/user', { nickName })
+      .then((res) => {
+        setUserData(res.data);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, [userData]);
+
+  if (okay && yes && good) {
+    return (
+      <>
+        <PageNav />
+        <Container>
+          <Row style={{ marginTop: '50px' }} className="m-auto my-5">
+            <Col sm={12}>
+              <Tab.Container
+                id="left-tabs-example"
+                defaultActiveKey="budget"
+                className="m-auto"
+              >
+                <Row>
+                  {/* 가로 nav tab */}
+                  <Col className="col-sm-0 col-md-1 col-lg-2">
+                    {userData.img !== undefined ? (
+                      <img
+                        src={`http://localhost:4000/uploads/${userData.img}`}
+                        alt="회원 이미지"
+                        style={{ width: '13rem', height: '13rem' }}
+                        className="bg-dark rounded text-center d-block m-auto"
+                      />
+                    ) : (
+                      <div
+                        // src="/images/submain/서울.jpg"
+                        style={{ width: '13rem', height: '13rem' }}
+                        className="bg-dark rounded text-center d-block m-auto"
+                      ></div>
+                    )}
+                    <p className="fs-3 text-center text-success fw-bold m-2">
+                      {nickName}
+                    </p>
+                    {imgUpload === true ? null : (
+                      <div className="d-flex">
+                        <input
+                          style={{ fontSize: '14px', margin: '20px' }}
+                          type="file"
+                          ref={imgRef}
+                          name="img"
+                          onChange={handleImg}
+                        />
+                        <button className="btn" onClick={userImg}>
+                          ✅
+                        </button>
+                      </div>
+                    )}
+                    <Nav
+                      variant="pills"
+                      className="flex-column mt-4 text-center"
+                      style={{ color: '#333' }}
+                    >
+                      <Nav.Item>
+                        <Nav.Link eventKey="trip">여행 조회</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="budget">가계부</Nav.Link>
+                      </Nav.Item>
+                      {/* <Nav.Item>
+                        <Nav.Link eventKey="pick">찜한 곳</Nav.Link>
+                      </Nav.Item> */}
+                      <Nav.Item>
+                        <Nav.Link eventKey="review">리뷰</Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  </Col>
+                  {/* 컨텐츠 */}
+                  <Col className="col-sm-12 col-md-8">
+                    <Tab.Content>
+                      {/* 여행 조회 */}
+                      <Tab.Pane eventKey="trip">
+                        <Row className="m-auto">
+                          <h1 className="fw-bold lh-base mt-5 mb-4">
+                            <span style={{ color: '#198754' }}>{nickName}</span>
+                            <span>님의</span>
+                            <br></br>
+                            <span>여행🛫 일정입니다</span>
+                          </h1>
+                          <Row className="d-flex w-75 m-auto">
+                            {plan !== '내 여행 없음' ? (
+                              plan.state.planDate.period.map(function (a, i) {
+                                return (
+                                  <Container xl={5} className="my-3 " key={i}>
+                                    <Card className="m-2">
+                                      <Row className="d-flex justify-content-center flex-wrap">
+                                        <Col
+                                          md={7}
+                                          className="d-flex text-center"
+                                        >
+                                          <p
+                                            className="fw-6 fw-bold w-75 m-auto my-3 text-center bg-success rounded p-2"
+                                            style={{ color: '#fff' }}
+                                          >
+                                            day {i + 1}
+                                          </p>
+                                        </Col>
+                                      </Row>
+                                      <Row className="m-3">
+                                        <Stack className="col-9 d-flex flex-column my-auto text-center">
+                                          {plan.state.planItems[i].map(
+                                            function (b, j) {
+                                              return (
+                                                <div
+                                                  style={{
+                                                    backgroundColor: '#fafafa',
+                                                    padding: '1rem',
+                                                  }}
+                                                >
+                                                  <Title className="m-1 fs-6">
+                                                    {
+                                                      plan.state.planItems[i][j]
+                                                        .title
+                                                    }
+                                                  </Title>
+                                                  <Title
+                                                    className="m-1"
+                                                    style={{ fontSize: '12px' }}
+                                                  >
+                                                    {
+                                                      plan.state.planItems[i][j]
+                                                        .addr1
+                                                    }
+                                                  </Title>
+                                                  <div
+                                                    style={{ color: '#1A8754' }}
+                                                  >
+                                                    <FontAwesomeIcon
+                                                      icon={faArrowDown}
+                                                    />
+                                                  </div>
+                                                </div>
+                                              );
+                                            }
+                                          )}
+                                        </Stack>
+                                      </Row>
+                                    </Card>
+                                  </Container>
+                                );
+                              })
+                            ) : (
+                              <div>계획한 여행이 아직 없습니다</div>
+                            )}
+                          </Row>
                         </Row>
-                        <hr class="solid"></hr>
-                        <Row className="mx-1">
-                          <Col className="col-2">
-                            <p>11.04</p>
-                          </Col>
-                          <Col className="col-6 text-center">title</Col>
-                          <Col className="col-2 text-center">가격</Col>
-                          <Col
-                            className="col-1 text-end"
-                            style={{ cursor: 'pointer' }}
-                          >
-                            {/* <FaPencilAlt style={{ color: '#198754' }} /> */}
-                          </Col>
-                          <Col
-                            className="col-1 text-end"
-                            style={{ cursor: 'pointer' }}
-                          >
-                            <FaTrash style={{ color: 'grey' }} />
-                          </Col>
-                        </Row>
-                        <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
-                        <Row>
-                          <Col sm md lg="auto" className="fw-bold">
-                            ITEM COUNT :
-                          </Col>
-                          <Col className="text-end">10개</Col>
-                        </Row>
+                      </Tab.Pane>
 
-                        <Row>
-                          <Col className="fw-bold">인원수 : 8 명</Col>
-                          <Col sm md lg="auto" className="text-end">
-                            인당 20000원
-                          </Col>
-                        </Row>
+                      {/* 체크리스트 조회 */}
+                      <Tab.Pane eventKey="checklist">
+                        <CheckListRe />
+                      </Tab.Pane>
 
-                        <Row>
-                          <Col className="fw-bold">총 합계 :</Col>
-                          <Col sm md lg="auto" className="text-end">
-                            오조오억원
-                          </Col>
-                        </Row>
+                      {/* 가계부 조회*/}
+                      <Tab.Pane eventKey="budget">
+                        <BudgetRe />
+                      </Tab.Pane>
 
-                        <hr
-                          className="dashed"
-                          style={{ borderTop: 'dashed' }}
-                        ></hr>
-                        <Row>
-                          <Col className="text-start ">
-                            <span>영수증 전체 초기화</span>
-                          </Col>
-                          <Col lg="auto" className="col-sm-2 ">
-                            <Button variant="success">초기화</Button>
-                          </Col>
-                        </Row>
-                      </Col>
-                      ;
-                    </Tab.Pane>
-
-                    {/* 찜한 곳 조회*/}
-                    <Tab.Pane eventKey="pick" className="container">
-                      <h4 className="fw-bold fs-3 text-center p-4">찜한 곳</h4>
-                      <Container className="d-flex flex-wrap">
-                        {[1, 2, 3, 4].map((a, i) => {
+                      {/* 리뷰 조회 */}
+                      <Tab.Pane eventKey="review">
+                        <h1 className="fw-bold lh-base mt-5 mb-4">
+                          <span style={{ color: '#198754' }}>{nickName}</span>
+                          <span>님의</span>
+                          <br></br>
+                          <span>리뷰✏️ 입니다</span>
+                        </h1>
+                        <Review />
+                        {review.map(function (b, j) {
                           return (
-                            <Card
-                              className="m-3"
-                              style={{ width: '29%' }}
-                              // onClick={() => {navigate(`/detail/${tourData.contentid}`);}}
-                            >
-                              <Card.Img
-                                variant="top"
-                                // src={tourData.firstimage}
-                                src="/images/jeju/tour/유수암마을_귤.png"
-                              />
-                              <Card.Body>
-                                {/* <Card.Title>{tourData.title}</Card.Title> */}
-                                <Card.Title>제목제목제목</Card.Title>
-                                <Card.Text className="text-muted">
-                                  {/* {tourData.addr1} */}
-                                  서울시 서초구 방배1동
-                                </Card.Text>
-                                <Card.Text className="text-muted">
-                                  ⭐⭐⭐⭐⭐ <span>30</span>
-                                </Card.Text>
-                              </Card.Body>
-                            </Card>
+                            <>
+                              <Row
+                                className="m-auto text-center w-75 shadow-sm"
+                                style={{ fontSize: '12px' }}
+                              >
+                                <Card className="mt-3">
+                                  <Card.Body>
+                                    <Card.Title className="mb-3 fs-6 bg-dark text-light w-50 p-1 m-5 m-auto rounded">
+                                      {tourData.map((el) => {
+                                        if (
+                                          el.data.contentid ===
+                                          review[j].contentId
+                                        ) {
+                                          return el.data.title;
+                                        }
+                                      })}
+                                    </Card.Title>
+                                    <div className="d-flex">
+                                      <div className="border rounded w-50">
+                                        <p className="mb-2 text-muted">
+                                          {review[j].dateFull.slice(0, 10)}
+                                        </p>
+                                        <Card.Text className="mb-2">
+                                          ⭐⭐⭐⭐⭐
+                                          <span> {review[j].star} </span>
+                                          ❤👍🏼 조회수{' '}
+                                          <span>{review[j].view}</span>
+                                        </Card.Text>
+                                      </div>
+
+                                      <div className="w-50 ms-2 border rounded">
+                                        <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
+                                          {review[j].content}
+                                        </Card.Text>
+                                      </div>
+                                    </div>
+                                  </Card.Body>
+                                </Card>
+                              </Row>
+                            </>
                           );
                         })}
-                      </Container>
-                    </Tab.Pane>
+                      </Tab.Pane>
+                    </Tab.Content>
+                  </Col>
+                  {/* 컨텐츠 끝나는 시점 */}
+                </Row>
+              </Tab.Container>
+            </Col>
+          </Row>
+        </Container>
 
-                    {/* 리뷰 조회 */}
-                    <Tab.Pane eventKey="review">
-                      <h4 className="fw-bold fs-3 text-center p-4">
-                        <p className="text-success d-inline">thals0 님 </p>의
-                        리뷰
-                      </h4>
-                      <Container className=" border border-success rounded">
-                        <Col>
-                          <Card
-                            className="mt-3 "
-                            style={{ overflowY: 'scroll' }}
-                          >
-                            <Card.Body
-                              className="m-2 "
-                              style={{ height: '40vh' }}
-                            >
-                              <p className=" mb-2 text-muted">
-                                조회수 <span>100</span>
-                              </p>
-                              <Card.Title className="mb-3">
-                                {/* {tourData.title} */}
-                              </Card.Title>
-                              <Card.Subtitle className="mb-2 text-muted">
-                                {/* 📍 {tourData.addr1} */}
-                              </Card.Subtitle>
-                              <Card.Text className="mb-2">
-                                ⭐⭐⭐⭐⭐<span> 30 </span> ❤{' '}
-                                {/* <span>{details.like}</span> */}
-                              </Card.Text>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      </Container>
-                    </Tab.Pane>
-                  </Tab.Content>
-                </Col>
-              </Row>
-            </Tab.Container>
-          </Col>
-        </Row>
-      </Container>
-
-      <Footer />
-    </>
-  );
+        <Footer />
+      </>
+    );
+  }
 }
 
 const Stars = styled.div`

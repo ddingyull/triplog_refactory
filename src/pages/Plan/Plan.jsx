@@ -5,6 +5,7 @@ import axios from 'axios';
 import PlanList from '../../components/Plan/PlanList';
 import SelectList from '../../components/Plan/SelectList';
 import styled from 'styled-components';
+import data from '../../data';
 
 import {
   Container,
@@ -21,25 +22,18 @@ import Footer from '../../components/Footer';
 import Welcome from './Welcome';
 import { addPlanItems } from '../../store/modules/triplog';
 import { useDispatch, useSelector } from 'react-redux';
+import ShareKakao from '../../components/share/ShareKakao';
 
 const { kakao } = window;
 
 let pickMap = [
   { areacode: '1', MapY: '127.04', MapX: '37.59' },
-  { areacode: '6', MapY: '127.04', MapX: '37.59' }, //부산
-  { areacode: '32', MapY: '127.04', MapX: '37.59' }, //강원
-  { areacode: '32', MapY: '127.04', MapX: '37.59' }, //강원
-  { areacode: '35', MapY: '127.04', MapX: '37.59' }, //경주
+  { areacode: '6', MapY: '129.16', MapX: '35.15' }, //부산
+  { areacode: '32', MapY: '128.89', MapX: '37.79' }, //강원
+  { areacode: '35', MapY: '129.33', MapX: '35.78' }, //경주
+  { areacode: '37', MapY: '127.15', MapX: '35.81' }, //전주
   { areacode: '39', MapY: '33.368', MapX: '126.54' }, //제주
 ];
-// let pickMap = [
-//   ['1', '127.04', '37.59'],
-//   ['6', '127.04', '37.59'], //부산
-//   ['32', '127.04', '37.59'], //강원
-//   ['32', '127.04', '37.59'], //강원
-//   ['35', '127.04', '37.59'], //경주
-//   ['39', '33.368', '126.54'], //제주
-//   ]
 
 export default function Plan() {
   let h = 0;
@@ -47,19 +41,13 @@ export default function Plan() {
     for (let j = 0; j < pickMap[i].length; j++) {
       if (pickMap[i][j].find((el) => el.areacode === areaCode) !== undefined) {
         h = i;
-        console.log(h);
-        console.log(pickMap[i].find((el) => el.areacode === areaCode));
       }
     }
   }
 
-  let pickMapY = parseFloat(pickMap[h].MapY);
-  let pickMapX = parseFloat(pickMap[h].MapX);
-  console.log('@', pickMapY, pickMapX);
-
   const savehandler = () => {
     axios
-      .post('http://localhost:4000/plan', { state })
+      .post('http://localhost:4000/plan', { state, nickName })
       .then((res) => {
         console.log(res.data);
         console.log('여행 계획 일정 전송 성공!!');
@@ -76,7 +64,7 @@ export default function Plan() {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.triplog);
-  console.log(state);
+  const nickName = useSelector((state) => state.users.userNickName);
 
   const [tourData, setTourData] = useState([]);
 
@@ -127,12 +115,13 @@ export default function Plan() {
     console.log(clickItem);
     console.log(productItems);
   };
+  const [areaName, setAreaName] = useState(data);
+  let pickAreaName = areaName[h][0];
 
   return (
     <>
       <Nav />
       <Welcome />
-
       <Modal
         show={show}
         onHide={() => {
@@ -143,7 +132,7 @@ export default function Plan() {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>제주 여행 🍊</Modal.Title>
+          <Modal.Title>TripLog</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Card className="col-sm-10 col-md- overflow-auto m-auto">
@@ -160,13 +149,18 @@ export default function Plan() {
             {/* 여행지 검색 기능 */}
             <Row className="m-auto py-4 d-flex text-center">
               <form>
-                <div className="text-center fs-4 m-4">TripLog</div>
+                <div
+                  className="text-center fs-4 m-4"
+                  style={{ fontFamily: 'ChosunBg' }}
+                >
+                  🛫 우리만의 여행, TripLog
+                </div>
                 <div className="text-center fs-6 m-4">
-                  추가하고 싶은 여행지를 검색하세요
+                  가고 싶은 여행지를 추가해보세요
                 </div>
                 <input
                   type="text"
-                  placeholder="원하는 여행지 검색"
+                  placeholder=" 여행지 검색"
                   ref={inputRef}
                   className="m-1"
                   style={{
@@ -220,6 +214,7 @@ export default function Plan() {
                             const pickedPlace = {
                               title: a.title,
                               Image: a.firstimage,
+                              addr1: a.addr1,
                               mapx: parseFloat(a.mapx),
                               mapy: parseFloat(a.mapy),
                             };
@@ -240,6 +235,7 @@ export default function Plan() {
                                   {
                                     title: a.title,
                                     Image: a.firstimage,
+                                    addr1: a.addr1,
                                     mapx: parseFloat(a.mapx),
                                     mapy: parseFloat(a.mapy),
                                   },
@@ -248,7 +244,6 @@ export default function Plan() {
                                 dispatch(
                                   addPlanItems({ copy, idx: state.planDateIdx })
                                 );
-                                // setList(copy);
                               }}
                             >
                               <img
@@ -295,11 +290,7 @@ export default function Plan() {
             </Row>
 
             {/* 여행지 리스트 보여주기 */}
-            <Row
-              className="m-3 overflow-scroll"
-              style={{ height: '20rem' }}
-              gap={3}
-            >
+            <Row className="m-3" gap={3}>
               {productItems.length > 0 ? (
                 <SelectList
                   productItems={productItems}
@@ -333,19 +324,19 @@ export default function Plan() {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <Container className="d-flex justify-content-end">
+      <Container className="d-flex justify-content-start">
         <Button
-          className="btn d-block btn-dark m-3"
+          className="btn d-block btn-dark mt-4 mb-3"
           onClick={() => {
             savehandler();
+            alert('여행 계획이 저장되었습니다');
           }}
         >
           여행 계획 저장하기
         </Button>
       </Container>
       {/* 여행계획 짜는 컴포넌트 */}
-      <Container className="d-flex flex-wrap justify-content-center">
+      <Container className="d-flex flex-wrap justify-content-center overflow-scroll">
         <PlanList
           productItems={productItems}
           setPlanItems={setPlanItems}
@@ -353,6 +344,8 @@ export default function Plan() {
           onClick={handleShow}
         />
       </Container>
+      <TriplogTitle className="d-block">TripLog</TriplogTitle>
+      <TriplogTitle1 className="d-block">TripLog</TriplogTitle1>
       <Footer />
     </>
   );
@@ -375,4 +368,31 @@ const SelectBox = styled.div`
     background-color: rgba(3, 102, 53, 0.3);
     cursor: pointer;
   }
+`;
+
+const TriplogTitle = styled.p`
+  position: absolute;
+  top: 150px;
+  right: 100px;
+  transform: rotate(-8deg);
+  color: #5d835d;
+  opacity: 0.2;
+  font-family: 'ChosunBg';
+  font-size: 140px;
+  background-color: #c0dac0;
+  border-radius: 10px;
+  padding: 20px 25px;
+`;
+const TriplogTitle1 = styled.p`
+  position: absolute;
+  top: 560px;
+  right: 100px;
+  transform: rotate(5deg);
+  color: #5d835d;
+  opacity: 0.2;
+  font-family: 'ChosunBg';
+  font-size: 120px;
+  background-color: #c0dac0;
+  border-radius: 10px;
+  padding: 20px 25px;
 `;
