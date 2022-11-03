@@ -21,7 +21,7 @@ import { logout } from '../store/modules/users';
 
 export default function NavHeader() {
   const state = useSelector((state) => state.users);
-  console.log(state);
+  // console.log(state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -78,22 +78,22 @@ export default function NavHeader() {
                 {/* {state.isLogin === true ? null : (
                   <FontAwesomeIcon icon={faUser} />
                 )} */}
-                {state.isLogin === true ? null : setShow(show)}
+                {/* {state.isLogin === true ? null : setShow(show)} */}
               </Nav.Link>
 
               <Nav.Link
                 href="/Logout"
                 variant="outline-success"
                 className="fs-5"
-                onClick={() => setShow(show)}
+                // onClick={() => setShow(show)}
               >
                 {/* {show ? <Logout logout={reduxLogout} /> : null} */}
-                {state.isLogin === true ? (
+                {/* {state.isLogin === true ? (
                   <FontAwesomeIcon
                     icon={faArrowRightFromBracket}
                     logout={reduxLogout}
                   />
-                ) : null}
+                ) : null} */}
               </Nav.Link>
               {/* <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
                 <FontAwesomeIcon icon={faFaceSmile} />
