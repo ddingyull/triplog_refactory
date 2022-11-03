@@ -95,35 +95,43 @@ export default function ReviewWrite() {
                   variant="success"
                   className="reviewSubmitBtn"
                   onClick={() => {
+                    console.log(nickName);
                     const content = contentRef.current.value;
-
-                    fetch('http://localhost:4000/review/img', {
-                      method: 'post',
-                      headers: {},
-                      body: formData,
-                    })
-                      .then((res) => res.json())
-                      .then((data) => {
-                        console.log(data);
-                        axios
-                          .post('http://localhost:4000/review/write', [
-                            { nickName, content, contentId, star, img: data },
-                          ])
-                          .then((res) => {
-                            console.log('댓글 등록 성공');
-                            contentRef.current.value = '';
-                            imgRef.current.value = '';
-                            alert('댓글 등록을 성공하였습니다. 🙌');
-                            // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
-                            dispatch(reviewUpdate());
-                          })
-                          .catch(() => {
-                            console.log('댓글 등록 실패');
-                            alert(
-                              '댓글 등록을 실패하였습니다. 다시 시도해주세요.'
-                            );
+                    nickName === ''
+                      ? alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!')
+                      : fetch('http://localhost:4000/review/img', {
+                          method: 'post',
+                          headers: {},
+                          body: formData,
+                        })
+                          .then((res) => res.json())
+                          .then((data) => {
+                            console.log(data);
+                            axios
+                              .post('http://localhost:4000/review/write', [
+                                {
+                                  nickName,
+                                  content,
+                                  contentId,
+                                  star,
+                                  img: data,
+                                },
+                              ])
+                              .then((res) => {
+                                console.log('댓글 등록 성공');
+                                contentRef.current.value = '';
+                                imgRef.current.value = '';
+                                alert('댓글 등록을 성공하였습니다. 🙌');
+                                // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
+                                dispatch(reviewUpdate());
+                              })
+                              .catch(() => {
+                                console.log('댓글 등록 실패');
+                                alert(
+                                  '댓글 등록을 실패하였습니다. 다시 시도해주세요.'
+                                );
+                              });
                           });
-                      });
                   }}
                 >
                   등록
