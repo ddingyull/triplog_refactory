@@ -32,14 +32,20 @@ export default function CalendarMain({
           <ColTitle
             xs={6}
             // className="position-absolute top-0 start-0"
-            style={{ marginTop: '50vh', marginLeft: '15vw' }}
+            style={{
+              marginTop: '50vh',
+              marginLeft: '18vw',
+            }}
           >
-            <p className="fw-bold justify-content-start small-font-size">
+            <p
+              className="fw-bold justify-content-start small-font-size"
+              style={{ fontFamily: 'ChosunBg' }}
+            >
               {pickAreaName}
             </p>
             <p
-              className="text-center "
-              style={{ color: '#fff', fontSize: '18px' }}
+              className="mx-3"
+              style={{ color: '#fff', fontSize: '18px', fontFamily: 'Inter' }}
             >
               {subText}
             </p>
@@ -47,12 +53,10 @@ export default function CalendarMain({
           <ColBtn
             xs={6}
             className="position-absolute top-0 start-0 d-block fs-6"
-            style={
-              {
-                // marginTop: '55vh',
-                // marginLeft: '20vw',
-              }
-            }
+            style={{
+              marginTop: '55vh',
+              marginLeft: '19vw',
+            }}
           >
             <CalendarModule planDate={planDate} />
           </ColBtn>
@@ -65,8 +69,8 @@ const ColTitle = styled.div`
   font: 8.5rem/1 'ChosunBg';
   color: #fff;
   position: absolute;
-  top: 90px;
-  left: 40px;
+  top: 80px;
+  left: 0px;
 
   @media only screen and (max-width: 1140px) {
     font: 5rem/1 'ChosunBg';

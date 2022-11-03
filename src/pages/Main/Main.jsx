@@ -116,7 +116,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-1 mb-1">🏙</p>
+            <p className="fs-1 mb-1">🗼</p>
             <p className="fw-bold">서울</p>
           </Col>
           <Col
@@ -126,7 +126,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-1 mb-1">⛴ </p>
+            <p className="fs-1 mb-1">🌊</p>
             <p className="fw-bold">부산</p>
           </Col>
           <Col
@@ -146,7 +146,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-1 mb-1">🎢</p>
+            <p className="fs-1 mb-1">🚃</p>
             <p className="fw-bold">경주</p>
           </Col>
           <Col
@@ -156,7 +156,7 @@ export default function Main() {
             }}
             style={{ cursor: 'pointer' }}
           >
-            <p className="fs-1 mb-1">🍛</p>
+            <p className="fs-1 mb-1">🌳</p>
             <p className="fw-bold">전주</p>
           </Col>
           <Col

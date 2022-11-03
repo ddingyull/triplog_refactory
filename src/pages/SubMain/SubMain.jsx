@@ -65,7 +65,7 @@ export default function SubMain({ productItems, width, height, planDate }) {
         <Row className="d-block justify-content-start">
           <Col className="m-3">
             <Title className="justify-content-start fw-bold">
-              🗂 여행 전 필수 준비항목
+              🧳 여행 전 필수 준비항목
             </Title>
             <p className="m-0 fs-6 text-secondary">
               트립로그가 챙겨주는 이번 여행!
