@@ -104,8 +104,8 @@ export default function Budget() {
     return (
       <>
         <Nav />
-        <Container>
-          <Row lg="2" sm="1" md="1">
+        <Container className="col-8">
+          <Row lg="2" sm="1" md="1" xs="1" xxs="1">
             {/* 왼쪽 입력칸 */}
 
             <Col className="col-6 align-self-center px-5 mb-4">
@@ -148,7 +148,6 @@ export default function Budget() {
                       const date = dateRef.current.value;
                       const title = textRef.current.value;
                       const charge = chargeRef.current.value;
-
                       axios
                         .post(`http://localhost:4000/charge/write`, {
                           chargeList: { date, title, charge: parseInt(charge) },
@@ -157,6 +156,9 @@ export default function Budget() {
                         .then((res) => {
                           console.log('charge 등록 성공');
                           alert('여행 지출 내역 등록을 성공하였습니다🙌');
+                          dateRef.current.value = '';
+                          textRef.current.value = '';
+                          chargeRef.current.value = '';
                           setUpdate(!update);
                         })
                         .catch(() => {
@@ -186,8 +188,8 @@ export default function Budget() {
               <hr class="solid" style={{ borderTopWidth: '2px' }}></hr>
 
               <Row className=" mb-2 mx-1">
-                <Col className="fw-bold col-2">Day</Col>
-                <Col className="fw-bold col-6 text-center">ITEM</Col>
+                <Col className="fw-bold col-3">Day</Col>
+                <Col className="fw-bold col-5 text-center">ITEM</Col>
                 <Col className="fw-bold col-2 text-center ">Price</Col>
                 <Col className="fw-bold col-2 text-end">Del</Col>
               </Row>
@@ -198,10 +200,10 @@ export default function Budget() {
                   console.log(a);
                   return (
                     <Row className="mx-1">
-                      <Col className="col-2">
+                      <Col className="col-3">
                         <p>{a.date.slice(5, 10)}</p>
                       </Col>
-                      <Col className="col-6 text-center">{a.title}</Col>
+                      <Col className="col-5 text-center">{a.title}</Col>
                       <Col className="col-2 text-center">{a.charge}</Col>
                       <Col
                         className="col-2 text-end"

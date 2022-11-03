@@ -68,7 +68,7 @@ export default function Main() {
           className="beachRemove"
         />
       </section> */}
-      <Container>
+      <Container className="col-9">
         <h1 className="fw-bold lh-base mt-5 mb-5 mx-5">
           <span style={{ color: '#198754' }}>{nickName}</span>님,
           <br></br>환영합니다 👋!

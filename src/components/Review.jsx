@@ -62,6 +62,10 @@ export default function Review() {
     setPage(page);
     console.log(page);
   };
+  // 이미지 로딩 실패시
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
+  };
 
   return (
     <>
@@ -117,102 +121,103 @@ export default function Review() {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Row xs={1} md={1} lg={2} className="g-3 mx-3 mb-4">
+        <Row xs={1} md={1} lg={2} sm={1} xxs={2} className="mb-4">
           {reviewData.length > 0 ? (
             reviewData
               .slice(pagePost * (page - 1), pagePost * (page - 1) + pagePost)
               .map(function (a, i) {
                 return (
                   <Col>
-                    <Card>
-                      <Row className="mt-3 px-2">
+                    <Card className="my-2">
+                      <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-start">
-                          <Col className="col-1 mx-4">
+                          <Col className="col-2">
                             <Image
                               src="/images/imgSample.jpg"
                               roundedCircle
-                              style={{ width: '50px' }}
+                              style={{ width: '60px' }}
                             />
                           </Col>
-                          <Col className="flex-fill">
-                            <p className="text-start fw-bold mt-2 mb-0">
-                              {a.nickName}
+                          <Col>
+                            <p className=" fw-bold m-0">{a.nickName}</p>
+                            {/* 별점 */}
+                            <div className="d-flex justify-content-start">
+                              <RaingStar className="text-center m-0">
+                                {a.star === 5 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                  </>
+                                ) : a.star === 4 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : a.star === 3 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : a.star === 2 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : a.star === 1 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : (
+                                  <>
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                )}
+                              </RaingStar>
+                            </div>
+
+                            <p className=" text-muted">
+                              {' '}
+                              {a.dateFull.slice(0, 10)}
                             </p>
                           </Col>
                         </div>
                       </Row>
-                      {/* 별점 */}
-                      <div className="d-flex align-items-center justify-content-start">
-                        <RaingStar className="text-center mx-2 col-6">
-                          {a.star === 5 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                            </>
-                          ) : a.star === 4 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : a.star === 3 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : a.star === 2 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : a.star === 1 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : (
-                            <>
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          )}
-                        </RaingStar>
-                        <p className="text-end mx-2 text-muted col-5 ">
-                          {' '}
-                          {a.dateFull.slice(0, 10)}
-                        </p>
-                      </div>
+
                       {/* 리뷰 내용 */}
                       <Card.Body>
                         <Card.Text>{a.content}</Card.Text>
                         {console.log(a.img)}
                         <Col>
                           <Image
+                            onError={onErrorImg}
                             src={`http://localhost:4000/uploads/${a.img}`}
-                            style={{ width: '100px', height: '100px' }}
-                            className="mt-3 mx-1"
+                            style={{ width: '200px', height: '150px' }}
+                            className="mt-3 border"
                           />
                         </Col>
 
                         <Row className="d-flex justify-content-end">
-                          <Col className=" text-end mt-3 mx-2">
+                          <Col className=" text-end mt-3 ">
                             {a.nickName === nickName && (
                               <>
                                 <Button

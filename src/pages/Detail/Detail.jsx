@@ -138,15 +138,15 @@ export default function Detail() {
   return (
     <>
       <Nav />
-      <Container>
-        <Row xs={1} md={1} lg={2} className="mx-lg-5 mx-md-2">
+      <Container className="col-8">
+        <Row xs={1} md={1} lg={2} xxs={1} className="">
           <Col>
             <Card className="mt-3" style={{ height: '45vh' }}>
               <Card.Img
                 variant="top"
                 src={tourData.firstimage}
                 onError={onErrorImg}
-                style={{ height: '200px', objectFit: 'cover' }}
+                style={{ height: '230px', objectFit: 'cover' }}
                 className="fluid border"
               />
               <Card.Body>
@@ -168,7 +168,7 @@ export default function Detail() {
                     style={{ cursor: 'pointer' }}
                   >
                     <ShareKakao tourData={tourData} />
-                    <p>카카오 공유</p>
+                    <p className="pt-2">카카오 공유</p>
                   </div>
                   <div
                     className="text-center flex-fill"
@@ -256,25 +256,26 @@ export default function Detail() {
         </Row>
 
         {/* 지도 */}
-        <Row className="m-3 mx-lg-5 ">
-          <h5 className="fw-bold mx-1 ">위치 보기</h5>
+        <Row className="mb-3 mt-3">
+          <h5 className="fw-bold">위치 보기</h5>
           <Card
             id="map"
-            style={{ width: '70vw', height: '35vh' }}
-            className="mt-2 mb-3 mx-md-3 mx-sm-4"
+            style={{ width: '67vw', height: '35vh' }}
+            className="mt-2 mb-3 "
           ></Card>
         </Row>
 
         {/* 리뷰 */}
-        <Row className="mt-5 mb-3 mx-4 d-flex mx-lg-5">
+        <Row className="mt-5 mb-3  d-flex ">
           <Col className=" text-start">
             <span className="fw-bold fs-5">
               리뷰
               <span className="text-success mx-1">{reviewData.length}</span>
             </span>
           </Col>
-          <Col className="justify-content-center"></Col>
-          <ReviewBox className="col-2" setReivew={setReview} />
+          <Col className="text-end mx-3">
+            <ReviewBox setReivew={setReview} />
+          </Col>
         </Row>
         {review === true ? <Review /> : <Review />}
       </Container>

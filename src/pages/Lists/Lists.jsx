@@ -83,9 +83,9 @@ export default function Lists() {
     return (
       <>
         <Nav />
-        <Container>
+        <Container className="col-9">
           {/* ListsTAB */}
-          <Row className="d-flex col-8 mx-auto text-center mt-4 mb-5">
+          <Row className="d-flex col-8 mx-auto text-center mt-5 mb-5">
             <Col
               className="rounded"
               ref={list1}

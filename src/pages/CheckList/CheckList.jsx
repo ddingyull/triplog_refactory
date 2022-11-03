@@ -72,7 +72,7 @@ export default function CheckList() {
     return (
       <>
         <Nav />
-        <Container className="m-auto mt-5 ">
+        <Container className="m-auto mt-5 col-8">
           <h1 className="fw-bold lh-base mt-5 mb-5">
             <span style={{ color: '#198754' }}>{nickName}</span>님, 여행 준비
             <br></br>체크리스트
@@ -89,24 +89,22 @@ export default function CheckList() {
                     <Accordion.Header>
                       {checklist.items[i].title}
                     </Accordion.Header>
-                    <Accordion.Body>
+                    <Accordion.Body className="text-start">
                       <Form>
                         {checklist.items[i].content.map(function (b, j) {
                           return (
                             <>
-                              <Form.Check
-                                type="checkbox"
-                                className="d-flex justify-content-between"
-                              >
+                              <Form.Check type="checkbox">
                                 <Form.Check.Input
                                   type="checkbox"
                                   onClick={handleToggle(b)}
                                   checked={checked.indexOf(b) !== -1}
                                 />
-                                <Form.Check.Label>
+                                <Form.Check.Label className="col-10">
                                   {checklist.items[i].content[j]}
                                 </Form.Check.Label>
                                 <FaTrash
+                                  className="col-2"
                                   style={{ color: 'grey' }}
                                   onClick={() => {
                                     axios
