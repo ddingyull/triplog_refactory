@@ -18,6 +18,7 @@ import Footer from '../../components/Footer';
 import PageNav from '../../components/Nav';
 import CheckListRe from '../CheckList/CheckList_re';
 import BudgetRe from '../Budget/Budget_re';
+import Review from '../../components/Review';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faArrowDown } from '@fortawesome/free-solid-svg-icons';
@@ -33,6 +34,8 @@ import { useDispatch, useSelector } from 'react-redux';
 const formData = new FormData();
 
 export default function MyPage() {
+  let [tab, setTab] = useState(0);
+
   const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
   const [okay, setOkay] = useState(false);
@@ -45,7 +48,9 @@ export default function MyPage() {
   const [plan, setPlan] = useState([]);
   // 이미지 저장
   const [userData, setUserData] = useState([]);
+  const [imgUpload, setImgUpload] = useState(false);
 
+  // 이미지 업로드
   const imgRef = useRef();
   const handleImg = (e) => {
     formData.append('img', e.target.files[0]);
@@ -64,6 +69,7 @@ export default function MyPage() {
             // 백엔드 콘솔 결과
             console.log(결과);
             console.log('성공');
+            setImgUpload(true);
           })
           .catch(() => {
             console.log('실패');
@@ -71,6 +77,7 @@ export default function MyPage() {
       });
   };
 
+  // 디테일 데이터 받아오기
   useEffect(() => {
     axios.get('http://localhost:4000/detail').then((res) => {
       // console.log(res.data[0].data.title);
@@ -145,7 +152,7 @@ export default function MyPage() {
             <Col sm={12}>
               <Tab.Container
                 id="left-tabs-example"
-                defaultActiveKey="trip"
+                defaultActiveKey="budget"
                 className="m-auto"
               >
                 <Row>
@@ -168,18 +175,20 @@ export default function MyPage() {
                     <p className="fs-3 text-center text-success fw-bold m-2">
                       {nickName}
                     </p>
-                    <div className="d-flex">
-                      <input
-                        style={{ fontSize: '14px', margin: '20px' }}
-                        type="file"
-                        ref={imgRef}
-                        name="img"
-                        onChange={handleImg}
-                      />
-                      <button className="btn" onClick={userImg}>
-                        ✅
-                      </button>
-                    </div>
+                    {imgUpload === true ? null : (
+                      <div className="d-flex">
+                        <input
+                          style={{ fontSize: '14px', margin: '20px' }}
+                          type="file"
+                          ref={imgRef}
+                          name="img"
+                          onChange={handleImg}
+                        />
+                        <button className="btn" onClick={userImg}>
+                          ✅
+                        </button>
+                      </div>
+                    )}
                     <Nav
                       variant="pills"
                       className="flex-column mt-4 text-center"
@@ -345,6 +354,7 @@ export default function MyPage() {
                           <br></br>
                           <span>리뷰✏️ 입니다</span>
                         </h1>
+                        <Review />
                         {review.map(function (b, j) {
                           return (
                             <>

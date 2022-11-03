@@ -70,18 +70,26 @@ export default function NavHeader() {
               </Nav.Link>
             </Nav>
 
-            <Nav className="d-flex" style={{ fontSize: '20px' }}>
+            <Nav
+              className="d-flex flex-sm-row justify-content-sm-center"
+              style={{ fontSize: '20px' }}
+            >
               <Nav.Link
                 href="/Login"
                 variant="outline-success"
                 className="fs-5"
+                style={{ marginRight: '15px' }}
               >
                 {state.isLogin === false ? (
                   <FontAwesomeIcon icon={faUser} />
                 ) : null}
               </Nav.Link>
 
-              <Nav.Link variant="outline-success" className="fs-5">
+              <Nav.Link
+                variant="outline-success"
+                className="fs-5"
+                style={{ marginRight: '15px' }}
+              >
                 {state.isLogin === true ? (
                   <FontAwesomeIcon
                     icon={faArrowRightFromBracket}
