@@ -148,224 +148,213 @@ export default function MyPage() {
     return (
       <>
         <PageNav />
-        <Container>
-          <Row style={{ marginTop: '50px' }} className="m-auto my-5">
-            <Col sm={12}>
-              <Tab.Container
-                id="left-tabs-example"
-                defaultActiveKey="budget"
-                className="m-auto"
-              >
-                <Row>
-                  {/* 가로 nav tab */}
-                  <Col className="col-sm-0 col-md-1 col-lg-2">
-                    {userData.img !== undefined ? (
-                      <img
-                        src={`http://localhost:4000/uploads/${userData.img}`}
-                        alt="회원 이미지"
-                        style={{ width: '13rem', height: '13rem' }}
-                        className="bg-dark rounded text-center d-block m-auto"
-                      />
-                    ) : (
-                      <div
-                        // src="/images/submain/서울.jpg"
-                        style={{ width: '13rem', height: '13rem' }}
-                        className="bg-dark rounded text-center d-block m-auto"
-                      ></div>
-                    )}
-                    <p className="fs-3 text-center text-success fw-bold m-2">
-                      {nickName}
-                    </p>
-                    {imgUpload === true ? null : (
-                      <div className="d-flex">
-                        <input
-                          style={{ fontSize: '14px', margin: '20px' }}
-                          type="file"
-                          ref={imgRef}
-                          name="img"
-                          onChange={handleImg}
-                        />
-                        <button className="btn" onClick={userImg}>
-                          ✅
-                        </button>
-                      </div>
-                    )}
-                    <Nav
-                      variant="pills"
-                      className="flex-column mt-4 text-center"
-                      style={{ color: '#333' }}
-                    >
-                      <Nav.Item>
-                        <Nav.Link eventKey="trip">여행 조회</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="budget">가계부</Nav.Link>
-                      </Nav.Item>
-                      {/* <Nav.Item>
-                        <Nav.Link eventKey="pick">찜한 곳</Nav.Link>
-                      </Nav.Item> */}
-                      <Nav.Item>
-                        <Nav.Link eventKey="review">리뷰</Nav.Link>
-                      </Nav.Item>
-                    </Nav>
-                  </Col>
-                  {/* 컨텐츠 */}
-                  <Col className="col-sm-12 col-md-8">
-                    <Tab.Content>
-                      {/* 여행 조회 */}
-                      <Tab.Pane eventKey="trip">
-                        <Row className="m-auto">
-                          <h1 className="fw-bold lh-base mt-5 mb-4">
-                            <span style={{ color: '#198754' }}>{nickName}</span>
-                            <span>님의</span>
-                            <br></br>
-                            <span>여행🛫 일정입니다</span>
-                          </h1>
-                          <Row className="d-flex w-75 m-auto">
-                            {plan !== '내 여행 없음' ? (
-                              plan.state.planDate.period.map(function (a, i) {
-                                return (
-                                  <Container xl={5} className="my-3 " key={i}>
-                                    <Card className="m-2">
-                                      <Row className="d-flex justify-content-center flex-wrap">
-                                        <Col
-                                          md={7}
-                                          className="d-flex text-center"
-                                        >
-                                          <p
-                                            className="fw-6 fw-bold w-75 m-auto my-3 text-center bg-success rounded p-2"
-                                            style={{ color: '#fff' }}
+        <Container
+          style={{ marginTop: '50px' }}
+          className="d-flex justify-content-center"
+        >
+          <Row className="col-9 ">
+            <Tab.Container
+              id="left-tabs-example"
+              defaultActiveKey="budget"
+              // className="m-auto"
+              // className="col-9"
+            >
+              {/* 가로 nav tab */}
+              <Col className="col-3">
+                {userData.img !== undefined ? (
+                  <img
+                    src={`http://localhost:4000/uploads/${userData.img}`}
+                    alt="회원 이미지"
+                    style={{ width: '13rem', height: '13rem' }}
+                    className="bg-dark rounded text-center d-block m-auto"
+                  />
+                ) : (
+                  <div
+                    // src="/images/submain/서울.jpg"
+                    style={{ width: '13rem', height: '13rem' }}
+                    className="bg-dark rounded text-center d-block m-auto"
+                  ></div>
+                )}
+                <p className="fs-3 text-center text-success fw-bold m-2">
+                  {nickName}
+                </p>
+                {imgUpload === true ? null : (
+                  <div className="d-flex">
+                    <input
+                      style={{ fontSize: '14px', margin: '20px' }}
+                      type="file"
+                      ref={imgRef}
+                      name="img"
+                      onChange={handleImg}
+                    />
+                    <button className="btn" onClick={userImg}>
+                      ✅
+                    </button>
+                  </div>
+                )}
+                <Nav
+                  variant="pills"
+                  className="flex-column mt-4 text-center"
+                  style={{ color: '#333' }}
+                >
+                  <Nav.Item>
+                    <Nav.Link eventKey="trip">여행 조회</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="budget">가계부</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="review">리뷰</Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </Col>
+              {/* 컨텐츠 */}
+              <Col>
+                <Tab.Content>
+                  {/* 여행 조회 */}
+                  <Tab.Pane eventKey="trip">
+                    <Row className="m-auto">
+                      <h1
+                        className="fw-bold lh-base mt-2 mb-4 m-auto"
+                        style={{ width: '75%' }}
+                      >
+                        <span style={{ color: '#198754' }}>{nickName}</span>
+                        <span>님의</span>
+                        <br></br>
+                        <span>여행🛫 일정입니다</span>
+                      </h1>
+                      <Row className="d-flex w-75 m-auto">
+                        {plan !== '내 여행 없음' ? (
+                          plan.state.planDate.period.map(function (a, i) {
+                            return (
+                              <Container xl={5} className="my-3 " key={i}>
+                                <Card className="m-2">
+                                  <Row className="d-flex justify-content-center flex-wrap">
+                                    <Col md={7} className="d-flex text-center">
+                                      <p
+                                        className="fw-6 fw-bold w-75 m-auto my-3 text-center bg-success rounded p-2"
+                                        style={{ color: '#fff' }}
+                                      >
+                                        day {i + 1}
+                                      </p>
+                                    </Col>
+                                  </Row>
+                                  <Row className="m-3">
+                                    <Stack className="d-flex flex-column my-auto text-center">
+                                      {plan.state.planItems[i].map(function (
+                                        b,
+                                        j
+                                      ) {
+                                        return (
+                                          <div
+                                            style={{
+                                              backgroundColor: '#fafafa',
+                                              padding: '1rem',
+                                            }}
                                           >
-                                            day {i + 1}
-                                          </p>
-                                        </Col>
-                                      </Row>
-                                      <Row className="m-3">
-                                        <Stack className="col-9 d-flex flex-column my-auto text-center">
-                                          {plan.state.planItems[i].map(
-                                            function (b, j) {
-                                              return (
-                                                <div
-                                                  style={{
-                                                    backgroundColor: '#fafafa',
-                                                    padding: '1rem',
-                                                  }}
-                                                >
-                                                  <Title className="m-1 fs-6">
-                                                    {
-                                                      plan.state.planItems[i][j]
-                                                        .title
-                                                    }
-                                                  </Title>
-                                                  <Title
-                                                    className="m-1"
-                                                    style={{ fontSize: '12px' }}
-                                                  >
-                                                    {
-                                                      plan.state.planItems[i][j]
-                                                        .addr1
-                                                    }
-                                                  </Title>
-                                                  <div
-                                                    style={{ color: '#1A8754' }}
-                                                  >
-                                                    <FontAwesomeIcon
-                                                      icon={faArrowDown}
-                                                    />
-                                                  </div>
-                                                </div>
-                                              );
-                                            }
-                                          )}
-                                        </Stack>
-                                      </Row>
-                                    </Card>
-                                  </Container>
-                                );
-                              })
-                            ) : (
-                              <div>계획한 여행이 아직 없습니다</div>
-                            )}
-                          </Row>
-                        </Row>
-                      </Tab.Pane>
-
-                      {/* 체크리스트 조회 */}
-                      <Tab.Pane eventKey="checklist">
-                        <CheckListRe />
-                      </Tab.Pane>
-
-                      {/* 가계부 조회*/}
-                      <Tab.Pane eventKey="budget">
-                        <BudgetRe />
-                      </Tab.Pane>
-
-                      {/* 리뷰 조회 */}
-                      <Tab.Pane eventKey="review">
-                        <h1 className="fw-bold lh-base mt-5 mb-4">
-                          <span style={{ color: '#198754' }}>{nickName}</span>
-                          <span>님의</span>
-                          <br></br>
-                          <span>리뷰✏️ 입니다</span>
-                        </h1>
-                        <Review />
-                        {review.map(function (b, j) {
-                          return (
-                            <>
-                              <Row
-                                className="m-auto text-center w-75 shadow-sm"
-                                style={{ fontSize: '12px' }}
-                              >
-                                <Card className="mt-3">
-                                  <Card.Body>
-                                    <Card.Title className="mb-3 fs-6 bg-dark text-light w-50 p-1 m-5 m-auto rounded">
-                                      {tourData.map((el) => {
-                                        if (
-                                          el.data.contentid ===
-                                          review[j].contentId
-                                        ) {
-                                          return el.data.title;
-                                        }
+                                            <Title className="m-1 fs-6">
+                                              {plan.state.planItems[i][j].title}
+                                            </Title>
+                                            <Title
+                                              className="m-1"
+                                              style={{ fontSize: '12px' }}
+                                            >
+                                              {plan.state.planItems[i][j].addr1}
+                                            </Title>
+                                            <div style={{ color: '#1A8754' }}>
+                                              <FontAwesomeIcon
+                                                icon={faArrowDown}
+                                              />
+                                            </div>
+                                          </div>
+                                        );
                                       })}
-                                    </Card.Title>
-                                    <div className="d-flex">
-                                      <div className="border rounded w-50">
-                                        <p className="mb-2 text-muted">
-                                          {review[j].dateFull.slice(0, 10)}
-                                        </p>
-                                        <Card.Text className="mb-2">
-                                          ⭐⭐⭐⭐⭐
-                                          <span> {review[j].star} </span>
-                                          ❤👍🏼 조회수{' '}
-                                          <span>{review[j].view}</span>
-                                        </Card.Text>
-                                      </div>
-
-                                      <div className="w-50 ms-2 border rounded">
-                                        <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
-                                          {review[j].content}
-                                        </Card.Text>
-                                      </div>
-                                    </div>
-                                  </Card.Body>
+                                    </Stack>
+                                  </Row>
                                 </Card>
-                              </Row>
-                            </>
-                          );
-                        })}
-                      </Tab.Pane>
-                    </Tab.Content>
-                  </Col>
-                  {/* 컨텐츠 끝나는 시점 */}
-                </Row>
-              </Tab.Container>
-            </Col>
+                              </Container>
+                            );
+                          })
+                        ) : (
+                          <div>계획한 여행이 아직 없습니다</div>
+                        )}
+                      </Row>
+                    </Row>
+                  </Tab.Pane>
+
+                  {/* 체크리스트 조회 */}
+                  <Tab.Pane eventKey="checklist">
+                    <CheckListRe />
+                  </Tab.Pane>
+
+                  {/* 가계부 조회*/}
+                  <Tab.Pane eventKey="budget">
+                    <BudgetRe />
+                  </Tab.Pane>
+
+                  {/* 리뷰 조회 */}
+                  <Tab.Pane eventKey="review">
+                    <h1
+                      className="fw-bold lh-base mt-2 mb-4 m-auto"
+                      style={{ width: '75%' }}
+                    >
+                      <span style={{ color: '#198754' }}>{nickName}</span>
+                      <span>님의</span>
+                      <br></br>
+                      <span>리뷰✏️ 입니다</span>
+                    </h1>
+                    {review.map(function (b, j) {
+                      return (
+                        <>
+                          <Row
+                            className="m-auto text-center w-75 shadow-sm"
+                            style={{ fontSize: '12px' }}
+                          >
+                            <Card className="mt-3">
+                              <Card.Body>
+                                <Card.Title className="mb-3 fs-6 bg-dark text-light w-50 p-1 m-5 m-auto rounded">
+                                  {tourData.map((el) => {
+                                    if (
+                                      el.data.contentid === review[j].contentId
+                                    ) {
+                                      return el.data.title;
+                                    }
+                                  })}
+                                </Card.Title>
+                                <div className="d-flex">
+                                  <div className="border rounded w-50">
+                                    <p className="mb-2 text-muted">
+                                      {review[j].dateFull.slice(0, 10)}
+                                    </p>
+                                    <Card.Text className="mb-2">
+                                      ⭐⭐⭐⭐⭐
+                                      <span> {review[j].star} </span>
+                                      ❤👍🏼 조회수 <span>{review[j].view}</span>
+                                    </Card.Text>
+                                  </div>
+
+                                  <div className="w-50 ms-2 border rounded">
+                                    <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
+                                      {review[j].content}
+                                    </Card.Text>
+                                  </div>
+                                </div>
+                              </Card.Body>
+                            </Card>
+                          </Row>
+                        </>
+                      );
+                    })}
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+              {/* 컨텐츠 끝나는 시점 */}
+            </Tab.Container>
           </Row>
         </Container>
-
         <Footer />
       </>
     );
@@ -373,7 +362,7 @@ export default function MyPage() {
 }
 
 const Stars = styled.div`
-  display: flex;
+  /* display: flex; */
   padding-top: 5px;
 
   & svg {
@@ -398,15 +387,26 @@ const Title = styled.p`
   font: 2rem/1 'Inter';
 `;
 
-// const NavCol = styled.li`
-//   list-style: none;
-//   color: #333;
-// `;
+const TabContainer = styled.a`
+  .nav-tabs .nav-item .nav-link {
+    background-color: red;
+    color: #000;
+  }
 
-// const NavLink = styled.li`
-//   list-style: none;
-//   &:hover {
-//     box-flex-group: #036635;
-//     color: #fff;
-//   }
-// `;
+  .nav-tabs .nav-item .nav-link.active {
+    color: #000;
+  }
+
+  .tab-content {
+    border: 1px solid #dee2e6;
+    border-top: transparent;
+    padding: 15px;
+  }
+
+  .tab-content .tab-pane {
+    background-color: #fff;
+    color: #0080ff;
+    min-height: 200px;
+    height: auto;
+  }
+`;

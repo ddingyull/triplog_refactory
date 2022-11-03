@@ -65,13 +65,17 @@ export default function CheckListRe() {
   if (okay) {
     return (
       <>
-        <Container className="m-auto mt-5 ">
-          <h1 className="fw-bold lh-base mt-5 mb-4">
+        <Container className="m-auto ">
+          <h1
+            className="fw-bold lh-base mt-2 mb-4 m-auto"
+            style={{ width: '75%' }}
+          >
             <span style={{ color: '#198754' }}>{nickName}</span>
             <span>님의</span>
             <br></br>
             <span>체크리스트📝 입니다</span>
           </h1>
+
           <Accordion
             defaultActiveKey={[0]}
             alwaysOpen

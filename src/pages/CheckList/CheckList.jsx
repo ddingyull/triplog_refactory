@@ -20,6 +20,7 @@ import {
 } from 'react-icons/fa';
 // 리듀서
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 export default function CheckList() {
   const dispatch = useDispatch();
@@ -198,3 +199,16 @@ export default function CheckList() {
     );
   }
 }
+
+// const AccordionHeader = styled.a`
+//   background-color: #35a135;
+//   color: #fff;
+//   border-radius: 3px;
+//   padding: 0 30px;
+//   :active {
+//     background-color: rgba(97, 160, 131, 0.4);
+//   }
+//   :focus {
+//     background-color: yellow;
+//   }
+// `;

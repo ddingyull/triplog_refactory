@@ -52,16 +52,19 @@ export default function BudgetRe() {
   if (okay) {
     return (
       <>
-        <Container className="col-md-12">
-          <h1 className="fw-bold lh-base mt-5 mb-4">
+        <Container>
+          <h1
+            className="fw-bold lh-base mt-2 mb-4 m-auto"
+            style={{ width: '75%' }}
+          >
             <span style={{ color: '#198754' }}>{nickName}</span>
             <span>님의</span>
             <br></br>
             <span>정산💸내역입니다.</span>
           </h1>
           <Col
-            className="w-50 p-5 m-auto rounded border mt-4"
-            style={{ backgroundColor: '#fafafa' }}
+            className=" p-5 m-auto rounded border mt-4"
+            style={{ backgroundColor: '#fafafa', width: '75%' }}
           >
             <h6 className="fw-bold text-center" style={{ color: '#198754' }}>
               TripLog
