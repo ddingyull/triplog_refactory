@@ -32,7 +32,7 @@ export default function Main() {
   const nickName = useSelector((state) => state.users.userNickName);
   const [cardText, setCardText] = useState([
     '오랜만의 서울여행! 여행 포인트 ✨',
-    '고즈넉한 가을 감성💛 강원의 대표 명소 7',
+    '🍂고즈넉한 가을 감성💛 강원의 대표 명소 7',
     "요즘 부산 가면 '이곳'에 꼭 들린대요",
     '잘 몰랐던 경주 지금이 떠날 기회!',
     '복잡한 서울? Trip Log로 한번에 해결!',
@@ -75,7 +75,7 @@ export default function Main() {
               {nickName === undefined ? nickName : '여행자'}
             </span>
             님,
-            <br></br>TripLog에 오신걸 환영합니다 👋!
+            <br></br>TripLog에 오신걸 환영합니다! 👋
           </h1>
 
           <div className="mx-5 mt-3">
@@ -174,7 +174,7 @@ export default function Main() {
         <Row sm xs={1} md={2} lg={4} className="g-4 mt-3">
           {Array.from({ length: 4 }).map((_, idx) => (
             <Col>
-              <Card style={{ border: 'none' }}>
+              <Card style={{ border: 'none' }} onClick={() => {}}>
                 <Card.Img
                   variant="top"
                   src={`/images/main/main_grid${idx}.jpg`}

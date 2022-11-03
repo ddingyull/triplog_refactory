@@ -11,6 +11,7 @@ import {
   Card,
   Accordion,
   Stack,
+  InputGroup,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
@@ -28,6 +29,7 @@ import {
   FaPencilAlt,
   FaTrash,
   FaStar,
+  FaCheck,
 } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -180,36 +182,38 @@ export default function MyPage() {
                 </p>
                 {imgUpload === true ? null : (
                   <div className="d-flex">
-                    <input
-                      style={{ fontSize: '14px', margin: '20px' }}
+                    <Form.Control
+                      style={{ fontSize: '8px', margin: '20px' }}
                       type="file"
                       ref={imgRef}
                       name="img"
                       onChange={handleImg}
                     />
                     <button className="btn" onClick={userImg}>
-                      ✅
+                      <FaCheck className="text-dark" />
                     </button>
                   </div>
                 )}
-                <Nav
-                  variant="pills"
-                  className="flex-column mt-4 text-center"
-                  style={{ color: '#333' }}
-                >
-                  <Nav.Item>
-                    <Nav.Link eventKey="trip">여행 조회</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="budget">가계부</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="review">리뷰</Nav.Link>
-                  </Nav.Item>
-                </Nav>
+                <TabContainer>
+                  <Nav
+                    variant="pills"
+                    className="flex-column mt-4 text-center"
+                    style={{ color: '#333' }}
+                  >
+                    <Nav.Item>
+                      <Nav.Link eventKey="trip">여행 조회</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="budget">가계부</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="review">리뷰</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </TabContainer>
               </Col>
               {/* 컨텐츠 */}
               <Col>
@@ -315,7 +319,7 @@ export default function MyPage() {
                           >
                             <Card className="mt-3">
                               <Card.Body>
-                                <Card.Title className="mb-3 fs-6 bg-dark text-light w-50 p-1 m-5 m-auto rounded">
+                                <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
                                   {tourData.map((el) => {
                                     if (
                                       el.data.contentid === review[j].contentId
@@ -387,26 +391,12 @@ const Title = styled.p`
   font: 2rem/1 'Inter';
 `;
 
-const TabContainer = styled.a`
-  .nav-tabs .nav-item .nav-link {
-    background-color: red;
-    color: #000;
+const TabContainer = styled.div`
+  .nav-pills .nav-link {
+    color: #198754;
   }
-
-  .nav-tabs .nav-item .nav-link.active {
-    color: #000;
-  }
-
-  .tab-content {
-    border: 1px solid #dee2e6;
-    border-top: transparent;
-    padding: 15px;
-  }
-
-  .tab-content .tab-pane {
-    background-color: #fff;
-    color: #0080ff;
-    min-height: 200px;
-    height: auto;
+  .nav-pills .nav-link.active {
+    color: #fff;
+    background-color: #198754;
   }
 `;

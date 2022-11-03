@@ -141,12 +141,12 @@ export default function Detail() {
       <Container className="col-8">
         <Row xs={1} md={1} lg={2} xxs={1} className="">
           <Col>
-            <Card className="mt-3" style={{ height: '45vh' }}>
+            <Card className="mt-3" style={{ height: '50vh' }}>
               <Card.Img
                 variant="top"
                 src={tourData.firstimage}
                 onError={onErrorImg}
-                style={{ height: '230px', objectFit: 'cover' }}
+                style={{ height: '250px', objectFit: 'cover' }}
                 className="fluid border"
               />
               <Card.Body>
@@ -166,19 +166,21 @@ export default function Detail() {
                   <div
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
-                  >
-                    <ShareKakao tourData={tourData} />
-                    <p className="pt-2">카카오 공유</p>
-                  </div>
-                  <div
-                    className="text-center flex-fill"
-                    style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      alert('서비스 구현예정입니다. 🙏');
+                      // alert('서비스 구현예정입니다. 🙏');
+                      console.log(document.documentElement.scrollHeight);
+                      window.scrollTo(0, document.documentElement.scrollHeight);
                     }}
                   >
                     <h5>⭐</h5>
                     <p>리뷰쓰기</p>
+                  </div>
+                  <div
+                    className="text-center flex-fill"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <ShareKakao tourData={tourData} />
+                    <p className="pt-2">카카오 공유</p>
                   </div>
                   <div
                     className="text-center flex-fill"
@@ -197,8 +199,8 @@ export default function Detail() {
 
           <Col>
             <Card
-              className="mt-3 "
-              style={{ overflowY: 'scroll', height: '45vh' }}
+              className="mt-3 px-3"
+              style={{ overflowY: 'scroll', height: '50vh' }}
             >
               <Card.Body className="m-2 " style={{ height: '40vh' }}>
                 <p className=" mb-2 text-muted text-end">
@@ -266,14 +268,14 @@ export default function Detail() {
         </Row>
 
         {/* 리뷰 */}
-        <Row className="mt-5 mb-3  d-flex ">
-          <Col className=" text-start">
-            <span className="fw-bold fs-5">
+        <Row className="mt-5 ">
+          <Col>
+            <span className="fw-bold fs-5 ">
               리뷰
               <span className="text-success mx-1">{reviewData.length}</span>
             </span>
           </Col>
-          <Col className="text-end mx-3">
+          <Col className="text-end col-12">
             <ReviewBox setReivew={setReview} />
           </Col>
         </Row>

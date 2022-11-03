@@ -6,6 +6,7 @@ import triplog from './modules/triplog';
 import detail from './modules/detail';
 import budget from './modules/budget';
 import users from './modules/users';
+import check from './modules/check';
 
 const persistConfig = {
   key: 'user',
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
   detail,
   budget,
   users,
+  check,
 });
 
 export default persistReducer(persistConfig, rootReducer);

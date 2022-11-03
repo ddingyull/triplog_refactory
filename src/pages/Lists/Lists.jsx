@@ -106,7 +106,7 @@ export default function Lists() {
               }}
               style={{ cursor: 'pointer' }}
             >
-              <p className="fs-2 mb-1">🌳</p>
+              <p className="fs-1 mb-1">🌴</p>
               <p className="fw-bold">관광</p>
             </Col>
             <Col
@@ -128,7 +128,7 @@ export default function Lists() {
               }}
               style={{ cursor: 'pointer' }}
             >
-              <p className="fs-2 mb-1">⛩ </p>
+              <p className="fs-1 mb-1">🗿</p>
               <p className="fw-bold">문화</p>
             </Col>
             <Col
@@ -150,7 +150,7 @@ export default function Lists() {
               }}
               style={{ cursor: 'pointer' }}
             >
-              <p className="fs-2 mb-1">🍽</p>
+              <p className="fs-1 mb-1">🍽</p>
               <p className="fw-bold">음식</p>
             </Col>
             <Col
@@ -173,7 +173,7 @@ export default function Lists() {
               style={{ cursor: 'pointer' }}
             >
               <div>
-                <div className="fs-2 mb-1">🏠</div>
+                <div className="fs-1 mb-1">🏠</div>
                 <div className="fw-bold">숙소</div>
               </div>
             </Col>
@@ -196,7 +196,7 @@ export default function Lists() {
               }}
               style={{ cursor: 'pointer' }}
             >
-              <p className="fs-2 mb-1">🛍</p>
+              <p className="fs-1 mb-1">💵</p>
               <p className="fw-bold">쇼핑</p>
             </Col>
           </Row>
@@ -223,6 +223,7 @@ export default function Lists() {
                             src={a.firstimage}
                             onError={onErrorImg}
                             height={'250rem'}
+                            className="border"
                           />
                           <Card.Body>
                             <Card.Title>{a.title}</Card.Title>

@@ -204,7 +204,11 @@ export default function Budget() {
                         <p>{a.date.slice(5, 10)}</p>
                       </Col>
                       <Col className="col-5 text-center">{a.title}</Col>
-                      <Col className="col-2 text-center">{a.charge}</Col>
+                      <Col className="col-2 text-center">
+                        {a.charge.toLocaleString('ko-KR', {
+                          currency: 'KRW',
+                        })}
+                      </Col>
                       <Col
                         className="col-2 text-end"
                         style={{ cursor: 'pointer' }}
@@ -253,14 +257,21 @@ export default function Budget() {
                   />
                 </Col>
                 <Col sm md lg="auto" className="text-end">
-                  1인당 {parseInt(totalCharge / users)} 원
+                  1인당{' '}
+                  {parseInt(totalCharge / users).toLocaleString('ko-KR', {
+                    currency: 'KRW',
+                  })}
+                  원
                 </Col>
               </Row>
 
               <Row>
                 <Col className="fw-bold">총 합계 : </Col>
                 <Col sm md lg="auto" className="text-end">
-                  {totalCharge} 원
+                  {totalCharge.toLocaleString('ko-KR', {
+                    currency: 'KRW',
+                  })}
+                  원
                 </Col>
               </Row>
 
