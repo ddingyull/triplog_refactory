@@ -22,6 +22,7 @@ import Footer from '../../components/Footer';
 import Welcome from './Welcome';
 import { addPlanItems } from '../../store/modules/triplog';
 import { useDispatch, useSelector } from 'react-redux';
+import ShareKakao from '../../components/share/ShareKakao';
 
 const { kakao } = window;
 
@@ -40,15 +41,9 @@ export default function Plan() {
     for (let j = 0; j < pickMap[i].length; j++) {
       if (pickMap[i][j].find((el) => el.areacode === areaCode) !== undefined) {
         h = i;
-        // console.log(h);
-        // console.log(pickMap[i].find((el) => el.areacode === areaCode));
       }
     }
   }
-
-  // let pickMapY = parseFloat(pickMap[h].MapY);
-  // let pickMapX = parseFloat(pickMap[h].MapX);
-  // console.log('@', pickMapY, pickMapX);
 
   const savehandler = () => {
     axios

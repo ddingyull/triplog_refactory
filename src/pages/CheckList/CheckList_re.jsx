@@ -127,17 +127,16 @@ export default function CheckListRe() {
                             </>
                           );
                         })}
-                        <InputGroup className="mt-3">
+                        {/* <InputGroup className="mt-3">
                           <Form.Control
                             placeholder="아이템 추가하기🤗"
-                            // aria-label="Recipient's username"
-                            // aria-describedby="basic-addon2"
                             onChange={(e) => changeHandler(e)}
                           />
                           <Button
                             variant="success"
                             id="button-addon2"
                             onClick={() => {
+                              console.log(input);
                               axios
                                 .post(
                                   'http://localhost:4000/checklist/addItem',
@@ -157,7 +156,7 @@ export default function CheckListRe() {
                           >
                             추가
                           </Button>
-                        </InputGroup>
+                        </InputGroup> */}
                       </Form>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -165,8 +164,7 @@ export default function CheckListRe() {
               );
             })}
           </Accordion>
-          {/* <div className="container ">
-            <h4 calssName="fw-bold text-center">내 체크리스트 저장하기!</h4>
+          <div className="container ">
             <Button
               variant="success"
               onClick={() => {
@@ -181,7 +179,7 @@ export default function CheckListRe() {
             >
               저장
             </Button>
-          </div> */}
+          </div>
         </Container>
       </>
     );

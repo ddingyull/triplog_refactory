@@ -78,7 +78,7 @@ export default function NavHeader() {
                 href="/Login"
                 variant="outline-success"
                 className="fs-5"
-                style={{ marginRight: '15px' }}
+                style={{ marginRight: '10px' }}
               >
                 {state.isLogin === false ? (
                   <FontAwesomeIcon icon={faUser} />
@@ -88,7 +88,7 @@ export default function NavHeader() {
               <Nav.Link
                 variant="outline-success"
                 className="fs-5"
-                style={{ marginRight: '15px' }}
+                style={{ marginRight: '10px' }}
               >
                 {state.isLogin === true ? (
                   <FontAwesomeIcon
@@ -100,7 +100,9 @@ export default function NavHeader() {
                 ) : null}
               </Nav.Link>
               <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
-                <FontAwesomeIcon icon={faCircleUser} />
+                {state.isLogin === true ? (
+                  <FontAwesomeIcon icon={faCircleUser} />
+                ) : null}
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

@@ -22,7 +22,6 @@ import Review from '../../components/Review';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-
 import {
   FaArrowAltCircleUp,
   FaPencilAlt,
@@ -49,6 +48,8 @@ export default function MyPage() {
   // 이미지 저장
   const [userData, setUserData] = useState([]);
   const [imgUpload, setImgUpload] = useState(false);
+  // islogin
+  const users = useSelector((state) => state.users);
 
   // 이미지 업로드
   const imgRef = useRef();
@@ -142,7 +143,6 @@ export default function MyPage() {
       });
   }, [userData]);
 
-  // console.log(plan);
   if (okay && yes && good) {
     return (
       <>
@@ -157,7 +157,7 @@ export default function MyPage() {
               >
                 <Row>
                   {/* 가로 nav tab */}
-                  <Col sm={3}>
+                  <Col className="col-sm-0 col-md-1 col-lg-2">
                     {userData.img !== undefined ? (
                       <img
                         src={`http://localhost:4000/uploads/${userData.img}`}
@@ -166,11 +166,11 @@ export default function MyPage() {
                         className="bg-dark rounded text-center d-block m-auto"
                       />
                     ) : (
-                      <img
-                        src="/images/submain/서울.jpg"
+                      <div
+                        // src="/images/submain/서울.jpg"
                         style={{ width: '13rem', height: '13rem' }}
                         className="bg-dark rounded text-center d-block m-auto"
-                      ></img>
+                      ></div>
                     )}
                     <p className="fs-3 text-center text-success fw-bold m-2">
                       {nickName}
@@ -212,7 +212,7 @@ export default function MyPage() {
                     </Nav>
                   </Col>
                   {/* 컨텐츠 */}
-                  <Col>
+                  <Col className="col-sm-12 col-md-8">
                     <Tab.Content>
                       {/* 여행 조회 */}
                       <Tab.Pane eventKey="trip">
@@ -301,50 +301,6 @@ export default function MyPage() {
                       <Tab.Pane eventKey="budget">
                         <BudgetRe />
                       </Tab.Pane>
-
-                      {/* 찜한 곳 조회*/}
-                      {/* <Tab.Pane eventKey="pick" className="container">
-                        <h4 className="fw-bold fs-3 text-center p-4">
-                          찜한 곳
-                        </h4>
-                        <Container className="d-flex flex-wrap">
-                          {like.map((a, i) => {
-                            return (
-                              <Card
-                                className="m-3"
-                                style={{ width: '29%' }}
-                                onClick={() => {navigate(`/detail/${tourData.contentid}`);}}
-                              >
-                                <Card.Img
-                                  variant="top"
-                                  src={tourData[0].data.firstimage}
-                                ></Card.Img>
-                                <Card.Body>
-                                  <Card.Title>{tourData.title}</Card.Title>
-                                  <Card.Title>
-                                    {tourData.map((el) => {
-                                      if (el.data.contentid === a) {
-                                        return el.data.title;
-                                      }
-                                    })}
-                                  </Card.Title>
-                                  <Card.Text className="text-muted">
-                                    {tourData.addr1}
-                                    {tourData.map((el) => {
-                                      if (el.data.contentid === a) {
-                                        return el.data.addr1;
-                                      }
-                                    })}
-                                  </Card.Text>
-                                  <Card.Text className="text-muted">
-                                    ⭐⭐⭐⭐⭐ <span>30</span>
-                                  </Card.Text>
-                                </Card.Body>
-                              </Card>
-                            );
-                          })}
-                        </Container>
-                      </Tab.Pane> */}
 
                       {/* 리뷰 조회 */}
                       <Tab.Pane eventKey="review">
