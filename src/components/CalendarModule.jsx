@@ -205,6 +205,19 @@ const LinkBtn = styled.button`
   font-family: 'ChosunBg';
   color: #fff;
 
+  @media only screen and (max-width: 992px) {
+    font: 1rem/1 'ChosunBg';
+    top: -10px;
+    left: 40px;
+    display: none;
+  }
+
+  @media only screen and (max-width: 720px) {
+    display: none;
+    /* font: 1rem/1 'ChosunBg';
+    top: -10px;
+    left: 0px; */
+  }
   &:hover {
     opacity: 1;
   }
