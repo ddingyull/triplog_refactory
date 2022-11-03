@@ -202,9 +202,10 @@ export default function Review() {
                       {/* 리뷰 내용 */}
                       <Card.Body>
                         <Card.Text>{a.content}</Card.Text>
+                        {console.log(a.img)}
                         <Col>
                           <Image
-                            src="/images/imgSample.jpg"
+                            src={`http://localhost:4000/uploads/${a.img}`}
                             style={{ width: '100px', height: '100px' }}
                             className="mt-3 mx-1"
                           />

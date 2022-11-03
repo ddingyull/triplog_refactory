@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
@@ -18,6 +18,15 @@ export default function Lists() {
   const [reviewData, setReviewData] = useState([]);
   const [details, setDetails] = useState([]);
   const [okay, setOkay] = useState(false);
+
+  const checkLike = useRef();
+  const checkView = useRef();
+
+  const list1 = useRef();
+  const list2 = useRef();
+  const list3 = useRef();
+  const list4 = useRef();
+  const list5 = useRef();
 
   // 이미지 로딩 실패
   const onErrorImg = (e) => {
@@ -76,9 +85,17 @@ export default function Lists() {
         <Nav />
         <Container>
           {/* ListsTAB */}
-          <Row className="d-flex col-8 mx-auto text-center mt-4 mb-3">
+          <Row className="d-flex col-8 mx-auto text-center mt-4 mb-5">
             <Col
+              className="rounded"
+              ref={list1}
               onClick={() => {
+                list1.current.style.border = '3px solid #198754';
+                list2.current.style.border = 'none';
+                list3.current.style.border = 'none';
+                list4.current.style.border = 'none';
+                list5.current.style.border = 'none';
+
                 axios
                   .get(
                     `https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`
@@ -93,7 +110,14 @@ export default function Lists() {
               <p className="fw-bold">관광</p>
             </Col>
             <Col
+              className="rounded"
+              ref={list2}
               onClick={() => {
+                list2.current.style.border = '3px solid #198754';
+                list1.current.style.border = 'none';
+                list3.current.style.border = 'none';
+                list4.current.style.border = 'none';
+                list5.current.style.border = 'none';
                 axios
                   .get(
                     `https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=14&areaCode=${areaCode}`
@@ -108,7 +132,14 @@ export default function Lists() {
               <p className="fw-bold">문화</p>
             </Col>
             <Col
+              ref={list3}
+              className="rounded"
               onClick={() => {
+                list3.current.style.border = '3px solid #198754';
+                list1.current.style.border = 'none';
+                list2.current.style.border = 'none';
+                list4.current.style.border = 'none';
+                list5.current.style.border = 'none';
                 axios
                   .get(
                     `https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=850&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=39&areaCode=${areaCode}`
@@ -123,7 +154,14 @@ export default function Lists() {
               <p className="fw-bold">음식</p>
             </Col>
             <Col
+              className="rounded"
+              ref={list4}
               onClick={() => {
+                list4.current.style.border = '3px solid #198754';
+                list1.current.style.border = 'none';
+                list2.current.style.border = 'none';
+                list3.current.style.border = 'none';
+                list5.current.style.border = 'none';
                 axios
                   .get(
                     `https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=32&areaCode=${areaCode}`
@@ -134,11 +172,20 @@ export default function Lists() {
               }}
               style={{ cursor: 'pointer' }}
             >
-              <p className="fs-2 mb-1">🏠</p>
-              <p className="fw-bold">숙소</p>
+              <div>
+                <div className="fs-2 mb-1">🏠</div>
+                <div className="fw-bold">숙소</div>
+              </div>
             </Col>
             <Col
+              className="rounded"
+              ref={list5}
               onClick={() => {
+                list5.current.style.border = '3px solid #198754';
+                list1.current.style.border = 'none';
+                list2.current.style.border = 'none';
+                list3.current.style.border = 'none';
+                list4.current.style.border = 'none';
                 axios
                   .get(
                     `https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=38&areaCode=${areaCode}`
@@ -162,6 +209,8 @@ export default function Lists() {
                     pagePost * (page - 1) + pagePost
                   )
                   .map(function (a, i) {
+                    checkLike.current = true;
+                    checkView.current = true;
                     return (
                       <Col>
                         <Card
@@ -184,24 +233,44 @@ export default function Lists() {
                               <span>
                                 {reviewData.map((el) => {
                                   if (el.contentId === tourData[i].contentid) {
-                                    const str = ` ⭐⭐⭐⭐⭐ ${el.star}`;
+                                    const str = ` ⭐ ${el.star}`;
                                     return str;
                                   }
                                 })}
                               </span>
                               <span>
-                                {details.map((el) => {
-                                  if (el.contentId === tourData[i].contentid) {
+                                {details.map((el, j, arr) => {
+                                  if (
+                                    el.data.contentid === tourData[i].contentid
+                                  ) {
                                     const str = ` ❤ ${el.like}`;
+                                    checkLike.current = false;
                                     return str;
+                                  }
+
+                                  if (
+                                    checkLike.current &&
+                                    arr.length - 1 === j
+                                  ) {
+                                    return ` ❤ 0`;
                                   }
                                 })}
                               </span>
                               <span>
-                                {details.map((el) => {
-                                  if (el.contentId === tourData[i].contentid) {
+                                {details.map((el, k, arr) => {
+                                  if (
+                                    el.data.contentid === tourData[i].contentid
+                                  ) {
                                     const str = ` 조회수 ${el.view}`;
+                                    checkView.current = true;
                                     return str;
+                                  }
+
+                                  if (
+                                    checkLike.current &&
+                                    arr.length - 1 === k
+                                  ) {
+                                    return ` 조회수 0`;
                                   }
                                 })}
                               </span>

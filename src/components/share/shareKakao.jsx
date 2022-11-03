@@ -28,17 +28,26 @@ export default function ShareKakao({ tourData }) {
         description: tourData.addr1,
         imageUrl: tourData.firstimage,
         link: {
+          mobileWebUrl: currentUrl,
           webUrl: currentUrl,
         },
       },
-      social: {
-        likeCount: 286,
-        commentCount: 45,
-      },
+      // social: {
+      //   likeCount: 286,
+      //   commentCount: 45,
+      // },
       buttons: [
         {
-          title: '보러가기',
+          title: '홈페이지 가기',
           link: {
+            mobileWebUrl: 'http://localhost:3000/',
+            webUrl: 'http://localhost:3000/',
+          },
+        },
+        {
+          title: '자세히 보기',
+          link: {
+            mobileWebUrl: currentUrl,
             webUrl: currentUrl,
           },
         },
@@ -48,10 +57,14 @@ export default function ShareKakao({ tourData }) {
 
   if (tourData) {
     return (
-      <div className="share-node" onClick={shareKakao}>
-        <img src="이미지" alt="카카오공유" />
-        <p>{tourData.title}</p>
-      </div>
+      <>
+        <img
+          onClick={shareKakao}
+          src={process.env.PUBLIC_URL + '/images/KakaoLogo.png'}
+          alt=""
+          width="23px"
+        />
+      </>
     );
   }
 }

@@ -1,17 +1,24 @@
 /* global kakao */
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Badge, Card } from 'react-bootstrap';
+import { Container, Row, Col, Badge, Card, Image } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from '../../components/Footer';
 import Nav from '../../components/Nav';
 import { useNavigate, useParams } from 'react-router-dom';
 import Review from '../../components/Review';
 import ReviewBox from './contents/Review/ReviewBox';
+import ShareKakao from '../../components/share/ShareKakao';
 
 // redux 에서 review 업데이트 여부를 받아옴
 import { useSelector } from 'react-redux';
+import ShareUrl from '../../components/share/ShareUrl';
+const starScore = [4, 4, 4, 4, 4];
 
 export default function Detail() {
+  const result = starScore.reduce(function add(sum, currValue) {
+    return sum + currValue;
+  }, 0);
+  console.log(result);
   const navigator = useNavigate();
   const params = useParams();
   const contentId = params.contentId;
@@ -29,15 +36,15 @@ export default function Detail() {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
   /* 투어 API */
-  useEffect(() => {
-    axios
-      .get(
-        `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
-      )
-      .then((response) => {
-        setTourData(response.data.response.body.items.item[0]);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
+  //     )
+  //     .then((response) => {
+  //       setTourData(response.data.response.body.items.item[0]);
+  //     });
+  // }, []);
 
   /* 리뷰 */
   useEffect(() => {
@@ -49,29 +56,42 @@ export default function Detail() {
       .catch(() => console.log('리뷰 실패'));
   }, [reviewUpdate]);
 
+  /* 투어 데이터 + 디테일 데이터 가져오기 */
+  useEffect(() => {
+    const reqPost = async () => {
+      const res = await axios.get(
+        `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
+      );
+      // console.log(res.data);
+      setTourData(res.data.response.body.items.item[0]);
+      let data = res.data.response.body.items.item[0];
+      axios
+        .post(`http://localhost:4000/detail/${contentId}`, { data })
+        .then((res) => {
+          console.log(res.data);
+          setDetails(res.data);
+        })
+        .catch(() => {
+          console.log('실패');
+        });
+    };
+    reqPost();
+    // console.log(tourData);
+  }, [like]);
+
+  /* 좋아요 데이터 가져오기 */
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/detail/${contentId}`)
+      .post('http://localhost:4000/like/getlikes', { nickName })
       .then((res) => {
         console.log(res.data);
-        setDetails(res.data);
+        // console.log(res.data[0].likes);
+        setLike(res.data.likes);
       })
       .catch(() => {
         console.log('실패');
       });
-  }, [like]);
-
-  // 유저 데이터 가져오기
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/user/getlikes")
-  //     .then((res) => {
-  //       setLike(res.data[0].likes);
-  //     })
-  //     .catch(() => {
-  //       console.log("실패");
-  //     });
-  // }, []);
+  }, []);
 
   const handleToggle = (b) => () => {
     console.log(b);
@@ -93,7 +113,7 @@ export default function Detail() {
     }
     setLike(newLike);
     axios
-      .post('http://localhost:4000/user/arrlike', newLike)
+      .post('http://localhost:4000/like/arrlike', { newLike, nickName })
       .then((res) => console.log(res.data));
   };
 
@@ -126,7 +146,7 @@ export default function Detail() {
                 variant="top"
                 src={tourData.firstimage}
                 onError={onErrorImg}
-                style={{ height: '35vh', objectFit: 'cover' }}
+                style={{ height: '200px', objectFit: 'cover' }}
                 className="fluid border"
               />
               <Card.Body>
@@ -146,12 +166,9 @@ export default function Detail() {
                   <div
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      alert('서비스 구현예정입니다. 🙏');
-                    }}
                   >
-                    <h5>📆</h5>
-                    <p>일정짜기</p>
+                    <ShareKakao tourData={tourData} />
+                    <p>카카오 공유</p>
                   </div>
                   <div
                     className="text-center flex-fill"
@@ -167,11 +184,11 @@ export default function Detail() {
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
-                      alert('서비스 구현예정입니다. 🙏');
+                      alert('url이 복사되었습니다.');
                     }}
                   >
-                    <h5>⬆</h5>
-                    <p>공유하기</p>
+                    <ShareUrl />
+                    <p style={{ fontSize: '1rem' }}>URL공유</p>
                   </div>
                 </div>
               </Card.Body>
@@ -185,7 +202,12 @@ export default function Detail() {
             >
               <Card.Body className="m-2 " style={{ height: '40vh' }}>
                 <p className=" mb-2 text-muted text-end">
-                  조회수 <span>{details.view}</span>
+                  조회수{' '}
+                  {details.view === undefined ? (
+                    <span>1</span>
+                  ) : (
+                    <span>{details.view + 1}</span>
+                  )}
                 </p>
                 <Card.Title className="mb-3 fw-bold">
                   {tourData.title}
@@ -194,8 +216,12 @@ export default function Detail() {
                   📍 {tourData.addr1}
                 </Card.Subtitle>
                 <Card.Text className="mb-4">
-                  ⭐⭐⭐⭐⭐<span> {reviewData.length} </span> ❤{' '}
-                  <span>{details.like}</span>
+                  ⭐<span> {reviewData.length} </span> ❤{' '}
+                  {details.like === undefined ? (
+                    <span>0</span>
+                  ) : (
+                    <span>{details.like}</span>
+                  )}
                 </Card.Text>
                 <Card.Text>
                   <Row className="mt-1 text-start">

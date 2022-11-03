@@ -23,7 +23,7 @@ import MainIntro from './MainIntro';
 // gsap.reigisterPlugin(ScrollTrigger);
 
 export default function Main() {
-  let state = useSelector((state) => state.users.isLogin);
+  let state = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   const navigator = useNavigate();
@@ -50,9 +50,9 @@ export default function Main() {
   return (
     <>
       {/* <MainScroll /> */}
-      <MainIntro />
+      {console.log(state)}
+      {/* // <MainIntro /> */}
       <Nav />
-
       {/* <section class="slide1">
         <img
           src={process.env.PUBLIC_URL + '/images/mainBeach.jpg'}
@@ -68,7 +68,6 @@ export default function Main() {
           className="beachRemove"
         />
       </section> */}
-
       <Container>
         <h1 className="fw-bold lh-base mt-5 mb-5 mx-5">
           <span style={{ color: '#198754' }}>{nickName}</span>님,
@@ -84,7 +83,9 @@ export default function Main() {
         >
           <Button
             className="flex-fill mx-3 mb-2"
-            onClick={() => navigator('/budget')}
+            onClick={() => {
+              state.isLogin ? navigator('/budget') : navigator('/login');
+            }}
             variant="success"
           >
             💸 가계부
@@ -174,8 +175,8 @@ export default function Main() {
                 <Card.ImgOverlay>
                   <Card.Body>
                     <Card.Text
-                      className="fw-bold fs-4 "
-                      style={{ color: '#f7f7f7' }}
+                      className="fw-bold fs-4 text-light"
+                      // style={{ color: '#f7f7f7' }}
                       // fontFamily: 'ChosunBg',
                     >
                       {cardText[idx]}
