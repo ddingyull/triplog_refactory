@@ -17,7 +17,7 @@ export default function MainIntro() {
         '#slogan',
         {
           scale: 2,
-          y: 300,
+          y: 200,
           duration: 2,
         },
         1
@@ -25,7 +25,7 @@ export default function MainIntro() {
       .to(
         '.beachRemove',
         {
-          y: -700,
+          y: -800,
           duration: 2,
         },
         1
@@ -35,6 +35,7 @@ export default function MainIntro() {
         '.beachRemove',
         {
           opacity: 0,
+          duration: 2,
         },
         2
       )
@@ -42,6 +43,15 @@ export default function MainIntro() {
         '.beach',
         {
           opacity: 0,
+          duration: 2,
+        },
+        2
+      )
+      .to(
+        '#slogan',
+        {
+          opacity: 0,
+          duration: 1,
         },
         2
       );
@@ -123,7 +133,7 @@ const MainBeach = styled.img``;
 const Slogan = styled.h1`
   position: absolute;
   left: 47%;
-  top: 20%;
+  top: 30%;
   scale: 5;
   color: white;
 `;
@@ -131,4 +141,5 @@ const Image = styled.img`
   position: absolute;
   top: 83%;
   width: inherit;
+  height: inherit;
 `;
