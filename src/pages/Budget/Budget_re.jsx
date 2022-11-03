@@ -52,7 +52,7 @@ export default function BudgetRe() {
   if (okay) {
     return (
       <>
-        <Container>
+        <Container className="col-md-12">
           <h1 className="fw-bold lh-base mt-5 mb-4">
             <span style={{ color: '#198754' }}>{nickName}</span>
             <span>님의</span>
@@ -80,7 +80,7 @@ export default function BudgetRe() {
 
             {chargeData &&
               chargeData.map(function (a, i) {
-                console.log(a);
+                // console.log(a);
                 return (
                   <Row className="mx-1">
                     <Col className="col-2">
