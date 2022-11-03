@@ -35,11 +35,6 @@ let pickMap = [
 ];
 
 export default function Plan() {
-  const nickName = useSelector((state) => state.users.userNickName);
-  const state = useSelector((state) => state.triplog);
-  const dispatch = useDispatch();
-  console.log(state.triplog);
-
   let h = 0;
   for (let i = 0; i < pickMap.length; i++) {
     for (let j = 0; j < pickMap[i].length; j++) {
@@ -71,6 +66,10 @@ export default function Plan() {
   const areaCode = params.areaCode;
 
   // const oldIdx = useRef();
+
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.triplog);
+  const nickName = useSelector((state) => state.users.userNickName);
 
   const [tourData, setTourData] = useState([]);
 
@@ -128,7 +127,6 @@ export default function Plan() {
     <>
       <Nav />
       <Welcome />
-
       <Modal
         show={show}
         onHide={() => {
@@ -156,16 +154,18 @@ export default function Plan() {
             {/* 여행지 검색 기능 */}
             <Row className="m-auto py-4 d-flex text-center">
               <form>
-                <div className="text-center fs-4 m-4">
-                  {' '}
-                  🛫 {pickAreaName} 여행
+                <div
+                  className="text-center fs-4 m-4"
+                  style={{ fontFamily: 'ChosunBg' }}
+                >
+                  🛫 우리만의 여행, TripLog
                 </div>
                 <div className="text-center fs-6 m-4">
-                  추가하고 싶은 여행지를 검색하세요
+                  가고 싶은 여행지를 추가해보세요
                 </div>
                 <input
                   type="text"
-                  placeholder="원하는 여행지 검색"
+                  placeholder=" 여행지 검색"
                   ref={inputRef}
                   className="m-1"
                   style={{
@@ -219,6 +219,7 @@ export default function Plan() {
                             const pickedPlace = {
                               title: a.title,
                               Image: a.firstimage,
+                              addr1: a.addr1,
                               mapx: parseFloat(a.mapx),
                               mapy: parseFloat(a.mapy),
                             };
@@ -239,6 +240,7 @@ export default function Plan() {
                                   {
                                     title: a.title,
                                     Image: a.firstimage,
+                                    addr1: a.addr1,
                                     mapx: parseFloat(a.mapx),
                                     mapy: parseFloat(a.mapy),
                                   },
@@ -327,12 +329,12 @@ export default function Plan() {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <Container className="d-flex justify-content-end">
+      <Container className="d-flex justify-content-start">
         <Button
-          className="btn d-block btn-dark m-3"
+          className="btn d-block btn-dark mt-4 mb-3"
           onClick={() => {
             savehandler();
+            alert('여행 계획이 저장되었습니다');
           }}
         >
           여행 계획 저장하기
@@ -347,6 +349,8 @@ export default function Plan() {
           onClick={handleShow}
         />
       </Container>
+      <TriplogTitle className="d-block">TripLog</TriplogTitle>
+      <TriplogTitle1 className="d-block">TripLog</TriplogTitle1>
       <Footer />
     </>
   );
@@ -369,4 +373,31 @@ const SelectBox = styled.div`
     background-color: rgba(3, 102, 53, 0.3);
     cursor: pointer;
   }
+`;
+
+const TriplogTitle = styled.p`
+  position: absolute;
+  top: 150px;
+  right: 100px;
+  transform: rotate(-8deg);
+  color: #5d835d;
+  opacity: 0.2;
+  font-family: 'ChosunBg';
+  font-size: 140px;
+  background-color: #c0dac0;
+  border-radius: 10px;
+  padding: 20px 25px;
+`;
+const TriplogTitle1 = styled.p`
+  position: absolute;
+  top: 560px;
+  right: 100px;
+  transform: rotate(5deg);
+  color: #5d835d;
+  opacity: 0.2;
+  font-family: 'ChosunBg';
+  font-size: 120px;
+  background-color: #c0dac0;
+  border-radius: 10px;
+  padding: 20px 25px;
 `;

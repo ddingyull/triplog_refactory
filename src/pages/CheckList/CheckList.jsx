@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function CheckList() {
   const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
+
+  const inputRef = useRef();
   const [checked, setChecked] = useState([]);
   const [checklist, setChecklist] = useState([]);
   const [okay, setOkay] = useState(false);
@@ -25,6 +27,7 @@ export default function CheckList() {
   const callApi = async () => {
     axios
       .post('http://localhost:4000/checklist', { nickName })
+
       .then((res) => {
         console.log(res.data);
         setChecklist(res.data);

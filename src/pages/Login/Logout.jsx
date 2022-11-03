@@ -1,29 +1,23 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { logout } from '../../store/modules/users';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSolid,
   faUser,
   faFaceSmile,
+  faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 
-function Logout(props) {
+export default function Logout({ logout }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  function logout() {
-    dispatch(logout());
-    navigate('/');
-  }
-
-  return (
-    <button onClick={() => logout()}>
-      <FontAwesomeIcon icon="fa-arrow-right-from-bracket" />
-    </button>
-  );
+  // return (
+  //   <logoutRtn onClick={logout}>
+  //     <FontAwesomeIcon icon={faArrowRightFromBracket} />
+  //   </logoutRtn>
+  // );
 }
 
-export default Logout;
+const logoutRtn = styled.button``;

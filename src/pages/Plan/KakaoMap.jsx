@@ -29,7 +29,7 @@ export default function KakaoMap(props) {
         pickMap[props.areaCode].MapY
       ),
       // 지도 레벨(높을 수록 멀어진다)
-      level: 12,
+      level: 11,
     };
     // 지도 생성을 위한 메소드
     const map = new kakao.maps.Map(container, options);
@@ -42,18 +42,38 @@ export default function KakaoMap(props) {
     // 지도 줌인 금지
     // map.setZoomable(false);
 
-    // tetz 이제 redux 에서만 값을 받아서 지도를 그려줌 + idx 를 통해 각각 날짜에 맞는 데이터를 지도에 뿌려준다!
+    // 이제 redux 에서만 값을 받아서 지도를 그려줌 + idx 를 통해 각각 날짜에 맞는 데이터를 지도에 뿌려준다!
     // 추가 및 삭제 시에도 redux 값에 따라 해당 변화 값을 자동으로 지도에 적용!
     // 선택한 list에 대한 forEach
     if (state.planItems[props.idx]) {
       state.planItems[props.idx].forEach((el, num, arr) => {
-        // 지도에 생성할 마커
-        new kakao.maps.Marker({
-          //마커가 표시 될 지도
-          map: map,
-          //마커가 표시 될 위치
-          position: new kakao.maps.LatLng(el.mapy, el.mapx),
+        let imageSrc = '/images/marker.png', // 마커이미지의 주소입니다
+          imageSize = new kakao.maps.Size(23, 30), // 마커이미지의 크기입니다
+          imageOption = { offset: new kakao.maps.Point(13, 28) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          ),
+          markerPosition = new kakao.maps.LatLng(el.mapy, el.mapx); // 마커가 표시될 위치입니다
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+          position: markerPosition,
+          image: markerImage, // 마커이미지 설정
         });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+        // // 지도에 생성할 마커
+        // new kakao.maps.Marker({
+        //   //마커가 표시 될 지도
+        //   map: map,
+        //   //마커가 표시 될 위치
+        //   position: new kakao.maps.LatLng(el.mapy, el.mapx),
+        // });
         // path 를 주기 위해서 리스트에 저장 된 공간의 좌표를 pathArr 라는 배열에 푸쉬
         let pathArr = [];
         for (let i = 0; i < state.planItems[props.idx].length; i++) {
@@ -68,9 +88,9 @@ export default function KakaoMap(props) {
           // 선을 굵기
           strokeWeight: 3,
           // 선의 색
-          strokeColor: '#34A853',
+          strokeColor: '#2e7c5d',
           // 선의 불투명도
-          strokeOpacity: 1,
+          strokeOpacity: 0.8,
           // 선의 스타일
           strokeStyle: 'solid',
         });

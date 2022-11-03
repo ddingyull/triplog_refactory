@@ -39,6 +39,8 @@ export default function users(state = initState, action) {
     case LOGOUT:
       return {
         ...state,
+        userEmail: '',
+        userNickName: '',
         isLogin: false,
       };
     default:
