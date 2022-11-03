@@ -18,35 +18,36 @@ import { chargeUpdate } from '../../store/modules/budget';
 
 export default function Budget() {
   const dispatch = useDispatch();
+
   const textRef = useRef();
   const chargeRef = useRef();
   const dateRef = useRef();
 
   const [chargeData, setChargeData] = useState();
-  const [updateChargeTitle, setUpdateChargeTitle] = useState();
-  const [updateCharge, setUpdateCharge] = useState();
-  const [users, setUsers] = useState(0);
-
+  const [users, setUsers] = useState(1);
+  const [update, setUpdate] = useState(false);
   const [okay, setOkay] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
-  const chargeUpdate = useSelector((state) => state.budget.chargeUpdate);
-  const totalCharge = chargeData?.reduce((acc, cur, i) => {
-    return cur.charge + acc;
-  }, 0);
+  let totalCharge = [];
+  if (chargeData !== undefined) {
+    totalCharge = chargeData?.reduce((acc, cur, i) => {
+      return cur.charge + acc;
+    }, 0);
+  }
+  const nickName = useSelector((state) => state.users.userNickName);
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/charge')
+      .post('http://localhost:4000/charge', { nickName })
       .then((res) => {
-        console.log(res.data[0].chargeList);
-        setChargeData(res.data[0].chargeList);
+        setChargeData(res.data.chargeList);
         setOkay(true);
         dispatch(chargeUpdate());
       })
       .catch((err) => console.log(err));
-  }, [chargeUpdate]);
+  }, [update]);
 
   if (show) {
     return (
@@ -74,20 +75,21 @@ export default function Budget() {
         <Modal.Footer>
           <Button
             variant="outline-success"
-            // onClick={() => {
-            //   axios
-            //     .post(`http://localhost:4000/review/emend/${emendId}`, [
-            //       { emendId, emendContent },
-            //     ])
-            //     .then((결과) => {
-            //       console.log(결과);
-            //       console.log('리뷰 수정 성공');
-            //       setShow(false);
-            //     })
-            //     .catch(() => {
-            //       console.log('실패');
-            //     });
-            // }}
+            onClick={() => {
+              axios
+                .post(`http://localhost:4000/charge/alldelete`, {
+                  nickName,
+                  chargeData,
+                })
+                .then((결과) => {
+                  console.log('초기화 성공');
+                  setShow(false);
+                  setUpdate(!update);
+                })
+                .catch(() => {
+                  console.log('실패');
+                });
+            }}
           >
             초기화
           </Button>
@@ -108,10 +110,10 @@ export default function Budget() {
 
             <Col className="col-6 align-self-center px-5 mb-4">
               <h1 className="fw-bold lh-base mt-5 mb-4">
-                <span style={{ color: '#198754' }}>trip</span>
+                <span style={{ color: '#198754' }}>{nickName}</span>
                 <span>님의</span>
                 <br></br>
-                <span>정산내역입니다.</span>
+                <span>정산💸내역입니다.</span>
               </h1>
               <p className="mb-4">
                 일행과 함께 지출한 비용이 있다면,
@@ -141,33 +143,21 @@ export default function Budget() {
                 <Col>
                   <Button
                     variant="success"
+                    className="text-end"
                     onClick={() => {
-                      // const date = dateRef.current.value;
+                      const date = dateRef.current.value;
                       const title = textRef.current.value;
                       const charge = chargeRef.current.value;
 
-                      let obj = {
-                        title: title,
-                        charge: parseInt(charge),
-                      };
-
-                      if (chargeData.chargeList === undefined)
-                        chargeData.chargeList = [];
-                      chargeData.chargeList.push(obj);
-
-                      console.log('@@', chargeData);
-
-                      setChargeData(chargeData);
-
                       axios
-                        .post(`http://localhost:4000/charge/write`, [
-                          chargeData,
-                        ])
+                        .post(`http://localhost:4000/charge/write`, {
+                          chargeList: { date, title, charge: parseInt(charge) },
+                          nickName,
+                        })
                         .then((res) => {
-                          console.log(res);
                           console.log('charge 등록 성공');
                           alert('여행 지출 내역 등록을 성공하였습니다🙌');
-                          dispatch(chargeUpdate());
+                          setUpdate(!update);
                         })
                         .catch(() => {
                           console.log('charge 등록 실패');
@@ -179,9 +169,6 @@ export default function Budget() {
                   >
                     등록
                   </Button>
-                </Col>
-                <Col className="text-end">
-                  <Button variant="success">수정</Button>
                 </Col>
               </Row>
             </Col>
@@ -202,48 +189,48 @@ export default function Budget() {
                 <Col className="fw-bold col-2">Day</Col>
                 <Col className="fw-bold col-6 text-center">ITEM</Col>
                 <Col className="fw-bold col-2 text-center ">Price</Col>
-                <Col className="fw-bold col-1">Edit</Col>
-                <Col className="fw-bold col-1">Del</Col>
+                <Col className="fw-bold col-2 text-end">Del</Col>
               </Row>
               <hr class="solid"></hr>
 
-              {chargeData.map(function (a, i) {
-                console.log(a);
-                return (
-                  <Row className="mx-1">
-                    <Col className="col-2">
-                      <p>11.04</p>
-                    </Col>
-                    <Col className="col-6 text-center">{a.title}</Col>
-                    <Col className="col-2 text-center">{a.charge}</Col>
-                    <Col
-                      className="col-1 text-end"
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <FaPencilAlt
-                        style={{ color: '#198754' }}
-                        onClick={() => {
-                          axios
-                            .get(`http://localhost:4000/charge/update/`)
-                            .then((res) => {
-                              console.log('가계부 수정 성공');
-                              setUpdateCharge(res.data.title);
-                            })
-                            .catch((err) => {
-                              console.log('가계부 수정 실패');
-                            });
-                        }}
-                      />
-                    </Col>
-                    <Col
-                      className="col-1 text-end"
-                      style={{ cursor: 'pointer' }}
-                    >
-                      <FaTrash style={{ color: 'grey' }} />
-                    </Col>
-                  </Row>
-                );
-              })}
+              {chargeData &&
+                chargeData.map(function (a, i) {
+                  console.log(a);
+                  return (
+                    <Row className="mx-1">
+                      <Col className="col-2">
+                        <p>{a.date.slice(5, 10)}</p>
+                      </Col>
+                      <Col className="col-6 text-center">{a.title}</Col>
+                      <Col className="col-2 text-center">{a.charge}</Col>
+                      <Col
+                        className="col-2 text-end"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <FaTrash
+                          style={{ color: 'grey' }}
+                          onClick={() => {
+                            axios
+                              .post('http://localhost:4000/charge/delete', {
+                                nickName,
+                                a,
+                              })
+                              .then((결과) => {
+                                // 백엔드 콘솔 결과
+                                console.log(결과);
+                                console.log('성공');
+                                alert('지출 내역 삭제를 성공하였습니다🙌');
+                                setUpdate(!update);
+                              })
+                              .catch(() => {
+                                console.log('실패');
+                              });
+                          }}
+                        />
+                      </Col>
+                    </Row>
+                  );
+                })}
 
               <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
               <Row>
@@ -264,14 +251,14 @@ export default function Budget() {
                   />
                 </Col>
                 <Col sm md lg="auto" className="text-end">
-                  1인당 {parseInt(totalCharge / users)}
+                  1인당 {parseInt(totalCharge / users)} 원
                 </Col>
               </Row>
 
               <Row>
                 <Col className="fw-bold">총 합계 : </Col>
                 <Col sm md lg="auto" className="text-end">
-                  {totalCharge}
+                  {totalCharge} 원
                 </Col>
               </Row>
 

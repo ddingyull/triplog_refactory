@@ -37,7 +37,7 @@ export default function Review() {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-
+  const nickName = useSelector((state) => state.users.userNickName);
   // 리덕스 detail store 에서 리뷰 업데이트 현황 받아오기
   const reviewUPdate = useSelector((state) => state.detail.reviewUpdate);
 
@@ -99,8 +99,8 @@ export default function Review() {
               variant="success"
               onClick={() => {
                 axios
-                  .post(`http://localhost:4000/review/emend/${emendId}`, [
-                    { emendId, emendContent },
+                  .post(`http://localhost:4000/review/emend`, [
+                    { emendId, emendContent, nickName },
                   ])
                   .then((res) => {
                     dispatch(reviewUpdate());
@@ -212,48 +212,52 @@ export default function Review() {
 
                         <Row className="d-flex justify-content-end">
                           <Col className=" text-end mt-3 mx-2">
-                            <Button
-                              variant="success"
-                              className="reviewEmendBtn"
-                              onClick={() => {
-                                setShow(true);
-                                axios
-                                  .get(
-                                    `http://localhost:4000/review/emend/${a._id}`
-                                  )
-                                  .then((res) => {
-                                    console.log('review 수정 성공');
-                                    setEmendContent(res.data.content);
-                                    setEmendId(res.data._id);
-                                    dispatch(reviewUpdate());
-                                  })
-                                  .catch(() => {
-                                    console.log('실패');
-                                  });
-                              }}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              variant="success"
-                              className="mx-2"
-                              onClick={() => {
-                                axios
-                                  .delete(
-                                    `http://localhost:4000/review/delete/${a._id}`
-                                  )
-                                  .then((res) => {
-                                    console.log(res);
-                                    console.log('review 삭제 성공');
-                                    dispatch(reviewUpdate());
-                                  })
-                                  .catch(() => {
-                                    console.log('실패');
-                                  });
-                              }}
-                            >
-                              삭제
-                            </Button>
+                            {a.nickName === nickName && (
+                              <>
+                                <Button
+                                  variant="success"
+                                  className="reviewEmendBtn"
+                                  onClick={() => {
+                                    setShow(true);
+                                    axios
+                                      .get(
+                                        `http://localhost:4000/review/emend/${a._id}`
+                                      )
+                                      .then((res) => {
+                                        console.log('review 수정 성공');
+                                        setEmendContent(res.data.content);
+                                        setEmendId(res.data._id);
+                                        dispatch(reviewUpdate());
+                                      })
+                                      .catch(() => {
+                                        console.log('실패');
+                                      });
+                                  }}
+                                >
+                                  수정
+                                </Button>
+                                <Button
+                                  variant="success"
+                                  className="mx-2"
+                                  onClick={() => {
+                                    axios
+                                      .delete(
+                                        `http://localhost:4000/review/delete/${a._id}`
+                                      )
+                                      .then((res) => {
+                                        console.log(res);
+                                        console.log('review 삭제 성공');
+                                        dispatch(reviewUpdate());
+                                      })
+                                      .catch(() => {
+                                        console.log('실패');
+                                      });
+                                  }}
+                                >
+                                  삭제
+                                </Button>
+                              </>
+                            )}
                           </Col>
                         </Row>
                       </Card.Body>

@@ -21,7 +21,7 @@ import { logout } from '../store/modules/users';
 
 export default function NavHeader() {
   const state = useSelector((state) => state.users);
-  console.log(state);
+  // console.log(state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -68,12 +68,12 @@ export default function NavHeader() {
                 제주
               </Nav.Link>
             </Nav>
+            
             <Nav className="d-flex">
               <Nav.Link
                 href="/Login"
                 variant="outline-success"
                 className="fs-5"
-                // onClick={() => setShow(!show)}
               >
                 {state.isLogin === false ? (
                   <FontAwesomeIcon icon={faUser} />
@@ -81,14 +81,13 @@ export default function NavHeader() {
               </Nav.Link>
 
               <Nav.Link variant="outline-success" className="fs-5">
-                {state.isLogin === true ? (
+              {state.isLogin === true ?
                   <FontAwesomeIcon
                     icon={faArrowRightFromBracket}
                     onClick={() => {
                       reduxLogout();
                     }}
-                  />
-                ) : null}
+                  /> : null }
               </Nav.Link>
               <Nav.Link href="/MyPage" className="d-sm-none d-md-inline-block">
                 <FontAwesomeIcon icon={faFaceSmile} />

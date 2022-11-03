@@ -6,17 +6,18 @@ import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { reviewUpdate } from '../../../../store/modules/detail';
 
 const ARRAY = [0, 1, 2, 3, 4];
 
-export default function ReviewWrite(props) {
+export default function ReviewWrite() {
   const params = useParams();
+
   const navigate = useNavigate();
   //dispatch 변수에 할당
   const dispatch = useDispatch();
-
+  const nickName = useSelector((state) => state.users.userNickName);
   const contentId = params.contentId;
   const contentRef = useRef();
   const imgRef = useRef();
@@ -91,7 +92,7 @@ export default function ReviewWrite(props) {
                     const content = contentRef.current.value;
                     axios
                       .post('http://localhost:4000/review/write', [
-                        { content, contentId, star },
+                        { nickName, content, contentId, star },
                       ])
                       .then((res) => {
                         console.log('댓글 등록 성공');

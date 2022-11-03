@@ -15,7 +15,7 @@ import { FaTrash } from 'react-icons/fa';
 // 리듀서
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function CheckList() {
+export default function CheckListRe() {
   const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
 
@@ -65,7 +65,6 @@ export default function CheckList() {
   if (okay) {
     return (
       <>
-        <Nav />
         <Container className="m-auto mt-5 ">
           <h1 className="fw-bold lh-base mt-5 mb-5">
             <span style={{ color: '#198754' }}>{nickName}</span>님, 여행 준비
