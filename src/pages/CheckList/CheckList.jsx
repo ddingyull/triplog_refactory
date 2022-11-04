@@ -145,7 +145,6 @@ export default function CheckList() {
                               // aria-describedby="basic-addon2"
                               onChange={(e) => changeHandler(e)}
                               value={text}
-                              // ref={inputRef}
                             />
                             <Button
                               variant="success"
@@ -162,7 +161,6 @@ export default function CheckList() {
                                   )
                                   .then((res) => {
                                     // console.log(res.data);
-                                    console.log('!!');
                                     setText('');
                                     setUpdate(!update);
                                   })

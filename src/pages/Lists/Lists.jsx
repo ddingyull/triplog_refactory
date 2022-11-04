@@ -232,10 +232,21 @@ export default function Lists() {
                             </Card.Text>
                             <Card.Text className="text-muted">
                               <span>
-                                {reviewData.map((el) => {
-                                  if (el.contentId === tourData[i].contentid) {
-                                    const str = ` ⭐ ${el.star}`;
+                                {details.map((el, j, arr) => {
+                                  if (
+                                    el.data.contentid === tourData[i].contentid
+                                  ) {
+                                    const star = parseFloat(el.starAvg);
+                                    const str = ` ⭐️ ${star}`;
+                                    checkLike.current = false;
                                     return str;
+                                  }
+
+                                  if (
+                                    checkLike.current &&
+                                    arr.length - 1 === j
+                                  ) {
+                                    return ` ⭐️ 0`;
                                   }
                                 })}
                               </span>

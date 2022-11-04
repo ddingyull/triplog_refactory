@@ -25,11 +25,14 @@ import styled from 'styled-components';
 export default function CheckList() {
   const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
+  const check = useSelector((state) => state.check);
 
   const inputRef = useRef();
   const [checked, setChecked] = useState([]);
   const [checklist, setChecklist] = useState([]);
   const [okay, setOkay] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [text, setText] = useState('');
 
   const callApi = async () => {
     axios
@@ -46,7 +49,7 @@ export default function CheckList() {
 
   useEffect(() => {
     callApi();
-  }, []);
+  }, [update]);
 
   const handleToggle = (b) => () => {
     // console.log(b);
@@ -65,8 +68,9 @@ export default function CheckList() {
   /* 추가 인풋 */
   let input = '';
   const changeHandler = (e) => {
-    console.log(e.target.value);
-    input = e.target.value;
+    // console.log(e.target.value);
+    // input = e.target.value;
+    setText(e.target.value);
   };
 
   if (okay) {
@@ -124,6 +128,7 @@ export default function CheckList() {
                                         )
                                         .then((res) => {
                                           console.log(res.data);
+                                          setUpdate(!update);
                                         })
                                         .catch(() => {
                                           console.log('실패');
@@ -140,6 +145,7 @@ export default function CheckList() {
                               // aria-label="Recipient's username"
                               // aria-describedby="basic-addon2"
                               onChange={(e) => changeHandler(e)}
+                              value={text}
                             />
                             <Button
                               variant="success"
@@ -151,11 +157,13 @@ export default function CheckList() {
                                     {
                                       nickName: nickName,
                                       title: checklist.items[i].title,
-                                      item: input,
+                                      item: text,
                                     }
                                   )
                                   .then((res) => {
                                     console.log(res.data);
+                                    setText('');
+                                    setUpdate(!update);
                                   })
                                   .catch(() => {
                                     console.log('실패');
@@ -187,7 +195,10 @@ export default function CheckList() {
                           nickName: nickName,
                           checked: checked,
                         })
-                        .then((res) => console.log(res.data))
+                        .then((res) => {
+                          console.log(res.data);
+                          setUpdate(!update);
+                        })
                         .catch(() => console.log('실패'));
                     }}
                   >

@@ -38,6 +38,8 @@ export default function Review() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const nickName = useSelector((state) => state.users.userNickName);
+  const userImg = useSelector((state) => state.users.userImg);
+
   // 리덕스 detail store 에서 리뷰 업데이트 현황 받아오기
   const reviewUPdate = useSelector((state) => state.detail.reviewUpdate);
 
@@ -52,6 +54,8 @@ export default function Review() {
       .catch(() => console.log('실패함'));
   }, [reviewUPdate]);
 
+  console.log(reviewData);
+
   /* pagingnation */
   // 첫 번째 페이지
   const [page, setPage] = useState(1);
@@ -64,7 +68,7 @@ export default function Review() {
   };
   // 이미지 로딩 실패시
   const onErrorImg = (e) => {
-    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
+    e.target.src = process.env.PUBLIC_URL + '/images/userNOIMG.png';
   };
 
   return (
@@ -132,11 +136,26 @@ export default function Review() {
                       <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-start">
                           <Col className="col-2">
-                            <Image
-                              src="/images/imgSample.jpg"
-                              roundedCircle
-                              style={{ width: '60px' }}
-                            />
+                            {userImg !== '' ? (
+                              <Image
+                                src={`http://localhost:4000/uploads/${userImg}`}
+                                roundedCircle
+                                style={{
+                                  width: '60px',
+                                  border: '1px solid black',
+                                }}
+                              />
+                            ) : (
+                              <Image
+                                onError={onErrorImg}
+                                src={`http://localhost:4000/uploads/${userImg}`}
+                                roundedCircle
+                                style={{
+                                  width: '60px',
+                                  border: '1px solid black',
+                                }}
+                              />
+                            )}
                           </Col>
                           <Col>
                             <p className=" fw-bold m-0">{a.nickName}</p>
@@ -206,19 +225,30 @@ export default function Review() {
                       {/* 리뷰 내용 */}
                       <Card.Body>
                         <Card.Text>{a.content}</Card.Text>
-                        {console.log(a.img)}
                         <Col>
-                          <Image
-                            onError={onErrorImg}
-                            src={`http://localhost:4000/uploads/${a.img}`}
-                            style={{ width: '200px', height: '150px' }}
-                            className="mt-3 border"
-                          />
+                          {a.img !== '' ? (
+                            <Image
+                              src={`http://localhost:4000/uploads/${a.img}`}
+                              style={{ width: '150px', height: '150px' }}
+                              className="mt-3 border"
+                            />
+                          ) : (
+                            <Image
+                              onError={onErrorImg}
+                              src={`http://localhost:4000/uploads/${a.img}`}
+                              style={{
+                                width: '150px',
+                                height: '150px',
+                                opacity: '0',
+                              }}
+                              className="mt-3 border"
+                            />
+                          )}
                         </Col>
 
                         <Row className="d-flex justify-content-end">
                           <Col className=" text-end mt-3 ">
-                            {a.nickName === nickName && (
+                            {a.nickName === nickName ? (
                               <>
                                 <Button
                                   variant="success"
@@ -261,7 +291,12 @@ export default function Review() {
                                   }}
                                 >
                                   삭제
-                                </Button>
+                                </Button>{' '}
+                              </>
+                            ) : (
+                              <>
+                                <Button style={{ opacity: '0' }}>수정</Button>
+                                <Button style={{ opacity: '0' }}>삭제</Button>
                               </>
                             )}
                           </Col>
