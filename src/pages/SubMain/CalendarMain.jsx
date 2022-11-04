@@ -5,46 +5,98 @@ import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import CalendarModule from '../../components/CalendarModule';
 import moment from 'moment';
-import data from '../../data'
+import data from '../../data';
 
-export default function CalendarMain({ text, planDate, subText, plandate, pickAreaName, pickAreaImg }){
+export default function CalendarMain({
+  text,
+  planDate,
+  subText,
+  plandate,
+  pickAreaName,
+  pickAreaImg,
+}) {
   const [value, onChange] = useState(new Date());
   const [areaImg, setAreaImg] = useState(data);
-  
 
-  return(
-      <Container className="position-relative d-flex justify-content-center">
-      <Row className='col-lg-10 col-md-12'>
+  return (
+    <Container className="justify-content-center">
+      <Row className="col-lg-10 m-auto">
         <Col>
-          <img className="d-block m-auto pt-5" alt="메인이미지" src={pickAreaImg} style={{width:"85%"}}/>
-          <Col xs={6} className='position-absolute top-0 start-0' style={{marginTop:'18vh', marginLeft:'25vw'}}>
-            <Title className="fw-bold text-dark fs-2 justify-content-start">Always {pickAreaName} With TripLog</Title>
-            <p className='m-0 fs-6 text-dark text-center position-absolute top-10 start-0'>{subText}</p>
-          </Col>
-          <Col xs={6} className='position-absolute top-0 start-0 d-block fs-6' style={{marginTop:'29vh', marginLeft:'24.5vw'}}>
-            <CalendarModule 
-              planDate={planDate}
-              />
-            <LinkBtn href='/Budget' className='btn btn-light ms-1 my-1'>💸 더치페이하기?</LinkBtn>
-            <LinkBtn href='/CheckList' className='btn btn-light d-block ms-1 my-2'>🔖 두고가시는건 없으신가요?</LinkBtn>
-          </Col>
+          <img
+            className="d-block m-auto pt-5 position-relative"
+            alt="메인이미지"
+            src={pickAreaImg}
+            style={{ width: '100%' }}
+          />
+
+          <ColTitle
+            xs={6}
+            // className="position-absolute top-0 start-0"
+            style={{
+              marginTop: '50vh',
+              marginLeft: '18vw',
+            }}
+          >
+            <p
+              className="fw-bold justify-content-start small-font-size"
+              style={{ fontFamily: 'ChosunBg' }}
+            >
+              {pickAreaName}
+            </p>
+            <p
+              className="mx-3"
+              style={{ color: '#fff', fontSize: '18px', fontFamily: 'Inter' }}
+            >
+              {subText}
+            </p>
+          </ColTitle>
+          <ColBtn
+            xs={6}
+            className="position-absolute top-0 start-0 d-block fs-6"
+            style={{
+              marginTop: '55vh',
+              marginLeft: '19vw',
+            }}
+          >
+            <CalendarModule planDate={planDate} />
+          </ColBtn>
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
-const Title = styled.div`
-font: 2rem/1 'Inter'
-`
-const LinkBtn = styled.button`
-  background-color: rgba(255, 255, 255, .5);
-  border: none;
-  font-size: 12px;
-  padding: 6px;
-  border-radius: 3px;
+const ColTitle = styled.div`
+  font: 8.5rem/1 'ChosunBg';
+  color: #fff;
+  position: absolute;
+  top: 80px;
+  left: 0px;
 
-
-  &:hover{
-  /* background-color: green; */
+  @media only screen and (max-width: 1140px) {
+    font: 5rem/1 'ChosunBg';
+    top: 70px;
+    left: 40px;
   }
-`
+
+  @media only screen and (max-width: 992px) {
+    font: 3rem/1 'ChosunBg';
+    top: 50px;
+    left: 40px;
+  }
+
+  @media only screen and (max-width: 720px) {
+    display: none;
+  }
+`;
+
+const ColBtn = styled.div`
+  position: absolute;
+  margin-top: 55vh;
+  margin-left: 20vw;
+
+  @media only screen and (max-width: 1140px) {
+    font: 0.5rem/1 'ChosunBg';
+    top: 30px;
+    left: 60px;
+  }
+`;

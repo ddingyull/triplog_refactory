@@ -9,8 +9,7 @@ import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import Forminput from '../../components/Forminput';
 import Btn from '../../components/Button';
-import { login } from '../../store/modules/triplog';
-import Logout from './Logout';
+import { login } from '../../store/modules/users';
 
 const ERROR_MSG = {
   required: '필수 정보입니다.',
@@ -92,6 +91,8 @@ export default function Login({
 
   const [UserEmailValid, setUserEmailValid] = useState(false);
   const [UserPwValid, setUserPwValid] = useState(false);
+  const [fixEmailValue, setFixEmailValue] = useState('thals0@gmail.com');
+  const [fixPwlValue, setFixPwValue] = useState('11111111aa');
 
   const handleEmail = (e) => {
     setUseremail(e.target.value);
@@ -124,14 +125,48 @@ export default function Login({
   async function loginUser() {
     setOpenDialog(false);
 
-    // {success.result === false ? <p>정보가 잘못되었습니다</p> : <div>로그인성공</div>}
+    async function normalLogin() {
+      const loginInfo = {
+        email: useremail,
+        password: userpw,
+      };
+      console.log(loginInfo);
 
-    const loginInfo = {
-      email: useremail,
-      password: userpw,
-    };
+      if (useremail !== '' && userpw !== '') {
+        const response = await fetch('http://localhost:4000/user/login ', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginInfo),
+        });
 
-    if (useremail !== '' && userpw !== '') {
+        if (response.status === 200) {
+          const result = await response.json();
+          console.log(result);
+          if (result.result) {
+            dispatch(login(result));
+            navigate('/');
+          } else {
+            alert('해당 정보를 찾을 수 없습니다');
+            navigate('/login');
+          }
+        } else {
+          throw new Error('로그인 실패');
+        }
+      } else {
+      }
+    }
+
+    // normalLogin();
+
+    async function porfolioLogin() {
+      const loginInfo = {
+        email: fixEmailValue,
+        password: fixPwlValue,
+      };
+      console.log(loginInfo);
+
       const response = await fetch('http://localhost:4000/user/login ', {
         method: 'POST',
         headers: {
@@ -153,8 +188,11 @@ export default function Login({
       } else {
         throw new Error('로그인 실패');
       }
-    } else {
     }
+
+    porfolioLogin();
+
+    // {success.result === false ? <p>정보가 잘못되었습니다</p> : <div>로그인성공</div>}
   }
   return (
     <>
@@ -177,7 +215,10 @@ export default function Login({
           <Forminput
             id={'useremail'}
             label="아이디"
-            value={useremail}
+            // normal
+            // value={useremail}
+            // portfolio
+            value={fixEmailValue}
             onChange={handleEmail}
             inputProps={{
               type: 'text',
@@ -192,7 +233,10 @@ export default function Login({
           <Forminput
             id={'userpw'}
             label="비밀번호"
-            value={userpw}
+            // normal
+            // value={userpw}
+            // portfolio
+            value={fixPwlValue}
             onChange={handlePw}
             inputProps={{
               type: 'password',
@@ -218,8 +262,6 @@ export default function Login({
             style={{ width: '100%', textDecoration: 'none' }}
           >
             <Btn
-              // href='KAKAO_CLIENT_ID'
-              // onClick={() => {(checkUser())}}
               text="카카오로그인"
               textColor="#333"
               backgroundColor="#ffd503"
@@ -228,7 +270,6 @@ export default function Login({
             ></Btn>
           </a>
           {/* <a href={KAKAO_AUTH_URL}>카카오톡로그인</a> */}
-          <Logout />
         </Card>
       </Container>
       <Footer />

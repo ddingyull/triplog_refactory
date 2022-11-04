@@ -37,6 +37,8 @@ export default function Review() {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const nickName = useSelector((state) => state.users.userNickName);
+  const userImg = useSelector((state) => state.users.userImg);
 
   // 리덕스 detail store 에서 리뷰 업데이트 현황 받아오기
   const reviewUPdate = useSelector((state) => state.detail.reviewUpdate);
@@ -52,6 +54,8 @@ export default function Review() {
       .catch(() => console.log('실패함'));
   }, [reviewUPdate]);
 
+  console.log(reviewData);
+
   /* pagingnation */
   // 첫 번째 페이지
   const [page, setPage] = useState(1);
@@ -61,6 +65,10 @@ export default function Review() {
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
+  };
+  // 이미지 로딩 실패시
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/userNOIMG.png';
   };
 
   return (
@@ -99,8 +107,8 @@ export default function Review() {
               variant="success"
               onClick={() => {
                 axios
-                  .post(`http://localhost:4000/review/emend/${emendId}`, [
-                    { emendId, emendContent },
+                  .post(`http://localhost:4000/review/emend`, [
+                    { emendId, emendContent, nickName },
                   ])
                   .then((res) => {
                     dispatch(reviewUpdate());
@@ -117,143 +125,180 @@ export default function Review() {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Row xs={1} md={1} lg={2} className="g-3 mx-3 mb-4">
+        <Row xs={1} md={1} lg={2} sm={1} xxs={2} className="mb-4">
           {reviewData.length > 0 ? (
             reviewData
               .slice(pagePost * (page - 1), pagePost * (page - 1) + pagePost)
               .map(function (a, i) {
                 return (
                   <Col>
-                    <Card>
-                      <Row className="mt-3 px-2">
+                    <Card className="my-2">
+                      <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-start">
-                          <Col className="col-1 mx-4">
-                            <Image
-                              src="/images/imgSample.jpg"
-                              roundedCircle
-                              style={{ width: '50px' }}
-                            />
+                          <Col className="col-2">
+                            {userImg !== '' ? (
+                              <Image
+                                src={`http://localhost:4000/uploads/${userImg}`}
+                                roundedCircle
+                                style={{
+                                  width: '60px',
+                                  border: '1px solid black',
+                                }}
+                              />
+                            ) : (
+                              <Image
+                                onError={onErrorImg}
+                                src={`http://localhost:4000/uploads/${userImg}`}
+                                roundedCircle
+                                style={{
+                                  width: '60px',
+                                  border: '1px solid black',
+                                }}
+                              />
+                            )}
                           </Col>
-                          <Col className="flex-fill">
-                            <p className="text-start fw-bold mt-2 mb-0">
-                              {a.nickName}
+                          <Col>
+                            <p className=" fw-bold m-0">{a.nickName}</p>
+                            {/* 별점 */}
+                            <div className="d-flex justify-content-start">
+                              <RaingStar className="text-center m-0">
+                                {a.star === 5 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                  </>
+                                ) : a.star === 4 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : a.star === 3 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : a.star === 2 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : a.star === 1 ? (
+                                  <>
+                                    <FaStar size="20" className="yellowStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                ) : (
+                                  <>
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                    <FaStar size="20" className="grayStar" />
+                                  </>
+                                )}
+                              </RaingStar>
+                            </div>
+
+                            <p className=" text-muted">
+                              {' '}
+                              {a.dateFull.slice(0, 10)}
                             </p>
                           </Col>
                         </div>
                       </Row>
-                      {/* 별점 */}
-                      <div className="d-flex align-items-center justify-content-start">
-                        <RaingStar className="text-center mx-2 col-6">
-                          {a.star === 5 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                            </>
-                          ) : a.star === 4 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : a.star === 3 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : a.star === 2 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : a.star === 1 ? (
-                            <>
-                              <FaStar size="20" className="yellowStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          ) : (
-                            <>
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                              <FaStar size="20" className="grayStar" />
-                            </>
-                          )}
-                        </RaingStar>
-                        <p className="text-end mx-2 text-muted col-5 ">
-                          {' '}
-                          {a.dateFull.slice(0, 10)}
-                        </p>
-                      </div>
+
                       {/* 리뷰 내용 */}
                       <Card.Body>
                         <Card.Text>{a.content}</Card.Text>
                         <Col>
-                          <Image
-                            src="/images/imgSample.jpg"
-                            style={{ width: '100px', height: '100px' }}
-                            className="mt-3 mx-1"
-                          />
+                          {a.img !== '' ? (
+                            <Image
+                              src={`http://localhost:4000/uploads/${a.img}`}
+                              style={{ width: '150px', height: '150px' }}
+                              className="mt-3 border"
+                            />
+                          ) : (
+                            <Image
+                              onError={onErrorImg}
+                              src={`http://localhost:4000/uploads/${a.img}`}
+                              style={{
+                                width: '150px',
+                                height: '150px',
+                                opacity: '0',
+                              }}
+                              className="mt-3 border"
+                            />
+                          )}
                         </Col>
 
                         <Row className="d-flex justify-content-end">
-                          <Col className=" text-end mt-3 mx-2">
-                            <Button
-                              variant="success"
-                              className="reviewEmendBtn"
-                              onClick={() => {
-                                setShow(true);
-                                axios
-                                  .get(
-                                    `http://localhost:4000/review/emend/${a._id}`
-                                  )
-                                  .then((res) => {
-                                    console.log('review 수정 성공');
-                                    setEmendContent(res.data.content);
-                                    setEmendId(res.data._id);
-                                    dispatch(reviewUpdate());
-                                  })
-                                  .catch(() => {
-                                    console.log('실패');
-                                  });
-                              }}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              variant="success"
-                              className="mx-2"
-                              onClick={() => {
-                                axios
-                                  .delete(
-                                    `http://localhost:4000/review/delete/${a._id}`
-                                  )
-                                  .then((res) => {
-                                    console.log(res);
-                                    console.log('review 삭제 성공');
-                                    dispatch(reviewUpdate());
-                                  })
-                                  .catch(() => {
-                                    console.log('실패');
-                                  });
-                              }}
-                            >
-                              삭제
-                            </Button>
+                          <Col className=" text-end mt-3 ">
+                            {a.nickName === nickName ? (
+                              <>
+                                <Button
+                                  variant="success"
+                                  className="reviewEmendBtn"
+                                  onClick={() => {
+                                    setShow(true);
+                                    axios
+                                      .get(
+                                        `http://localhost:4000/review/emend/${a._id}`
+                                      )
+                                      .then((res) => {
+                                        console.log('review 수정 성공');
+                                        setEmendContent(res.data.content);
+                                        setEmendId(res.data._id);
+                                        dispatch(reviewUpdate());
+                                      })
+                                      .catch(() => {
+                                        console.log('실패');
+                                      });
+                                  }}
+                                >
+                                  수정
+                                </Button>
+                                <Button
+                                  variant="success"
+                                  className="mx-2"
+                                  onClick={() => {
+                                    axios
+                                      .delete(
+                                        `http://localhost:4000/review/delete/${a._id}`
+                                      )
+                                      .then((res) => {
+                                        console.log(res);
+                                        console.log('review 삭제 성공');
+                                        dispatch(reviewUpdate());
+                                      })
+                                      .catch(() => {
+                                        console.log('실패');
+                                      });
+                                  }}
+                                >
+                                  삭제
+                                </Button>{' '}
+                              </>
+                            ) : (
+                              <>
+                                <Button style={{ opacity: '0' }}>수정</Button>
+                                <Button style={{ opacity: '0' }}>삭제</Button>
+                              </>
+                            )}
                           </Col>
                         </Row>
                       </Card.Body>
