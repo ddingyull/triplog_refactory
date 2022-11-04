@@ -7,18 +7,13 @@ import Nav from '../../components/Nav';
 import { useNavigate, useParams } from 'react-router-dom';
 import Review from '../../components/Review';
 import ReviewBox from './contents/Review/ReviewBox';
+import ShareUrl from '../../components/share/ShareUrl';
 import ShareKakao from '../../components/share/ShareKakao';
 
 // redux 에서 review 업데이트 여부를 받아옴
 import { useSelector } from 'react-redux';
-import ShareUrl from '../../components/share/ShareUrl';
-const starScore = [4, 4, 4, 4, 4];
 
 export default function Detail() {
-  const result = starScore.reduce(function add(sum, currValue) {
-    return sum + currValue;
-  }, 0);
-  console.log(result);
   const navigator = useNavigate();
   const params = useParams();
   const contentId = params.contentId;
@@ -135,6 +130,24 @@ export default function Detail() {
     });
   }, [tourData.mapy]);
 
+  const arr = [0];
+  for (let key in reviewData) {
+    arr.push(reviewData[key].star);
+  }
+  // console.log(arr);
+  const starsum = arr.reduce(function add(sum, currValue) {
+    return sum + currValue;
+  }, 0);
+  // console.log(starsum / arr.length);
+  const starAvg = (starsum / arr.length).toFixed(1);
+  console.log(starAvg);
+
+  useEffect(() => {
+    axios
+      .post(`http://localhost:4000/detail/incstar/${contentId}`, { starAvg })
+      .then((res) => console.log(res.data));
+  }, [starAvg]);
+
   return (
     <>
       <Nav />
@@ -157,7 +170,13 @@ export default function Detail() {
                   >
                     <h5
                       sytle={{ cursor: 'pointer' }}
-                      onClick={handleToggle(contentId)}
+                      onClick={
+                        nickName !== ''
+                          ? handleToggle(contentId)
+                          : () => {
+                              alert('로그인해주세요!');
+                            }
+                      }
                     >
                       {like.indexOf(contentId) !== -1 ? '❤' : '🤍'}
                     </h5>
@@ -218,7 +237,7 @@ export default function Detail() {
                   📍 {tourData.addr1}
                 </Card.Subtitle>
                 <Card.Text className="mb-4">
-                  ⭐<span> {reviewData.length} </span> ❤{' '}
+                  ⭐<span> {parseFloat(starAvg)} </span> ❤{' '}
                   {details.like === undefined ? (
                     <span>0</span>
                   ) : (

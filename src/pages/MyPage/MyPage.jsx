@@ -146,6 +146,10 @@ export default function MyPage() {
       });
   }, [userData]);
 
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
+  };
+
   if (okay && yes && good) {
     return (
       <>
@@ -157,13 +161,13 @@ export default function MyPage() {
           <Row className="col-9 ">
             <Tab.Container
               id="left-tabs-example"
-              defaultActiveKey="budget"
+              defaultActiveKey="trip"
               // className="m-auto"
               // className="col-9"
             >
               {/* 가로 nav tab */}
               <Col className="col-3">
-                {userData.img !== undefined ? (
+                {userData.img !== '' ? (
                   <img
                     src={`http://localhost:4000/uploads/${userData.img}`}
                     alt="회원 이미지"
@@ -171,11 +175,13 @@ export default function MyPage() {
                     className="bg-dark rounded text-center d-block m-auto"
                   />
                 ) : (
-                  <div
-                    // src="/images/submain/서울.jpg"
+                  <img
+                    onError={onErrorImg}
+                    src={`http://localhost:4000/uploads/${userData.img}`}
+                    alt="회원 이미지"
                     style={{ width: '13rem', height: '13rem' }}
                     className="bg-dark rounded text-center d-block m-auto"
-                  ></div>
+                  />
                 )}
                 <p className="fs-3 text-center text-success fw-bold m-2">
                   {nickName}

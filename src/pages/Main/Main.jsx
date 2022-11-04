@@ -72,7 +72,7 @@ export default function Main() {
         <Container>
           <h1 className="fw-bold lh-base mt-5 mx-5 fs-md-6">
             <span style={{ color: '#198754' }}>
-              {nickName === undefined ? nickName : '여행자'}
+              {nickName === '' ? '여행자' : nickName}
             </span>
             님,
             <br></br>TripLog에 오신걸 환영합니다! 👋
