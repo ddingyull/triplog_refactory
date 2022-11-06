@@ -47,7 +47,7 @@ export default function Lists() {
   /* 리뷰 */
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/review`)
+      .get(`http://13.125.234.1:4000/review`)
       .then((res) => {
         setReviewData(res.data);
       })
@@ -57,7 +57,7 @@ export default function Lists() {
   /* 좋아요/조회수 */
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/detail`)
+      .get(`http://13.125.234.1:4000/detail`)
       .then((res) => {
         // console.log(res.data);
         setDetails(res.data);

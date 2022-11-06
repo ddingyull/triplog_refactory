@@ -105,7 +105,7 @@ export default function ReviewWrite() {
                     if (nickName === '') {
                       alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!');
                     } else if (upload) {
-                      fetch('http://localhost:4000/review/img', {
+                      fetch('http://13.125.234.1:4000/review/img', {
                         method: 'post',
                         headers: {},
                         body: formData,
@@ -114,7 +114,7 @@ export default function ReviewWrite() {
                         .then((data) => {
                           console.log(data);
                           axios
-                            .post('http://localhost:4000/review/write', [
+                            .post('http://13.125.234.1:4000/review/write', [
                               {
                                 nickName,
                                 content,
@@ -140,7 +140,7 @@ export default function ReviewWrite() {
                         });
                     } else {
                       axios
-                        .post('http://localhost:4000/review/write', [
+                        .post('http://13.125.234.1:4000/review/write', [
                           {
                             nickName,
                             content,

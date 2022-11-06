@@ -40,7 +40,7 @@ export default function Budget() {
 
   useEffect(() => {
     axios
-      .post('http://localhost:4000/charge', { nickName })
+      .post('http://13.125.234.1:4000/charge', { nickName })
       .then((res) => {
         setChargeData(res.data.chargeList);
         setOkay(true);
@@ -77,7 +77,7 @@ export default function Budget() {
             variant="outline-success"
             onClick={() => {
               axios
-                .post(`http://localhost:4000/charge/alldelete`, {
+                .post(`http://13.125.234.1:4000/charge/alldelete`, {
                   nickName,
                   chargeData,
                 })
@@ -149,7 +149,7 @@ export default function Budget() {
                       const title = textRef.current.value;
                       const charge = chargeRef.current.value;
                       axios
-                        .post(`http://localhost:4000/charge/write`, {
+                        .post(`http://13.125.234.1:4000/charge/write`, {
                           chargeList: { date, title, charge: parseInt(charge) },
                           nickName,
                         })
@@ -217,7 +217,7 @@ export default function Budget() {
                           style={{ color: 'grey' }}
                           onClick={() => {
                             axios
-                              .post('http://localhost:4000/charge/delete', {
+                              .post('http://13.125.234.1:4000/charge/delete', {
                                 nickName,
                                 a,
                               })

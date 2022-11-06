@@ -19,7 +19,7 @@ const ERROR_MSG = {
 
 // 카카오톡 로그인 필요 정보, CLIENT_ID 로 REST API 키 사용 필요
 const KAKAO_CLIENT_ID = '0c33348e34eeceef7d378e029e920c12';
-const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauth/callback/kakao';
+const KAKAO_REDIRECT_URI = 'http://13.125.234.1:3000/oauth/callback/kakao';
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
 export default function Login({
@@ -41,7 +41,7 @@ export default function Login({
   //     alert('아이디와 비밀번호를 입력해주세요');
   //     return;
   //   }
-  //   axios.post('http://localhost:4000/user/login', {
+  //   axios.post('http://13.125.234.1:4000/user/login', {
   //     email: useremail,
   //     password: userpw,
   // })
@@ -65,7 +65,7 @@ export default function Login({
       navigate('/login');
     }
     axios
-      .post('http://localhost:4000/users/register', {
+      .post('http://13.125.234.1:4000/users/register', {
         type: 'local',
         identifier: useremail,
         password: userpw,
@@ -133,7 +133,7 @@ export default function Login({
       console.log(loginInfo);
 
       if (useremail !== '' && userpw !== '') {
-        const response = await fetch('http://localhost:4000/user/login ', {
+        const response = await fetch('http://13.125.234.1:4000/user/login ', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ export default function Login({
       };
       console.log(loginInfo);
 
-      const response = await fetch('http://localhost:4000/user/login ', {
+      const response = await fetch('http://13.125.234.1:4000/user/login ', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

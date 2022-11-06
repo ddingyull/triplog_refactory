@@ -36,7 +36,7 @@ export default function CheckList() {
 
   const callApi = async () => {
     axios
-      .post('http://localhost:4000/checklist', { nickName })
+      .post('http://13.125.234.1:4000/checklist', { nickName })
 
       .then((res) => {
         console.log(res.data);
@@ -113,7 +113,7 @@ export default function CheckList() {
                                     onClick={() => {
                                       axios
                                         .delete(
-                                          'http://localhost:4000/checklist/deleteItem',
+                                          'http://13.125.234.1:4000/checklist/deleteItem',
                                           {
                                             data: {
                                               nickName: nickName,
@@ -152,7 +152,7 @@ export default function CheckList() {
                               onClick={() => {
                                 axios
                                   .post(
-                                    'http://localhost:4000/checklist/addItem',
+                                    'http://13.125.234.1:4000/checklist/addItem',
                                     {
                                       nickName: nickName,
                                       title: checklist.items[i].title,
@@ -190,7 +190,7 @@ export default function CheckList() {
                     variant="success"
                     onClick={() => {
                       axios
-                        .post('http://localhost:4000/checklist/checked', {
+                        .post('http://13.125.234.1:4000/checklist/checked', {
                           nickName: nickName,
                           checked: checked,
                         })

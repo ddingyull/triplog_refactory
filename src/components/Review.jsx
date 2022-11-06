@@ -45,7 +45,7 @@ export default function Review() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/review/${contentId}`)
+      .get(`http://13.125.234.1:4000/review/${contentId}`)
       .then((res) => {
         console.log('review의 리뷰성공');
         let copy = [...res.data];
@@ -107,7 +107,7 @@ export default function Review() {
               variant="success"
               onClick={() => {
                 axios
-                  .post(`http://localhost:4000/review/emend`, [
+                  .post(`http://13.125.234.1:4000/review/emend`, [
                     { emendId, emendContent, nickName },
                   ])
                   .then((res) => {
@@ -138,7 +138,7 @@ export default function Review() {
                           <Col className="col-2">
                             {userImg !== '' ? (
                               <Image
-                                src={`http://localhost:4000/uploads/${userImg}`}
+                                src={`http://13.125.234.1:4000/uploads/${userImg}`}
                                 roundedCircle
                                 style={{
                                   width: '60px',
@@ -148,7 +148,7 @@ export default function Review() {
                             ) : (
                               <Image
                                 onError={onErrorImg}
-                                src={`http://localhost:4000/uploads/${userImg}`}
+                                src={`http://13.125.234.1:4000/uploads/${userImg}`}
                                 roundedCircle
                                 style={{
                                   width: '60px',
@@ -228,14 +228,14 @@ export default function Review() {
                         <Col>
                           {a.img !== '' ? (
                             <Image
-                              src={`http://localhost:4000/uploads/${a.img}`}
+                              src={`http://13.125.234.1:4000/uploads/${a.img}`}
                               style={{ width: '150px', height: '150px' }}
                               className="mt-3 border"
                             />
                           ) : (
                             <Image
                               onError={onErrorImg}
-                              src={`http://localhost:4000/uploads/${a.img}`}
+                              src={`http://13.125.234.1:4000/uploads/${a.img}`}
                               style={{
                                 width: '150px',
                                 height: '150px',
@@ -257,7 +257,7 @@ export default function Review() {
                                     setShow(true);
                                     axios
                                       .get(
-                                        `http://localhost:4000/review/emend/${a._id}`
+                                        `http://13.125.234.1:4000/review/emend/${a._id}`
                                       )
                                       .then((res) => {
                                         console.log('review 수정 성공');
@@ -278,7 +278,7 @@ export default function Review() {
                                   onClick={() => {
                                     axios
                                       .delete(
-                                        `http://localhost:4000/review/delete/${a._id}`
+                                        `http://13.125.234.1:4000/review/delete/${a._id}`
                                       )
                                       .then((res) => {
                                         console.log(res);

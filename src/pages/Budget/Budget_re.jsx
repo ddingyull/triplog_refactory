@@ -40,7 +40,7 @@ export default function BudgetRe() {
 
   useEffect(() => {
     axios
-      .post('http://localhost:4000/charge', { nickName })
+      .post('http://13.125.234.1:4000/charge', { nickName })
       .then((res) => {
         setChargeData(res.data.chargeList);
         setOkay(true);
@@ -103,7 +103,7 @@ export default function BudgetRe() {
                         style={{ color: 'grey' }}
                         onClick={() => {
                           axios
-                            .post('http://localhost:4000/charge/delete', {
+                            .post('http://13.125.234.1:4000/charge/delete', {
                               nickName,
                               a,
                             })

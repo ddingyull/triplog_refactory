@@ -7,8 +7,8 @@ import Nav from '../../components/Nav';
 import { useNavigate, useParams } from 'react-router-dom';
 import Review from '../../components/Review';
 import ReviewBox from './contents/Review/ReviewBox';
-import ShareUrl from '../../components/share/ShareUrl';
-import ShareKakao from '../../components/share/ShareKakao';
+import Url from '../../components/share/Url';
+import Kakao from '../../components/share/Kakao';
 
 // redux 에서 review 업데이트 여부를 받아옴
 import { useSelector } from 'react-redux';
@@ -44,7 +44,7 @@ export default function Detail() {
   /* 리뷰 */
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/review/${contentId}`)
+      .get(`http://13.125.234.1:4000/review/${contentId}`)
       .then((res) => {
         setReviewData(res.data);
       })
@@ -61,7 +61,7 @@ export default function Detail() {
       setTourData(res.data.response.body.items.item[0]);
       let data = res.data.response.body.items.item[0];
       axios
-        .post(`http://localhost:4000/detail/${contentId}`, { data })
+        .post(`http://13.125.234.1:4000/detail/${contentId}`, { data })
         .then((res) => {
           console.log(res.data);
           setDetails(res.data);
@@ -77,7 +77,7 @@ export default function Detail() {
   /* 좋아요 데이터 가져오기 */
   useEffect(() => {
     axios
-      .post('http://localhost:4000/like/getlikes', { nickName })
+      .post('http://13.125.234.1:4000/like/getlikes', { nickName })
       .then((res) => {
         console.log(res.data);
         // console.log(res.data[0].likes);
@@ -98,17 +98,17 @@ export default function Detail() {
     if (currentIndex === -1) {
       newLike.push(b);
       axios
-        .post(`http://localhost:4000/detail/inclike/${contentId}`)
+        .post(`http://13.125.234.1:4000/detail/inclike/${contentId}`)
         .then(console.log('좋아요 + 1'));
     } else {
       newLike.splice(currentIndex, 1);
       axios
-        .post(`http://localhost:4000/detail/deletelike/${contentId}`)
+        .post(`http://13.125.234.1:4000/detail/deletelike/${contentId}`)
         .then(console.log('좋아요 -1'));
     }
     setLike(newLike);
     axios
-      .post('http://localhost:4000/like/arrlike', { newLike, nickName })
+      .post('http://13.125.234.1:4000/like/arrlike', { newLike, nickName })
       .then((res) => console.log(res.data));
   };
 
@@ -144,7 +144,7 @@ export default function Detail() {
 
   useEffect(() => {
     axios
-      .post(`http://localhost:4000/detail/incstar/${contentId}`, { starAvg })
+      .post(`http://13.125.234.1:4000/detail/incstar/${contentId}`, { starAvg })
       .then((res) => console.log(res.data));
   }, [starAvg]);
 
@@ -198,7 +198,7 @@ export default function Detail() {
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
                   >
-                    <ShareKakao tourData={tourData} />
+                    <Kakao tourData={tourData} />
                     <p className="pt-2">카카오 공유</p>
                   </div>
                   <div
@@ -208,7 +208,7 @@ export default function Detail() {
                       alert('url이 복사되었습니다.');
                     }}
                   >
-                    <ShareUrl />
+                    <Url />
                     <p style={{ fontSize: '1rem' }}>URL공유</p>
                   </div>
                 </div>
