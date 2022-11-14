@@ -104,8 +104,8 @@ export default function Budget() {
     return (
       <>
         <Nav />
-        <Container className="col-8">
-          <Row lg="2" sm="1" md="1" xs="1" xxs="1">
+        <Container className="col-lg-8 ">
+          <Row xs={1} sm={1} md={1} lg={2}>
             {/* 왼쪽 입력칸 */}
 
             <Col className="col-6 align-self-center px-5 mb-4">
@@ -113,7 +113,15 @@ export default function Budget() {
                 <span style={{ color: '#198754' }}>{nickName}</span>
                 <span>님의</span>
                 <br></br>
-                <span>정산💸내역입니다.</span>
+                <span>
+                  정산
+                  <img
+                    src="/images/icons/budget.png"
+                    alt="정산내역"
+                    style={{ width: '3rem' }}
+                  />
+                  내역입니다.
+                </span>
               </h1>
               <p className="mb-4">
                 일행과 함께 지출한 비용이 있다면,
@@ -276,16 +284,11 @@ export default function Budget() {
               </Row>
 
               <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
-              <Row>
-                <Col className="text-start ">
-                  <span>영수증 전체 초기화</span>
-                </Col>
-                <Col lg="auto" className="col-sm-2 ">
-                  <Button variant="success" onClick={() => setShow(true)}>
-                    초기화
-                  </Button>
-                </Col>
-              </Row>
+              <Col className="text-end">
+                <Button variant="success" onClick={() => setShow(true)}>
+                  초기화
+                </Button>
+              </Col>
             </Col>
           </Row>
         </Container>
