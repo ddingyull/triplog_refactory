@@ -151,7 +151,7 @@ export default function Detail() {
   return (
     <>
       <Nav />
-      <Container className="col-8">
+      <Container className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
         <Row xs={1} md={1} lg={2} xxs={1} className="">
           <Col>
             <Card className="mt-3" style={{ height: '60vh' }}>
@@ -277,17 +277,17 @@ export default function Detail() {
         </Row>
 
         {/* 지도 */}
-        <Row className="mb-3 mt-3">
+        <Row className="mb-3 mt-lg-5 mt-md-5 mt-sm-3 mt-4">
           <h5 className="fw-bold">위치 보기</h5>
           <Card
             id="map"
             style={{ width: '67vw', height: '35vh' }}
-            className="mt-2 mb-3 "
+            className="mt-2 mb-3 m-auto ps-5"
           ></Card>
         </Row>
 
         {/* 리뷰 */}
-        <Row className="mt-5 ">
+        <Row className="mt-lg-5 mt-md-5 mt-sm-5 mt-4 ">
           <Col>
             <span className="fw-bold fs-5 ">
               리뷰
