@@ -154,16 +154,16 @@ export default function Detail() {
       <Container className="col-8">
         <Row xs={1} md={1} lg={2} xxs={1} className="">
           <Col>
-            <Card className="mt-3" style={{ height: '50vh' }}>
+            <Card className="mt-3" style={{ height: '60vh' }}>
               <Card.Img
                 variant="top"
                 src={tourData.firstimage}
                 onError={onErrorImg}
-                style={{ height: '250px', objectFit: 'cover' }}
+                style={{ height: '45vh', objectFit: 'cover' }}
                 className="fluid border"
               />
               <Card.Body>
-                <div className="d-flex justify-content-center mt-2">
+                <div className="d-flex justify-content-center align-items-center ">
                   <div
                     className="text-center flex-fill"
                     style={{ cursor: 'pointer' }}
@@ -202,7 +202,7 @@ export default function Detail() {
                     <p className="pt-2">카카오 공유</p>
                   </div>
                   <div
-                    className="text-center flex-fill"
+                    className="text-center flex-fill "
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
                       alert('url이 복사되었습니다.');
@@ -219,7 +219,7 @@ export default function Detail() {
           <Col>
             <Card
               className="mt-3 px-3"
-              style={{ overflowY: 'scroll', height: '50vh' }}
+              style={{ overflowY: 'scroll', height: '60vh' }}
             >
               <Card.Body className="m-2 " style={{ height: '40vh' }}>
                 <p className=" mb-2 text-muted text-end">
