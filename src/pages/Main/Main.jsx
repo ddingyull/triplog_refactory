@@ -51,7 +51,7 @@ export default function Main() {
             <br></br>TripLog에 오신걸 환영합니다! 👋
           </h1>
 
-          <div className="mx-5 mt-3">
+          <div className="mx-lg-5 mt-3">
             <Button
               size="sm"
               className="flex-fill mx-1 mb-2 border"
@@ -86,11 +86,11 @@ export default function Main() {
         </Container>
 
         <Row
-          lg
-          md={6}
+          lg={6}
+          md
           sm
           xs={3}
-          className="d-flex col-8 mx-auto text-center mt-5"
+          className="d-flex col-lg-8 col-sm-8 mx-auto text-center mt-5"
         >
           <Col
             onClick={() => {
