@@ -45,46 +45,48 @@ export default function SubMain({ productItems, width, height, planDate }) {
   return (
     <>
       <Nav />
-      <CalendarMain
-        pickAreaName={pickAreaName}
-        pickAreaImg={pickAreaImg}
-        subText="온전히 내 취향대로, 나만의 감성을 그대로 담은 나만의 여행로그"
-        planDate={planDate}
-      />
+      <Container className="overflow-x-hidden">
+        <CalendarMain
+          pickAreaName={pickAreaName}
+          pickAreaImg={pickAreaImg}
+          subText="온전히 내 취향대로, 나만의 감성을 그대로 담은 나만의 여행로그"
+          planDate={planDate}
+        />
 
-      <Items
-        width="20rem"
-        height="20rem"
-        text="✨ 트랜디한 트립로그의 Pick!"
-        subText="브이로그 감성 낭낭한 여행일지, 트립로그와 함께라면 가능합니다"
-      />
+        <Items
+          width="20rem"
+          height="20rem"
+          text="✨ 트랜디한 트립로그의 Pick!"
+          subText="브이로그 감성 낭낭한 여행일지, 트립로그와 함께라면 가능합니다"
+        />
 
-      <Items2 width="18rem" height="18rem" pickAreaName={pickAreaName} />
+        <Items2 width="18rem" height="18rem" pickAreaName={pickAreaName} />
 
-      <Container className="p-3 mb-4 mt-5">
-        <Row className="d-block justify-content-start">
-          <Col className="m-3">
-            <Title className="justify-content-start fw-bold">
-              🧳 여행 전 필수 준비항목
-            </Title>
-            <p className="m-0 fs-6 text-secondary">
-              트립로그가 챙겨주는 이번 여행!
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <TableContainer className="d-block rounded text-center">
-            <a href="/plan/1">
-              <img src="/images/icons/여행 계획하기.png"></img>
-            </a>
-            <a href="/budget">
-              <img src="/images/icons/가계부.png"></img>
-            </a>
-            <a href="/checklist">
-              <img src="/images/icons/체크리스트.png"></img>
-            </a>
-          </TableContainer>
-        </Row>
+        <Container className="p-3 mb-4 mt-5">
+          <Row className="d-block justify-content-start">
+            <Col className="m-3">
+              <Title className="justify-content-start fw-bold">
+                🧳 여행 전 필수 준비항목
+              </Title>
+              <p className="m-0 fs-6 text-secondary">
+                트립로그가 챙겨주는 이번 여행!
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <TableContainer className="d-block rounded text-center">
+              <a href="/plan/1">
+                <img src="/images/icons/여행 계획하기.png"></img>
+              </a>
+              <a href="/budget">
+                <img src="/images/icons/가계부.png"></img>
+              </a>
+              <a href="/checklist">
+                <img src="/images/icons/체크리스트.png"></img>
+              </a>
+            </TableContainer>
+          </Row>
+        </Container>
       </Container>
       <Footer />
     </>
