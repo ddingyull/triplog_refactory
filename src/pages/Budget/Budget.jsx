@@ -108,7 +108,7 @@ export default function Budget() {
           <Row xs={1} sm={1} md={1} lg={2}>
             {/* 왼쪽 입력칸 */}
 
-            <Col className="col-6 align-self-center px-5 mb-4">
+            <Col className="align-self-center px-5 mb-4">
               <h1 className="fw-bold lh-base mt-5 mb-4">
                 <span style={{ color: '#198754' }}>{nickName}</span>
                 <span>님의</span>
@@ -185,7 +185,7 @@ export default function Budget() {
 
             {/* 오른쪽 영수증 */}
             <Col
-              className="col-6 p-5 rounded border mt-4"
+              className=" p-5 rounded border mt-4"
               style={{ backgroundColor: '#fafafa' }}
             >
               <h6 className="fw-bold text-center" style={{ color: '#198754' }}>
