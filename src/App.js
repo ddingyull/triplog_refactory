@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
 import Main from './pages/Main/Main';
 import SubMain from './pages/SubMain/SubMain';
 import Plan from './pages/Plan/Plan';
-import Lists from './pages/Lists/Lists';
+import List from './pages/Lists/List';
 import Detail from './pages/Detail/Detail';
 import MyPage from './pages/MyPage/MyPage';
 import Budget from './pages/Budget/Budget';
@@ -28,8 +28,8 @@ function App() {
       <Route path="/" element={<Main />} />
       <Route path="/SubMain/:areaCode" element={<SubMain />} />
       <Route path="/Plan/:areaCode" element={<Plan />} />
-      <Route path="/lists/:areaCode" element={<Lists />} />
-      <Route path="/detail/:contentId" element={<Detail />} />
+      <Route path="/lists/:areaCode/:contentType" element={<List />} />
+      <Route path="/detail/:areaCode/:contentId" element={<Detail />} />
       <Route path="/MyPage" element={<MyPage />} />
       <Route path="/Budget" element={<Budget />} />
       <Route path="/CheckList" element={<CheckList />} />
