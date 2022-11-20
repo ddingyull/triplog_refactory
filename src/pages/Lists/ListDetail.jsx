@@ -1,9 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Row, Col, Card } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
+import '../../styles/Paging.css';
 
 export default function ListDetail({ props, region }) {
   const navigate = useNavigate();
+
+  // const [reviewData, setReviewData] = useState([]);
+  // const [details, setDetails] = useState([]);
+
+  // const checkLike = useRef();
+  // const checkView = useRef();
+
+  // 이미지 로딩 실패
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
+  };
+
+  /* 좋아요& 조회수 
+  useEffect(() => {
+    axios
+      .get(`http://13.125.234.1:4000/detail`)
+      .then((res) => {
+        // console.log(res.data);
+        setDetails(res.data);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, []); */
 
   /* pagingnation */
   // 첫 번째 페이지
@@ -18,38 +45,99 @@ export default function ListDetail({ props, region }) {
   if (props) {
     return (
       <>
-        <div className="container d-flex flex-wrap">
+        {/* Lists CARD */}
+        <Row xs={1} sm={2} md={2} lg={3} className="g-4">
           {props.length > 0
             ? props
                 .slice(pagePost * (page - 1), pagePost * (page - 1) + pagePost)
-                .map((a, i) => {
+                .map(function (a, i) {
+                  // checkLike.current = true;
+                  // checkView.current = true;
                   return (
-                    <div
-                      className="card col-2"
-                      key={i}
-                      onClick={() => {
-                        navigate(`/detail/${region}/${a.contentid}`);
-                      }}
-                    >
-                      <img
-                        src={a.firstimage1}
-                        alt=""
-                        className="card-img-top"
-                        style={{ height: '100px' }}
-                      />
-                      <div className="card-body">
-                        <h5 className="card-title">{a.title}</h5>
-                        <p className="card-text">{a.addr1}</p>
-                        <span>좋아요{a.like}</span>
-                        <span>별점{a.star}</span>
-                      </div>
-                    </div>
+                    <Col>
+                      <Card
+                        onClick={() => {
+                          navigate(`/detail/${region}/${a.contentid}`);
+                        }}
+                      >
+                        <Card.Img
+                          variant="top"
+                          src={a.firstimage1}
+                          onError={onErrorImg}
+                          height={'250rem'}
+                          className="border"
+                        />
+                        <Card.Body>
+                          <Card.Title>{a.title}</Card.Title>
+                          <Card.Text className="text-muted">
+                            {a.addr1}
+                          </Card.Text>
+                          <Card.Text className="text-muted">
+                            <span>❤{a.like}</span>
+                            <span>⭐{a.star}</span>
+                            {/* <span>
+                              {details.map((el, j, arr) => {
+                                if (
+                                  el.data.contentid === tourData[i].contentid
+                                ) {
+                                  const star = parseFloat(el.starAvg);
+                                  const str = ` ⭐️ ${star}`;
+                                  checkLike.current = false;
+                                  return str;
+                                }
+
+                                if (checkLike.current && arr.length - 1 === j) {
+                                  return ` ⭐️ 0`;
+                                }
+                              })}
+                            </span>
+                            <span>
+                              {details.map((el, j, arr) => {
+                                if (
+                                  el.data.contentid === tourData[i].contentid
+                                ) {
+                                  const str = ` ❤ ${el.like}`;
+                                  checkLike.current = false;
+                                  return str;
+                                }
+
+                                if (checkLike.current && arr.length - 1 === j) {
+                                  return ` ❤ 0`;
+                                }
+                              })}
+                            </span>
+                            <span>
+                              {details.map((el, k, arr) => {
+                                if (
+                                  el.data.contentid === tourData[i].contentid
+                                ) {
+                                  const str = ` 조회수 ${el.view}`;
+                                  checkView.current = true;
+                                  return str;
+                                }
+
+                                if (checkLike.current && arr.length - 1 === k) {
+                                  return ` 조회수 0`;
+                                }
+                              })}
+                            </span> */}
+                            {/* 
+                            ⭐⭐⭐⭐⭐<span> {reviewData.length} </span> ❤{' '}
+                            <span>{details.like}</span>
+                            조회수 <span>
+
+                            </span> */}
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
                   );
                 })
             : null}
-        </div>
+        </Row>
 
-        <div
+        {/* Pagination */}
+        <Row
           className="d-flex justify-content-center col-2 m-auto mt-4 mb-4"
           lg={2}
         >
@@ -70,7 +158,7 @@ export default function ListDetail({ props, region }) {
             // 페이지 변경 핸들러 pageNumber를 인수로 수신
             onChange={handlePageChange}
           />
-        </div>
+        </Row>
       </>
     );
   }

@@ -96,6 +96,7 @@ export default function Main() {
             onClick={() => {
               dispatch(setAreaCode(1));
               navigator('/submain/1');
+              // navigator('/submain/seoul');
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -106,6 +107,7 @@ export default function Main() {
             onClick={() => {
               dispatch(setAreaCode(6));
               navigator('/submain/6');
+              // navigator('/submain/busan');
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -116,6 +118,7 @@ export default function Main() {
             onClick={() => {
               dispatch(setAreaCode(32));
               navigator('/submain/32');
+              // navigator('/submain/32');
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -126,6 +129,7 @@ export default function Main() {
             onClick={() => {
               dispatch(setAreaCode(35));
               navigator('/submain/35');
+              // navigator('/submain/gyeongju');
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -136,6 +140,7 @@ export default function Main() {
             onClick={() => {
               dispatch(setAreaCode(37));
               navigator('/submain/37');
+              // navigator('/submain/jeonju');
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -146,6 +151,7 @@ export default function Main() {
             onClick={() => {
               dispatch(setAreaCode(39));
               navigator('/submain/39');
+              // navigator('/submain/jeju');
             }}
             style={{ cursor: 'pointer' }}
           >
