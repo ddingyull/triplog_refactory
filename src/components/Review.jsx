@@ -45,16 +45,14 @@ export default function Review() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/review/${contentId}`)
+      .get(`http://13.125.234.1:4000/review/${contentId}`)
       .then((res) => {
-        console.log('review의 리뷰성공');
+        // console.log('review의 리뷰성공');
         let copy = [...res.data];
         setReviewData(copy);
       })
       .catch(() => console.log('실패함'));
   }, [reviewUPdate]);
-
-  console.log(reviewData);
 
   /* pagingnation */
   // 첫 번째 페이지
@@ -64,7 +62,7 @@ export default function Review() {
   // 페이지 이동 이벤트함수
   const handlePageChange = (page) => {
     setPage(page);
-    console.log(page);
+    // console.log(page);
   };
   // 이미지 로딩 실패시
   const onErrorImg = (e) => {
@@ -107,13 +105,12 @@ export default function Review() {
               variant="success"
               onClick={() => {
                 axios
-                  .post(`http://localhost:4000/review/emend`, [
+                  .post(`http://13.125.234.1:4000/review/emend`, [
                     { emendId, emendContent, nickName },
                   ])
                   .then((res) => {
                     dispatch(reviewUpdate());
-                    console.log(res);
-                    console.log('리뷰 수정 저장 성공');
+                    // console.log('리뷰 수정 저장 성공');
                     setShow(false);
                   })
                   .catch(() => {
@@ -134,11 +131,11 @@ export default function Review() {
                   <Col>
                     <Card className="my-2">
                       <Row className="mt-3 mx-2">
-                        <div className="d-flex align-items-center justify-content-start">
-                          <Col className="col-2">
+                        <div className="d-flex align-items-center justify-content-center">
+                          <Col className="col-3 col-lg-3 col-md-2 col-sm-3  text-center">
                             {userImg !== '' ? (
                               <Image
-                                src={`http://localhost:4000/uploads/${userImg}`}
+                                src={`http://13.125.234.1:4000/uploads/${userImg}`}
                                 roundedCircle
                                 style={{
                                   width: '60px',
@@ -148,7 +145,7 @@ export default function Review() {
                             ) : (
                               <Image
                                 onError={onErrorImg}
-                                src={`http://localhost:4000/uploads/${userImg}`}
+                                src={`http://13.125.234.1:4000/uploads/${userImg}`}
                                 roundedCircle
                                 style={{
                                   width: '60px',
@@ -160,7 +157,7 @@ export default function Review() {
                           <Col>
                             <p className=" fw-bold m-0">{a.nickName}</p>
                             {/* 별점 */}
-                            <div className="d-flex justify-content-start">
+                            <div className="d-flex justify-content-start align-items-center ">
                               <RaingStar className="text-center m-0">
                                 {a.star === 5 ? (
                                   <>
@@ -214,8 +211,7 @@ export default function Review() {
                               </RaingStar>
                             </div>
 
-                            <p className=" text-muted">
-                              {' '}
+                            <p className=" text-muted m-0">
                               {a.dateFull.slice(0, 10)}
                             </p>
                           </Col>
@@ -224,18 +220,18 @@ export default function Review() {
 
                       {/* 리뷰 내용 */}
                       <Card.Body>
-                        <Card.Text>{a.content}</Card.Text>
+                        <Card.Text className="ps-4">{a.content}</Card.Text>
                         <Col>
                           {a.img !== '' ? (
                             <Image
-                              src={`http://localhost:4000/uploads/${a.img}`}
+                              src={`http://13.125.234.1:4000/uploads/${a.img}`}
                               style={{ width: '150px', height: '150px' }}
                               className="mt-3 border"
                             />
                           ) : (
                             <Image
                               onError={onErrorImg}
-                              src={`http://localhost:4000/uploads/${a.img}`}
+                              src={`http://13.125.234.1:4000/uploads/${a.img}`}
                               style={{
                                 width: '150px',
                                 height: '150px',
@@ -257,10 +253,10 @@ export default function Review() {
                                     setShow(true);
                                     axios
                                       .get(
-                                        `http://localhost:4000/review/emend/${a._id}`
+                                        `http://13.125.234.1:4000/review/emend/${a._id}`
                                       )
                                       .then((res) => {
-                                        console.log('review 수정 성공');
+                                        // console.log('review 수정 성공');
                                         setEmendContent(res.data.content);
                                         setEmendId(res.data._id);
                                         dispatch(reviewUpdate());
@@ -278,11 +274,10 @@ export default function Review() {
                                   onClick={() => {
                                     axios
                                       .delete(
-                                        `http://localhost:4000/review/delete/${a._id}`
+                                        `http://13.125.234.1:4000/review/delete/${a._id}`
                                       )
                                       .then((res) => {
-                                        console.log(res);
-                                        console.log('review 삭제 성공');
+                                        // console.log('review 삭제 성공');
                                         dispatch(reviewUpdate());
                                       })
                                       .catch(() => {

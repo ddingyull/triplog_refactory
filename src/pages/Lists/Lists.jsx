@@ -47,7 +47,7 @@ export default function Lists() {
   /* 리뷰 */
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/review`)
+      .get(`http://13.125.234.1:4000/review`)
       .then((res) => {
         setReviewData(res.data);
       })
@@ -57,7 +57,7 @@ export default function Lists() {
   /* 좋아요/조회수 */
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/detail`)
+      .get(`http://13.125.234.1:4000/detail`)
       .then((res) => {
         // console.log(res.data);
         setDetails(res.data);
@@ -83,9 +83,9 @@ export default function Lists() {
     return (
       <>
         <Nav />
-        <Container className="col-9">
+        <Container className="col-lg-9 col-md-9 col-sm-9">
           {/* ListsTAB */}
-          <Row className="d-flex col-8 mx-auto text-center mt-5 mb-5">
+          <Row className="d-flex col-lg-8 col-md-8 col-xs-12 col-sm-10 justify-content-center mx-auto text-center mt-5 mb-5">
             <Col
               className="rounded"
               ref={list1}
@@ -201,7 +201,7 @@ export default function Lists() {
             </Col>
           </Row>
           {/* Lists CARD */}
-          <Row xs={1} md={2} lg={3} className="g-4">
+          <Row xs={1} sm={2} md={2} lg={3} className="g-4">
             {tourData.length > 0
               ? tourData
                   .slice(

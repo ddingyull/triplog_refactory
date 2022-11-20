@@ -40,7 +40,7 @@ export default function Budget() {
 
   useEffect(() => {
     axios
-      .post('http://localhost:4000/charge', { nickName })
+      .post('http://13.125.234.1:4000/charge', { nickName })
       .then((res) => {
         setChargeData(res.data.chargeList);
         setOkay(true);
@@ -77,7 +77,7 @@ export default function Budget() {
             variant="outline-success"
             onClick={() => {
               axios
-                .post(`http://localhost:4000/charge/alldelete`, {
+                .post(`http://13.125.234.1:4000/charge/alldelete`, {
                   nickName,
                   chargeData,
                 })
@@ -104,16 +104,24 @@ export default function Budget() {
     return (
       <>
         <Nav />
-        <Container className="col-8">
-          <Row lg="2" sm="1" md="1" xs="1" xxs="1">
+        <Container className="col-lg-8 ">
+          <Row xs={1} sm={1} md={1} lg={2}>
             {/* 왼쪽 입력칸 */}
 
-            <Col className="col-6 align-self-center px-5 mb-4">
+            <Col className="align-self-center px-5 mb-4">
               <h1 className="fw-bold lh-base mt-5 mb-4">
                 <span style={{ color: '#198754' }}>{nickName}</span>
                 <span>님의</span>
                 <br></br>
-                <span>정산💸내역입니다.</span>
+                <span>
+                  정산
+                  <img
+                    src="/images/icons/budget.png"
+                    alt="정산내역"
+                    style={{ width: '3rem' }}
+                  />
+                  내역입니다.
+                </span>
               </h1>
               <p className="mb-4">
                 일행과 함께 지출한 비용이 있다면,
@@ -149,7 +157,7 @@ export default function Budget() {
                       const title = textRef.current.value;
                       const charge = chargeRef.current.value;
                       axios
-                        .post(`http://localhost:4000/charge/write`, {
+                        .post(`http://13.125.234.1:4000/charge/write`, {
                           chargeList: { date, title, charge: parseInt(charge) },
                           nickName,
                         })
@@ -177,7 +185,7 @@ export default function Budget() {
 
             {/* 오른쪽 영수증 */}
             <Col
-              className="col-6 p-5 rounded border mt-4"
+              className=" p-5 rounded border mt-4"
               style={{ backgroundColor: '#fafafa' }}
             >
               <h6 className="fw-bold text-center" style={{ color: '#198754' }}>
@@ -217,7 +225,7 @@ export default function Budget() {
                           style={{ color: 'grey' }}
                           onClick={() => {
                             axios
-                              .post('http://localhost:4000/charge/delete', {
+                              .post('http://13.125.234.1:4000/charge/delete', {
                                 nickName,
                                 a,
                               })
@@ -276,16 +284,11 @@ export default function Budget() {
               </Row>
 
               <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
-              <Row>
-                <Col className="text-start ">
-                  <span>영수증 전체 초기화</span>
-                </Col>
-                <Col lg="auto" className="col-sm-2 ">
-                  <Button variant="success" onClick={() => setShow(true)}>
-                    초기화
-                  </Button>
-                </Col>
-              </Row>
+              <Col className="text-end">
+                <Button variant="success" onClick={() => setShow(true)}>
+                  초기화
+                </Button>
+              </Col>
             </Col>
           </Row>
         </Container>

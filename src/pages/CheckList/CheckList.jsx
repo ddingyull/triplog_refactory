@@ -36,10 +36,10 @@ export default function CheckList() {
 
   const callApi = async () => {
     axios
-      .post('http://localhost:4000/checklist', { nickName })
+      .post('http://13.125.234.1:4000/checklist', { nickName })
 
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setChecklist(res.data);
         setChecked(res.data.checked);
         setOkay(true);
@@ -75,10 +75,16 @@ export default function CheckList() {
     return (
       <>
         <Nav />
-        <Container className="m-auto mt-5 col-8">
+        <Container className="m-auto mt-5 col-lg-8">
           <h1 className="fw-bold lh-base mt-5 mb-5">
             <span style={{ color: '#198754' }}>{nickName}</span>님, 여행 준비
-            <br></br>체크리스트
+            <br></br>
+            체크리스트{' '}
+            <img
+              src="/images/icons/check.png"
+              alt="체크리스트"
+              style={{ width: '2.5rem' }}
+            />
           </h1>
           <AccordionCustom>
             <Accordion
@@ -113,7 +119,7 @@ export default function CheckList() {
                                     onClick={() => {
                                       axios
                                         .delete(
-                                          'http://localhost:4000/checklist/deleteItem',
+                                          'http://13.125.234.1:4000/checklist/deleteItem',
                                           {
                                             data: {
                                               nickName: nickName,
@@ -125,7 +131,7 @@ export default function CheckList() {
                                           }
                                         )
                                         .then((res) => {
-                                          console.log(res.data);
+                                          // console.log(res.data);
                                           setUpdate(!update);
                                         })
                                         .catch(() => {
@@ -152,7 +158,7 @@ export default function CheckList() {
                               onClick={() => {
                                 axios
                                   .post(
-                                    'http://localhost:4000/checklist/addItem',
+                                    'http://13.125.234.1:4000/checklist/addItem',
                                     {
                                       nickName: nickName,
                                       title: checklist.items[i].title,
@@ -180,22 +186,22 @@ export default function CheckList() {
               })}
               <Row className="mt-3 mx-1">
                 <Col>
-                  <h5 calssName="fw-bold text-center">
-                    체크리스트 저장하기{' '}
+                  <h6 calssName="text-center ">
+                    체크리스트 저장{' '}
                     <FaArrowRight style={{ color: '#198754' }} />
-                  </h5>
+                  </h6>
                 </Col>
                 <Col className="text-end">
                   <Button
                     variant="success"
                     onClick={() => {
                       axios
-                        .post('http://localhost:4000/checklist/checked', {
+                        .post('http://13.125.234.1:4000/checklist/checked', {
                           nickName: nickName,
                           checked: checked,
                         })
                         .then((res) => {
-                          console.log(res.data);
+                          // console.log(res.data);
                           setUpdate(!update);
                         })
                         .catch(() => console.log('실패'));

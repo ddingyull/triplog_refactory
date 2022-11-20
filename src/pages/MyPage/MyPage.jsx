@@ -60,7 +60,7 @@ export default function MyPage() {
     formData.append('img', e.target.files[0]);
   };
   const userImg = async () => {
-    await fetch('http://localhost:4000/user/img', {
+    await fetch('http://13.125.234.1:4000/user/img', {
       method: 'post',
       headers: {},
       body: formData,
@@ -68,7 +68,7 @@ export default function MyPage() {
       .then((res) => res.json())
       .then((data) => {
         axios
-          .post('http://localhost:4000/user/upload', [{ nickName, img: data }])
+          .post('http://13.125.234.1:4000/user/upload', [{ nickName, img: data }])
           .then((결과) => {
             // 백엔드 콘솔 결과
             console.log(결과);
@@ -83,7 +83,7 @@ export default function MyPage() {
 
   // 디테일 데이터 받아오기
   useEffect(() => {
-    axios.get('http://localhost:4000/detail').then((res) => {
+    axios.get('http://13.125.234.1:4000/detail').then((res) => {
       // console.log(res.data[0].data.title);
       console.log(res.data);
       setTourData(res.data);
@@ -94,7 +94,7 @@ export default function MyPage() {
   // plan
   useEffect(() => {
     axios
-      .post('http://localhost:4000/plan/getplan', { nickName })
+      .post('http://13.125.234.1:4000/plan/getplan', { nickName })
       .then((res) => {
         console.log('%%%%%%', res.data);
         setPlan(res.data);
@@ -108,7 +108,7 @@ export default function MyPage() {
   // 리뷰 데이터 가져오기
   useEffect(() => {
     axios
-      .post('http://localhost:4000/review', { nickName })
+      .post('http://13.125.234.1:4000/review', { nickName })
       .then((res) => {
         // console.log(res.data);
         setReview(res.data);
@@ -122,7 +122,7 @@ export default function MyPage() {
   // 저장 목록 데이터 가져오기
   useEffect(() => {
     axios
-      .post('http://localhost:4000/like/getlikes', { nickName })
+      .post('http://13.125.234.1:4000/like/getlikes', { nickName })
       .then((res) => {
         console.log(res.data);
         // console.log(res.data[0].likes);
@@ -137,7 +137,7 @@ export default function MyPage() {
   // 이미지 가져오기
   useEffect(() => {
     axios
-      .post('http://localhost:4000/user', { nickName })
+      .post('http://13.125.234.1:4000/user', { nickName })
       .then((res) => {
         setUserData(res.data);
       })
@@ -169,7 +169,7 @@ export default function MyPage() {
               <Col className="col-3">
                 {userData.img !== '' ? (
                   <img
-                    src={`http://localhost:4000/uploads/${userData.img}`}
+                    src={`http://13.125.234.1:4000/uploads/${userData.img}`}
                     alt="회원 이미지"
                     style={{ width: '13rem', height: '13rem' }}
                     className="bg-dark rounded text-center d-block m-auto"
@@ -177,7 +177,7 @@ export default function MyPage() {
                 ) : (
                   <img
                     onError={onErrorImg}
-                    src={`http://localhost:4000/uploads/${userData.img}`}
+                    src={`http://13.125.234.1:4000/uploads/${userData.img}`}
                     alt="회원 이미지"
                     style={{ width: '13rem', height: '13rem' }}
                     className="bg-dark rounded text-center d-block m-auto"

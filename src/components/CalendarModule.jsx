@@ -72,8 +72,8 @@ function CalendarModule({ text, subText }) {
 
     // 만들어진 clickDate 또는 clickDateJava 를 바로 axios 로 전달
     // state 를 사용하기 이상하게 처음 선택 완료 클릭 시에, 자꾸 값이 안들어가는 문제가 생겨서 그냥 변수로 처리
-    console.log('JS 형태의 배열', clickDateJava);
-    console.log('문자열 형태의 배열', clickDate);
+    // console.log('JS 형태의 배열', clickDateJava);
+    // console.log('문자열 형태의 배열', clickDate);
     setPlanDate(clickDate);
 
     dispatch(
@@ -193,19 +193,6 @@ const LinkBtn = styled.button`
   font-family: 'ChosunBg';
   color: #fff;
 
-  @media only screen and (max-width: 992px) {
-    font: 1rem/1 'ChosunBg';
-    top: -10px;
-    left: 40px;
-    display: none;
-  }
-
-  @media only screen and (max-width: 720px) {
-    display: none;
-    /* font: 1rem/1 'ChosunBg';
-    top: -10px;
-    left: 0px; */
-  }
   &:hover {
     opacity: 1;
   }

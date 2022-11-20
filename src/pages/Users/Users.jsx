@@ -24,7 +24,7 @@ export default function Users() {
 
   // // let userID = 1;
   // const register = () => {
-  //   axios.post('http://localhost:4000/user/register', {
+  //   axios.post('http://13.125.234.1:4000/user/register', {
   //       type:'local',
   //       nickname: nickname,
   //       email: useremail,
@@ -56,7 +56,7 @@ export default function Users() {
   const register = () => {
     console.log(nickname, useremail, userpw);
     axios
-      .post('http://localhost:4000/user/register', {
+      .post('http://13.125.234.1:4000/user/register', {
         type: 'local',
         nickName: nickname,
         email: useremail,

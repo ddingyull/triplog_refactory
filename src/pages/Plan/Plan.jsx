@@ -22,7 +22,7 @@ import Footer from '../../components/Footer';
 import Welcome from './Welcome';
 import { addPlanItems } from '../../store/modules/triplog';
 import { useDispatch, useSelector } from 'react-redux';
-import ShareKakao from '../../components/share/ShareKakao';
+import Kakao from '../../components/share/Kakao';
 
 const { kakao } = window;
 
@@ -47,7 +47,7 @@ export default function Plan() {
 
   const savehandler = () => {
     axios
-      .post('http://localhost:4000/plan', { state, nickName })
+      .post('http://13.125.234.1:4000/plan', { state, nickName })
       .then((res) => {
         console.log(res.data);
         console.log('여행 계획 일정 전송 성공!!');
