@@ -7,7 +7,7 @@ import { FaStar } from 'react-icons/fa';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
 import { useDispatch, useSelector } from 'react-redux';
-import { reviewUpdate } from '../../../../store/modules/detail';
+import { reviewUpdate } from '../../../store/modules/detail';
 
 const ARRAY = [0, 1, 2, 3, 4];
 const formData = new FormData();
@@ -16,6 +16,9 @@ export default function ReviewWrite() {
   const params = useParams();
 
   const [upload, setUpload] = useState(false);
+
+  const [text, setText] = useState([]);
+
   const navigate = useNavigate();
   //dispatch 변수에 할당
   const dispatch = useDispatch();
@@ -74,11 +77,15 @@ export default function ReviewWrite() {
               <Form.Control
                 name="textarea"
                 as="textarea"
+                maxlength={100}
                 placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다!🤗"
                 rows={4}
                 required
                 className="mb-3"
                 ref={contentRef}
+                onChange={() => {
+                  setText(contentRef.current.value.length);
+                }}
               />
               {/* 리뷰 사진 */}
               <Form.Control
@@ -93,6 +100,7 @@ export default function ReviewWrite() {
 
             <Row className="d-flex justify-content-end">
               <Col className=" text-end mb-3 mx-2">
+                <p className="text-mute">글자수 제한: {text}/100자</p>
                 <Button
                   variant="success"
                   className="reviewSubmitBtn"

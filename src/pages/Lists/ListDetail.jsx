@@ -75,6 +75,7 @@ export default function ListDetail({ props, region }) {
                           <Card.Text className="text-muted">
                             <span>❤{a.like}</span>
                             <span>⭐{a.star}</span>
+                            <span>조회수{a.view}</span>
                             {/* <span>
                               {details.map((el, j, arr) => {
                                 if (
@@ -135,7 +136,6 @@ export default function ListDetail({ props, region }) {
                 })
             : null}
         </Row>
-
         {/* Pagination */}
         <Row
           className="d-flex justify-content-center col-2 m-auto mt-4 mb-4"

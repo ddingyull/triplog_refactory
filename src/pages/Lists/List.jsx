@@ -29,6 +29,7 @@ export default function List() {
       .get(`http://localhost:4000/list/${region}/${type}`)
       .then((response) => {
         setData(response.data);
+        setOkay(true);
       });
   }, [region, type]);
 

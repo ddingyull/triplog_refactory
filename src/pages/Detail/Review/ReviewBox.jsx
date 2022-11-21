@@ -13,7 +13,7 @@ export default function ReviewBox(props) {
 
   return (
     <>
-      <Button variant="success" onClick={onClick} className="reviewWrite">
+      <Button variant="success" onClick={onClick} className="reviewWrite mb-2">
         {text}
       </Button>
       {reviewWrite && (

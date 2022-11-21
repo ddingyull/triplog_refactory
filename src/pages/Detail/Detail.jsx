@@ -5,10 +5,11 @@ import axios from 'axios';
 import Footer from '../../components/Footer';
 import Nav from '../../components/Nav';
 import { useNavigate, useParams } from 'react-router-dom';
-import Review from '../../components/Review';
-import ReviewBox from './contents/Review/ReviewBox';
+import Review from '../Detail/Review/Review';
+import ReviewBox from './Review/ReviewBox';
 import Url from '../../components/share/Url';
 import Kakao from '../../components/share/Kakao';
+import { BeatLoader } from 'react-spinners';
 
 // redux 에서 review 업데이트 여부를 받아옴
 import { useSelector } from 'react-redux';
@@ -17,29 +18,47 @@ export default function Detail() {
   const navigator = useNavigate();
   const params = useParams();
   const contentId = params.contentId;
+  const region = params.region;
 
-  const [tourData, setTourData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [overview, setOverview] = useState([]);
+  const [homepage, setHomepage] = useState([]);
   const [reviewData, setReviewData] = useState([]);
+  const [detail, setDetail] = useState([]);
   const [details, setDetails] = useState([]);
   const [like, setLike] = useState([]);
   const [review, setReview] = useState(true);
   const nickName = useSelector((state) => state.users.userNickName);
+
   // 리덕스 detail store 에서 리뷰 업데이트 현황 받아오기
   const reviewUpdate = useSelector((state) => state.detail.reviewUpdate);
   // 이미지 로딩 실패시
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
-  /* 투어 API */
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
-  //     )
-  //     .then((response) => {
-  //       setTourData(response.data.response.body.items.item[0]);
-  //     });
-  // }, []);
+
+  // 페이지정보를 가져오는 API
+  useEffect(() => {
+    axios
+      .get(
+        `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
+      )
+      .then((response) => {
+        setOverview(response.data.response.body.items.item[0].overview);
+        setHomepage(response.data.response.body.items.item[0].homepage);
+        setLoading(false);
+      })
+      .catch(() => new Error('실패'));
+  }, [contentId]);
+
+  // 전체 데이터를 가져오는 useEffect
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/test/etc/${region}/${contentId}`)
+      .then((response) => {
+        setDetail(response.data);
+      });
+  }, [contentId, region]);
 
   /* 리뷰 */
   useEffect(() => {
@@ -57,8 +76,6 @@ export default function Detail() {
       const res = await axios.get(
         `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
       );
-      // console.log(res.data);
-      setTourData(res.data.response.body.items.item[0]);
       let data = res.data.response.body.items.item[0];
       axios
         .post(`http://13.125.234.1:4000/detail/${contentId}`, { data })
@@ -71,7 +88,6 @@ export default function Detail() {
         });
     };
     reqPost();
-    // console.log(tourData);
   }, [like]);
 
   /* 좋아요 데이터 가져오기 */
@@ -116,7 +132,7 @@ export default function Detail() {
   useEffect(() => {
     const container = document.getElementById('map');
     const options = {
-      center: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
+      center: new kakao.maps.LatLng(detail.mapy, detail.mapx),
       level: 7,
     };
 
@@ -126,10 +142,11 @@ export default function Detail() {
 
     new kakao.maps.Marker({
       map: map,
-      position: new kakao.maps.LatLng(tourData.mapy, tourData.mapx),
+      position: new kakao.maps.LatLng(detail.mapy, detail.mapx),
     });
-  }, [tourData.mapy]);
+  }, [detail.mapy]);
 
+  /* 별점 평균평점 */
   const arr = [0];
   for (let key in reviewData) {
     arr.push(reviewData[key].star);
@@ -157,60 +174,58 @@ export default function Detail() {
             <Card className="mt-3" style={{ height: '60vh' }}>
               <Card.Img
                 variant="top"
-                src={tourData.firstimage}
+                src={detail.firstimage1}
                 onError={onErrorImg}
                 style={{ height: '45vh', objectFit: 'cover' }}
                 className="fluid border"
               />
-              <Card.Body>
-                <div className="d-flex justify-content-center align-items-center ">
-                  <div
-                    className="text-center flex-fill"
-                    style={{ cursor: 'pointer' }}
+              <Card.Body className="d-flex justify-content-center align-items-center">
+                <div
+                  className="text-center flex-fill flex-row"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <h5
+                    sytle={{ cursor: 'pointer' }}
+                    onClick={
+                      nickName !== ''
+                        ? handleToggle(contentId)
+                        : () => {
+                            alert('로그인해주세요!');
+                          }
+                    }
                   >
-                    <h5
-                      sytle={{ cursor: 'pointer' }}
-                      onClick={
-                        nickName !== ''
-                          ? handleToggle(contentId)
-                          : () => {
-                              alert('로그인해주세요!');
-                            }
-                      }
-                    >
-                      {like.indexOf(contentId) !== -1 ? '❤' : '🤍'}
-                    </h5>
-                    <p>좋아요</p>
-                  </div>
-                  <div
-                    className="text-center flex-fill"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      // alert('서비스 구현예정입니다. 🙏');
-                      console.log(document.documentElement.scrollHeight);
-                      window.scrollTo(0, document.documentElement.scrollHeight);
-                    }}
-                  >
-                    <h5>⭐</h5>
-                    <p>리뷰쓰기</p>
-                  </div>
-                  <div
-                    className="text-center flex-fill"
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <Kakao tourData={tourData} />
-                    <p className="pt-2">카카오 공유</p>
-                  </div>
-                  <div
-                    className="text-center flex-fill "
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      alert('url이 복사되었습니다.');
-                    }}
-                  >
-                    <Url />
-                    <p style={{ fontSize: '1rem' }}>URL공유</p>
-                  </div>
+                    {like.indexOf(contentId) !== -1 ? '❤' : '🤍'}
+                  </h5>
+                  <p>좋아요</p>
+                </div>
+                <div
+                  className="text-center flex-fill"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    // alert('서비스 구현예정입니다. 🙏');
+                    console.log(document.documentElement.scrollHeight);
+                    window.scrollTo(0, document.documentElement.scrollHeight);
+                  }}
+                >
+                  <h5>⭐</h5>
+                  <p>리뷰쓰기</p>
+                </div>
+                <div
+                  className="text-center flex-fill"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <Kakao tourData={detail} />
+                  <p className="pt-2">카카오 공유</p>
+                </div>
+                <div
+                  className="text-center flex-fill "
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    alert('url이 복사되었습니다.');
+                  }}
+                >
+                  <Url />
+                  <p style={{ fontSize: '1rem' }}>URL공유</p>
                 </div>
               </Card.Body>
             </Card>
@@ -230,11 +245,9 @@ export default function Detail() {
                     <span>{details.view + 1}</span>
                   )}
                 </p>
-                <Card.Title className="mb-3 fw-bold">
-                  {tourData.title}
-                </Card.Title>
+                <Card.Title className="mb-3 fw-bold">{detail.title}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  📍 {tourData.addr1}
+                  📍 {detail.addr1}
                 </Card.Subtitle>
                 <Card.Text className="mb-4">
                   ⭐<span> {parseFloat(starAvg)} </span> ❤{' '}
@@ -245,31 +258,35 @@ export default function Detail() {
                   )}
                 </Card.Text>
                 <Card.Text>
-                  <Row className="mt-1 text-start">
+                  <Row className="mt-1">
                     <span className="fw-bold">전화</span>
                     <p>
-                      {tourData.tel === !' '
-                        ? tourData.tel
+                      {detail.tel === !' '
+                        ? detail.tel
                         : '전화번호 정보가 없습니다.'}
                     </p>
                   </Row>
-                  <Row className="text-start">
+                  <Row>
                     <span className="fw-bold">홈페이지</span>
 
-                    {tourData.homepage !== null ? (
-                      <a
-                        dangerouslySetInnerHTML={{ __html: tourData.homepage }}
-                      ></a>
+                    {loading ? (
+                      <div className=" d-flex justify-content-center">
+                        <BeatLoader color="#198754" />
+                      </div>
+                    ) : homepage === !'' ? (
+                      <a dangerouslySetInnerHTML={{ __html: homepage }}></a>
                     ) : (
-                      '홈페이지 정보가 없습니다.'
+                      <p>홈페이지 정보가 없습니다.</p>
                     )}
                   </Row>
                 </Card.Text>
                 <Card.Text>
                   <span className="fw-bold">장소설명</span>
-                  <p
-                    dangerouslySetInnerHTML={{ __html: tourData.overview }}
-                  ></p>
+                  {loading ? (
+                    <BeatLoader color="#198754" className="text-center mt-5" />
+                  ) : (
+                    <p dangerouslySetInnerHTML={{ __html: overview }}></p>
+                  )}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -298,7 +315,7 @@ export default function Detail() {
             <ReviewBox setReivew={setReview} />
           </Col>
         </Row>
-        {review === true ? <Review /> : <Review />}
+        <div className="mt-2">{review === true ? <Review /> : <Review />}</div>
       </Container>
       <Footer />
     </>

@@ -5,7 +5,7 @@ export default function ShareKakao({ tourData }) {
   //현재 url가져오기
   const currentUrl = window.location.href;
   useEffect(() => {
-    initKakao(); //
+    initKakao();
   }, []);
 
   //자바스크립트키로 카카오 init
@@ -26,7 +26,7 @@ export default function ShareKakao({ tourData }) {
       content: {
         title: tourData.title,
         description: tourData.addr1,
-        imageUrl: tourData.firstimage,
+        imageUrl: tourData.firstimage1,
         link: {
           mobileWebUrl: currentUrl,
           webUrl: currentUrl,

@@ -10,7 +10,7 @@ import {
   Form,
 } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
-import '../styles/Paging.css';
+import '../../../styles/Paging.css';
 import axios from 'axios';
 // import UserProfile from './UserProfile';
 import { useParams } from 'react-router';
@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
 import { useDispatch } from 'react-redux';
-import { reviewUpdate } from '../store/modules/detail';
+import { reviewUpdate } from '../../../store/modules/detail';
 
 export default function Review() {
   const contentRef = useRef();
@@ -32,6 +32,7 @@ export default function Review() {
 
   const [reviewData, setReviewData] = useState([]);
 
+  const [emendContentText, setEmendContentText] = useState([]);
   const [emendContent, setEmendContent] = useState([]);
   const [emendId, setEmendId] = useState([]);
 
@@ -65,8 +66,11 @@ export default function Review() {
     // console.log(page);
   };
   // 이미지 로딩 실패시
-  const onErrorImg = (e) => {
+  const onErrorUserImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/userNOIMG.png';
+  };
+  const onErrorReviewImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
 
   return (
@@ -87,17 +91,21 @@ export default function Review() {
             <Form.Control
               name="textarea"
               as="textarea"
+              maxlength={100}
               value={emendContent}
               rows={4}
               required
               className="mb-3"
-              // ref={contentRef}
+              ref={contentRef}
+              setCon
               onChange={(event) => {
                 setEmendContent(event.target.value);
+                setEmendContentText(contentRef.current.value.length);
               }}
             />
           </Modal.Body>
           <Modal.Footer>
+            <p className="text-mute">글자수 제한: {emendContentText}/100자</p>
             <Button variant="outline-success" onClick={handleClose}>
               닫기
             </Button>
@@ -132,24 +140,26 @@ export default function Review() {
                     <Card className="my-2">
                       <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-center">
-                          <Col className="col-3 col-lg-3 col-md-2 col-sm-3  text-center">
+                          <Col className="col-3 col-lg-3 col-md-2 col-sm-3 me-2 text-center">
                             {userImg !== '' ? (
                               <Image
                                 src={`http://13.125.234.1:4000/uploads/${userImg}`}
                                 roundedCircle
                                 style={{
-                                  width: '60px',
-                                  border: '1px solid black',
+                                  width: '70px',
+                                  border: '2px solid lightgray',
+                                  boxShadow:
+                                    'rgba(0, 0, 0, 0.4) 0px 20px 30px -20px',
                                 }}
                               />
                             ) : (
                               <Image
-                                onError={onErrorImg}
+                                onError={onErrorUserImg}
                                 src={`http://13.125.234.1:4000/uploads/${userImg}`}
                                 roundedCircle
                                 style={{
                                   width: '60px',
-                                  border: '1px solid black',
+                                  border: '1px solid #198754',
                                 }}
                               />
                             )}
@@ -220,17 +230,19 @@ export default function Review() {
 
                       {/* 리뷰 내용 */}
                       <Card.Body>
-                        <Card.Text className="ps-4">{a.content}</Card.Text>
+                        <Card.Text className="m-0 ps-3 pe-3">
+                          {a.content}
+                        </Card.Text>
                         <Col>
                           {a.img !== '' ? (
                             <Image
                               src={`http://13.125.234.1:4000/uploads/${a.img}`}
                               style={{ width: '150px', height: '150px' }}
-                              className="mt-3 border"
+                              className="mt-3 border mx-2"
                             />
                           ) : (
                             <Image
-                              onError={onErrorImg}
+                              onError={onErrorReviewImg}
                               src={`http://13.125.234.1:4000/uploads/${a.img}`}
                               style={{
                                 width: '150px',

@@ -19,7 +19,7 @@ import Footer from '../../components/Footer';
 import PageNav from '../../components/Nav';
 import CheckListRe from '../CheckList/CheckList_re';
 import BudgetRe from '../Budget/Budget_re';
-import Review from '../../components/Review';
+import Review from '../Detail/Review/Review';
 // import PlanList from '../../components/Plan/PlanList';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -68,7 +68,9 @@ export default function MyPage() {
       .then((res) => res.json())
       .then((data) => {
         axios
-          .post('http://13.125.234.1:4000/user/upload', [{ nickName, img: data }])
+          .post('http://13.125.234.1:4000/user/upload', [
+            { nickName, img: data },
+          ])
           .then((결과) => {
             // 백엔드 콘솔 결과
             console.log(결과);
