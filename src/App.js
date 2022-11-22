@@ -4,7 +4,7 @@ import SubMain from './pages/SubMain/SubMain';
 import Plan from './pages/Plan/Plan';
 // import Lists from './pages/Lists/Lists';
 import List from './pages/Lists/List';
-import Detail from './pages/Detail/Detail';
+import DetailPage from './pages/Detail/DetailPage';
 import MyPage from './pages/MyPage/MyPage';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
@@ -32,7 +32,7 @@ function App() {
       {/* <Route path="/lists/:areaCode" element={<Lists />} />
       <Route path="/detail/:contentId" element={<Detail />} /> */}
       <Route path="/list/:region/:type" element={<List />} />
-      <Route path="/detail/:region/:contentId" element={<Detail />} />
+      <Route path="/detail/:region/:contentId" element={<DetailPage />} />
       <Route path="/MyPage" element={<MyPage />} />
       <Route path="/Budget" element={<Budget />} />
       <Route path="/CheckList" element={<CheckList />} />
