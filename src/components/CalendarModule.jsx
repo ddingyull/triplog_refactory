@@ -90,12 +90,7 @@ function CalendarModule({ text, subText }) {
 
   return (
     <>
-      <LinkBtn
-        // variant="light"
-        onClick={handleShow}
-      >
-        TripLog 시작하기 📆
-      </LinkBtn>
+      <LinkBtn onClick={handleShow}>TripLog 시작하기 📆</LinkBtn>
 
       <Modal
         show={show}
@@ -143,39 +138,6 @@ function CalendarModule({ text, subText }) {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      {/* 밑에 넣는 버전
-      <CalendarCard className="p-5 shadow-sm">
-        <h1 className="text-center">🛫 </h1>
-        <h5 className="text-center" style={{ fontFamily: 'ChosunBg' }}>
-          여행 날짜를 선택해주세요
-        </h5>
-
-        {value.length > 0 ? (
-          <p className="text-center">
-            {moment(value[0]).format('YYYY년 MM월 DD일')}
-            <span className="bold"> ~ </span>{' '}
-            {moment(value[1]).format('MM월 DD일')}
-          </p>
-        ) : (
-          <p className="text-center">
-            <span className="bold">오늘:</span>{' '}
-            {moment(value).format('YYYY년 MM월 DD일')}
-          </p>
-        )}
-
-        <Calendar
-          minDate={new Date()}
-          onChange={onChange}
-          selectRange={true}
-          formatDay={(locale, date) => moment(date).format('DD')} //'일'글씨 빼기
-          maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-          className="m-auto p-3 rounded"
-        />
-        <SelectButton variant="dark" onClick={getDate}>
-          완료
-        </SelectButton>
-      </CalendarCard> */}
     </>
   );
 }
@@ -198,22 +160,22 @@ const LinkBtn = styled.button`
   }
 `;
 
-const SelectButton = styled.button`
-  display: block;
-  justify-content: center;
-  background-color: #444;
-  color: #fff;
-  width: 10%;
-  border: none;
-  border-radius: 5px;
-  padding: 3px;
-  margin: 2% auto;
-`;
+// const SelectButton = styled.button`
+//   display: block;
+//   justify-content: center;
+//   background-color: #444;
+//   color: #fff;
+//   width: 10%;
+//   border: none;
+//   border-radius: 5px;
+//   padding: 3px;
+//   margin: 2% auto;
+// `;
 
-const CalendarCard = styled.div`
-  margin: auto;
-  width: 60%;
-  background-color: #f8f8f8;
-  border-radius: 10px;
-  color: #333;
-`;
+// const CalendarCard = styled.div`
+//   margin: auto;
+//   width: 60%;
+//   background-color: #f8f8f8;
+//   border-radius: 10px;
+//   color: #333;
+// `;

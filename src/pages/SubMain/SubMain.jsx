@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
-import '../../styles/globalStyle';
 import CalendarMain from './CalendarMain';
 import Items from './Items';
 import Items2 from './Items2';
 import data from '../../data';
-import CardItemLink from '../../components/CardItemLink';
 
 import { useParams } from 'react-router-dom';
 
@@ -49,7 +47,6 @@ export default function SubMain({ productItems, width, height, planDate }) {
         <CalendarMain
           pickAreaName={pickAreaName}
           pickAreaImg={pickAreaImg}
-          subText="온전히 내 취향대로, 나만의 감성을 그대로 담은 나만의 여행로그"
           planDate={planDate}
         />
 
@@ -74,7 +71,7 @@ export default function SubMain({ productItems, width, height, planDate }) {
             </Col>
           </Row>
           <Row>
-            <TableContainer className="d-block rounded text-center">
+            <div className="d-block rounded text-center">
               <a href="/plan/1">
                 <img src="/images/icons/여행 계획하기.png"></img>
               </a>
@@ -84,7 +81,7 @@ export default function SubMain({ productItems, width, height, planDate }) {
               <a href="/checklist">
                 <img src="/images/icons/체크리스트.png"></img>
               </a>
-            </TableContainer>
+            </div>
           </Row>
         </Container>
       </Container>
@@ -94,11 +91,6 @@ export default function SubMain({ productItems, width, height, planDate }) {
 }
 
 // style-components
-const TableContainer = styled.div`
-  /* overflow-x: auto; */
-  /* white-space:nowrap; */
-`;
-
 const Title = styled.p`
   font: 2rem/1 'Inter';
 `;
