@@ -141,28 +141,17 @@ export default function Review() {
                       <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-center">
                           <Col className="col-3 col-lg-3 col-md-2 col-sm-3 me-2 text-center">
-                            {userImg !== '' ? (
-                              <Image
-                                src={`http://13.125.234.1:4000/uploads/${userImg}`}
-                                roundedCircle
-                                style={{
-                                  width: '70px',
-                                  border: '2px solid lightgray',
-                                  boxShadow:
-                                    'rgba(0, 0, 0, 0.4) 0px 20px 30px -20px',
-                                }}
-                              />
-                            ) : (
-                              <Image
-                                onError={onErrorUserImg}
-                                src={`http://13.125.234.1:4000/uploads/${userImg}`}
-                                roundedCircle
-                                style={{
-                                  width: '60px',
-                                  border: '1px solid #198754',
-                                }}
-                              />
-                            )}
+                            <Image
+                              src={`http://13.125.234.1:4000/uploads/${userImg}`}
+                              roundedCircle
+                              onError={onErrorUserImg}
+                              style={{
+                                width: '70px',
+                                border: '2px solid lightgray',
+                                boxShadow:
+                                  'rgba(0, 0, 0, 0.4) 0px 20px 30px -20px',
+                              }}
+                            />
                           </Col>
                           <Col>
                             <p className=" fw-bold m-0">{a.nickName}</p>
@@ -234,24 +223,12 @@ export default function Review() {
                           {a.content}
                         </Card.Text>
                         <Col>
-                          {a.img !== '' ? (
-                            <Image
-                              src={`http://13.125.234.1:4000/uploads/${a.img}`}
-                              style={{ width: '150px', height: '150px' }}
-                              className="mt-3 border mx-2"
-                            />
-                          ) : (
-                            <Image
-                              onError={onErrorReviewImg}
-                              src={`http://13.125.234.1:4000/uploads/${a.img}`}
-                              style={{
-                                width: '150px',
-                                height: '150px',
-                                opacity: '0',
-                              }}
-                              className="mt-3 border"
-                            />
-                          )}
+                          <Image
+                            src={`http://13.125.234.1:4000/uploads/${a.img}`}
+                            onError={onErrorReviewImg}
+                            style={{ width: '150px', height: '150px' }}
+                            className="mt-3 border mx-2"
+                          />
                         </Col>
 
                         <Row className="d-flex justify-content-end">

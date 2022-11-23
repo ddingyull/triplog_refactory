@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
@@ -105,10 +105,7 @@ export default function ReviewWrite() {
                   variant="success"
                   className="reviewSubmitBtn"
                   onClick={() => {
-                    console.log(nickName);
                     const content = contentRef.current.value;
-
-                    console.log(formData);
 
                     if (nickName === '') {
                       alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!');
@@ -125,7 +122,6 @@ export default function ReviewWrite() {
                       })
                         .then((res) => res.json())
                         .then((data) => {
-                          console.log(data);
                           axios
                             .post('http://13.125.234.1:4000/review/write', [
                               {
