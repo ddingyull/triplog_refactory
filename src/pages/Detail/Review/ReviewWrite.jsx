@@ -112,6 +112,11 @@ export default function ReviewWrite() {
 
                     if (nickName === '') {
                       alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!');
+                      navigate('/login');
+                    } else if (content === '') {
+                      alert(
+                        '댓글 등록에 실패했습니다. 😥 내용을 작성해주세요!'
+                      );
                     } else if (upload) {
                       fetch('http://13.125.234.1:4000/review/img', {
                         method: 'post',
