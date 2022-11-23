@@ -4,7 +4,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
 import Footer from '../../components/Footer';
 import Nav from '../../components/Nav';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Review from './Review/Review';
 import ReviewBox from './Review/ReviewBox';
 import Url from '../../components/share/Url';
@@ -14,9 +14,9 @@ import { BeatLoader } from 'react-spinners';
 // redux 에서 review 업데이트 여부를 받아옴
 import { useSelector } from 'react-redux';
 import DetailMap from './DetailMap';
+import Progress from '../../components/Progress';
 
 export default function Detail() {
-  const navigator = useNavigate();
   const params = useParams();
   const contentId = params.contentId;
   const region = params.region;
@@ -233,7 +233,7 @@ export default function Detail() {
                   📍 {detail.addr1}
                 </Card.Subtitle>
                 <Card.Text className="mb-4">
-                  ⭐<span> {parseFloat(starAvg)} </span> ❤{' '}
+                  <Progress starAvg={parseFloat(starAvg)} /> <span>❤</span>{' '}
                   {details.like === undefined ? (
                     <span>0</span>
                   ) : (
