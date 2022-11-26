@@ -36,8 +36,13 @@ export default function Review() {
   const [emendContent, setEmendContent] = useState([]);
   const [emendId, setEmendId] = useState([]);
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const [emendShow, setEmendShow] = useState(false);
+  const [imgShow, setImgShow] = useState(false);
+  const [imgSrc, setImgSrc] = useState();
+  const handleEmendShow = () => setEmendShow(true);
+  const handleEmendClose = () => setEmendShow(false);
+  const handleImgShow = () => setImgShow(true);
+  const handleImgClose = () => setImgShow(false) && setImgSrc('');
   const nickName = useSelector((state) => state.users.userNickName);
   const userImg = useSelector((state) => state.users.userImg);
 
@@ -76,9 +81,10 @@ export default function Review() {
   return (
     <>
       <Container>
+        {/* 리뷰수정 모달 */}
         <Modal
-          show={show}
-          onHide={handleClose}
+          show={emendShow}
+          onHide={handleEmendClose}
           backdrop="static"
           keyboard={false}
           aria-labelledby="contained-modal-title-vcenter"
@@ -106,7 +112,7 @@ export default function Review() {
           </Modal.Body>
           <Modal.Footer>
             <p className="text-mute">글자수 제한: {emendContentText}/100자</p>
-            <Button variant="outline-success" onClick={handleClose}>
+            <Button variant="outline-success" onClick={handleEmendClose}>
               닫기
             </Button>
             <Button
@@ -119,7 +125,7 @@ export default function Review() {
                   .then((res) => {
                     dispatch(reviewUpdate());
                     // console.log('리뷰 수정 저장 성공');
-                    setShow(false);
+                    setEmendShow(false);
                   })
                   .catch(() => {
                     console.log('실패');
@@ -130,6 +136,7 @@ export default function Review() {
             </Button>
           </Modal.Footer>
         </Modal>
+
         <Row xs={1} md={1} lg={2} sm={1} xxs={2} className="mb-4">
           {reviewData.length > 0 ? (
             reviewData
@@ -137,6 +144,37 @@ export default function Review() {
               .map(function (a, i) {
                 return (
                   <Col>
+                    {/* 리뷰이미지 클릭시 팝업 모달 */}
+                    <Modal
+                      show={imgShow}
+                      onHide={handleImgClose}
+                      backdrop="static"
+                      keyboard={false}
+                      size="lg"
+                      // fullscreen={true}
+                      aria-labelledby="contained-modal-title-vcenter"
+                      centered
+                      scrollable
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>리뷰 이미지 보기</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Image
+                          src={imgSrc}
+                          onError={onErrorReviewImg}
+                          className="mt-3 border mx-2"
+                        />
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button
+                          variant="outline-success"
+                          onClick={handleImgClose}
+                        >
+                          닫기
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
                     <Card className="my-2">
                       <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-center">
@@ -226,6 +264,10 @@ export default function Review() {
                           <Image
                             src={`http://13.125.234.1:4000/uploads/${a.img}`}
                             onError={onErrorReviewImg}
+                            onClick={(e) => {
+                              setImgSrc(e.target.src);
+                              setImgShow(true);
+                            }}
                             style={{ width: '150px', height: '150px' }}
                             className="mt-3 border mx-2"
                           />
@@ -239,7 +281,7 @@ export default function Review() {
                                   variant="success"
                                   className="reviewEmendBtn"
                                   onClick={() => {
-                                    setShow(true);
+                                    setEmendShow(true);
                                     axios
                                       .get(
                                         `http://13.125.234.1:4000/review/emend/${a._id}`
