@@ -137,9 +137,6 @@ export default function Plan() {
         <Modal.Body>
           <Card className="col-sm-10 col-md- overflow-auto m-auto">
             <Row className="d-flex justify-content-center">
-              {/* <Col md={4} className='d-flex m-3 '>
-            <p className='fw-6 fs-5 fw-bold me-2'>제주 여행 🍊</p>
-          </Col> */}
               <Col
                 md={{ span: 4, offset: 2 }}
                 className="text-end d-block"
@@ -148,7 +145,6 @@ export default function Plan() {
 
             {/* 여행지 검색 기능 */}
             <Row className="m-auto py-4 d-flex text-center">
-              {/* <form onSubmit={'reuturn false'}> */}
               <div className="text-center">
                 <div
                   className="text-center fs-4 m-4"
@@ -203,7 +199,6 @@ export default function Plan() {
                   검색
                 </Button>
               </div>
-              {/* </form> */}
 
               <div>
                 {
@@ -271,20 +266,6 @@ export default function Plan() {
                               >
                                 {a.addr1}
                               </Title>
-                            </Stack>
-
-                            <Stack>
-                              {/* <button
-                                className="btn"
-                                onClick={() => {
-                                  let copy = [...list];
-                                  // 선택한 데이터를 삭제
-                                  copy.splice(i, 1);
-                                  setPlanItems(copy);
-                                }}
-                              >
-                                x
-                              </button> */}
                             </Stack>
                           </div>
                         </SelectBox>
@@ -388,6 +369,15 @@ const TriplogTitle = styled.p`
   background-color: #c0dac0;
   border-radius: 10px;
   padding: 20px 25px;
+
+  @media screen and (max-width: 1200px) {
+  }
+  @media screen and (max-width: 992px) {
+    opacity: 0;
+  }
+  @media screen and (max-width: 576px) {
+    opacity: 0;
+  }
 `;
 const TriplogTitle1 = styled.p`
   position: absolute;
@@ -401,4 +391,12 @@ const TriplogTitle1 = styled.p`
   background-color: #c0dac0;
   border-radius: 10px;
   padding: 20px 25px;
+  @media screen and (max-width: 1200px) {
+  }
+  @media screen and (max-width: 992px) {
+    opacity: 0;
+  }
+  @media screen and (max-width: 576px) {
+    opacity: 0;
+  }
 `;

@@ -32,9 +32,8 @@ export default function Welcome() {
               </p>
               의 여행계획 세우기 ✏️
             </Title>
-            <div className="fs-6 d-inline p-2">
-              {' '}
-              📆 여행 날짜 :{' '}
+            <div className="fs-6 d-inline p-2"> 📆 여행 기간 : </div>
+            <div className="fs-6 d-block p-2">
               {state.planDate.startDate + ' ~ ' + state.planDate.endDate}{' '}
             </div>
           </Col>
@@ -42,14 +41,6 @@ export default function Welcome() {
             <Plan_li>
               <a href="/Plan/:areaCode">
                 <PlanKakao />
-                {/* <Badge
-                  style={{ backgroundColor: '#036635' }}
-                  bg="success"
-                  text="light"
-                  className="fs-8"
-                >
-                  💌 공유하기
-                </Badge>{' '} */}
               </a>
             </Plan_li>
             <Plan_li>
