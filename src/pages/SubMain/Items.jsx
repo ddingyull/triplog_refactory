@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, CardImg } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import CardItemLink from '../../components/CardItemLink';
@@ -26,8 +26,6 @@ export default function Items({ text, subText, srcImg, width, height }) {
   }, []);
 
   const [datas, setData] = useState(data);
-  // let seoulStay = data[0][1];
-  // let seoulTour = data[0][2];
 
   let h = 0;
   for (let i = 0; i < datas.length; i++) {
@@ -38,12 +36,11 @@ export default function Items({ text, subText, srcImg, width, height }) {
     }
   }
   return (
-    <Container className="p-3 mb-4 mt-5 position-relative">
+    <Container className="p-3 mt-5 position-relative">
       <Row className="d-block justify-content-start">
-        <Col className="m-3">
+        <Col className="m-lg-3 m-md-1">
           <Title className="justify-content-start fw-bold">{text}</Title>
-          {/* <p className='m-0 fs-6' >2022.10.25 - 10.28</p> */}
-          <p className="m-0 fs-6 text-secondary">{subText}</p>
+          <SubTitle className="m-lg-0 m-md-2 fs-6">{subText}</SubTitle>
         </Col>
       </Row>
 
@@ -83,4 +80,26 @@ const TableContainer = styled.div`
 `;
 const Title = styled.p`
   font: 2rem/1 'Inter';
+  @media screen and (max-width: 1200px) {
+    font: 2rem/1 'Inter';
+  }
+  @media screen and (max-width: 992px) {
+    font: 1.5rem/1 'Inter';
+  }
+  @media screen and (max-width: 576px) {
+    font: 1.1rem/1 'Inter';
+  }
+`;
+
+const SubTitle = styled.p`
+  font: 2rem/1 'Inter';
+  @media screen and (max-width: 1200px) {
+    font: 2rem/1 'Inter';
+  }
+  @media screen and (max-width: 992px) {
+    font: 1.5rem/1 'Inter';
+  }
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
 `;

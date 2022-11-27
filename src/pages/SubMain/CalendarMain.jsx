@@ -35,7 +35,7 @@ const CalendarIcon = styled.a``;
 
 const AreaName = styled.p`
   color: #fff;
-  font: 10rem/1 'ChosunBg';
+  font: 9rem/1 'ChosunBg';
   margin: 0 0 0 3%;
 
   @media screen and (max-width: 1200px) {
@@ -47,7 +47,7 @@ const AreaName = styled.p`
     margin: 0 0 0 3%;
   }
   @media screen and (max-width: 576px) {
-    font: 3rem/1 'ChosunBg';
+    font: 2.6rem/1 'ChosunBg';
     margin: 0 0 0 3%;
   }
 `;

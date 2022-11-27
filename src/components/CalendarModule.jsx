@@ -41,18 +41,6 @@ function CalendarModule({ text, subText }) {
     let start = value[0];
     let startJava = value[0];
 
-    // 여행 일정의 길이에 맞춰서 시작일에 + 1 일을 해주는 방법으로 전체 여행 일정을 배열로 만들기!
-    // 문자열 형태의 Date 가 필요하면 ClickDate 의 데이터를 사용
-    // for (let i = 0; i < dateLength; i++) {
-    //   if (i === 0) {
-    //     clickDateJava.push(new Date(startJava.setDate(startJava.getDate())));
-    //   } else {
-    //     clickDateJava.push(
-    //       new Date(startJava.setDate(startJava.getDate() + 1))
-    //     );
-    //   }
-    // }
-
     // JS Date 형태의 Date 가 필요하면 ClickDateJava 의 데이터를 사용
     for (let i = 0; i < dateLength; i++) {
       if (i === 0) {

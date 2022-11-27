@@ -45,36 +45,36 @@ export default function SubMain({ productItems, width, height, planDate }) {
           width="20rem"
           height="20rem"
           text="✨ 트랜디한 트립로그의 Pick!"
-          subText="브이로그 감성 낭낭한 여행일지, 트립로그와 함께라면 가능합니다"
+          subText="브이로그 감성 낭낭한 여행일지, 트립로그와 함께!"
         />
 
-        <Items2 width="18rem" height="18rem" pickAreaName={pickAreaName} />
-
-        <Container className="p-3 mb-4 mt-5">
+        <Container className="p-lg-3 p-md-0 mb-4 mt-lg-5 mt-md-0">
           <Row className="d-block justify-content-start">
             <Col className="m-3">
               <Title className="justify-content-start fw-bold">
                 🧳 여행 전 필수 준비항목
               </Title>
-              <p className="m-0 fs-6 text-secondary">
+              <SubTitle className="m-0 fs-6 text-secondary">
                 트립로그가 챙겨주는 이번 여행!
-              </p>
+              </SubTitle>
             </Col>
           </Row>
           <Row>
             <div className="d-block rounded text-center">
-              <a href="/plan/1">
-                <img src="/images/icons/여행 계획하기.png"></img>
-              </a>
+              {/* <a href="/plan/1">
+                <ListImg src="/images/icons/여행 계획하기.png"></ListImg>
+              </a> */}
               <a href="/budget">
-                <img src="/images/icons/가계부.png"></img>
+                <ListImg src="/images/icons/가계부.png"></ListImg>
               </a>
               <a href="/checklist">
-                <img src="/images/icons/체크리스트.png"></img>
+                <ListImg src="/images/icons/체크리스트.png"></ListImg>
               </a>
             </div>
           </Row>
         </Container>
+
+        <Items2 width="18rem" height="18rem" pickAreaName={pickAreaName} />
       </Container>
       <Footer />
     </>
@@ -84,4 +84,39 @@ export default function SubMain({ productItems, width, height, planDate }) {
 // style-components
 const Title = styled.p`
   font: 2rem/1 'Inter';
+  @media screen and (max-width: 1200px) {
+    font: 2rem/1 'Inter';
+  }
+  @media screen and (max-width: 992px) {
+    font: 1.5rem/1 'Inter';
+  }
+  @media screen and (max-width: 576px) {
+    font: 1.1rem/1 'Inter';
+  }
+`;
+
+const SubTitle = styled.p`
+  font: 2rem/1 'Inter';
+  @media screen and (max-width: 1200px) {
+    font: 2rem/1 'Inter';
+  }
+  @media screen and (max-width: 992px) {
+    font: 1.5rem/1 'Inter';
+  }
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
+`;
+
+const ListImg = styled.img`
+  width: calc(100 / 3);
+  @media screen and (max-width: 1200px) {
+    width: 30%;
+  }
+  @media screen and (max-width: 992px) {
+    width: 30%;
+  }
+  @media screen and (max-width: 576px) {
+    width: 40%;
+  }
 `;

@@ -47,14 +47,13 @@ export default function Items2({
   return (
     <Container className="p-3 mb-4 mt-5">
       <Row className="d-block justify-content-start">
-        <Col className="m-3">
+        <Col className="m-lg-3 m-md-1">
           <Title className="justify-content-start fw-bold">
-            💚 {pickAreaName}에간다면?
+            💚 {pickAreaName}에 간다면?
           </Title>
-          {/* <p className='m-0 fs-6' >2022.10.25 - 10.28</p> */}
-          <p className="m-0 fs-6 text-secondary">
+          <SubTitle className="m-lg-0 m-md-2 fs-6 text-secondary">
             겨울에 가면 더 좋은 {pickAreaName} 여행지 추천
-          </p>
+          </SubTitle>
         </Col>
       </Row>
 
@@ -92,4 +91,26 @@ const TableContainer = styled.div`
 `;
 const Title = styled.p`
   font: 2rem/1 'Inter';
+  @media screen and (max-width: 1200px) {
+    font: 2rem/1 'Inter';
+  }
+  @media screen and (max-width: 992px) {
+    font: 1.5rem/1 'Inter';
+  }
+  @media screen and (max-width: 576px) {
+    font: 1.1rem/1 'Inter';
+  }
+`;
+
+const SubTitle = styled.p`
+  font: 2rem/1 'Inter';
+  @media screen and (max-width: 1200px) {
+    font: 2rem/1 'Inter';
+  }
+  @media screen and (max-width: 992px) {
+    font: 1.5rem/1 'Inter';
+  }
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
 `;
