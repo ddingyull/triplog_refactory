@@ -145,37 +145,30 @@ function CalendarModule({ text, subText }) {
 export default CalendarModule;
 
 const LinkBtn = styled.button`
-  /* background-color: rgba(255, 255, 255, 0); */
   background-color: rgb(0, 0, 0, 0.4);
   border: none;
-  /* font-size: 4rem; */
   font-size: 0.8rem;
   padding: 0.5rem;
   border-radius: 10px;
-  font-family: 'ChosunBg';
+  font-family: ‘ChosunBg’;
   color: #fff;
-
+  margin: 22% 0 0 3%;
   &:hover {
-    opacity: 1;
+    background-color: #000;
+  }
+  @media only screen and (max-width: 1200px) {
+    font: 0.8rem/1 ‘ChosunBg’;
+    margin: 23% 0 0 3%;
+  }
+  @media only screen and (max-width: 992px) {
+    font: 0.5rem/1 ‘ChosunBg’;
+    margin: 23% 0 0 3%;
+  }
+  @media only screen and (max-width: 768px) {
+    font: 0.01rem/1 ‘ChosunBg’;
+    margin: 17% 0 0 3%;
+  }
+  @media only screen and (max-width: 576px) {
+    margin: 16% 0 0 1%;
   }
 `;
-
-// const SelectButton = styled.button`
-//   display: block;
-//   justify-content: center;
-//   background-color: #444;
-//   color: #fff;
-//   width: 10%;
-//   border: none;
-//   border-radius: 5px;
-//   padding: 3px;
-//   margin: 2% auto;
-// `;
-
-// const CalendarCard = styled.div`
-//   margin: auto;
-//   width: 60%;
-//   background-color: #f8f8f8;
-//   border-radius: 10px;
-//   color: #333;
-// `;

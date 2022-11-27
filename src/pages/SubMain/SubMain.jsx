@@ -23,8 +23,6 @@ export default function SubMain({ productItems, width, height, planDate }) {
     for (let j = 2; j < areaName[i].length; j++) {
       if (areaName[i][j].find((el) => el.areacode === areaCode) !== undefined) {
         h = i;
-        // console.log(h)
-        // console.log(areaName[i][j].find(el => el.areacode === areaCode))
       }
     }
   }
@@ -33,13 +31,6 @@ export default function SubMain({ productItems, width, height, planDate }) {
   let pickAreaImg = areaName[h][1];
   const [productItem, setProductItem] = useState([]); //받아온데이터 담기
 
-  // data 받아오기
-  // useEffect (() => {
-  //   const productItem = axios.get(`https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`)
-  //   .then((response) => {
-  //     setProductItem(response.data.response.body.items.item);
-  //   })Always {pickAreaName} With TripLog
-  // }, []);
   return (
     <>
       <Nav />
