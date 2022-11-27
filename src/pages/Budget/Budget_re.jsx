@@ -64,7 +64,7 @@ export default function BudgetRe() {
           </h1>
           <Col
             className=" p-5 m-auto rounded border mt-4"
-            style={{ backgroundColor: '#fafafa', width: '75%' }}
+            style={{ backgroundColor: '#fafafa', width: '90%' }}
           >
             <h6 className="fw-bold text-center" style={{ color: '#198754' }}>
               TripLog
@@ -162,20 +162,13 @@ export default function BudgetRe() {
             </Row>
 
             <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
-            <Row>
-              <Col className="text-start ">
-                <span>영수증 전체 초기화</span>
-              </Col>
-              <Col lg="auto" className="col-sm-2 ">
-                <Button variant="success" onClick={() => setShow(true)}>
-                  초기화
-                </Button>
-              </Col>
-            </Row>
+            <Col lg="auto" className="text-end ">
+              <Button variant="success" onClick={() => setShow(true)}>
+                초기화
+              </Button>
+            </Col>
           </Col>
-          {/* </Row> */}
         </Container>
-        {/* <Footer /> */}
       </>
     );
   }

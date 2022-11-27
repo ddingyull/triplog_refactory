@@ -1,17 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
 import {
   Container,
   Tab,
   Row,
   Col,
   Nav,
-  Button,
   Form,
   Card,
-  Accordion,
   Stack,
-  InputGroup,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
@@ -19,18 +15,11 @@ import Footer from '../../components/Footer';
 import PageNav from '../../components/Nav';
 import CheckListRe from '../CheckList/CheckList_re';
 import BudgetRe from '../Budget/Budget_re';
-import Review from '../Detail/Review/Review';
-// import PlanList from '../../components/Plan/PlanList';
+// import Review from '../Detail/Review/Review';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import {
-  FaArrowAltCircleUp,
-  FaPencilAlt,
-  FaTrash,
-  FaStar,
-  FaCheck,
-} from 'react-icons/fa';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FaCheck } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 
 const formData = new FormData();
@@ -40,9 +29,9 @@ export default function MyPage() {
 
   const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
-  const [okay, setOkay] = useState(false);
-  const [yes, setYes] = useState(false);
-  const [good, setGood] = useState(false);
+  const [detailOK, setDtailOK] = useState(false);
+  const [planOK, setPlanOK] = useState(false);
+  const [reviewOK, setReviewOK] = useState(false);
   const [tourData, setTourData] = useState([]);
   const [like, setLike] = useState([]);
   const [user, setUser] = useState([]);
@@ -86,10 +75,9 @@ export default function MyPage() {
   // 디테일 데이터 받아오기
   useEffect(() => {
     axios.get('http://13.125.234.1:4000/detail').then((res) => {
-      // console.log(res.data[0].data.title);
       console.log(res.data);
       setTourData(res.data);
-      setOkay(true);
+      setDtailOK(true);
     });
   }, []);
 
@@ -98,9 +86,9 @@ export default function MyPage() {
     axios
       .post('http://13.125.234.1:4000/plan/getplan', { nickName })
       .then((res) => {
-        console.log('%%%%%%', res.data);
+        console.log('plan', res.data);
         setPlan(res.data);
-        setYes(true);
+        setPlanOK(true);
       })
       .catch(() => {
         console.log('실패');
@@ -112,9 +100,8 @@ export default function MyPage() {
     axios
       .post('http://13.125.234.1:4000/review', { nickName })
       .then((res) => {
-        // console.log(res.data);
         setReview(res.data);
-        setGood(true);
+        setReviewOK(true);
       })
       .catch(() => {
         console.log('실패');
@@ -127,9 +114,7 @@ export default function MyPage() {
       .post('http://13.125.234.1:4000/like/getlikes', { nickName })
       .then((res) => {
         console.log(res.data);
-        // console.log(res.data[0].likes);
         setLike(res.data.likes);
-        // setOkay(true);
       })
       .catch(() => {
         console.log('실패');
@@ -152,23 +137,18 @@ export default function MyPage() {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
 
-  if (okay && yes && good) {
+  if (detailOK && planOK && reviewOK) {
     return (
       <>
         <PageNav />
         <Container
           style={{ marginTop: '50px' }}
-          className="d-flex justify-content-center"
+          className="d-flex justify-content-center col-lg-9"
         >
-          <Row className="col-9 ">
-            <Tab.Container
-              id="left-tabs-example"
-              defaultActiveKey="trip"
-              // className="m-auto"
-              // className="col-9"
-            >
+          <Row xs={1} sm={1} md={1}>
+            <Tab.Container id="left-tabs-example" defaultActiveKey="trip">
               {/* 가로 nav tab */}
-              <Col className="col-3">
+              <Col className="col-lg-3">
                 {userData.img !== '' ? (
                   <img
                     src={`http://13.125.234.1:4000/uploads/${userData.img}`}
@@ -177,13 +157,7 @@ export default function MyPage() {
                     className="bg-dark rounded text-center d-block m-auto"
                   />
                 ) : (
-                  <img
-                    onError={onErrorImg}
-                    src={`http://13.125.234.1:4000/uploads/${userData.img}`}
-                    alt="회원 이미지"
-                    style={{ width: '13rem', height: '13rem' }}
-                    className="bg-dark rounded text-center d-block m-auto"
-                  />
+                  <img onError={onErrorImg} />
                 )}
                 <p className="fs-3 text-center text-success fw-bold m-2">
                   {nickName}
@@ -224,7 +198,7 @@ export default function MyPage() {
                 </TabContainer>
               </Col>
               {/* 컨텐츠 */}
-              <Col>
+              <Col className="col-lg-9">
                 <Tab.Content>
                   {/* 여행 조회 */}
                   <Tab.Pane eventKey="trip">
@@ -277,9 +251,9 @@ export default function MyPage() {
                                               {plan.state.planItems[i][j].addr1}
                                             </Title>
                                             <div style={{ color: '#1A8754' }}>
-                                              <FontAwesomeIcon
+                                              {/* <FontAwesomeIcon
                                                 icon={faArrowDown}
-                                              />
+                                              /> */}
                                             </div>
                                           </div>
                                         );
