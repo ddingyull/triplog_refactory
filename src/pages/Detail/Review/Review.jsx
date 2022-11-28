@@ -154,7 +154,7 @@ export default function Review({ props }) {
                         <div className="d-flex align-items-center justify-content-center">
                           <Col className="col-3 col-lg-3 col-md-2 col-sm-3 me-2 text-center">
                             <Image
-                              src={`http://localhost:4000/uploads/${userImage}`}
+                              src={`http://localhost:4000/uploads/${a.userImage}`}
                               roundedCircle
                               onError={onErrorUserImg}
                               style={{

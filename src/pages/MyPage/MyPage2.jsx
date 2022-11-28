@@ -48,10 +48,10 @@ export default function MyPage2() {
   // 이미지 업로드
   const imgRef = useRef();
   const handleImg = (e) => {
-    formData.append('img', e.target.files[0]);
+    formData.append('image', e.target.files[0]);
   };
   const userImg = async () => {
-    await fetch('http://13.125.234.1:4000/user/img', {
+    await fetch('http://localhost:4000/user/image', {
       method: 'post',
       headers: {},
       body: formData,
@@ -59,8 +59,8 @@ export default function MyPage2() {
       .then((res) => res.json())
       .then((data) => {
         axios
-          .post('http://13.125.234.1:4000/user/upload', [
-            { nickName, img: data },
+          .post('http://localhost:4000/user/upload', [
+            { nickName, image: data },
           ])
           .then((결과) => {
             // 백엔드 콘솔 결과
@@ -81,10 +81,23 @@ export default function MyPage2() {
       .get(`http://localhost:4000/mypage/${nickName}/${option}`)
       .then((res) => {
         console.log(res.data);
+
         setSuccess(true);
         setData(res.data);
       });
   }, [nickName, option]);
+
+  // 이미지 가져오기
+  useEffect(() => {
+    axios
+      .post('http://13.125.234.1:4000/user', { nickName })
+      .then((res) => {
+        setUserData(res.data);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, [userData]);
 
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
@@ -102,9 +115,9 @@ export default function MyPage2() {
             <Tab.Container id="left-tabs-example" defaultActiveKey="trip">
               {/* 가로 nav tab */}
               <Col className="col-lg-3">
-                {userData.img !== '' ? (
+                {userData.image !== '' ? (
                   <img
-                    src={`http://13.125.234.1:4000/uploads/${userData.img}`}
+                    src={`http://localhost:4000/uploads/${userData.image}`}
                     alt="회원 이미지"
                     style={{ width: '13rem', height: '13rem' }}
                     className="bg-dark rounded text-center d-block m-auto"
@@ -121,7 +134,7 @@ export default function MyPage2() {
                       style={{ fontSize: '8px', margin: '20px' }}
                       type="file"
                       ref={imgRef}
-                      name="img"
+                      name="image"
                       onChange={handleImg}
                     />
                     <button className="btn" onClick={userImg}>
@@ -269,7 +282,7 @@ export default function MyPage2() {
                   </Tab.Pane>
 
                   {/* 리뷰 조회 */}
-                  <Tab.Pane eventKey="review">
+                  {/* <Tab.Pane eventKey="review">
                     <h1
                       className="fw-bold lh-base mt-2 mb-4 m-auto"
                       style={{ width: '75%' }}
@@ -288,7 +301,7 @@ export default function MyPage2() {
                           >
                             <Card className="mt-3">
                               <Card.Body>
-                                {/* <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
+                                <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
                                   {tourData.map((el) => {
                                     if (
                                       el.data.contentid === data[j].contentId
@@ -296,7 +309,7 @@ export default function MyPage2() {
                                       return el.data.title;
                                     }
                                   })}
-                                </Card.Title> */}
+                                </Card.Title>
                                 <div className="d-flex">
                                   <div className="border rounded w-50">
                                     <p className="mb-2 text-muted">
@@ -321,7 +334,7 @@ export default function MyPage2() {
                         </>
                       );
                     })}
-                  </Tab.Pane>
+                  </Tab.Pane> */}
                 </Tab.Content>
               </Col>
             </Tab.Container>

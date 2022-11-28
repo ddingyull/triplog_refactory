@@ -44,7 +44,7 @@ export default function NavHeader() {
               style={{ maxHeight: '70px' }}
               navbarScroll
             >
-              <Nav.Link href="/lists/seoul/sightseeing" className="ms-4">
+              <Nav.Link href="/list/seoul/sightseeing" className="ms-4">
                 서울
               </Nav.Link>
               <Nav.Link href="/list/busan/sightseeing" className="ms-4">
