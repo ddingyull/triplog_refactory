@@ -1,34 +1,18 @@
-import React, { useState, useRef } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Image,
-  Carousel,
-} from 'react-bootstrap';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 // 리듀서
 import { useDispatch, useSelector } from 'react-redux';
 import { setAreaCode } from '../../store/modules/triplog';
-import MainIntro from './MainIntro';
-
-// import { useEffect } from 'react';
-// import { gsap } from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// gsap.reigisterPlugin(ScrollTrigger);
 
 export default function Main() {
   let state = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+
   const nickName = useSelector((state) => state.users.userNickName);
   const [cardText, setCardText] = useState([
     '오랜만의 서울여행! 여행 포인트 ✨',

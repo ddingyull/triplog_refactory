@@ -18,31 +18,38 @@ import Progress from '../../components/Progress';
 
 export default function Detail() {
   const params = useParams();
-  const contentId = params.contentId;
+  const contentid = params.contentid;
   const region = params.region;
 
   const [loading, setLoading] = useState(true);
   const [overview, setOverview] = useState([]);
   const [homepage, setHomepage] = useState([]);
-  const [reviewData, setReviewData] = useState([]);
   const [detail, setDetail] = useState([]);
-  const [details, setDetails] = useState([]);
   const [like, setLike] = useState([]);
-  const [review, setReview] = useState(true);
+  const [review, setReview] = useState([]);
+  const [likeNickName, setLikeNickName] = useState([]);
+  const [star, setStar] = useState([]);
   const nickName = useSelector((state) => state.users.userNickName);
 
-  // 리덕스 detail store 에서 리뷰 업데이트 현황 받아오기
-  const reviewUpdate = useSelector((state) => state.detail.reviewUpdate);
   // 이미지 로딩 실패시
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
 
+  // 전체 데이터를 가져오는 useEffect
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/detail/${region}/${contentid}`)
+      .then((response) => {
+        setDetail(response.data);
+      });
+  }, [contentid, region]);
+
   // 페이지정보를 가져오는 API
   useEffect(() => {
     axios
       .get(
-        `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
+        `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentid}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
       )
       .then((response) => {
         setOverview(response.data.response.body.items.item[0].overview);
@@ -50,101 +57,69 @@ export default function Detail() {
         setLoading(false);
       })
       .catch(() => new Error('실패'));
-  }, [contentId]);
+  }, [contentid]);
 
-  // 전체 데이터를 가져오는 useEffect
+  /*  리뷰 정보 가져오는 useEffect*/
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/test/etc/${region}/${contentId}`)
-      .then((response) => {
-        setDetail(response.data);
-      });
-  }, [contentId, region]);
-
-  /* 리뷰 */
-  useEffect(() => {
-    axios
-      .get(`http://13.125.234.1:4000/review/${contentId}`)
+      .get(`http://localhost:4000/review/${contentid}`)
       .then((res) => {
-        setReviewData(res.data);
+        setReview(res.data);
       })
       .catch(() => console.log('리뷰 실패'));
-  }, [reviewUpdate]);
-
-  /* 투어 데이터 + 디테일 데이터 가져오기 */
-  useEffect(() => {
-    const reqPost = async () => {
-      const res = await axios.get(
-        `https://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&MobileOS=ETC&MobileApp=AppTest&_type=json&contentId=${contentId}&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y`
-      );
-      let data = res.data.response.body.items.item[0];
-      axios
-        .post(`http://13.125.234.1:4000/detail/${contentId}`, { data })
-        .then((res) => {
-          console.log(res.data);
-          setDetails(res.data);
-        })
-        .catch(() => {
-          console.log('실패');
-        });
-    };
-    reqPost();
-  }, [like]);
+  }, [contentid, review]);
 
   /* 좋아요 데이터 가져오기 */
   useEffect(() => {
     axios
-      .post('http://13.125.234.1:4000/like/getlikes', { nickName })
+      .get(`http://localhost:4000/detail/${contentid}`)
       .then((res) => {
-        console.log(res.data);
-        // console.log(res.data[0].likes);
-        setLike(res.data.likes);
+        setLikeNickName(res.data.nickNameList);
+        setLike(res.data.like);
+        setStar(res.data.star);
       })
       .catch(() => {
         console.log('실패');
       });
-  }, []);
+  }, [contentid, setLike, setStar]);
 
-  const handleToggle = (b) => () => {
-    console.log(b);
-    const currentIndex = like.indexOf(b);
-    console.log(currentIndex);
-    const newLike = [...like];
-    console.log(newLike);
+  // const handleToggle = (b) => () => {
+  //   console.log(b);
+  //   const currentIndex = like.indexOf(b);
+  //   console.log(currentIndex);
+  //   const newLike = [...like];
+  //   console.log(newLike);
 
-    if (currentIndex === -1) {
-      newLike.push(b);
-      axios
-        .post(`http://13.125.234.1:4000/detail/inclike/${contentId}`)
-        .then(console.log('좋아요 + 1'));
-    } else {
-      newLike.splice(currentIndex, 1);
-      axios
-        .post(`http://13.125.234.1:4000/detail/deletelike/${contentId}`)
-        .then(console.log('좋아요 -1'));
-    }
-    setLike(newLike);
-    axios
-      .post('http://13.125.234.1:4000/like/arrlike', { newLike, nickName })
-      .then((res) => console.log(res.data));
-  };
+  //   if (currentIndex === -1) {
+  //     newLike.push(b);
+  //     axios
+  //       .post(`http://13.125.234.1:4000/detail/inclike/${contentid}`)
+  //       .then(console.log('좋아요 + 1'));
+  //   } else {
+  //     newLike.splice(currentIndex, 1);
+  //     axios
+  //       .post(`http://13.125.234.1:4000/detail/deletelike/${contentid}`)
+  //       .then(console.log('좋아요 -1'));
+  //   }
+  //   setLike(newLike);
+  //   axios
+  //     .post('http://13.125.234.1:4000/like/arrlike', { newLike, nickName })
+  //     .then((res) => console.log(res.data));
+  // };
 
   /* 별점 평균평점 */
   const arr = [0];
-  for (let key in reviewData) {
-    arr.push(reviewData[key].star);
+  for (let key in review) {
+    arr.push(review[key].star);
   }
-  // console.log(arr);
   const starsum = arr.reduce(function add(sum, currValue) {
     return sum + currValue;
   }, 0);
-  // console.log(starsum / arr.length);
-  const starAvg = (starsum / arr.length).toFixed(1);
-  console.log(starAvg);
+  const starAvg = (starsum / (arr.length - 1)).toFixed(1);
 
   useEffect(() => {
     axios
-      .post(`http://13.125.234.1:4000/detail/incstar/${contentId}`, { starAvg })
+      .post(`http://13.125.234.1:4000/detail/incstar/${contentid}`, { starAvg })
       .then((res) => console.log(res.data));
   }, [starAvg]);
 
@@ -169,15 +144,16 @@ export default function Detail() {
                 >
                   <h5
                     sytle={{ cursor: 'pointer' }}
-                    onClick={
-                      nickName !== ''
-                        ? handleToggle(contentId)
-                        : () => {
-                            alert('로그인해주세요!');
-                          }
-                    }
+
+                    // onClick={
+                    //   nickName !== ''
+                    //     ? handleToggle(contentid)
+                    //     : () => {
+                    //         alert('로그인해주세요!');
+                    //       }
+                    // }
                   >
-                    {like.indexOf(contentId) !== -1 ? '❤' : '🤍'}
+                    {/* {like.indexOf(contentid) !== -1 ? '❤' : '🤍'} */}
                   </h5>
                   <p>좋아요</p>
                 </div>
@@ -185,7 +161,6 @@ export default function Detail() {
                   className="text-center flex-fill"
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    // alert('서비스 구현예정입니다. 🙏');
                     console.log(document.documentElement.scrollHeight);
                     window.scrollTo(0, document.documentElement.scrollHeight);
                   }}
@@ -222,10 +197,10 @@ export default function Detail() {
               <Card.Body className="m-2 " style={{ height: '40vh' }}>
                 <p className=" mb-2 text-muted text-end">
                   조회수{' '}
-                  {details.view === undefined ? (
+                  {detail.view === undefined ? (
                     <span>1</span>
                   ) : (
-                    <span>{details.view + 1}</span>
+                    <span>{detail.view + 1}</span>
                   )}
                 </p>
                 <Card.Title className="mb-3 fw-bold">{detail.title}</Card.Title>
@@ -234,10 +209,10 @@ export default function Detail() {
                 </Card.Subtitle>
                 <Card.Text className="mb-4">
                   <Progress starAvg={parseFloat(starAvg)} /> <span>❤</span>{' '}
-                  {details.like === undefined ? (
+                  {detail.like === undefined ? (
                     <span>0</span>
                   ) : (
-                    <span>{details.like}</span>
+                    <span>{detail.like}</span>
                   )}
                 </Card.Text>
                 <Card.Text>
@@ -284,14 +259,14 @@ export default function Detail() {
           <Col>
             <span className="fw-bold fs-5 ">
               리뷰
-              <span className="text-success mx-1">{reviewData.length}</span>
+              <span className="text-success mx-1">{review.length}</span>
             </span>
           </Col>
           <Col className="text-end col-12">
             <ReviewBox setReivew={setReview} />
           </Col>
         </Row>
-        <div className="mt-2">{review === true ? <Review /> : <Review />}</div>
+        <Review props={review} />
       </Container>
       <Footer />
     </>
