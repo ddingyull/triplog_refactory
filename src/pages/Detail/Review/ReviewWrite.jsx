@@ -26,7 +26,6 @@ export default function ReviewWrite() {
   const [text, setText] = useState([]);
 
   const nickName = useSelector((state) => state.users.userNickName);
-  const userImage = useSelector((state) => state.users.userImage);
 
   const [upload, setUpload] = useState(false);
 
@@ -65,7 +64,6 @@ export default function ReviewWrite() {
             .post('http://localhost:4000/review/write', [
               {
                 nickName,
-                userImage,
                 contentid,
                 contentData,
                 starData,
@@ -90,7 +88,6 @@ export default function ReviewWrite() {
         .post('http://localhost:4000/review/write', [
           {
             nickName,
-            userImage,
             contentid,
             contentData,
             starData,
