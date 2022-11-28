@@ -162,7 +162,7 @@ export default function Main() {
 
         <Row sm xs={1} md={2} lg={4} className="g-4 mt-3">
           {Array.from({ length: 4 }).map((_, idx) => (
-            <Col>
+            <Col key={idx}>
               <Card style={{ border: 'none' }} onClick={() => {}}>
                 <Card.Img
                   variant="top"

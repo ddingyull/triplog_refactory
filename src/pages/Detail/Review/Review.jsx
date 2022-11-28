@@ -143,7 +143,7 @@ export default function Review() {
               .slice(pagePost * (page - 1), pagePost * (page - 1) + pagePost)
               .map(function (a, i) {
                 return (
-                  <Col>
+                  <Col key={i}>
                     {/* 리뷰이미지 클릭시 팝업 모달 */}
                     <Modal
                       show={imgShow}

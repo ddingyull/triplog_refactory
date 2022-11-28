@@ -207,7 +207,7 @@ export default function Budget() {
                 chargeData.map(function (a, i) {
                   console.log(a);
                   return (
-                    <Row className="mx-1">
+                    <Row className="mx-1" key={i}>
                       <Col className="col-3">
                         <p>{a.date.slice(5, 10)}</p>
                       </Col>
