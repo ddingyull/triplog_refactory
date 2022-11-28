@@ -7,6 +7,7 @@ import detail from './modules/detail';
 import budget from './modules/budget';
 import users from './modules/users';
 import check from './modules/check';
+import image from './modules/image';
 
 const persistConfig = {
   key: 'user',
@@ -22,6 +23,7 @@ export const rootReducer = combineReducers({
   budget,
   users,
   check,
+  image,
 });
 
 export default persistReducer(persistConfig, rootReducer);
