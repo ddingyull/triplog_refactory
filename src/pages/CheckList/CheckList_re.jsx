@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-export default function CheckList() {
+export default function CheckListRe() {
   const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
   const check = useSelector((state) => state.check);
@@ -79,7 +79,7 @@ export default function CheckList() {
         <Container className="m-auto mt-5 col-9">
           <h1
             className="fw-bold lh-base mt-2 mb-4 m-auto"
-            style={{ width: '100%' }}
+            style={{ width: '90%' }}
           >
             <span style={{ color: '#198754' }}>{nickName}</span>
             <span>님의</span>
@@ -180,12 +180,6 @@ export default function CheckList() {
                 );
               })}
               <Row className="mt-3 mx-1">
-                <Col>
-                  <h5 calssName="fw-bold text-center">
-                    체크리스트 저장하기{' '}
-                    <FaArrowRight style={{ color: '#198754' }} />
-                  </h5>
-                </Col>
                 <Col className="text-end">
                   <Button
                     variant="success"

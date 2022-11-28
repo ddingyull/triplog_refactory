@@ -1,24 +1,16 @@
 import { useState } from 'react';
-import {
-  Container,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Form,
-  Button,
-} from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
-  faFaceSmile,
   faArrowRightFromBracket,
   faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-// import Logout from '../pages/Login/Logout';
+import { useNavigate, useParams } from 'react-router-dom';
 import { logout } from '../store/modules/users';
+import axios from 'axios';
 
 export default function NavHeader() {
   const state = useSelector((state) => state.users);
@@ -26,6 +18,11 @@ export default function NavHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [userData, setUserData] = useState([]);
+
+  // nickname 가져오기
+  const params = useParams();
+  const nickName = useSelector((state) => state.users.userNickName);
 
   const reduxLogout = () => {
     dispatch(logout());
@@ -47,11 +44,7 @@ export default function NavHeader() {
               style={{ maxHeight: '70px' }}
               navbarScroll
             >
-              {/* <NavDropdown title="여행지" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">여행지</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">여행지</NavDropdown.Item>
-              </NavDropdown> */}
-              <Nav.Link href="/list/seoul/sightseeing" className="ms-4">
+              <Nav.Link href="/lists/seoul/sightseeing" className="ms-4">
                 서울
               </Nav.Link>
               <Nav.Link href="/list/busan/sightseeing" className="ms-4">
@@ -101,7 +94,9 @@ export default function NavHeader() {
                 ) : null}
               </Nav.Link>
               <Nav.Link
-                href="/MyPage"
+                onClick={() => {
+                  navigate(`/MyPage/${nickName}/plans`);
+                }}
                 className="d-sm-none d-md-inline-block text-success"
               >
                 {state.isLogin === true ? (
