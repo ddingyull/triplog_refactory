@@ -95,7 +95,7 @@ export default function CheckList() {
               {checklist.items.map(function (a, i) {
                 return (
                   <>
-                    <Accordion.Item eventKey={i}>
+                    <Accordion.Item eventKey={i} key={i}>
                       <Accordion.Header>
                         {checklist.items[i].title}
                       </Accordion.Header>
@@ -104,7 +104,7 @@ export default function CheckList() {
                           {checklist.items[i].content.map(function (b, j) {
                             return (
                               <>
-                                <Form.Check type="checkbox">
+                                <Form.Check type="checkbox" key={i}>
                                   <Form.Check.Input
                                     type="checkbox"
                                     onClick={handleToggle(b)}

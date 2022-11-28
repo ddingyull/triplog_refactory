@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -13,29 +13,32 @@ const ARRAY = [0, 1, 2, 3, 4];
 const formData = new FormData();
 
 export default function ReviewWrite() {
+  // dispatch 변수에 할당
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const params = useParams();
+  const contentid = params.contentid;
+
+  const contentRef = useRef();
+  const imgRef = useRef();
+  const [text, setText] = useState([]);
+
+  const nickName = useSelector((state) => state.users.userNickName);
+  const userImage = useSelector((state) => state.users.userImage);
 
   const [upload, setUpload] = useState(false);
 
-  const [text, setText] = useState([]);
-
-  const navigate = useNavigate();
-  //dispatch 변수에 할당
-  const dispatch = useDispatch();
-  const nickName = useSelector((state) => state.users.userNickName);
-  const contentId = params.contentId;
-  const contentRef = useRef();
-  const imgRef = useRef();
-  //이미지 함수
+  // 이미지 함수
   const handleImg = (e) => {
-    formData.append('img', e.target.files[0]);
+    formData.append('image', e.target.files[0]);
     setUpload(true);
   };
 
   const [clicked, setClicked] = useState([false, false, false, false, false]);
-  const [star, setStar] = useState(0);
 
-  /* 별점 등록 */
+  // 별점 클릭
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
     for (let i = 0; i < 5; i++) {
@@ -45,14 +48,74 @@ export default function ReviewWrite() {
   };
 
   const sendReview = () => {
-    setStar(clicked.filter(Boolean).length);
+    const starData = clicked.filter(Boolean).length;
+    const contentData = contentRef.current.value;
+
+    if (nickName === '') {
+      alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!');
+      navigate('/login');
+    } else if (contentData === '') {
+      alert('댓글 등록에 실패했습니다. 😥 내용을 작성해주세요!');
+    } else if (upload) {
+      axios
+        .post('http://localhost:4000/review/image', formData)
+        .then((res) => res.data)
+        .then((data) => {
+          axios
+            .post('http://localhost:4000/review/write', [
+              {
+                nickName,
+                userImage,
+                contentid,
+                contentData,
+                starData,
+                image: data,
+              },
+            ])
+            .then(() => {
+              contentRef.current.value = '';
+              imgRef.current.value = '';
+              alert('댓글 등록을 성공하였습니다. 🙌');
+              // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
+              dispatch(reviewUpdate());
+            })
+            .catch((err) => {
+              new Error(err);
+              alert('댓글 등록을 실패하였습니다. 다시 시도해주세요.');
+            });
+        })
+        .catch((err) => new Error(err));
+    } else {
+      axios
+        .post('http://localhost:4000/review/write', [
+          {
+            nickName,
+            userImage,
+            contentid,
+            contentData,
+            starData,
+            image: '',
+          },
+        ])
+        .then((res) => {
+          contentRef.current.value = '';
+          imgRef.current.value = '';
+          alert('댓글 등록을 성공하였습니다. 🙌');
+          // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
+          dispatch(reviewUpdate());
+        })
+        .catch((err) => {
+          new Error(err);
+          alert('댓글 등록을 실패하였습니다. 다시 시도해주세요.');
+        });
+    }
   };
 
-  useEffect(() => {
-    sendReview();
-  }, [clicked]);
+  // useEffect(() => {
+  //   sendReview();
+  // }, [clicked]);
 
-  useEffect(() => {}, [contentRef]);
+  // useEffect(() => {}, [contentRef]);
 
   return (
     <>
@@ -104,76 +167,7 @@ export default function ReviewWrite() {
                 <Button
                   variant="success"
                   className="reviewSubmitBtn"
-                  onClick={() => {
-                    const content = contentRef.current.value;
-
-                    if (nickName === '') {
-                      alert('댓글 등록에 실패했습니다. 😥 로그인해주세요!');
-                      navigate('/login');
-                    } else if (content === '') {
-                      alert(
-                        '댓글 등록에 실패했습니다. 😥 내용을 작성해주세요!'
-                      );
-                    } else if (upload) {
-                      fetch('http://13.125.234.1:4000/review/img', {
-                        method: 'post',
-                        headers: {},
-                        body: formData,
-                      })
-                        .then((res) => res.json())
-                        .then((data) => {
-                          axios
-                            .post('http://13.125.234.1:4000/review/write', [
-                              {
-                                nickName,
-                                content,
-                                contentId,
-                                star,
-                                img: data,
-                              },
-                            ])
-                            .then((res) => {
-                              console.log('댓글 등록 성공');
-                              contentRef.current.value = '';
-                              imgRef.current.value = '';
-                              alert('댓글 등록을 성공하였습니다. 🙌');
-                              // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
-                              dispatch(reviewUpdate());
-                            })
-                            .catch(() => {
-                              console.log('댓글 등록 실패');
-                              alert(
-                                '댓글 등록을 실패하였습니다. 다시 시도해주세요.'
-                              );
-                            });
-                        });
-                    } else {
-                      axios
-                        .post('http://13.125.234.1:4000/review/write', [
-                          {
-                            nickName,
-                            content,
-                            contentId,
-                            star,
-                            img: '',
-                          },
-                        ])
-                        .then((res) => {
-                          console.log('댓글 등록 성공');
-                          contentRef.current.value = '';
-                          imgRef.current.value = '';
-                          alert('댓글 등록을 성공하였습니다. 🙌');
-                          // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
-                          dispatch(reviewUpdate());
-                        })
-                        .catch(() => {
-                          console.log('댓글 등록 실패');
-                          alert(
-                            '댓글 등록을 실패하였습니다. 다시 시도해주세요.'
-                          );
-                        });
-                    }
-                  }}
+                  onClick={sendReview}
                 >
                   등록
                 </Button>

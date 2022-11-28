@@ -20,7 +20,7 @@ export function logout() {
 const initState = {
   userEmail: '',
   userNickName: '',
-  userImg: '',
+  userImage: '',
   isLogin: false,
 };
 
@@ -28,14 +28,14 @@ const initState = {
 export default function users(state = initState, action) {
   switch (action.type) {
     // login 함수가 dipatch 에 의해 전달 되면 백엔드 서로 부터 받은 email, nickname 정보를 세팅하고
-    // 제일 중요한 isLogin 값을 true 로 변경, 해당 값은 Header 및 Item 페이지에서 로그인 여부를 판단하는
+    // 제일 중요한 isLogin 값을500 (Internal Server Error) true 로 변경, 해당 값은 Header 및 Item 페이지에서 로그인 여부를 판단하는
     // 값이 되어 해당 값에 따라 조건부 처리
     case LOGIN:
       return {
         ...state,
         userEmail: action.payload.email,
         userNickName: action.payload.nickName,
-        userImg: action.payload.img,
+        userImage: action.payload.image,
         isLogin: true,
       };
     case LOGOUT:
@@ -43,7 +43,7 @@ export default function users(state = initState, action) {
         ...state,
         userEmail: '',
         userNickName: '',
-        userImg: '',
+        userImage: '',
         isLogin: false,
       };
     default:

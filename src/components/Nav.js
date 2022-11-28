@@ -47,19 +47,19 @@ export default function NavHeader() {
               <Nav.Link href="/lists/seoul/sightseeing" className="ms-4">
                 서울
               </Nav.Link>
-              <Nav.Link href="/lists/busan/sightseeing" className="ms-4">
+              <Nav.Link href="/list/busan/sightseeing" className="ms-4">
                 부산
               </Nav.Link>
-              <Nav.Link href="/lists/gangneung/sightseeing" className="ms-4">
+              <Nav.Link href="/list/gangneung/sightseeing" className="ms-4">
                 강원
               </Nav.Link>
-              <Nav.Link href="/lists/gyeonju/sightseeing" className="ms-4">
+              <Nav.Link href="/list/gyeonju/sightseeing" className="ms-4">
                 경주
               </Nav.Link>
-              <Nav.Link href="/lists/junju/sightseeing" className="ms-4">
+              <Nav.Link href="/list/junju/sightseeing" className="ms-4">
                 전주
               </Nav.Link>
-              <Nav.Link href="/lists/jeju/sightseeing" className="ms-4">
+              <Nav.Link href="/list/jeju/sightseeing" className="ms-4">
                 제주
               </Nav.Link>
             </Nav>

@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { Row, Col, Card } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import '../../styles/Paging.css';
@@ -54,7 +53,7 @@ export default function ListDetail({ props, region }) {
                   // checkLike.current = true;
                   // checkView.current = true;
                   return (
-                    <Col>
+                    <Col key={i}>
                       <Card
                         onClick={() => {
                           navigate(`/detail/${region}/${a.contentid}`);
