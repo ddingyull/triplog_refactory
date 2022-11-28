@@ -51,22 +51,22 @@ export default function NavHeader() {
                 <NavDropdown.Item href="#action3">여행지</NavDropdown.Item>
                 <NavDropdown.Item href="#action4">여행지</NavDropdown.Item>
               </NavDropdown> */}
-              <Nav.Link href="/lists/1" className="ms-4">
+              <Nav.Link href="/lists/seoul/sightseeing" className="ms-4">
                 서울
               </Nav.Link>
-              <Nav.Link href="/lists/6" className="ms-4">
+              <Nav.Link href="/lists/busan/sightseeing" className="ms-4">
                 부산
               </Nav.Link>
-              <Nav.Link href="/lists/32" className="ms-4">
+              <Nav.Link href="/lists/gangneung/sightseeing" className="ms-4">
                 강원
               </Nav.Link>
-              <Nav.Link href="/lists/35" className="ms-4">
+              <Nav.Link href="/lists/gyeonju/sightseeing" className="ms-4">
                 경주
               </Nav.Link>
-              <Nav.Link href="/lists/37" className="ms-4">
+              <Nav.Link href="/lists/junju/sightseeing" className="ms-4">
                 전주
               </Nav.Link>
-              <Nav.Link href="/lists/39" className="ms-4">
+              <Nav.Link href="/lists/jeju/sightseeing" className="ms-4">
                 제주
               </Nav.Link>
             </Nav>
