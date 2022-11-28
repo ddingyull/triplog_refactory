@@ -54,7 +54,7 @@ export default function ListDetail({ props, region }) {
                   // checkLike.current = true;
                   // checkView.current = true;
                   return (
-                    <Col>
+                    <Col key={i}>
                       <Card
                         onClick={() => {
                           navigate(`/detail/${region}/${a.contentid}`);
