@@ -5,7 +5,7 @@ import Plan from './pages/Plan/Plan';
 // import Lists from './pages/Lists/Lists';
 import List from './pages/Lists/List';
 import DetailPage from './pages/Detail/DetailPage';
-import MyPage from './pages/MyPage/MyPage';
+import MyPage from './pages/MyPage/MyPage2';
 import Budget from './pages/Budget/Budget';
 import CheckList from './pages/CheckList/CheckList';
 import Login from './pages/Login/Login';
@@ -13,14 +13,6 @@ import Users from './pages/Users/Users';
 import KakaoRedirectHandler from './components/KakaoRedirectHandler.js';
 import MainIntro from './pages/Main/MainIntro';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// // 리덕스 세팅
-// import { Provider, useSelector } from 'react-redux';
-// import { configureStore } from '@reduxjs/toolkit';
-// import rootReducer from './store';
-// const reduxDevTool =
-//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-
-// const store = configureStore({ reducer: rootReducer }, reduxDevTool);
 
 function App() {
   return (
@@ -32,8 +24,8 @@ function App() {
       {/* <Route path="/lists/:areaCode" element={<Lists />} />
       <Route path="/detail/:contentId" element={<Detail />} /> */}
       <Route path="/list/:region/:type" element={<List />} />
-      <Route path="/detail/:region/:contentId" element={<DetailPage />} />
-      <Route path="/MyPage" element={<MyPage />} />
+      <Route path="/detail/:region/:contentid" element={<DetailPage />} />
+      <Route path="/MyPage/:nickName/:option" element={<MyPage />} />
       <Route path="/Budget" element={<Budget />} />
       <Route path="/CheckList" element={<CheckList />} />
       <Route path="/login" element={<Login />} />
