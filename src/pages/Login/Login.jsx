@@ -269,7 +269,6 @@ export default function Login({
               hoverBackgroundColor="#d0ad00"
             ></Btn>
           </a>
-          {/* <a href={KAKAO_AUTH_URL}>카카오톡로그인</a> */}
         </Card>
       </Container>
       <Footer />

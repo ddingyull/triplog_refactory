@@ -29,9 +29,6 @@ export default function Users() {
   //       nickname: nickname,
   //       email: useremail,
   //       password: userpw,
-  //       // userID: userID++,
-  //       // user_img: userImg,
-  //       // regDate: new Date(),
   // })
   // .then(response => {
   //   console.log('회원 등록 성공');
@@ -52,10 +49,8 @@ export default function Users() {
   const [errorMsg, setErrMsg] = useState(ERROR_MSG);
   const navigate = useNavigate();
 
-  // let userID = 1;
   const register = () => {
-    // tetz, 회원 가입 정보를 백엔드로 보내기 전에
-    // 각각 입력이 제대로 들어왔는지 여부를 체크하고 해당 값이 정확히 입력 되어야만 전송
+    // 회원 가입 정보를 백엔드로 보내기 전에 각각 입력이 제대로 들어왔는지 여부를 체크하고 해당 값이 정확히 입력 되어야만 전송
     if (UserNicknameValid && UserEmailValid && UserPwValid) {
       axios
         .post('http://13.125.234.1:4000/user/register', {
@@ -72,17 +67,17 @@ export default function Users() {
           console.log('error', error.response);
         });
     } else {
-      // tetz, 입력 값 중 하나라도 validation 을 통과하지 못하면 alert 창 출력
+      // 입력 값 중 하나라도 validation 을 통과하지 못하면 alert 창 출력
       alert('회원 가입 정보를 정확히 입력해 주세요!');
     }
   };
 
-  // tetz, 닉 네임도 1글자 이상이라는 조건이 필요하므로 해당 조건을 저장할 state 설정
+  // 닉 네임도 1글자 이상이라는 조건이 필요하므로 해당 조건을 저장할 state 설정
   const [UserNicknameValid, setUserNicknameValid] = useState(false);
   const [UserEmailValid, setUserEmailValid] = useState(false);
   const [UserPwValid, setUserPwValid] = useState(false);
 
-  // tetz, 닉 네임의 입력 값에 따라 validation 을 수행하는 함수 생성
+  // 닉 네임의 입력 값에 따라 validation 을 수행하는 함수 생성
   const handleNickName = (e) => {
     setNickname(e.target.value);
     // 한 글자 이상이면 통과 시켜주는 3항 연산자
@@ -135,13 +130,13 @@ export default function Users() {
             id={'nickname'}
             label="이름(별명)"
             value={nickname}
-            // tetz, 닉 네임 체크 함수로 변경
+            // 닉 네임 체크 함수로 변경
             onChange={handleNickName}
             inputProps={{
               type: 'text',
               placeholder: '닉네임을 입력해주세요.',
             }}
-            // tetz, 닉 네임이 체크 결과 값에 따라 에러 메세지가 출력 되도록 수정
+            // 닉 네임이 체크 결과 값에 따라 에러 메세지가 출력 되도록 수정
             validText={!UserNicknameValid ? errorMsg.required : null}
           />
 
