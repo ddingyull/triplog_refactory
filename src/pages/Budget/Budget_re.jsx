@@ -52,10 +52,10 @@ export default function BudgetRe() {
   if (okay) {
     return (
       <>
-        <Container>
+        <Container className="mx-5">
           <h1
             className="fw-bold lh-base mt-2 mb-4 m-auto"
-            style={{ width: '75%' }}
+            // style={{ width: '65%' }}
           >
             <span style={{ color: '#198754' }}>{nickName}</span>
             <span>님의</span>
@@ -79,13 +79,12 @@ export default function BudgetRe() {
               <Col className="fw-bold col-2 text-center ">Price</Col>
               <Col className="fw-bold col-2 text-end">Del</Col>
             </Row>
-            <hr class="solid"></hr>
+            <hr className="solid"></hr>
 
             {chargeData &&
               chargeData.map(function (a, i) {
-                // console.log(a);
                 return (
-                  <Row className="mx-1">
+                  <Row className="mx-1" key={i}>
                     <Col className="col-2">
                       <p>{a.date.slice(5, 10)}</p>
                     </Col>
@@ -124,7 +123,7 @@ export default function BudgetRe() {
                 );
               })}
 
-            <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
+            <hr className="dashed" style={{ borderTop: 'dashed' }}></hr>
             <Row>
               <Col sm md lg="auto" className="fw-bold">
                 ITEM COUNT :
@@ -161,7 +160,7 @@ export default function BudgetRe() {
               </Col>
             </Row>
 
-            <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
+            <hr className="dashed" style={{ borderTop: 'dashed' }}></hr>
             <Col lg="auto" className="text-end ">
               <Button variant="success" onClick={() => setShow(true)}>
                 초기화

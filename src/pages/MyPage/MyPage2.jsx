@@ -198,9 +198,8 @@ export default function MyPage2() {
                 </TabContainer>
               </Col>
 
-              <Col className="col-lg-9">
+              <Col className="col-lg-9" style={{ width: '75%' }}>
                 <Tab.Content>
-                  {/* <MyTrip data={data} nickName={nickName} /> */}
                   {/* 여행 조회 */}
                   <Tab.Pane eventKey="trip">
                     <Row className="m-auto">
@@ -242,6 +241,7 @@ export default function MyPage2() {
                                               backgroundColor: '#fafafa',
                                               padding: '1rem',
                                             }}
+                                            key={j}
                                           >
                                             <Title className="m-1 fs-6">
                                               {
@@ -298,52 +298,60 @@ export default function MyPage2() {
                       <br></br>
                       <span>리뷰✏️ 입니다</span>
                     </h1>
-                    {option === 'review' &&
-                      data[0].content &&
-                      data.map(function (b, j) {
-                        return (
-                          <>
-                            <Row
-                              className="m-auto text-center w-75 shadow-sm"
-                              style={{ fontSize: '12px' }}
-                            >
-                              <Card className="mt-3">
-                                <Card.Body>
-                                  <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
+                    <Row className="d-flex w-75 m-auto">
+                      {option === 'review' &&
+                        data[0].content &&
+                        data.map(function (b, j) {
+                          return (
+                            <>
+                              <Row
+                                key={j}
+                                className="m-auto text-center w-75 shadow-sm"
+                                style={{ fontSize: '12px' }}
+                              >
+                                <Card className="mt-3">
+                                  <Card.Body>
+                                    {/* <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"> */}
                                     {tourData.map((el) => {
-                                      console.log('@', el.data);
-                                      console.log('j', data[j]);
                                       if (
                                         el.data.contentid === data[j].contentid
                                       ) {
-                                        return el.data.title;
+                                        return (
+                                          <Card.Title
+                                            className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"
+                                            key={j}
+                                          >
+                                            el.data.title;
+                                          </Card.Title>
+                                        );
                                       }
                                     })}
-                                  </Card.Title>
-                                  <div className="d-flex">
-                                    <div className="border rounded w-50">
-                                      <p className="mb-2 text-muted">
-                                        {data[j].dateFull.slice(0, 10)}
-                                      </p>
-                                      <Card.Text className="mb-2">
-                                        ⭐⭐⭐⭐⭐
-                                        <span> {data[j].star} </span>
-                                        ❤👍🏼 조회수 <span>{data[j].view}</span>
-                                      </Card.Text>
-                                    </div>
+                                    {/* </Card.Title> */}
+                                    <div className="d-flex">
+                                      <div className="border rounded w-50">
+                                        <p className="mb-2 text-muted">
+                                          {data[j].dateFull.slice(0, 10)}
+                                        </p>
+                                        <Card.Text className="mb-2">
+                                          ⭐⭐⭐⭐⭐
+                                          <span> {data[j].star} </span>
+                                          ❤👍🏼 조회수 <span>{data[j].view}</span>
+                                        </Card.Text>
+                                      </div>
 
-                                    <div className="w-50 ms-2 border rounded">
-                                      <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
-                                        {data[j].content}
-                                      </Card.Text>
+                                      <div className="w-50 ms-2 border rounded">
+                                        <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
+                                          {data[j].content}
+                                        </Card.Text>
+                                      </div>
                                     </div>
-                                  </div>
-                                </Card.Body>
-                              </Card>
-                            </Row>
-                          </>
-                        );
-                      })}
+                                  </Card.Body>
+                                </Card>
+                              </Row>
+                            </>
+                          );
+                        })}
+                    </Row>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>

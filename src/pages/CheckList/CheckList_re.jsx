@@ -76,7 +76,7 @@ export default function CheckListRe() {
   if (okay) {
     return (
       <>
-        <Container className="m-auto mt-5 col-9">
+        <Container className="m-auto mx-5 col-9">
           <h1
             className="fw-bold lh-base mt-2 mb-4 m-auto"
             style={{ width: '90%' }}
@@ -86,12 +86,16 @@ export default function CheckListRe() {
             <br></br>
             <span>체크리스트📝 입니다.</span>
           </h1>
-          <AccordionCustom>
-            <Accordion defaultActiveKey={[0]} alwaysOpen className="container">
+          <AccordionCustom style={{ width: '130%' }}>
+            <Accordion
+              defaultActiveKey={[0]}
+              alwaysOpen
+              className="container mx-3"
+            >
               {checklist.items.map(function (a, i) {
                 return (
                   <>
-                    <Accordion.Item eventKey={i}>
+                    <Accordion.Item eventKey={i} key={i}>
                       <Accordion.Header>
                         {checklist.items[i].title}
                       </Accordion.Header>
@@ -100,7 +104,7 @@ export default function CheckListRe() {
                           {checklist.items[i].content.map(function (b, j) {
                             return (
                               <>
-                                <Form.Check type="checkbox">
+                                <Form.Check type="checkbox" key={i}>
                                   <Form.Check.Input
                                     type="checkbox"
                                     onClick={handleToggle(b)}
@@ -142,8 +146,6 @@ export default function CheckListRe() {
                           <InputGroup className="mt-3">
                             <Form.Control
                               placeholder="아이템 추가하기🤗"
-                              // aria-label="Recipient's username"
-                              // aria-describedby="basic-addon2"
                               onChange={(e) => changeHandler(e)}
                               value={text}
                             />

@@ -37,7 +37,7 @@ export default function Welcome() {
               {state.planDate.startDate + ' ~ ' + state.planDate.endDate}{' '}
             </div>
           </Col>
-          <Col class="d-flex justify-content-start m-3 mb-0">
+          <Col className="d-flex justify-content-start m-3 mb-0">
             <Plan_li>
               <a href="/Plan/:areaCode">
                 <PlanKakao />
