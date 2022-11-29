@@ -31,15 +31,14 @@ export default function MyPage2() {
   const nickName = params.nickName;
   const option = params.option;
 
-  let [tab, setTab] = useState(0);
-
   const dispatch = useDispatch();
-  // const nickName = useSelector((state) => state.users.userNickName);
 
   //위 state를 success 하나로 바꾸기
   const [success, setSuccess] = useState(false);
   const [data, setData] = useState([]);
-  const [userData, setUserData] = useState([]); // 이미지 저장
+  const [tourData, setTourData] = useState([]);
+  // 이미지 저장
+  const [userData, setUserData] = useState([]);
   const [imgUpload, setImgUpload] = useState(false);
 
   // islogin
@@ -80,24 +79,31 @@ export default function MyPage2() {
     axios
       .get(`http://localhost:4000/mypage/${nickName}/${option}`)
       .then((res) => {
-        console.log(res.data);
-
         setSuccess(true);
         setData(res.data);
       });
   }, [nickName, option]);
 
+  // 디테일 데이터 받아오기
+  // tetz, 리뷰에 장소 이름 표시를 위해 필요!
+  useEffect(() => {
+    axios.get('http://13.125.234.1:4000/detail').then((res) => {
+      console.log('settourdata');
+      setTourData(res.data);
+    });
+  }, []);
+
   // 이미지 가져오기
   useEffect(() => {
     axios
-      .post('http://13.125.234.1:4000/user', { nickName })
+      .post('http://localhost:4000/user', { nickName })
       .then((res) => {
         setUserData(res.data);
       })
       .catch(() => {
         console.log('실패');
       });
-  }, [userData]);
+  }, [setUserData]); //무한 랜더링 막기 위해서 userData가 아닌 setUserData로 수정
 
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
@@ -196,7 +202,7 @@ export default function MyPage2() {
                 <Tab.Content>
                   {/* <MyTrip data={data} nickName={nickName} /> */}
                   {/* 여행 조회 */}
-                  {/* <Tab.Pane eventKey="trip">
+                  <Tab.Pane eventKey="trip">
                     <Row className="m-auto">
                       <h1
                         className="fw-bold lh-base mt-2 mb-4 m-auto"
@@ -208,9 +214,9 @@ export default function MyPage2() {
                         <span>여행🛫 일정입니다</span>
                       </h1>
                       <Row className="d-flex w-75 m-auto">
-                        {data[0] !== '내 여행 없음' ? (
-                          data[0].state.planDate.period.map(function (a, i) {
-                            // console.log(data.state.planDate);
+                        {/* 어떤 option이든 data에 값이 들어가기 때문에 조건문 추가/ state 뒤에 ? 없으면 이전 data로 그리려다가 undefined 에러  */}
+                        {option === 'plans' ? (
+                          data[0].state?.planDate.period.map(function (a, i) {
                             return (
                               <Container xl={5} className="my-3 " key={i}>
                                 <Card className="m-2">
@@ -269,7 +275,7 @@ export default function MyPage2() {
                         )}
                       </Row>
                     </Row>
-                  </Tab.Pane> */}
+                  </Tab.Pane>
 
                   {/* 체크리스트 조회 */}
                   <Tab.Pane eventKey="checklist">
@@ -282,7 +288,7 @@ export default function MyPage2() {
                   </Tab.Pane>
 
                   {/* 리뷰 조회 */}
-                  {/* <Tab.Pane eventKey="review">
+                  <Tab.Pane eventKey="review">
                     <h1
                       className="fw-bold lh-base mt-2 mb-4 m-auto"
                       style={{ width: '75%' }}
@@ -292,49 +298,53 @@ export default function MyPage2() {
                       <br></br>
                       <span>리뷰✏️ 입니다</span>
                     </h1>
-                    {data.map(function (b, j) {
-                      return (
-                        <>
-                          <Row
-                            className="m-auto text-center w-75 shadow-sm"
-                            style={{ fontSize: '12px' }}
-                          >
-                            <Card className="mt-3">
-                              <Card.Body>
-                                <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
-                                  {tourData.map((el) => {
-                                    if (
-                                      el.data.contentid === data[j].contentId
-                                    ) {
-                                      return el.data.title;
-                                    }
-                                  })}
-                                </Card.Title>
-                                <div className="d-flex">
-                                  <div className="border rounded w-50">
-                                    <p className="mb-2 text-muted">
-                                      {data[j].dateFull.slice(0, 10)}
-                                    </p>
-                                    <Card.Text className="mb-2">
-                                      ⭐⭐⭐⭐⭐
-                                      <span> {data[j].star} </span>
-                                      ❤👍🏼 조회수 <span>{data[j].view}</span>
-                                    </Card.Text>
-                                  </div>
+                    {option === 'review' &&
+                      data[0].content &&
+                      data.map(function (b, j) {
+                        return (
+                          <>
+                            <Row
+                              className="m-auto text-center w-75 shadow-sm"
+                              style={{ fontSize: '12px' }}
+                            >
+                              <Card className="mt-3">
+                                <Card.Body>
+                                  <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
+                                    {tourData.map((el) => {
+                                      console.log('@', el.data);
+                                      console.log('j', data[j]);
+                                      if (
+                                        el.data.contentid === data[j].contentid
+                                      ) {
+                                        return el.data.title;
+                                      }
+                                    })}
+                                  </Card.Title>
+                                  <div className="d-flex">
+                                    <div className="border rounded w-50">
+                                      <p className="mb-2 text-muted">
+                                        {data[j].dateFull.slice(0, 10)}
+                                      </p>
+                                      <Card.Text className="mb-2">
+                                        ⭐⭐⭐⭐⭐
+                                        <span> {data[j].star} </span>
+                                        ❤👍🏼 조회수 <span>{data[j].view}</span>
+                                      </Card.Text>
+                                    </div>
 
-                                  <div className="w-50 ms-2 border rounded">
-                                    <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
-                                      {data[j].content}
-                                    </Card.Text>
+                                    <div className="w-50 ms-2 border rounded">
+                                      <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
+                                        {data[j].content}
+                                      </Card.Text>
+                                    </div>
                                   </div>
-                                </div>
-                              </Card.Body>
-                            </Card>
-                          </Row>
-                        </>
-                      );
-                    })}
-                  </Tab.Pane> */}
+                                </Card.Body>
+                              </Card>
+                            </Row>
+                          </>
+                        );
+                      })}
+                  </Tab.Pane>
                 </Tab.Content>
               </Col>
             </Tab.Container>
