@@ -108,14 +108,16 @@ export default function Detail() {
   // };
 
   /* 별점 평균평점 */
-  const arr = [0];
+  const INITIALVALUE = 0;
+  const starList = [];
   for (let key in review) {
-    arr.push(review[key].star);
+    starList.push(parseInt(review[key].star));
   }
-  const starsum = arr.reduce(function add(sum, currValue) {
-    return sum + currValue;
-  }, 0);
-  const starAvg = (starsum / (arr.length - 1)).toFixed(1);
+  const starSum = starList.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    INITIALVALUE
+  );
+  const starAvg = (starSum / starList.length).toFixed(1);
 
   useEffect(() => {
     axios
@@ -153,7 +155,7 @@ export default function Detail() {
                     //       }
                     // }
                   >
-                    {/* {like.indexOf(contentid) !== -1 ? '❤' : '🤍'} */}
+                    ❤{/* {like.indexOf(contentid) !== -1 ? '❤' : '🤍'} */}
                   </h5>
                   <p>좋아요</p>
                 </div>

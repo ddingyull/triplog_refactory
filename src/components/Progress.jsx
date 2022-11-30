@@ -32,7 +32,7 @@ export default function Progress({ starAvg }) {
           </span>
         </span>{' '}
       </StarWrap>
-      {starAvg} / 5
+      {isNaN(starAvg) ? 0 : starAvg} / 5
     </>
   );
 }
