@@ -3,20 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { Row, Col, Card } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import '../../styles/Paging.css';
+import Progress from '../../components/Progress';
 
 export default function ListDetail({ props, region }) {
   const navigate = useNavigate();
+
+  // 이미지 로딩 실패
+  const onErrorImg = (e) => {
+    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
+  };
 
   // const [reviewData, setReviewData] = useState([]);
   // const [details, setDetails] = useState([]);
 
   // const checkLike = useRef();
   // const checkView = useRef();
-
-  // 이미지 로딩 실패
-  const onErrorImg = (e) => {
-    e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
-  };
 
   /* 좋아요& 조회수 
   useEffect(() => {
@@ -52,6 +53,15 @@ export default function ListDetail({ props, region }) {
                 .map(function (a, i) {
                   // checkLike.current = true;
                   // checkView.current = true;
+
+                  /* 별점 평균평점 */
+                  const INITIALVALUE = 0;
+                  const starSum = a.star.reduce(
+                    (accumulator, currentValue) => accumulator + currentValue,
+                    INITIALVALUE
+                  );
+                  const starAvg = (starSum / a.star.length).toFixed(1);
+
                   return (
                     <Col key={i}>
                       <Card
@@ -66,15 +76,20 @@ export default function ListDetail({ props, region }) {
                           height={'250rem'}
                           className="border"
                         />
+
                         <Card.Body>
+                          <Card.Text className="text-end text-muted m-0">
+                            조회수 {a.view}
+                          </Card.Text>
                           <Card.Title>{a.title}</Card.Title>
-                          <Card.Text className="text-muted">
+                          <Card.Text className="text-muted mb-2">
                             {a.addr1}
                           </Card.Text>
                           <Card.Text className="text-muted">
-                            <span>❤{a.like}</span>
-                            <span>⭐{a.star}</span>
-                            <span>조회수{a.view}</span>
+                            <span>
+                              <Progress starAvg={starAvg} />{' '}
+                            </span>
+                            <span>❤{a.like} </span>
                             {/* <span>
                               {details.map((el, j, arr) => {
                                 if (

@@ -14,6 +14,9 @@ export default function Progress({ starAvg }) {
   //   }
   //   return result;
   // };
+
+  const checkStarAvg = isNaN(starAvg) ? 0 : starAvg;
+
   return (
     <>
       <StarWrap>
@@ -23,7 +26,7 @@ export default function Progress({ starAvg }) {
           <FaStar size="20"></FaStar>
           <FaStar size="20"></FaStar>
           <FaStar size="20"></FaStar>
-          <span class="starAvg" style={{ width: `${starAvg * 20}%` }}>
+          <span class="starAvg" style={{ width: `${checkStarAvg * 20}%` }}>
             <FaStar size="20"></FaStar>
             <FaStar size="20"></FaStar>
             <FaStar size="20"></FaStar>
@@ -32,7 +35,7 @@ export default function Progress({ starAvg }) {
           </span>
         </span>{' '}
       </StarWrap>
-      {isNaN(starAvg) ? 0 : starAvg} / 5
+      {checkStarAvg}/5
     </>
   );
 }
