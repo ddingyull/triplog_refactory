@@ -54,6 +54,22 @@ export default function Review({ props }) {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
 
+  const changeEmendContent = (event) => {
+    setEmendContent(event.target.value);
+    setEmendContentText(contentRef.current.value.length);
+  };
+  const saveEmendReview = () => {
+    axios
+      .post(`http://localhost:4000/review/emend`, [
+        { emendId, emendContent, nickName },
+      ])
+      .then((res) => {
+        setEmendShow(false);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  };
   return (
     <>
       <Container>
@@ -80,10 +96,7 @@ export default function Review({ props }) {
               className="mb-3"
               ref={contentRef}
               setCon
-              onChange={(event) => {
-                setEmendContent(event.target.value);
-                setEmendContentText(contentRef.current.value.length);
-              }}
+              onChange={changeEmendContent}
             />
           </Modal.Body>
           <Modal.Footer>
@@ -91,21 +104,7 @@ export default function Review({ props }) {
             <Button variant="outline-success" onClick={handleEmendClose}>
               닫기
             </Button>
-            <Button
-              variant="success"
-              onClick={() => {
-                axios
-                  .post(`http://localhost:4000/review/emend`, [
-                    { emendId, emendContent, nickName },
-                  ])
-                  .then((res) => {
-                    setEmendShow(false);
-                  })
-                  .catch(() => {
-                    console.log('실패');
-                  });
-              }}
-            >
+            <Button variant="success" onClick={saveEmendReview}>
               저장
             </Button>
           </Modal.Footer>

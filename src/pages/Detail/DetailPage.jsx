@@ -12,24 +12,31 @@ import Kakao from '../../components/share/Kakao';
 import { BeatLoader } from 'react-spinners';
 
 // redux 에서 review 업데이트 여부를 받아옴
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DetailMap from './DetailMap';
 import Progress from '../../components/Progress';
+import { likeUpdate } from '../../store/modules/like';
 
 export default function Detail() {
   const params = useParams();
   const contentid = params.contentid;
   const region = params.region;
 
+  const dispatch = useDispatch();
+  const updateReview = useSelector((state) => state.review.reviewUpdate);
+  const updateLike = useSelector((state) => state.like.likeUpdate);
+  const nickName = useSelector((state) => state.users.userNickName);
+
   const [loading, setLoading] = useState(true);
   const [overview, setOverview] = useState([]);
   const [homepage, setHomepage] = useState([]);
-  const [detail, setDetail] = useState([]);
-  const [like, setLike] = useState([]);
   const [review, setReview] = useState([]);
-  const [likeNickName, setLikeNickName] = useState([]);
+
+  const [like, setLike] = useState([]);
+  const [likeClickUser, setLikeClickUser] = useState(['']);
+
+  const [detail, setDetail] = useState([]);
   const [star, setStar] = useState([]);
-  const nickName = useSelector((state) => state.users.userNickName);
 
   // 이미지 로딩 실패시
   const onErrorImg = (e) => {
@@ -59,6 +66,17 @@ export default function Detail() {
       .catch(() => new Error('실패'));
   }, [contentid]);
 
+  /* 좋아요 데이터 가져오기 */
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/detail/${contentid}`)
+      .then((res) => {
+        setLikeClickUser(res.data.likeuser);
+        setLike(res.data.like);
+      })
+      .catch(() => new Error('실패'));
+  }, [contentid, updateLike]);
+
   /*  리뷰 정보 가져오는 useEffect*/
   useEffect(() => {
     axios
@@ -67,22 +85,59 @@ export default function Detail() {
         setReview(res.data);
       })
       .catch(() => console.log('리뷰 실패'));
-  }, [contentid, review]);
+  }, [contentid, updateReview]);
 
-  /* 좋아요 데이터 가져오기 */
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/detail/${contentid}`)
-      .then((res) => {
-        setLikeNickName(res.data.nickNameList);
-        setLike(res.data.like);
-        setStar(res.data.star);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, [contentid, setLike, setStar]);
+  /* 별점 평균평점 계산 */
+  const INITIALVALUE = 0;
+  const starList = [];
+  for (let key in review) {
+    starList.push(parseInt(review[key].star));
+  }
+  const starSum = starList.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    INITIALVALUE
+  );
+  const starAvg = (starSum / starList.length).toFixed(1);
 
+  /* 좋아요 클릭 이벤트 함수 */
+  const likeClick = () => {
+    if (nickName === '') {
+      alert('로그인후 이용 가능합니다.');
+      return false;
+    }
+    if (likeClickUser.includes(nickName) === false) {
+      axios
+        .post('http://localhost:4000/like/plus', {
+          nickName,
+          contentid,
+          region,
+        })
+        .then(() => {
+          dispatch(likeUpdate());
+          alert('좋아요가 추가 되었습니다.');
+        })
+        .catch(() => new Error('통신에러'));
+    } else {
+      axios
+        .post('http://localhost:4000/like/minus', {
+          nickName,
+          contentid,
+          region,
+        })
+        .then(() => {
+          dispatch(likeUpdate());
+          alert('좋아요가 삭제 되었습니다.');
+        });
+    }
+  };
+
+  // 해당 디테일의 좋아요 클릭 유저정보
+  const likeUser = likeClickUser.includes(nickName) === false ? '🤍' : '❤️';
+
+  const scrollReview = () => {
+    console.log(document.documentElement.scrollHeight);
+    window.scrollTo(0, document.documentElement.scrollHeight);
+  };
   // const handleToggle = (b) => () => {
   //   console.log(b);
   //   const currentIndex = like.indexOf(b);
@@ -107,22 +162,6 @@ export default function Detail() {
   //     .then((res) => console.log(res.data));
   // };
 
-  /* 별점 평균평점 */
-  const arr = [0];
-  for (let key in review) {
-    arr.push(review[key].star);
-  }
-  const starsum = arr.reduce(function add(sum, currValue) {
-    return sum + currValue;
-  }, 0);
-  const starAvg = (starsum / (arr.length - 1)).toFixed(1);
-
-  useEffect(() => {
-    axios
-      .post(`http://13.125.234.1:4000/detail/incstar/${contentid}`, { starAvg })
-      .then((res) => console.log(res.data));
-  }, [starAvg]);
-
   return (
     <>
       <Nav />
@@ -142,28 +181,15 @@ export default function Detail() {
                   className="text-center flex-fill flex-row"
                   style={{ cursor: 'pointer' }}
                 >
-                  <h5
-                    sytle={{ cursor: 'pointer' }}
-
-                    // onClick={
-                    //   nickName !== ''
-                    //     ? handleToggle(contentid)
-                    //     : () => {
-                    //         alert('로그인해주세요!');
-                    //       }
-                    // }
-                  >
-                    {/* {like.indexOf(contentid) !== -1 ? '❤' : '🤍'} */}
+                  <h5 sytle={{ cursor: 'pointer' }} onClick={likeClick}>
+                    {likeUser}
                   </h5>
                   <p>좋아요</p>
                 </div>
                 <div
                   className="text-center flex-fill"
                   style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    console.log(document.documentElement.scrollHeight);
-                    window.scrollTo(0, document.documentElement.scrollHeight);
-                  }}
+                  onClick={scrollReview}
                 >
                   <h5>⭐</h5>
                   <p>리뷰쓰기</p>
@@ -212,7 +238,7 @@ export default function Detail() {
                   {detail.like === undefined ? (
                     <span>0</span>
                   ) : (
-                    <span>{detail.like}</span>
+                    <span>{like}</span>
                   )}
                 </Card.Text>
                 <Card.Text>
@@ -263,7 +289,11 @@ export default function Detail() {
             </span>
           </Col>
           <Col className="text-end col-12">
-            <ReviewBox setReivew={setReview} />
+            <ReviewBox
+              setReivew={setReview}
+              title={detail.title}
+              region={region}
+            />
           </Col>
         </Row>
         <Review props={review} />

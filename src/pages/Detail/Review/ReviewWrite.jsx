@@ -12,7 +12,7 @@ import { reviewUpdate } from '../../../store/modules/detail';
 const ARRAY = [0, 1, 2, 3, 4];
 const formData = new FormData();
 
-export default function ReviewWrite() {
+export default function ReviewWrite({ title, region }) {
   // dispatch 변수에 할당
   const dispatch = useDispatch();
 
@@ -26,6 +26,7 @@ export default function ReviewWrite() {
   const [text, setText] = useState([]);
 
   const nickName = useSelector((state) => state.users.userNickName);
+  // const userImage = useSelector((state) => state.users.userImage);
 
   const [upload, setUpload] = useState(false);
 
@@ -64,7 +65,10 @@ export default function ReviewWrite() {
             .post('http://localhost:4000/review/write', [
               {
                 nickName,
+                // userImage,
                 contentid,
+                region,
+                title,
                 contentData,
                 starData,
                 image: data,
@@ -88,7 +92,10 @@ export default function ReviewWrite() {
         .post('http://localhost:4000/review/write', [
           {
             nickName,
+            // userImage,
             contentid,
+            region,
+            title,
             contentData,
             starData,
             image: '',
