@@ -16,12 +16,10 @@ import PageNav from '../../components/Nav';
 import CheckListRe from '../CheckList/CheckList_re';
 import BudgetRe from '../Budget/Budget_re';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FaCheck } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import MyTrip from './content/MyTrip';
+import { imageUpdate } from '../../store/modules/users';
 
 const formData = new FormData();
 
@@ -71,6 +69,7 @@ export default function MyPage2() {
           ])
           .then(() => {
             alert('이미지가 등록되었습니다.');
+            dispatch(imageUpdate(data));
             imgRef.current.value = '';
           })
           .catch(() => {
