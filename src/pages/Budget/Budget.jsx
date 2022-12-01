@@ -46,7 +46,7 @@ export default function Budget() {
 
   useEffect(() => {
     axios
-      .post('http://13.125.234.1:4000/charge', { nickName })
+      .post('http://localhost:4000/charge', { nickName })
       .then((res) => {
         setChargeData(res.data.chargeList);
         setOkay(true);
@@ -57,7 +57,7 @@ export default function Budget() {
 
   const resetBudget = () => {
     axios
-      .post(`http://13.125.234.1:4000/charge/alldelete`, {
+      .post(`http://localhost:4000/charge/alldelete`, {
         nickName,
         chargeData,
       })
@@ -76,7 +76,7 @@ export default function Budget() {
     const title = textRef.current.value;
     const charge = chargeRef.current.value;
     axios
-      .post(`http://13.125.234.1:4000/charge/write`, {
+      .post(`http://localhost:4000/charge/write`, {
         chargeList: { date, title, charge: parseInt(charge) },
         nickName,
       })
@@ -229,7 +229,7 @@ export default function Budget() {
                           style={{ color: 'grey' }}
                           onClick={() => {
                             axios
-                              .post('http://13.125.234.1:4000/charge/delete', {
+                              .post('http://localhost:4000/charge/delete', {
                                 nickName,
                                 a,
                               })
@@ -252,7 +252,9 @@ export default function Budget() {
                 <Col sm md lg="auto" className="fw-bold">
                   ITEM COUNT :
                 </Col>
-                <Col className="text-end">{chargeData.length} 개</Col>
+                <Col className="text-end">
+                  {chargeData === [] ? 0 : chargeData.length} 개
+                </Col>
               </Row>
 
               <Row>
