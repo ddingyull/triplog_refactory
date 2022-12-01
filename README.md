@@ -23,9 +23,8 @@
 ## 💁🏻‍♀️ ABOUT US
 
 | [@thals0](https://github.com/thals0) | [@bokjunwoo](https://github.com/bokjunwoo) | [@lzns960](https://github.com/lzns960) | [@ddingyull](https://github.com/ddingyull) |
-|:—:|:—:|:—:|:—:|
-|<img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">| <img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">|<img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">|
-|<img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">|
+|:---:|:---:|:---:|:---:|
+|<img width="340" alt="스크린샷 2022-12-01 오후 3 24 57" src="https://user-images.githubusercontent.com/101865071/204981733-8d398e47-8979-4b34-890b-82e8e0023074.png">|<img width="340" alt="스크린샷 2022-12-01 오후 3 28 19" src="https://user-images.githubusercontent.com/101865071/204981752-61a29b2d-5741-48c7-9660-3a85f63c0cef.png">|<img width="340" alt="스크린샷 2022-12-01 오후 3 26 34" src="https://user-images.githubusercontent.com/101865071/204981764-bddcd004-2947-4ae7-a6fd-6cf8e5fa1d7e.png">|<img width="340" alt="KakaoTalk_Photo_2022-12-01-15-33-17" src="https://user-images.githubusercontent.com/101865071/204982269-e0ef02e5-a0a3-4455-8de7-30d59f991f80.png">|
 | `Main` <br/> `Web View` | `Sub Main` <br/> `List & Detail` <br/> `Mypage UI` | `Category Content View` <br/> `Search View` |`Category Content View` <br/> `Search View` |
 
 <br/>
