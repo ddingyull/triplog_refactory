@@ -25,12 +25,8 @@
 
 <br/>
 
-### <span style='background-color:#fff5b1'> 
-
-
-
 ## 📁 유저 플로우
-<p align="center"><img width="700" alt="triplog흐름도" src="https://user-images.githubusercontent.com/105038512/204964052-4c1c0cae-13f1-4642-bde6-da5820969dde.png"></p>
+<p align="center"> <img width="700" alt="triplog흐름도" src="https://user-images.githubusercontent.com/105038512/204964052-4c1c0cae-13f1-4642-bde6-da5820969dde.png"></p>
 <br/>
 
 
@@ -94,17 +90,17 @@ https://user-images.githubusercontent.com/105038512/200736340-20a3dfc4-236b-48b1
                                                                      
 ### [나만의 체크리스트]
 <img width="1000" alt="checklist" src="https://user-images.githubusercontent.com/105038512/204967491-d8d44727-aca9-4bc7-9c62-3e019eb74cbc.png">
-• Redux에 저장된 유저 정보로 DB에서 해당 유저의 체크리스트 불러옴
-• React useState 사용하여 check여부 확인 후 mongnDB에 저장
-• 아이템 추가하기, 삭제하기 또한 useState 활용하여 DB에 저장
-• useEffect를 활용하여 추가, 삭제, 체크시 바로 체크리스트에 반영되도록 함 (랜더링)
+• Redux에 저장된 유저 정보로 DB에서 해당 유저의 체크리스트 불러옴<br/>
+• React useState 사용하여 check여부 확인 후 mongnDB에 저장<br/>
+• 아이템 추가하기, 삭제하기 또한 useState 활용하여 DB에 저장<br/>
+• useEffect를 활용하여 추가, 삭제, 체크시 바로 체크리스트에 반영되도록 함 (랜더링)<br/>
 • react bootstrap으로 ui 구현<br/><br/>
 
 ### [가계부]
  
-• React-Calendar 라이브러리로 날짜 선택
-• 내용, 금액 입력 후 등록시 가계부에 등록 완료
-• 정산 할 인원이 늘어나면 명당 계산 금액 계산
+• React-Calendar 라이브러리로 날짜 선택<br/>
+• 내용, 금액 입력 후 등록시 가계부에 등록 완료<br/>
+• 정산 할 인원이 늘어나면 명당 계산 금액 계산<br/>
 • 가계부 초기화 가능<br/><br/>
                                                                                                                                               
 ### [여행지 목록 페이지]
@@ -117,8 +113,7 @@ https://user-images.githubusercontent.com/105038512/200736340-20a3dfc4-236b-48b1
 • 리뷰 업데이트를 redux에 저장하여 리뷰가 생성 혹은 삭제 될 때마다 페이지 재랜더링<br/><br/>
                                                                                                                                          
 ### [마이 페이지]페이지에서 활동한 내용은 마이페이지에서 확인할 수 있음
-                                                                                                                                        
-                                                                                                                                         
+                                                                                                                                                                                                                                                                              
 • Redux를 활용하여 로그인 확인 후 axios를 통해 DB에서 해당 유저 정보 반환<br/>
 • 여행 조회, 나만의 체크리스트, 가계부, 내가 쓴 리뷰 등 조회 가능<br/>
 • 체크리스트, 가계부는 업데이트 가능<br/>
