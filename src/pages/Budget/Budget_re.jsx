@@ -53,7 +53,7 @@ export default function BudgetRe() {
     return (
       <>
         <Container className="mx-5">
-          <h1
+          {/* <h1
             className="fw-bold lh-base mt-2 mb-4 m-auto"
             // style={{ width: '65%' }}
           >
@@ -61,7 +61,7 @@ export default function BudgetRe() {
             <span>님의</span>
             <br></br>
             <span>정산💸내역입니다.</span>
-          </h1>
+          </h1> */}
           <Col
             className=" p-5 m-auto rounded border mt-4"
             style={{ backgroundColor: '#fafafa', width: '90%' }}

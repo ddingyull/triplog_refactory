@@ -23,13 +23,14 @@ import { imageUpdate } from '../../store/modules/users';
 
 const formData = new FormData();
 
-export default function MyPage2() {
+export default function MyPage() {
   const navigate = useNavigate();
   const params = useParams();
   const nickName = params.nickName;
   const option = params.option;
 
   const dispatch = useDispatch();
+  const updateUserImage = useSelector((state) => state.users.userImageUpdate);
 
   //위 state를 success 하나로 바꾸기
   const [success, setSuccess] = useState(false);
@@ -51,6 +52,18 @@ export default function MyPage2() {
         setData(res.data);
       });
   }, [nickName, option]);
+
+  // 이미지 가져오기
+  useEffect(() => {
+    axios
+      .post('http://localhost:4000/user', { nickName })
+      .then((res) => {
+        setUserData(res.data);
+      })
+      .catch(() => {
+        console.log('실패');
+      });
+  }, [setUserData, nickName, updateUserImage]); //무한 랜더링 막기 위해서 userData가 아닌 setUserData로 수정
 
   // 이미지 업로드
 
@@ -78,27 +91,6 @@ export default function MyPage2() {
       });
   };
 
-  // 디테일 데이터 받아오기
-  // 리뷰에 장소 이름 표시를 위해 필요!
-  useEffect(() => {
-    axios.get('http://13.125.234.1:4000/detail').then((res) => {
-      console.log('settourdata');
-      setTourData(res.data);
-    });
-  }, []);
-
-  // 이미지 가져오기
-  useEffect(() => {
-    axios
-      .post('http://localhost:4000/user', { nickName })
-      .then((res) => {
-        setUserData(res.data);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, [setUserData]); //무한 랜더링 막기 위해서 userData가 아닌 setUserData로 수정
-
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
@@ -123,7 +115,13 @@ export default function MyPage2() {
                     className="bg-dark rounded text-center d-block m-auto"
                   />
                 ) : (
-                  <img onError={onErrorImg} alt="유저프로필에러" />
+                  <img
+                    onError={onErrorImg}
+                    src=""
+                    style={{ width: '13rem', height: '13rem' }}
+                    className="bg-dark rounded text-center d-block m-auto"
+                    alt="유저프로필에러"
+                  />
                 )}
                 <p className="fs-3 text-center text-success fw-bold m-2">
                   {nickName}
@@ -301,6 +299,15 @@ export default function MyPage2() {
 
                   {/* 가계부 조회*/}
                   <Tab.Pane eventKey="budget">
+                    <h1
+                      className="fw-bold lh-base mt-2 mb-4 m-auto"
+                      style={{ width: '90%' }}
+                    >
+                      <span style={{ color: '#198754' }}>{nickName}</span>
+                      <span>님의</span>
+                      <br></br>
+                      <span>정산💸내역입니다.</span>
+                    </h1>
                     {data.length === 0 ? (
                       <p>작성한 가계부가 없습니다</p>
                     ) : (
@@ -320,9 +327,7 @@ export default function MyPage2() {
                       <span>리뷰✏️ 입니다</span>
                     </h1>
                     <Row className="d-flex w-75 m-auto">
-                      {option === 'review' &&
-                      data[0].content &&
-                      data.length === 0 ? (
+                      {option === 'review' && data.length === 0 ? (
                         <p>작성한 리뷰가 없습니다</p>
                       ) : (
                         data.map(function (b, j) {
@@ -335,24 +340,17 @@ export default function MyPage2() {
                               >
                                 <Card className="mt-3">
                                   <Card.Body>
-                                    {tourData.map((el) => {
-                                      if (
-                                        el.data.contentid === data[j].contentid
-                                      ) {
-                                        return (
-                                          <Card.Title
-                                            className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"
-                                            key={j}
-                                          >
-                                            {el.data.title}
-                                          </Card.Title>
-                                        );
-                                      }
-                                    })}
+                                    <Card.Title
+                                      className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"
+                                      key={j}
+                                    >
+                                      {data[j].title}
+                                    </Card.Title>
                                     <div className="d-flex">
                                       <div className="border rounded w-50">
                                         <p className="mb-2 text-muted">
-                                          {data[j].dateFull.slice(0, 10)}
+                                          {/* {data[j].dateFull.slice(0, 10)} */}
+                                          {data[j].dateFull}
                                         </p>
                                         <Card.Text className="mb-2">
                                           ⭐⭐⭐⭐⭐

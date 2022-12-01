@@ -77,7 +77,7 @@ export default function CheckListRe() {
     return (
       <>
         <Container className="m-auto mx-5 col-9">
-          <h1
+          {/* <h1
             className="fw-bold lh-base mt-2 mb-4 m-auto"
             style={{ width: '90%' }}
           >
@@ -85,7 +85,7 @@ export default function CheckListRe() {
             <span>님의</span>
             <br></br>
             <span>체크리스트📝 입니다.</span>
-          </h1>
+          </h1> */}
           <AccordionCustom style={{ width: '130%' }}>
             <Accordion
               defaultActiveKey={[0]}
