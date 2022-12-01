@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import ReviewWrite from './ReviewWrite';
 
-export default function ReviewBox(props, title, region) {
+export default function ReviewBox({ setReview, title, region }) {
   const [reviewWrite, setReviewWrite] = useState(false);
   const text = reviewWrite ? '리뷰닫기' : '리뷰쓰기';
   const nickName = useSelector((state) => state.users.userNickName);
@@ -20,7 +20,7 @@ export default function ReviewBox(props, title, region) {
         <ReviewWrite
           reviewAdd={reviewWrite}
           setReviewAdd={setReviewWrite}
-          setReivew={props.setReivew}
+          setReview={setReview}
           title={title}
           region={region}
         />

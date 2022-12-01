@@ -44,36 +44,6 @@ export default function MyPage2() {
   // islogin
   const users = useSelector((state) => state.users);
 
-  // 이미지 업로드
-  const imgRef = useRef();
-  const handleImg = (e) => {
-    formData.append('image', e.target.files[0]);
-  };
-  const userImg = async () => {
-    await fetch('http://localhost:4000/user/image', {
-      method: 'post',
-      headers: {},
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        axios
-          .post('http://localhost:4000/user/upload', [
-            { nickName, image: data },
-          ])
-          .then((결과) => {
-            // 백엔드 콘솔 결과
-            console.log(결과);
-            console.log('성공');
-            setImgUpload(true);
-            window.location.reload();
-          })
-          .catch(() => {
-            console.log('실패');
-          });
-      });
-  };
-
   // 데이터 받아오기
   useEffect(() => {
     axios
@@ -83,6 +53,31 @@ export default function MyPage2() {
         setData(res.data);
       });
   }, [nickName, option]);
+
+  // 이미지 업로드
+
+  const imgRef = useRef();
+  const handleImg = (e) => {
+    formData.append('image', e.target.files[0]);
+  };
+  const userUploadImage = () => {
+    axios
+      .post('http://localhost:4000/user/image', formData)
+      .then((response) => response.data)
+      .then((data) => {
+        axios
+          .post('http://localhost:4000/user/upload', [
+            { nickName, image: data },
+          ])
+          .then(() => {
+            alert('이미지가 등록되었습니다.');
+            imgRef.current.value = '';
+          })
+          .catch(() => {
+            new Error('실패');
+          });
+      });
+  };
 
   // 디테일 데이터 받아오기
   // tetz, 리뷰에 장소 이름 표시를 위해 필요!
@@ -129,7 +124,7 @@ export default function MyPage2() {
                     className="bg-dark rounded text-center d-block m-auto"
                   />
                 ) : (
-                  <img onError={onErrorImg} />
+                  <img onError={onErrorImg} alt="유저프로필에러" />
                 )}
                 <p className="fs-3 text-center text-success fw-bold m-2">
                   {nickName}
@@ -143,7 +138,7 @@ export default function MyPage2() {
                       name="image"
                       onChange={handleImg}
                     />
-                    <button className="btn" onClick={userImg}>
+                    <button className="btn" onClick={userUploadImage}>
                       <FaCheck className="text-dark" />
                     </button>
                   </div>

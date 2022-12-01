@@ -3,7 +3,6 @@ import { persistReducer } from 'redux-persist';
 import storageSession from 'redux-persist/lib/storage/session';
 
 import triplog from './modules/triplog';
-import detail from './modules/detail';
 import budget from './modules/budget';
 import users from './modules/users';
 import check from './modules/check';
@@ -21,7 +20,6 @@ const persistConfig = {
 
 export const rootReducer = combineReducers({
   triplog,
-  detail,
   budget,
   users,
   check,

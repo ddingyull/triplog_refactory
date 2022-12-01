@@ -7,7 +7,7 @@ import { FaStar } from 'react-icons/fa';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
 import { useDispatch, useSelector } from 'react-redux';
-import { reviewUpdate } from '../../../store/modules/detail';
+import { reviewUpdate } from '../../../store/modules/review';
 
 const ARRAY = [0, 1, 2, 3, 4];
 const formData = new FormData();
@@ -15,6 +15,9 @@ const formData = new FormData();
 export default function ReviewWrite({ title, region }) {
   // dispatch 변수에 할당
   const dispatch = useDispatch();
+
+  const nickName = useSelector((state) => state.users.userNickName);
+  const userImage = useSelector((state) => state.users.userImage);
 
   const navigate = useNavigate();
 
@@ -24,9 +27,6 @@ export default function ReviewWrite({ title, region }) {
   const contentRef = useRef();
   const imgRef = useRef();
   const [text, setText] = useState([]);
-
-  const nickName = useSelector((state) => state.users.userNickName);
-  // const userImage = useSelector((state) => state.users.userImage);
 
   const [upload, setUpload] = useState(false);
 
@@ -65,7 +65,7 @@ export default function ReviewWrite({ title, region }) {
             .post('http://localhost:4000/review/write', [
               {
                 nickName,
-                // userImage,
+                userImage,
                 contentid,
                 region,
                 title,
@@ -92,7 +92,7 @@ export default function ReviewWrite({ title, region }) {
         .post('http://localhost:4000/review/write', [
           {
             nickName,
-            // userImage,
+            userImage,
             contentid,
             region,
             title,

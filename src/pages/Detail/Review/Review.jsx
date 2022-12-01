@@ -15,11 +15,13 @@ import axios from 'axios';
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';
 // redux 에서 review 업데이트 여부를 받아옴
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { reviewUpdate } from '../../../store/modules/review';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
 
 export default function Review({ props }) {
+  const dispatch = useDispatch();
   const contentRef = useRef();
 
   const [emendContentText, setEmendContentText] = useState([]);
@@ -152,17 +154,25 @@ export default function Review({ props }) {
                       <Row className="mt-3 mx-2">
                         <div className="d-flex align-items-center justify-content-center">
                           <Col className="col-3 col-lg-3 col-md-2 col-sm-3 me-2 text-center">
-                            <Image
-                              src={`http://localhost:4000/uploads/${a.userImage}`}
-                              roundedCircle
-                              onError={onErrorUserImg}
-                              style={{
-                                width: '70px',
-                                border: '2px solid lightgray',
-                                boxShadow:
-                                  'rgba(0, 0, 0, 0.4) 0px 20px 30px -20px',
-                              }}
-                            />
+                            {a.userImage !== '' ? (
+                              <Image
+                                src={`http://localhost:4000/uploads/${a.userImage}`}
+                                roundedCircle
+                                alt="유저프로필사진"
+                                onError={onErrorUserImg}
+                                style={{
+                                  width: '70px',
+                                  border: '2px solid lightgray',
+                                  boxShadow:
+                                    'rgba(0, 0, 0, 0.4) 0px 20px 30px -20px',
+                                }}
+                              />
+                            ) : (
+                              <img
+                                onError={onErrorUserImg}
+                                alt="유저에러이미지"
+                              />
+                            )}
                           </Col>
                           <Col>
                             <p className=" fw-bold m-0">{a.nickName}</p>
@@ -279,7 +289,10 @@ export default function Review({ props }) {
                                       .delete(
                                         `http://localhost:4000/review/delete/${a._id}`
                                       )
-                                      .then((res) => {})
+                                      .then((res) => {
+                                        dispatch(reviewUpdate());
+                                        alert('리뷰가 삭제되었습니다.');
+                                      })
                                       .catch(() => {
                                         console.log('실패');
                                       });

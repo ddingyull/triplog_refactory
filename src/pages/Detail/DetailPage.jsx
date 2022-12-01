@@ -290,7 +290,7 @@ export default function Detail() {
           </Col>
           <Col className="text-end col-12">
             <ReviewBox
-              setReivew={setReview}
+              setReview={setReview}
               title={detail.title}
               region={region}
             />
