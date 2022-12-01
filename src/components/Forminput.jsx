@@ -1,12 +1,8 @@
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useRef, useState } from 'react';
-// import { FormContext } from '../pages/Users/Users';
 
 // id, pw 유효성 확인을 위한 정규식
-
-// 별명 중복 검사 코드 추가해야하는데..
-
 const USEREMAIL_REGEX = new RegExp(
   '^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(.[0-9a-zA-Z_-]+){1,2}$'
 );

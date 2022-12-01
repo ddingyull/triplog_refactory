@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-// import { addPlanDate } from '../../store/modules/triplog';
 import { users } from '../../store/modules/users';
 import PlanKakao from '../../components/share/PlanKakao';
 
@@ -19,7 +18,6 @@ export default function Welcome() {
       <Container className="p-3 col-9">
         <Row className="d-block justify-content-start">
           <Col className="my-3">
-            {/* <Title className="justify-content-start fw-bold">{state.user}의 여행계획 세우기 ✏️</Title> */}
             <Title className="justify-content-start fw-bold fs-3">
               <p className="mt-3 fs-6 d-block">
                 여행에 필요한 모든 것, TripLog

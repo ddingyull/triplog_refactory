@@ -61,9 +61,6 @@ export default function SubMain({ productItems, width, height, planDate }) {
           </Row>
           <Row>
             <div className="d-block rounded text-center">
-              {/* <a href="/plan/1">
-                <ListImg src="/images/icons/여행 계획하기.png"></ListImg>
-              </a> */}
               <a href="/budget">
                 <ListImg src="/images/icons/가계부.png"></ListImg>
               </a>

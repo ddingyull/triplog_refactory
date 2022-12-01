@@ -22,7 +22,6 @@ import Footer from '../../components/Footer';
 import Welcome from './Welcome';
 import { addPlanItems } from '../../store/modules/triplog';
 import { useDispatch, useSelector } from 'react-redux';
-import Kakao from '../../components/share/Kakao';
 
 const { kakao } = window;
 
@@ -59,9 +58,6 @@ export default function Plan() {
 
   const params = useParams();
   const areaCode = params.areaCode;
-
-  // const oldIdx = useRef();
-
   const dispatch = useDispatch();
   const state = useSelector((state) => state.triplog);
   const nickName = useSelector((state) => state.users.userNickName);
@@ -100,9 +96,6 @@ export default function Plan() {
   const [productItems, setProductItems] = useState([]); //받아온데이터 담기
   const [planItems, setPlanItems] = useState([]);
   let [itemData] = [productItems];
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   const saveToLocalStorage = () => {
     localStorage.setItem('planState', JSON.stringify(planItems));
@@ -208,8 +201,6 @@ export default function Plan() {
                       <>
                         <SelectBox
                           className="d-block m-auto w-75 p-3"
-                          // style={{border:'none'}}
-                          // data-productid={a.contentid}
                           onClick={() => {
                             // copy를 사용하지 않고 선택된 장소의 정보만 전달하도록
                             const pickedPlace = {
@@ -302,7 +293,6 @@ export default function Plan() {
 
           <Button
             style={{ backgroundColor: '#036635' }}
-            // variant="success"
             onClick={() => {
               handleClose();
             }}

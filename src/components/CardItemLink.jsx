@@ -1,4 +1,3 @@
-// import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
@@ -42,10 +41,8 @@ export default function CardItemLink({ width, height, src, title, onClick }) {
       onClick={onClick}
       className="m-lg-3 m-md-2 d-inline-block border rounded shadow-sm"
     >
-      {/* <Card.Body> */}
       <CardTitle className="fs-6 p-lg-2 p-md-1 text-center">{title}</CardTitle>
       <CardImg variant="top" src={src} />
-      {/* </Card.Body> */}
     </CardItem>
   );
 }

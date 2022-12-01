@@ -37,11 +37,6 @@ export default function KakaoMap(props) {
     // 지도가 2개 이상 호출되면 layout을 새롭게 잡아줘야함(카카오 권장 사항)
     map.relayout();
 
-    // 지도 드래그 금지
-    // map.setDraggable(false);
-    // 지도 줌인 금지
-    // map.setZoomable(false);
-
     // 이제 redux 에서만 값을 받아서 지도를 그려줌 + idx 를 통해 각각 날짜에 맞는 데이터를 지도에 뿌려준다!
     // 추가 및 삭제 시에도 redux 값에 따라 해당 변화 값을 자동으로 지도에 적용!
     // 선택한 list에 대한 forEach
@@ -109,26 +104,6 @@ export default function KakaoMap(props) {
   return (
     <>
       <KakaoDiv id={`map${props.idx}`}></KakaoDiv>
-
-      {/* <FlexDiv>      
-          <div>
-            {
-              tetz 각각의 카카오 지도는 서로 다른 id 를 가져야 하므로 props 로 전달 받은 idx 값을 부여
-              <KakaoDiv id={`map${props.idx}`}></KakaoDiv>
-              search의 map
-              search.map(function (a, i) {
-                return (
-                  <>
-                    <p onClick={() => {
-                      let copy = […list, { title: a.title, mapx: parseFloat(a.mapx), mapy: parseFloat(a.mapy) }];
-                      setList(copy);
-                    }} key={i}>{a.title}</p>
-                  </>
-                )
-              })
-            }
-          </div>
-        </FlexDiv> */}
     </>
   );
 }
@@ -137,7 +112,6 @@ const FlexDiv = styled.div`
   display: flex;
 `;
 const KakaoDiv = styled.div`
-  /* width: 25rem; */
   height: 20rem;
 `;
 const InputText = styled.input`

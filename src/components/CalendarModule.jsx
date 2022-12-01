@@ -14,7 +14,6 @@ import { addPlanDate } from '../store/modules/triplog';
 
 //CalendarModule
 function CalendarModule({ text, subText }) {
-  // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog);
   let dispatch = useDispatch();
 
@@ -60,8 +59,6 @@ function CalendarModule({ text, subText }) {
 
     // 만들어진 clickDate 또는 clickDateJava 를 바로 axios 로 전달
     // state 를 사용하기 이상하게 처음 선택 완료 클릭 시에, 자꾸 값이 안들어가는 문제가 생겨서 그냥 변수로 처리
-    // console.log('JS 형태의 배열', clickDateJava);
-    // console.log('문자열 형태의 배열', clickDate);
     setPlanDate(clickDate);
 
     dispatch(

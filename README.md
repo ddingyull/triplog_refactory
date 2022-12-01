@@ -21,16 +21,16 @@
 
 - - -
 ## 💁🏻‍♀️ ABOUT US
-<p align="center"><img width="700" alt="aboutus" src="https://user-images.githubusercontent.com/105038512/200730552-3f9eec4c-08f3-47c5-a323-39f2bcccc18b.jpeg"></p>
+
+| [@thals0](https://github.com/thals0) | [@bokjunwoo](https://github.com/bokjunwoo) | [@lzns960](https://github.com/lzns960) | [@ddingyull](https://github.com/ddingyull) |
+|:---:|:---:|:---:|:---:|
+|<img width="340" alt="스크린샷 2022-12-01 오후 3 24 57" src="https://user-images.githubusercontent.com/101865071/204981733-8d398e47-8979-4b34-890b-82e8e0023074.png">|<img width="340" alt="스크린샷 2022-12-01 오후 3 28 19" src="https://user-images.githubusercontent.com/101865071/204981752-61a29b2d-5741-48c7-9660-3a85f63c0cef.png">|<img width="340" alt="스크린샷 2022-12-01 오후 3 26 34" src="https://user-images.githubusercontent.com/101865071/204981764-bddcd004-2947-4ae7-a6fd-6cf8e5fa1d7e.png">|<img width="340" alt="KakaoTalk_Photo_2022-12-01-15-33-17" src="https://user-images.githubusercontent.com/101865071/204982269-e0ef02e5-a0a3-4455-8de7-30d59f991f80.png">|
+| `Main` <br/> `Web View` | `Sub Main` <br/> `List & Detail` <br/> `Mypage UI` | `Category Content View` <br/> `Search View` |`Category Content View` <br/> `Search View` |
 
 <br/>
 
-### <span style='background-color:#fff5b1'> 
-
-
-
 ## 📁 유저 플로우
-<p align="center"><img width="700" alt="triplog흐름도" src="https://user-images.githubusercontent.com/105038512/204964052-4c1c0cae-13f1-4642-bde6-da5820969dde.png"></p>
+<p align="center"> <img width="700" alt="triplog흐름도" src="https://user-images.githubusercontent.com/105038512/204964052-4c1c0cae-13f1-4642-bde6-da5820969dde.png"></p>
 <br/>
 
 
@@ -43,7 +43,7 @@
 ## <span style='background-color:#fff5b1'>📍 페이지별 상세 기능 </span><br/>
 
 ### [로그인 (로컬 / 카카오), 로그아웃, 회원가입]
-<img width=700" alt="login" src="https://user-images.githubusercontent.com/105038512/200729190-44bc4714-1df0-4dab-bd04-c505660397bd.png">
+<p align="center"><img width=700" alt="login" src="https://user-images.githubusercontent.com/105038512/200729190-44bc4714-1df0-4dab-bd04-c505660397bd.png"></p>
 
   • 백엔드에서 중복검사를 통해 같은 이메일로 중복 가입 불가
   
@@ -56,9 +56,6 @@
     
   • KakaoDveloper 앱 제작하여 카카오 로그인이 가능하도록 구현
   <br/><br/>
-  
-### [각 지역별 메인에서 여행 계획 수립하는 페이지]
-<br/>
 
 ### [메인] 모든 지역으로 진입 가능한 메인 페이지
  <img width="1000" alt="main" src="https://user-images.githubusercontent.com/105038512/204967273-fc7120ad-950a-464f-89da-5c7538379300.png"><br/>
@@ -94,17 +91,17 @@ https://user-images.githubusercontent.com/105038512/200736340-20a3dfc4-236b-48b1
                                                                      
 ### [나만의 체크리스트]
 <img width="1000" alt="checklist" src="https://user-images.githubusercontent.com/105038512/204967491-d8d44727-aca9-4bc7-9c62-3e019eb74cbc.png">
-• Redux에 저장된 유저 정보로 DB에서 해당 유저의 체크리스트 불러옴
-• React useState 사용하여 check여부 확인 후 mongnDB에 저장
-• 아이템 추가하기, 삭제하기 또한 useState 활용하여 DB에 저장
-• useEffect를 활용하여 추가, 삭제, 체크시 바로 체크리스트에 반영되도록 함 (랜더링)
+• Redux에 저장된 유저 정보로 DB에서 해당 유저의 체크리스트 불러옴<br/>
+• React useState 사용하여 check여부 확인 후 mongnDB에 저장<br/>
+• 아이템 추가하기, 삭제하기 또한 useState 활용하여 DB에 저장<br/>
+• useEffect를 활용하여 추가, 삭제, 체크시 바로 체크리스트에 반영되도록 함 (랜더링)<br/>
 • react bootstrap으로 ui 구현<br/><br/>
 
 ### [가계부]
  
-• React-Calendar 라이브러리로 날짜 선택
-• 내용, 금액 입력 후 등록시 가계부에 등록 완료
-• 정산 할 인원이 늘어나면 명당 계산 금액 계산
+• React-Calendar 라이브러리로 날짜 선택<br/>
+• 내용, 금액 입력 후 등록시 가계부에 등록 완료<br/>
+• 정산 할 인원이 늘어나면 명당 계산 금액 계산<br/>
 • 가계부 초기화 가능<br/><br/>
                                                                                                                                               
 ### [여행지 목록 페이지]
@@ -117,8 +114,7 @@ https://user-images.githubusercontent.com/105038512/200736340-20a3dfc4-236b-48b1
 • 리뷰 업데이트를 redux에 저장하여 리뷰가 생성 혹은 삭제 될 때마다 페이지 재랜더링<br/><br/>
                                                                                                                                          
 ### [마이 페이지]페이지에서 활동한 내용은 마이페이지에서 확인할 수 있음
-                                                                                                                                        
-                                                                                                                                         
+                                                                                                                                                                                                                                                                              
 • Redux를 활용하여 로그인 확인 후 axios를 통해 DB에서 해당 유저 정보 반환<br/>
 • 여행 조회, 나만의 체크리스트, 가계부, 내가 쓴 리뷰 등 조회 가능<br/>
 • 체크리스트, 가계부는 업데이트 가능<br/>
