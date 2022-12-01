@@ -14,13 +14,10 @@ import axios from 'axios';
 
 export default function NavHeader() {
   const state = useSelector((state) => state.users);
-  // console.log(state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [userData, setUserData] = useState([]);
-
-  // nickname 가져오기
   const params = useParams();
   const nickName = useSelector((state) => state.users.userNickName);
 

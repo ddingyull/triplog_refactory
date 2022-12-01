@@ -28,9 +28,6 @@ export default function KakaoRedirectHandler() {
       );
 
       // 토큰이 안나오는 이유를 찾기 위한 코드
-      // const err = await tokenResponse.json();
-      // console.log(err);
-
       // 토큰 받는 코드
       if (tokenResponse.status === 200) {
         const token = await tokenResponse.json();

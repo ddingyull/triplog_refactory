@@ -14,32 +14,16 @@ export default function SelectList({
   planItems,
   setPlanItems,
 }) {
-  // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog);
   let dispatch = useDispatch();
 
   const [clickItem, setClickItem] = useState({}); //받아온데이터 담기
-  // let [itemData] = productItems
-
-  // const onErrorImg = (e) => {
-  //   e.target.src = process.env.PUBLIC_URL + '/images/submain/경주.png';
-  // };
 
   // 여행계획 컴포넌트에 아이템 추가 (근데 공통으로 됨..)
   const handleAddItem = (idx) => {
     console.log(idx);
     const currentItem = search[idx];
     console.log(currentItem);
-    //   const checkedIdx = planItems.findIndex(
-    //         (item) => item.id === currentItem.id
-    //     );
-    //     if (checkedIdx === -1) {
-    //       setPlanItems((prev) => {
-    //             return [...prev, { ...currentItem, count: 1 }];
-    //         });
-    //     } else {
-    //     }
-    // };
     const newSearch = [...search, { ...currentItem }];
     setSearch(newSearch);
 
@@ -61,20 +45,6 @@ export default function SelectList({
     productItems.map(({ firstimage, title, contentid, addr1 }, idx) => {
       return (
         <>
-          {/* <Card 
-        className="d-inline-block m-auto"
-        style={{width:'9rem', border:'none'}}
-        data-productid={contentid} 
-        onClick={()=>{handleAddItem(idx)}}
-        key={idx}>
-      <Card.Img variant="top" src={firstimage}/>
-      <Card.Body>
-      <Card.Title 
-        style={{fontSize:'12px'}}
-        className='m-0 p-0 text-center'>{title}</Card.Title>
-      </Card.Body>
-    </Card> */}
-
           <Stack
             onClick={() => {
               handleAddItem(idx);
@@ -89,7 +59,6 @@ export default function SelectList({
             <img
               src={firstimage}
               style={{ width: '2.5rem', height: '2.5rem', borderRadius: '50%' }}
-              // onError={onErrorImg}
             ></img>
 
             <Stack className="col-9 d-flex flex-column my-auto">
@@ -103,7 +72,6 @@ export default function SelectList({
                 className="btn btn-light"
                 onClick={() => {
                   let copy = [...planItems];
-                  // 선택한 데이터를 삭제
                   copy.splice(idx, 1);
                   setPlanItems(copy);
                 }}
@@ -118,9 +86,6 @@ export default function SelectList({
   }
 }
 
-// const Title = styled.p`
-//   font: 2rem/1 'Inter'
-// `
 const SelectBox = styled.div`
   display: flex;
 

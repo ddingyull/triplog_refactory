@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Container, Card, Badge } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styled from 'styled-components';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import Forminput from '../../components/Forminput';
@@ -35,26 +34,6 @@ export default function Login({
   const [errorMsg, setErrMsg] = useState(ERROR_MSG);
   const [success, setSuccess] = useState([]);
 
-  // 로그인 검증 파트
-  // const checkUser = () => {
-  //   if(useremail === "" || userpw === "") {
-  //     alert('아이디와 비밀번호를 입력해주세요');
-  //     return;
-  //   }
-  //   axios.post('http://13.125.234.1:4000/user/login', {
-  //     email: useremail,
-  //     password: userpw,
-  // })
-  // .then(response => {
-  //   console.log('로그인 성공');
-  //   console.log('user 토큰', response.data.jwt);
-  //   localStorage.setItem('token', response.data.jwt);
-  //   Navigate('/')
-  // })
-  // .catch(error => {
-  //   console.log('error', error.response);
-  // });
-  // }
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -81,13 +60,6 @@ export default function Login({
         console.log('로그인 실패', error.response);
       });
   };
-
-  // 중복로그인 방지 : 로그인된 상태에서 로그인페이지 접근 시 메인페이지로 이동
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      // navigate('/');
-    }
-  }, []);
 
   const [UserEmailValid, setUserEmailValid] = useState(false);
   const [UserPwValid, setUserPwValid] = useState(false);
@@ -191,8 +163,6 @@ export default function Login({
     }
 
     porfolioLogin();
-
-    // {success.result === false ? <p>정보가 잘못되었습니다</p> : <div>로그인성공</div>}
   }
   return (
     <>
@@ -257,10 +227,7 @@ export default function Login({
             hoverColor="#fff"
             hoverBackgroundColor="#555"
           ></Btn>
-          <a
-            href={KAKAO_AUTH_URL}
-            style={{ width: '100%', textDecoration: 'none' }}
-          >
+          <a href={KAKAO_AUTH_URL} style={{ textDecoration: 'none' }}>
             <Btn
               text="카카오로그인"
               textColor="#333"

@@ -21,9 +21,6 @@ export default function Items2({
   const areaCode = params.areaCode;
 
   const [datas, setData] = useState(data);
-  // let seoulStay = data[0][1];
-  // let seoulTour = data[0][2];
-
   const [tourData, setTourData] = useState([]);
 
   useEffect(() => {

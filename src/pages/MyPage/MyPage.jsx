@@ -79,7 +79,7 @@ export default function MyPage2() {
   };
 
   // 디테일 데이터 받아오기
-  // tetz, 리뷰에 장소 이름 표시를 위해 필요!
+  // 리뷰에 장소 이름 표시를 위해 필요!
   useEffect(() => {
     axios.get('http://13.125.234.1:4000/detail').then((res) => {
       console.log('settourdata');
@@ -305,7 +305,6 @@ export default function MyPage2() {
                               >
                                 <Card className="mt-3">
                                   <Card.Body>
-                                    {/* <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"> */}
                                     {tourData.map((el) => {
                                       if (
                                         el.data.contentid === data[j].contentid
@@ -320,7 +319,6 @@ export default function MyPage2() {
                                         );
                                       }
                                     })}
-                                    {/* </Card.Title> */}
                                     <div className="d-flex">
                                       <div className="border rounded w-50">
                                         <p className="mb-2 text-muted">
@@ -359,7 +357,6 @@ export default function MyPage2() {
 }
 
 const Stars = styled.div`
-  /* display: flex; */
   padding-top: 5px;
 
   & svg {

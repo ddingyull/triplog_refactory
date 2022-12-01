@@ -9,10 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPlanDate, deletePlanItem } from '../../store/modules/triplog';
 
 const PlanItem = ({ onClick, productItems, idx }) => {
-  // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog);
   let dispatch = useDispatch();
-  // console.log();
 
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/submain/경주.png';
@@ -40,10 +38,8 @@ const PlanItem = ({ onClick, productItems, idx }) => {
           ></img>
 
           <Stack className="col-9 d-flex flex-column my-auto">
-            {/* <Title className='m-1 fs-5'>{title}</Title> */}
             <Title className="m-1 fs-6">{title}</Title>
             <Title className="m-1" style={{ fontSize: '12px' }}>
-              {/* {addr1} */}
               {addr1.slice(0, 12)}
             </Title>
           </Stack>
