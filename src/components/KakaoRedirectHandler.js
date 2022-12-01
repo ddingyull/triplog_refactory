@@ -13,8 +13,8 @@ export default function KakaoRedirectHandler() {
 
     // 카카오 디벨롭퍼에서 주는 정보
     const GRANT_TYPE = 'authorization_code';
-    const KAKAO_CLIENT_ID = '0c33348e34eeceef7d378e029e920c12';
-    const KAKAO_REDIRECT_URI = 'http://13.125.234.1:3000/oauth/callback/kakao';
+    const KAKAO_CLIENT_ID = 'f25833457b45f3935443a269e01a48b1';
+    const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauth/callback/kakao';
 
     async function loginFetch() {
       const tokenResponse = await fetch(
@@ -51,11 +51,12 @@ export default function KakaoRedirectHandler() {
           const userLoginInfo = {
             email: userKaKaoInfo.kakao_account.email,
             nickName: userKaKaoInfo.kakao_account.profile.nickname,
+            image: '',
           };
           console.log(userLoginInfo);
 
           const registerResponse = await fetch(
-            'http://13.125.234.1:4000/user/register',
+            'http://localhost:4000/user/register',
             {
               method: 'POST',
               headers: {
@@ -65,11 +66,13 @@ export default function KakaoRedirectHandler() {
                 type: 'kakao',
                 email: userKaKaoInfo.kakao_account.email,
                 nickName: userKaKaoInfo.kakao_account.profile.nickname,
+                image: '',
               }),
             }
           );
 
           if (registerResponse.status === 200) {
+            console.log('it works');
             dispatch(login(userLoginInfo));
             navigate('/');
           } else {

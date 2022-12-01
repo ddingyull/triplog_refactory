@@ -6,7 +6,6 @@ import triplog from './modules/triplog';
 import budget from './modules/budget';
 import users from './modules/users';
 import check from './modules/check';
-import image from './modules/image';
 import review from './modules/review';
 import like from './modules/like';
 
@@ -23,7 +22,6 @@ export const rootReducer = combineReducers({
   budget,
   users,
   check,
-  image,
   review,
   like,
 });
