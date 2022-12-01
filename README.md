@@ -1,9 +1,9 @@
-# 🚃 TripLog, <br/> 여행 계획부터 정산까지 하나로 끝내는 트립로그
+# <h1 align="center">🚃 TripLog, <br/> 여행 계획부터 정산까지 하나로 끝내는 트립로그</h1>
 - - -
 
 ## 💻 프로젝트
 
-| 제작 의도 | 여행을 하는 순간뿐 아니라! 준비과정까지 기록을 남겨두는 브이로그같은 서비스를 구현하고자 트립로그라는 이름으로 제작하였습니다|
+| 제작 의도 | 여행을 하는 순간뿐 아니라! 과정까지 기록을 남겨 브이로그같은 서비스를 구현하고자 트립로그라는 이름으로 제작하였습니다|
 | :------------: | -----------------------------|
 | 개발기간 | 2022년 10월 19일 ~ 11월 4일              |
 | 플랫폼   | Web |
@@ -21,7 +21,7 @@
 
 - - -
 ## 💁🏻‍♀️ ABOUT US
-<img width="1000" alt="aboutus" src="https://user-images.githubusercontent.com/105038512/200730552-3f9eec4c-08f3-47c5-a323-39f2bcccc18b.jpeg">
+<p align="center"><img width="700" alt="aboutus" src="https://user-images.githubusercontent.com/105038512/200730552-3f9eec4c-08f3-47c5-a323-39f2bcccc18b.jpeg"></p>
 
 <br/>
 
@@ -30,7 +30,7 @@
 
 
 ## 📁 유저 플로우
-<img width="700" alt="triplog흐름도" src="https://user-images.githubusercontent.com/105038512/204964052-4c1c0cae-13f1-4642-bde6-da5820969dde.png">
+<p align="center"><img width="700" alt="triplog흐름도" src="https://user-images.githubusercontent.com/105038512/204964052-4c1c0cae-13f1-4642-bde6-da5820969dde.png"></p>
 <br/>
 
 
