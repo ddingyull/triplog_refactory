@@ -306,7 +306,7 @@ export default function Plan() {
           className="btn d-block btn-dark mt-3 mb-1"
           onClick={() => {
             savehandler();
-            alert('여행 계획이 저장되었습니다');
+            alert('이전 여행 계획은 사라지고 새로운 여행 계획이 저장됩니다');
           }}
         >
           여행 계획 저장하기
