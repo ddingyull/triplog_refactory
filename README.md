@@ -21,7 +21,12 @@
 
 - - -
 ## 💁🏻‍♀️ ABOUT US
-<p align="center"><img width="700" alt="aboutus" src="https://user-images.githubusercontent.com/105038512/200730552-3f9eec4c-08f3-47c5-a323-39f2bcccc18b.jpeg"></p>
+
+| [@thals0](https://github.com/thals0) | [@bokjunwoo](https://github.com/bokjunwoo) | [@lzns960](https://github.com/lzns960) | [@ddingyull](https://github.com/ddingyull) |
+|:—:|:—:|:—:|:—:|
+|<img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">| <img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">|<img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">|
+|<img width="340" alt="스크린샷 2022-12-01 오후 3 27 45" src="https://user-images.githubusercontent.com/105038512/204983740-bd41cf41-93b2-4715-9afe-a81f1bd067a7.png">|
+| `Main` <br/> `Web View` | `Sub Main` <br/> `List & Detail` <br/> `Mypage UI` | `Category Content View` <br/> `Search View` |`Category Content View` <br/> `Search View` |
 
 <br/>
 
