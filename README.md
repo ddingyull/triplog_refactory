@@ -39,7 +39,7 @@
 ## <span style='background-color:#fff5b1'>📍 페이지별 상세 기능 </span><br/>
 
 ### [로그인 (로컬 / 카카오), 로그아웃, 회원가입]
-<img width=700" alt="login" src="https://user-images.githubusercontent.com/105038512/200729190-44bc4714-1df0-4dab-bd04-c505660397bd.png">
+<p align="center"><img width=700" alt="login" src="https://user-images.githubusercontent.com/105038512/200729190-44bc4714-1df0-4dab-bd04-c505660397bd.png"></p>
 
   • 백엔드에서 중복검사를 통해 같은 이메일로 중복 가입 불가
   
@@ -52,9 +52,6 @@
     
   • KakaoDveloper 앱 제작하여 카카오 로그인이 가능하도록 구현
   <br/><br/>
-  
-### [각 지역별 메인에서 여행 계획 수립하는 페이지]
-<br/>
 
 ### [메인] 모든 지역으로 진입 가능한 메인 페이지
  <img width="1000" alt="main" src="https://user-images.githubusercontent.com/105038512/204967273-fc7120ad-950a-464f-89da-5c7538379300.png"><br/>
