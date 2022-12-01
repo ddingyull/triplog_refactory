@@ -15,41 +15,42 @@ import Footer from '../../components/Footer';
 import PageNav from '../../components/Nav';
 import CheckListRe from '../CheckList/CheckList_re';
 import BudgetRe from '../Budget/Budget_re';
-// import Review from '../Detail/Review/Review';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FaCheck } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import MyTrip from './content/MyTrip';
 
 const formData = new FormData();
 
-export default function MyPage() {
-  let [tab, setTab] = useState(0);
+export default function MyPage2() {
+  const navigate = useNavigate();
+  const params = useParams();
+  const nickName = params.nickName;
+  const option = params.option;
 
   const dispatch = useDispatch();
-  const nickName = useSelector((state) => state.users.userNickName);
-  const [detailOK, setDtailOK] = useState(false);
-  const [planOK, setPlanOK] = useState(false);
-  const [reviewOK, setReviewOK] = useState(false);
+
+  //위 state를 success 하나로 바꾸기
+  const [success, setSuccess] = useState(false);
+  const [data, setData] = useState([]);
   const [tourData, setTourData] = useState([]);
-  const [like, setLike] = useState([]);
-  const [user, setUser] = useState([]);
-  const [review, setReview] = useState([]);
-  const [plan, setPlan] = useState([]);
   // 이미지 저장
   const [userData, setUserData] = useState([]);
   const [imgUpload, setImgUpload] = useState(false);
+
   // islogin
   const users = useSelector((state) => state.users);
 
   // 이미지 업로드
   const imgRef = useRef();
   const handleImg = (e) => {
-    formData.append('img', e.target.files[0]);
+    formData.append('image', e.target.files[0]);
   };
   const userImg = async () => {
-    await fetch('http://13.125.234.1:4000/user/img', {
+    await fetch('http://localhost:4000/user/image', {
       method: 'post',
       headers: {},
       body: formData,
@@ -57,14 +58,15 @@ export default function MyPage() {
       .then((res) => res.json())
       .then((data) => {
         axios
-          .post('http://13.125.234.1:4000/user/upload', [
-            { nickName, img: data },
+          .post('http://localhost:4000/user/upload', [
+            { nickName, image: data },
           ])
           .then((결과) => {
             // 백엔드 콘솔 결과
             console.log(결과);
             console.log('성공');
             setImgUpload(true);
+            window.location.reload();
           })
           .catch(() => {
             console.log('실패');
@@ -72,72 +74,42 @@ export default function MyPage() {
       });
   };
 
+  // 데이터 받아오기
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/mypage/${nickName}/${option}`)
+      .then((res) => {
+        setSuccess(true);
+        setData(res.data);
+      });
+  }, [nickName, option]);
+
   // 디테일 데이터 받아오기
+  // tetz, 리뷰에 장소 이름 표시를 위해 필요!
   useEffect(() => {
     axios.get('http://13.125.234.1:4000/detail').then((res) => {
-      console.log(res.data);
+      console.log('settourdata');
       setTourData(res.data);
-      setDtailOK(true);
     });
-  }, []);
-
-  // plan
-  useEffect(() => {
-    axios
-      .post('http://13.125.234.1:4000/plan/getplan', { nickName })
-      .then((res) => {
-        console.log('plan', res.data);
-        setPlan(res.data);
-        setPlanOK(true);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, []);
-
-  // 리뷰 데이터 가져오기
-  useEffect(() => {
-    axios
-      .post('http://13.125.234.1:4000/review', { nickName })
-      .then((res) => {
-        setReview(res.data);
-        setReviewOK(true);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, []);
-
-  // 저장 목록 데이터 가져오기
-  useEffect(() => {
-    axios
-      .post('http://13.125.234.1:4000/like/getlikes', { nickName })
-      .then((res) => {
-        console.log(res.data);
-        setLike(res.data.likes);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
   }, []);
 
   // 이미지 가져오기
   useEffect(() => {
     axios
-      .post('http://13.125.234.1:4000/user', { nickName })
+      .post('http://localhost:4000/user', { nickName })
       .then((res) => {
         setUserData(res.data);
       })
       .catch(() => {
         console.log('실패');
       });
-  }, [userData]);
+  }, [setUserData]); //무한 랜더링 막기 위해서 userData가 아닌 setUserData로 수정
 
   const onErrorImg = (e) => {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
 
-  if (detailOK && planOK && reviewOK) {
+  if (success) {
     return (
       <>
         <PageNav />
@@ -149,9 +121,9 @@ export default function MyPage() {
             <Tab.Container id="left-tabs-example" defaultActiveKey="trip">
               {/* 가로 nav tab */}
               <Col className="col-lg-3">
-                {userData.img !== '' ? (
+                {userData.image !== '' ? (
                   <img
-                    src={`http://13.125.234.1:4000/uploads/${userData.img}`}
+                    src={`http://localhost:4000/uploads/${userData.image}`}
                     alt="회원 이미지"
                     style={{ width: '13rem', height: '13rem' }}
                     className="bg-dark rounded text-center d-block m-auto"
@@ -168,7 +140,7 @@ export default function MyPage() {
                       style={{ fontSize: '8px', margin: '20px' }}
                       type="file"
                       ref={imgRef}
-                      name="img"
+                      name="image"
                       onChange={handleImg}
                     />
                     <button className="btn" onClick={userImg}>
@@ -183,22 +155,50 @@ export default function MyPage() {
                     style={{ color: '#333' }}
                   >
                     <Nav.Item>
-                      <Nav.Link eventKey="trip">여행 조회</Nav.Link>
+                      <Nav.Link
+                        eventKey="trip"
+                        onClick={() => {
+                          navigate(`/MyPage/${nickName}/plans`);
+                        }}
+                      >
+                        여행 조회
+                      </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="checklist">체크리스트</Nav.Link>
+                      <Nav.Link
+                        eventKey="checklist"
+                        onClick={() => {
+                          navigate(`/MyPage/${nickName}/checklist`);
+                        }}
+                      >
+                        체크리스트
+                      </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="budget">가계부</Nav.Link>
+                      <Nav.Link
+                        eventKey="budget"
+                        onClick={() => {
+                          navigate(`/MyPage/${nickName}/charge`);
+                        }}
+                      >
+                        가계부
+                      </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="review">리뷰</Nav.Link>
+                      <Nav.Link
+                        eventKey="review"
+                        onClick={() => {
+                          navigate(`/MyPage/${nickName}/review`);
+                        }}
+                      >
+                        리뷰
+                      </Nav.Link>
                     </Nav.Item>
                   </Nav>
                 </TabContainer>
               </Col>
-              {/* 컨텐츠 */}
-              <Col className="col-lg-9">
+
+              <Col className="col-lg-9" style={{ width: '75%' }}>
                 <Tab.Content>
                   {/* 여행 조회 */}
                   <Tab.Pane eventKey="trip">
@@ -213,8 +213,9 @@ export default function MyPage() {
                         <span>여행🛫 일정입니다</span>
                       </h1>
                       <Row className="d-flex w-75 m-auto">
-                        {plan !== '내 여행 없음' ? (
-                          plan.state.planDate.period.map(function (a, i) {
+                        {/* 어떤 option이든 data에 값이 들어가기 때문에 조건문 추가/ state 뒤에 ? 없으면 이전 data로 그리려다가 undefined 에러  */}
+                        {option === 'plans' ? (
+                          data[0].state?.planDate.period.map(function (a, i) {
                             return (
                               <Container xl={5} className="my-3 " key={i}>
                                 <Card className="m-2">
@@ -230,7 +231,7 @@ export default function MyPage() {
                                   </Row>
                                   <Row className="m-3">
                                     <Stack className="d-flex flex-column my-auto text-center">
-                                      {plan.state.planItems[i].map(function (
+                                      {data[0].state.planItems[i].map(function (
                                         b,
                                         j
                                       ) {
@@ -240,21 +241,26 @@ export default function MyPage() {
                                               backgroundColor: '#fafafa',
                                               padding: '1rem',
                                             }}
+                                            key={j}
                                           >
                                             <Title className="m-1 fs-6">
-                                              {plan.state.planItems[i][j].title}
+                                              {
+                                                data[0].state.planItems[i][j]
+                                                  .title
+                                              }
                                             </Title>
                                             <Title
                                               className="m-1"
                                               style={{ fontSize: '12px' }}
                                             >
-                                              {plan.state.planItems[i][j].addr1}
+                                              {
+                                                data[0].state.planItems[i][j]
+                                                  .addr1
+                                              }
                                             </Title>
-                                            <div style={{ color: '#1A8754' }}>
-                                              {/* <FontAwesomeIcon
-                                                icon={faArrowDown}
-                                              /> */}
-                                            </div>
+                                            <div
+                                              style={{ color: '#1A8754' }}
+                                            ></div>
                                           </div>
                                         );
                                       })}
@@ -292,52 +298,63 @@ export default function MyPage() {
                       <br></br>
                       <span>리뷰✏️ 입니다</span>
                     </h1>
-                    {review.map(function (b, j) {
-                      return (
-                        <>
-                          <Row
-                            className="m-auto text-center w-75 shadow-sm"
-                            style={{ fontSize: '12px' }}
-                          >
-                            <Card className="mt-3">
-                              <Card.Body>
-                                <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded">
-                                  {tourData.map((el) => {
-                                    if (
-                                      el.data.contentid === review[j].contentId
-                                    ) {
-                                      return el.data.title;
-                                    }
-                                  })}
-                                </Card.Title>
-                                <div className="d-flex">
-                                  <div className="border rounded w-50">
-                                    <p className="mb-2 text-muted">
-                                      {review[j].dateFull.slice(0, 10)}
-                                    </p>
-                                    <Card.Text className="mb-2">
-                                      ⭐⭐⭐⭐⭐
-                                      <span> {review[j].star} </span>
-                                      ❤👍🏼 조회수 <span>{review[j].view}</span>
-                                    </Card.Text>
-                                  </div>
+                    <Row className="d-flex w-75 m-auto">
+                      {option === 'review' &&
+                        data[0].content &&
+                        data.map(function (b, j) {
+                          return (
+                            <>
+                              <Row
+                                key={j}
+                                className="m-auto text-center w-75 shadow-sm"
+                                style={{ fontSize: '12px' }}
+                              >
+                                <Card className="mt-3">
+                                  <Card.Body>
+                                    {/* <Card.Title className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"> */}
+                                    {tourData.map((el) => {
+                                      if (
+                                        el.data.contentid === data[j].contentid
+                                      ) {
+                                        return (
+                                          <Card.Title
+                                            className="mb-3 fs-6 bg-success text-light w-50 p-1 m-5 m-auto rounded"
+                                            key={j}
+                                          >
+                                            {el.data.title}
+                                          </Card.Title>
+                                        );
+                                      }
+                                    })}
+                                    {/* </Card.Title> */}
+                                    <div className="d-flex">
+                                      <div className="border rounded w-50">
+                                        <p className="mb-2 text-muted">
+                                          {data[j].dateFull.slice(0, 10)}
+                                        </p>
+                                        <Card.Text className="mb-2">
+                                          ⭐⭐⭐⭐⭐
+                                          <span> {data[j].star} </span>
+                                          ❤👍🏼 조회수 <span>{data[j].view}</span>
+                                        </Card.Text>
+                                      </div>
 
-                                  <div className="w-50 ms-2 border rounded">
-                                    <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
-                                      {review[j].content}
-                                    </Card.Text>
-                                  </div>
-                                </div>
-                              </Card.Body>
-                            </Card>
-                          </Row>
-                        </>
-                      );
-                    })}
+                                      <div className="w-50 ms-2 border rounded">
+                                        <Card.Text className=" d-flex align-items-center justify-content-center h-100 fs-6">
+                                          {data[j].content}
+                                        </Card.Text>
+                                      </div>
+                                    </div>
+                                  </Card.Body>
+                                </Card>
+                              </Row>
+                            </>
+                          );
+                        })}
+                    </Row>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
-              {/* 컨텐츠 끝나는 시점 */}
             </Tab.Container>
           </Row>
         </Container>
