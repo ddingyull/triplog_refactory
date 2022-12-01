@@ -134,8 +134,10 @@ export default function Login({
 
     async function porfolioLogin() {
       const loginInfo = {
-        email: fixEmailValue,
-        password: fixPwlValue,
+        // email: fixEmailValue,
+        // password: fixPwlValue,
+        email: useremail,
+        password: userpw,
       };
       console.log(loginInfo);
 
@@ -186,9 +188,9 @@ export default function Login({
             id={'useremail'}
             label="아이디"
             // normal
-            // value={useremail}
+            value={useremail}
             // portfolio
-            value={fixEmailValue}
+            // value={fixEmailValue}
             onChange={handleEmail}
             inputProps={{
               type: 'text',
@@ -204,9 +206,9 @@ export default function Login({
             id={'userpw'}
             label="비밀번호"
             // normal
-            // value={userpw}
+            value={userpw}
             // portfolio
-            value={fixPwlValue}
+            // value={fixPwlValue}
             onChange={handlePw}
             inputProps={{
               type: 'password',
