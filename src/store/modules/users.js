@@ -1,6 +1,7 @@
 // 액션 타입(문자열)
 const LOGIN = 'user/LOGIN';
 const LOGOUT = 'user/LOGOUT';
+const IMAGE_UPDATE = 'user/IMAGE_UPDATE';
 
 // 로그인, 로그아웃 액션 생성 함수
 export function login(loginInfo) {
@@ -16,12 +17,20 @@ export function logout() {
   };
 }
 
+export function imageUpdate(data) {
+  return {
+    type: IMAGE_UPDATE,
+    payload: data,
+    userImageUpdate: false,
+  };
+}
 // 초기 상태 설정
 const initState = {
   userEmail: '',
   userNickName: '',
   userImage: '',
   isLogin: false,
+  userImageUpdate: false,
 };
 
 // 리듀서
@@ -45,6 +54,12 @@ export default function users(state = initState, action) {
         userNickName: '',
         userImage: '',
         isLogin: false,
+      };
+    case IMAGE_UPDATE:
+      return {
+        ...state,
+        userImage: action.payload,
+        userImageUpdate: !state.userImageUpdate,
       };
     default:
       return state;
