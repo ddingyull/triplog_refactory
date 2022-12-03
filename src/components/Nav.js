@@ -50,10 +50,10 @@ export default function NavHeader() {
               <Nav.Link href="/list/gangneung/sightseeing" className="ms-4">
                 강원
               </Nav.Link>
-              <Nav.Link href="/list/gyeonju/sightseeing" className="ms-4">
+              <Nav.Link href="/list/gyeongju/sightseeing" className="ms-4">
                 경주
               </Nav.Link>
-              <Nav.Link href="/list/junju/sightseeing" className="ms-4">
+              <Nav.Link href="/list/jeonju/sightseeing" className="ms-4">
                 전주
               </Nav.Link>
               <Nav.Link href="/list/jeju/sightseeing" className="ms-4">
