@@ -4,8 +4,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa';
-// 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
-// dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
 import { useDispatch, useSelector } from 'react-redux';
 import { reviewUpdate } from '../../../store/modules/review';
 
@@ -78,15 +76,14 @@ export default function ReviewWrite({ title, region }) {
               contentRef.current.value = '';
               imgRef.current.value = '';
               alert('댓글 등록을 성공하였습니다. 🙌');
-              // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
               dispatch(reviewUpdate());
             })
             .catch((err) => {
-              new Error(err);
+              console.log(err);
               alert('댓글 등록을 실패하였습니다. 다시 시도해주세요.');
             });
         })
-        .catch((err) => new Error(err));
+        .catch((err) => console.log(err));
     } else {
       axios
         .post('http://localhost:4000/review/write', [
@@ -101,25 +98,18 @@ export default function ReviewWrite({ title, region }) {
             image: '',
           },
         ])
-        .then((res) => {
+        .then(() => {
           contentRef.current.value = '';
           imgRef.current.value = '';
           alert('댓글 등록을 성공하였습니다. 🙌');
-          // 댓글 등록에 성공하면 redux에 review 가 업데이트 되었다고 알려주기!
           dispatch(reviewUpdate());
         })
         .catch((err) => {
-          new Error(err);
+          console.log(err);
           alert('댓글 등록을 실패하였습니다. 다시 시도해주세요.');
         });
     }
   };
-
-  // useEffect(() => {
-  //   sendReview();
-  // }, [clicked]);
-
-  // useEffect(() => {}, [contentRef]);
 
   return (
     <>
@@ -144,7 +134,7 @@ export default function ReviewWrite({ title, region }) {
               <Form.Control
                 name="textarea"
                 as="textarea"
-                maxlength={100}
+                maxLength={100}
                 placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다!🤗"
                 rows={4}
                 required
@@ -167,7 +157,7 @@ export default function ReviewWrite({ title, region }) {
 
             <Row className="d-flex justify-content-end">
               <Col className=" text-end mb-3 mx-2">
-                <p className="text-mute">글자수 제한: {text}/100자</p>
+                <div className="text-mute mb-2">글자수 제한: {text}/100자</div>
                 <Button
                   variant="success"
                   className="reviewSubmitBtn"

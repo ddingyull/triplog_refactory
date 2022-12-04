@@ -11,23 +11,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
-import {
-  FaArrowAltCircleRight,
-  FaArrowRight,
-  FaRegArrowAltCircleRight,
-  FaTrash,
-} from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaArrowRight, FaTrash } from 'react-icons/fa';
 // 리듀서
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 export default function CheckList() {
-  const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
-  const check = useSelector((state) => state.check);
 
-  const inputRef = useRef();
   const [checked, setChecked] = useState([]);
   const [checklist, setChecklist] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -39,7 +31,6 @@ export default function CheckList() {
       .post('http://13.125.234.1:4000/checklist', { nickName })
 
       .then((res) => {
-        // console.log(res.data);
         setChecklist(res.data);
         setChecked(res.data.checked);
         setOkay(true);
@@ -52,7 +43,6 @@ export default function CheckList() {
   }, [update]);
 
   const handleToggle = (b) => () => {
-    // console.log(b);
     const currentIndex = checked.indexOf(b);
     const newChecked = [...checked];
 
@@ -65,10 +55,22 @@ export default function CheckList() {
     setChecked(newChecked);
   };
 
-  /* 추가 인풋 */
-  let input = '';
+  // 아이템 추가 input
   const changeHandler = (e) => {
     setText(e.target.value);
+  };
+
+  // 체크박스 상태 저장
+  const saveCheckList = () => {
+    axios
+      .post('http://13.125.234.1:4000/checklist/checked', {
+        nickName: nickName,
+        checked: checked,
+      })
+      .then(() => {
+        alert('체크박스 상태를 저장했습니다 ✅');
+      })
+      .catch((err) => console.log(err));
   };
 
   if (okay) {
@@ -95,7 +97,7 @@ export default function CheckList() {
               {checklist.items.map(function (a, i) {
                 return (
                   <>
-                    <Accordion.Item eventKey={i} key={i}>
+                    <Accordion.Item eventKey={i} key={checklist.i}>
                       <Accordion.Header>
                         {checklist.items[i].title}
                       </Accordion.Header>
@@ -130,13 +132,10 @@ export default function CheckList() {
                                             },
                                           }
                                         )
-                                        .then((res) => {
-                                          // console.log(res.data);
+                                        .then(() => {
                                           setUpdate(!update);
                                         })
-                                        .catch(() => {
-                                          console.log('실패');
-                                        });
+                                        .catch((err) => console.log(err));
                                     }}
                                   />
                                 </Form.Check>
@@ -147,10 +146,7 @@ export default function CheckList() {
                             <Form.Control
                               type={'text'}
                               placeholder="아이템 추가하기🤗"
-                              // aria-label="Recipient's username"
-                              // aria-describedby="basic-addon2"
                               onChange={(e) => changeHandler(e)}
-                              value={text}
                             />
                             <Button
                               variant="success"
@@ -165,14 +161,11 @@ export default function CheckList() {
                                       item: text,
                                     }
                                   )
-                                  .then((res) => {
-                                    // console.log(res.data);
+                                  .then(() => {
                                     setText('');
                                     setUpdate(!update);
                                   })
-                                  .catch(() => {
-                                    console.log('실패');
-                                  });
+                                  .catch((err) => console.log(err));
                               }}
                             >
                               추가
@@ -192,21 +185,7 @@ export default function CheckList() {
                   </h6>
                 </Col>
                 <Col className="text-end">
-                  <Button
-                    variant="success"
-                    onClick={() => {
-                      axios
-                        .post('http://13.125.234.1:4000/checklist/checked', {
-                          nickName: nickName,
-                          checked: checked,
-                        })
-                        .then((res) => {
-                          // console.log(res.data);
-                          setUpdate(!update);
-                        })
-                        .catch(() => console.log('실패'));
-                    }}
-                  >
+                  <Button variant="success" onClick={saveCheckList}>
                     저장
                   </Button>
                 </Col>

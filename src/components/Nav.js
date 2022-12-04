@@ -10,15 +10,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { logout } from '../store/modules/users';
-import axios from 'axios';
 
 export default function NavHeader() {
   const state = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
-  const [userData, setUserData] = useState([]);
-  const params = useParams();
   const nickName = useSelector((state) => state.users.userNickName);
 
   const reduxLogout = () => {

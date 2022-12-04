@@ -71,7 +71,7 @@ export default function BudgetRe() {
             </h6>
             <h2 className="fw-bold text-center">RECEIPT</h2>
 
-            <hr class="solid" style={{ borderTopWidth: '2px' }}></hr>
+            <hr className="solid" style={{ borderTopWidth: '2px' }}></hr>
 
             <Row className=" mb-2 mx-1">
               <Col className="fw-bold col-2">Day</Col>

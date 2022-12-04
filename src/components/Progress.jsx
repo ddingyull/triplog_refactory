@@ -20,13 +20,13 @@ export default function Progress({ starAvg }) {
   return (
     <>
       <StarWrap>
-        <span class="star">
+        <span className="star">
           <FaStar size="20"></FaStar>
           <FaStar size="20"></FaStar>
           <FaStar size="20"></FaStar>
           <FaStar size="20"></FaStar>
           <FaStar size="20"></FaStar>
-          <span class="starAvg" style={{ width: `${checkStarAvg * 20}%` }}>
+          <span className="starAvg" style={{ width: `${checkStarAvg * 20}%` }}>
             <FaStar size="20"></FaStar>
             <FaStar size="20"></FaStar>
             <FaStar size="20"></FaStar>

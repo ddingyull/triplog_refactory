@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
@@ -12,11 +12,9 @@ import {
   Form,
   Modal,
 } from 'react-bootstrap';
-import { FaArrowAltCircleUp, FaPencilAlt, FaTrash } from 'react-icons/fa';
-import { chargeUpdate } from '../../store/modules/budget';
+import { FaArrowAltCircleUp, FaTrash } from 'react-icons/fa';
 
 export default function Budget() {
-  const dispatch = useDispatch();
   const nickName = useSelector((state) => state.users.userNickName);
 
   const textRef = useRef();
@@ -50,10 +48,9 @@ export default function Budget() {
       .then((res) => {
         setChargeData(res.data.chargeList);
         setOkay(true);
-        dispatch(chargeUpdate());
       })
       .catch((err) => console.log(err));
-  }, [update, chargeData]);
+  }, [update]);
 
   const resetBudget = () => {
     axios
@@ -62,13 +59,10 @@ export default function Budget() {
         chargeData,
       })
       .then((결과) => {
-        console.log('초기화 성공');
         setShow(false);
         setUpdate(!update);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
   const addBudget = () => {
@@ -80,17 +74,16 @@ export default function Budget() {
         chargeList: { date, title, charge: parseInt(charge) },
         nickName,
       })
-      .then((res) => {
-        console.log('charge 등록 성공');
+      .then(() => {
         alert('여행 지출 내역 등록을 성공하였습니다🙌');
         dateRef.current.value = '';
         textRef.current.value = '';
         chargeRef.current.value = '';
         setUpdate(!update);
       })
-      .catch(() => {
-        console.log('charge 등록 실패');
+      .catch((err) => {
         alert('여행 지출 내역 등록을 실패하였습니다. 다시 시도해주세요.');
+        console.log(err);
       });
   };
 
@@ -135,7 +128,6 @@ export default function Budget() {
         <Container className="col-lg-8 ">
           <Row xs={1} sm={1} md={1} lg={2}>
             {/* 왼쪽 입력칸 */}
-
             <Col className="align-self-center px-5 mb-4">
               <h1 className="fw-bold lh-base mt-5 mb-4">
                 <span style={{ color: '#198754' }}>{nickName}</span>
@@ -198,7 +190,7 @@ export default function Budget() {
               </h6>
               <h2 className="fw-bold text-center">RECEIPT</h2>
 
-              <hr class="solid" style={{ borderTopWidth: '2px' }}></hr>
+              <hr className="solid" style={{ borderTopWidth: '2px' }}></hr>
 
               <Row className=" mb-2 mx-1">
                 <Col className="fw-bold col-3">Day</Col>
@@ -206,7 +198,7 @@ export default function Budget() {
                 <Col className="fw-bold col-2 text-center ">Price</Col>
                 <Col className="fw-bold col-2 text-end">Del</Col>
               </Row>
-              <hr class="solid"></hr>
+              <hr className="solid"></hr>
 
               {chargeData &&
                 chargeData.map(function (a, i) {
@@ -233,13 +225,11 @@ export default function Budget() {
                                 nickName,
                                 a,
                               })
-                              .then((결과) => {
+                              .then(() => {
                                 alert('지출 내역 삭제를 성공하였습니다🙌');
                                 setUpdate(!update);
                               })
-                              .catch((err) => {
-                                console.log(err);
-                              });
+                              .catch((err) => console.log(err));
                           }}
                         />
                       </Col>
@@ -247,7 +237,7 @@ export default function Budget() {
                   );
                 })}
 
-              <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
+              <hr className="dashed" style={{ borderTop: 'dashed' }}></hr>
               <Row>
                 <Col sm md lg="auto" className="fw-bold">
                   ITEM COUNT :
@@ -284,7 +274,7 @@ export default function Budget() {
                 </Col>
               </Row>
 
-              <hr class="dashed" style={{ borderTop: 'dashed' }}></hr>
+              <hr className="dashed" style={{ borderTop: 'dashed' }}></hr>
               <Col className="text-end">
                 <Button variant="success" onClick={() => setShow(true)}>
                   초기화

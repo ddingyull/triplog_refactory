@@ -13,25 +13,6 @@ export default function ListDetail({ props, region }) {
     e.target.src = process.env.PUBLIC_URL + '/images/defaultImage.png';
   };
 
-  // const [reviewData, setReviewData] = useState([]);
-  // const [details, setDetails] = useState([]);
-
-  // const checkLike = useRef();
-  // const checkView = useRef();
-
-  /* 좋아요& 조회수 
-  useEffect(() => {
-    axios
-      .get(`http://13.125.234.1:4000/detail`)
-      .then((res) => {
-        // console.log(res.data);
-        setDetails(res.data);
-      })
-      .catch(() => {
-        console.log('실패');
-      });
-  }, []); */
-
   /* pagingnation */
   // 첫 번째 페이지
   const [page, setPage] = useState(1);
@@ -51,16 +32,17 @@ export default function ListDetail({ props, region }) {
             ? props
                 .slice(pagePost * (page - 1), pagePost * (page - 1) + pagePost)
                 .map(function (a, i) {
-                  // checkLike.current = true;
-                  // checkView.current = true;
-
                   /* 별점 평균평점 */
                   const INITIALVALUE = 0;
-                  const starSum = a.star.reduce(
+                  const starList = [];
+                  for (let key in a.star) {
+                    starList.push(parseInt(a.star[key].star));
+                  }
+                  const starSum = starList.reduce(
                     (accumulator, currentValue) => accumulator + currentValue,
                     INITIALVALUE
                   );
-                  const starAvg = (starSum / a.star.length).toFixed(1);
+                  const starAvg = (starSum / starList.length).toFixed(1);
 
                   return (
                     <Col key={i}>
@@ -90,58 +72,6 @@ export default function ListDetail({ props, region }) {
                               <Progress starAvg={starAvg} />{' '}
                             </span>
                             <span>❤{a.like} </span>
-                            {/* <span>
-                              {details.map((el, j, arr) => {
-                                if (
-                                  el.data.contentid === tourData[i].contentid
-                                ) {
-                                  const star = parseFloat(el.starAvg);
-                                  const str = ` ⭐️ ${star}`;
-                                  checkLike.current = false;
-                                  return str;
-                                }
-
-                                if (checkLike.current && arr.length - 1 === j) {
-                                  return ` ⭐️ 0`;
-                                }
-                              })}
-                            </span>
-                            <span>
-                              {details.map((el, j, arr) => {
-                                if (
-                                  el.data.contentid === tourData[i].contentid
-                                ) {
-                                  const str = ` ❤ ${el.like}`;
-                                  checkLike.current = false;
-                                  return str;
-                                }
-
-                                if (checkLike.current && arr.length - 1 === j) {
-                                  return ` ❤ 0`;
-                                }
-                              })}
-                            </span>
-                            <span>
-                              {details.map((el, k, arr) => {
-                                if (
-                                  el.data.contentid === tourData[i].contentid
-                                ) {
-                                  const str = ` 조회수 ${el.view}`;
-                                  checkView.current = true;
-                                  return str;
-                                }
-
-                                if (checkLike.current && arr.length - 1 === k) {
-                                  return ` 조회수 0`;
-                                }
-                              })}
-                            </span> */}
-                            {/* 
-                            ⭐⭐⭐⭐⭐<span> {reviewData.length} </span> ❤{' '}
-                            <span>{details.like}</span>
-                            조회수 <span>
-
-                            </span> */}
                           </Card.Text>
                         </Card.Body>
                       </Card>

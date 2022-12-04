@@ -20,7 +20,7 @@ import { reviewUpdate } from '../../../store/modules/review';
 // 리뷰가 업데이트 되면 해당 여부를 redux 에 알리기 위한
 // dispatch 훅고 리덕스에서 선언한 액션 생성 함수 임포트
 
-export default function Review({ props }) {
+export default function Review({ props, region }) {
   const dispatch = useDispatch();
   const contentRef = useRef();
 
@@ -46,7 +46,6 @@ export default function Review({ props }) {
   // 페이지 이동 이벤트함수
   const handlePageChange = (page) => {
     setPage(page);
-    // console.log(page);
   };
   // 이미지 로딩 실패시
   const onErrorUserImg = (e) => {
@@ -91,7 +90,7 @@ export default function Review({ props }) {
             <Form.Control
               name="textarea"
               as="textarea"
-              maxlength={100}
+              maxLength={100}
               value={emendContent}
               rows={4}
               required
@@ -102,7 +101,9 @@ export default function Review({ props }) {
             />
           </Modal.Body>
           <Modal.Footer>
-            <p className="text-mute">글자수 제한: {emendContentText}/100자</p>
+            <div className="text-mute">
+              글자수 제한: {emendContentText}/100자
+            </div>
             <Button variant="outline-success" onClick={handleEmendClose}>
               닫기
             </Button>
@@ -126,7 +127,6 @@ export default function Review({ props }) {
                       backdrop="static"
                       keyboard={false}
                       size="lg"
-                      // fullscreen={true}
                       aria-labelledby="contained-modal-title-vcenter"
                       centered
                       scrollable
@@ -158,7 +158,7 @@ export default function Review({ props }) {
                               <Image
                                 src={`http://localhost:4000/uploads/${a.userImage}`}
                                 roundedCircle
-                                alt="유저프로필사진"
+                                alt=" "
                                 onError={onErrorUserImg}
                                 style={{
                                   width: '70px',
@@ -168,14 +168,11 @@ export default function Review({ props }) {
                                 }}
                               />
                             ) : (
-                              <img
-                                onError={onErrorUserImg}
-                                alt="유저에러이미지"
-                              />
+                              <img onError={onErrorUserImg} alt=" " />
                             )}
                           </Col>
                           <Col>
-                            <p className=" fw-bold m-0">{a.nickName}</p>
+                            <div className=" fw-bold m-0">{a.nickName}</div>
                             {/* 별점 */}
                             <div className="d-flex justify-content-start align-items-center ">
                               <RaingStar className="text-center m-0">
@@ -231,9 +228,9 @@ export default function Review({ props }) {
                               </RaingStar>
                             </div>
 
-                            <p className=" text-muted m-0">
+                            <div className=" text-muted m-0">
                               {a.dateFull.slice(0, 10)}
-                            </p>
+                            </div>
                           </Col>
                         </div>
                       </Row>
@@ -270,13 +267,10 @@ export default function Review({ props }) {
                                         `http://localhost:4000/review/emend/${a._id}`
                                       )
                                       .then((res) => {
-                                        // console.log('review 수정 성공');
                                         setEmendContent(res.data.content);
                                         setEmendId(res.data._id);
                                       })
-                                      .catch(() => {
-                                        console.log('실패');
-                                      });
+                                      .catch((err) => console.log(err));
                                   }}
                                 >
                                   수정
@@ -285,17 +279,30 @@ export default function Review({ props }) {
                                   variant="success"
                                   className="mx-2"
                                   onClick={() => {
+                                    const _id = a._id;
+                                    const contentid = a.contentid;
+                                    const writeTime = a.writeTime;
+                                    const star = a.star;
                                     axios
                                       .delete(
-                                        `http://localhost:4000/review/delete/${a._id}`
+                                        'http://localhost:4000/review/delete',
+                                        {
+                                          data: [
+                                            {
+                                              region,
+                                              _id,
+                                              contentid,
+                                              writeTime,
+                                              star,
+                                            },
+                                          ],
+                                        }
                                       )
-                                      .then((res) => {
+                                      .then(() => {
                                         dispatch(reviewUpdate());
                                         alert('리뷰가 삭제되었습니다.');
                                       })
-                                      .catch(() => {
-                                        console.log('실패');
-                                      });
+                                      .catch((err) => console.log(err));
                                   }}
                                 >
                                   삭제
@@ -349,7 +356,7 @@ export default function Review({ props }) {
   );
 }
 
-const RaingStar = styled.p`
+const RaingStar = styled.div`
   .yellowStar {
     color: #fcc419;
   }
