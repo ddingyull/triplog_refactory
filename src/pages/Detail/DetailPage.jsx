@@ -36,7 +36,6 @@ export default function Detail() {
   const [likeClickUser, setLikeClickUser] = useState(['']);
 
   const [detail, setDetail] = useState([]);
-  const [star, setStar] = useState([]);
 
   // 이미지 로딩 실패시
   const onErrorImg = (e) => {
@@ -138,29 +137,6 @@ export default function Detail() {
     console.log(document.documentElement.scrollHeight);
     window.scrollTo(0, document.documentElement.scrollHeight);
   };
-  // const handleToggle = (b) => () => {
-  //   console.log(b);
-  //   const currentIndex = like.indexOf(b);
-  //   console.log(currentIndex);
-  //   const newLike = [...like];
-  //   console.log(newLike);
-
-  //   if (currentIndex === -1) {
-  //     newLike.push(b);
-  //     axios
-  //       .post(`http://13.125.234.1:4000/detail/inclike/${contentid}`)
-  //       .then(console.log('좋아요 + 1'));
-  //   } else {
-  //     newLike.splice(currentIndex, 1);
-  //     axios
-  //       .post(`http://13.125.234.1:4000/detail/deletelike/${contentid}`)
-  //       .then(console.log('좋아요 -1'));
-  //   }
-  //   setLike(newLike);
-  //   axios
-  //     .post('http://13.125.234.1:4000/like/arrlike', { newLike, nickName })
-  //     .then((res) => console.log(res.data));
-  // };
 
   return (
     <>
@@ -184,7 +160,7 @@ export default function Detail() {
                   <h5 sytle={{ cursor: 'pointer' }} onClick={likeClick}>
                     {likeUser}
                   </h5>
-                  <p>좋아요</p>
+                  <div>좋아요</div>
                 </div>
                 <div
                   className="text-center flex-fill"
@@ -192,14 +168,14 @@ export default function Detail() {
                   onClick={scrollReview}
                 >
                   <h5>⭐</h5>
-                  <p>리뷰쓰기</p>
+                  <div>리뷰쓰기</div>
                 </div>
                 <div
                   className="text-center flex-fill"
                   style={{ cursor: 'pointer' }}
                 >
                   <Kakao tourData={detail} />
-                  <p className="pt-2">카카오 공유</p>
+                  <div className="pt-2">카카오 공유</div>
                 </div>
                 <div
                   className="text-center flex-fill "
@@ -209,7 +185,7 @@ export default function Detail() {
                   }}
                 >
                   <Url />
-                  <p style={{ fontSize: '1rem' }}>URL공유</p>
+                  <div style={{ fontSize: '1rem' }}>URL공유</div>
                 </div>
               </Card.Body>
             </Card>
@@ -221,20 +197,20 @@ export default function Detail() {
               style={{ overflowY: 'scroll', height: '60vh' }}
             >
               <Card.Body className="m-2 " style={{ height: '40vh' }}>
-                <p className=" mb-2 text-muted text-end">
+                <div className=" mb-2 text-muted text-end">
                   조회수{' '}
                   {detail.view === undefined ? (
                     <span>1</span>
                   ) : (
                     <span>{detail.view + 1}</span>
                   )}
-                </p>
+                </div>
                 <Card.Title className="mb-3 fw-bold">{detail.title}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                   📍 {detail.addr1}
                 </Card.Subtitle>
                 <Card.Text className="mb-4">
-                  <Progress starAvg={parseFloat(starAvg)} /> <span>❤</span>{' '}
+                  <Progress starAvg={starAvg} /> <span>❤</span>{' '}
                   {detail.like === undefined ? (
                     <span>0</span>
                   ) : (
@@ -244,11 +220,11 @@ export default function Detail() {
                 <Card.Text>
                   <Row className="mt-1">
                     <span className="fw-bold">전화</span>
-                    <p>
+                    <div>
                       {detail.tel === !' '
                         ? detail.tel
                         : '전화번호 정보가 없습니다.'}
-                    </p>
+                    </div>
                   </Row>
                   <Row>
                     <span className="fw-bold">홈페이지</span>
@@ -260,7 +236,7 @@ export default function Detail() {
                     ) : homepage === !'' ? (
                       <a dangerouslySetInnerHTML={{ __html: homepage }}></a>
                     ) : (
-                      <p>홈페이지 정보가 없습니다.</p>
+                      <div>홈페이지 정보가 없습니다.</div>
                     )}
                   </Row>
                 </Card.Text>
@@ -269,7 +245,7 @@ export default function Detail() {
                   {loading ? (
                     <BeatLoader color="#198754" className="text-center mt-5" />
                   ) : (
-                    <p dangerouslySetInnerHTML={{ __html: overview }}></p>
+                    <div dangerouslySetInnerHTML={{ __html: overview }}></div>
                   )}
                 </Card.Text>
               </Card.Body>

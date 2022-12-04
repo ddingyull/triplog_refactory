@@ -33,16 +33,6 @@ export default function List() {
       });
   }, [region, type]);
 
-  //   axios
-  //     .get(
-  //       `https://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=498&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&contentTypeId=12&areaCode=${areaCode}`
-  //     )
-  //     .then((response) => {
-  //       setTourData(response.data.response.body.items.item);
-  //       setOkay(true);
-  //     });
-  // }, []);
-
   if (okay) {
     return (
       <>
