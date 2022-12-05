@@ -62,13 +62,6 @@ export default function KakaoMap(props) {
 
         // 마커가 지도 위에 표시되도록 설정합니다
         marker.setMap(map);
-        // // 지도에 생성할 마커
-        // new kakao.maps.Marker({
-        //   //마커가 표시 될 지도
-        //   map: map,
-        //   //마커가 표시 될 위치
-        //   position: new kakao.maps.LatLng(el.mapy, el.mapx),
-        // });
         // path 를 주기 위해서 리스트에 저장 된 공간의 좌표를 pathArr 라는 배열에 푸쉬
         let pathArr = [];
         for (let i = 0; i < state.planItems[props.idx].length; i++) {

@@ -3,11 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 import KakaoMap from '../../pages/Plan/KakaoMap';
 import PlanItem from './PlanItem';
-
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-// 리덕스
 import { useDispatch, useSelector } from 'react-redux';
 import { setDateIdx } from '../../store/modules/triplog';
 

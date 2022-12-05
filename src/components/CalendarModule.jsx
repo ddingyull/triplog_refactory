@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Button, Modal, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
@@ -13,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPlanDate } from '../store/modules/triplog';
 
 //CalendarModule
-function CalendarModule({ text, subText }) {
+function CalendarModule() {
   let state = useSelector((state) => state.triplog);
   let dispatch = useDispatch();
 

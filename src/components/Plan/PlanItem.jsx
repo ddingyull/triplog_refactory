@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addPlanDate, deletePlanItem } from '../../store/modules/triplog';

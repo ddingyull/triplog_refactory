@@ -169,13 +169,11 @@ export default function Plan() {
                   onClick={() => {
                     // input에 입력한 값 useRef
                     const text = inputRef.current.value;
-                    // 데이터 요청
                     axios
                       .get(
                         `https://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=rfaoGpiapHFqOcUT6bqfERRxy1WVxzOdOpEC3ChyAFPEfONdSMdRVNETTJKRhqTbPuZ2krpG2mQJMXDbyG74RA%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=TripLog&_type=json&listYN=Y&arrange=B&areaCode=${areaCode}&keyword=${text}`
                       )
                       .then((결과) => {
-                        // console.log(search);
                         // 재 검색 마다 search 값을 삭제 시켜줌
                         search.splice(0, search.length);
                         let copy = [

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from 'styled-components';
 
 export default function SelectItem() {
-  // 여행계획 컴포넌트에 아이템 추가 (근데 공통으로 됨..)
+  // 여행계획 컴포넌트에 아이템 추가
   const handleAddItem = (idx) => {
     const currentItem = planItems[idx];
     const newPlanitems = [...planItems, { ...currentItem }];

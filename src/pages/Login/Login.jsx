@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -87,7 +87,6 @@ export default function Login({
     }
   };
 
-  // 테츠님 코드
   const [loginCondition, setLoginCondition] = useState({
     condition: false,
     msg: '회원 정보를 정확하게 입력하세요!',
@@ -134,10 +133,8 @@ export default function Login({
 
     async function porfolioLogin() {
       const loginInfo = {
-        // email: fixEmailValue,
-        // password: fixPwlValue,
-        email: useremail,
-        password: userpw,
+        email: fixEmailValue,
+        password: fixPwlValue,
       };
       console.log(loginInfo);
 
@@ -187,10 +184,10 @@ export default function Login({
           <Forminput
             id={'useremail'}
             label="아이디"
-            // normal
-            value={useremail}
-            // portfolio
-            // value={fixEmailValue}
+            // normal로그인히기
+            // value={useremail}
+            // portfolio로그인하기
+            value={fixEmailValue}
             onChange={handleEmail}
             inputProps={{
               type: 'text',
@@ -205,10 +202,10 @@ export default function Login({
           <Forminput
             id={'userpw'}
             label="비밀번호"
-            // normal
-            value={userpw}
-            // portfolio
-            // value={fixPwlValue}
+            // normal로그인하기
+            // value={userpw}
+            // portfolio로그인하기
+            value={fixPwlValue}
             onChange={handlePw}
             inputProps={{
               type: 'password',

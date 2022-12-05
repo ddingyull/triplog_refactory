@@ -8,17 +8,9 @@ import {
   Col,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Nav from '../../components/Nav';
-import Footer from '../../components/Footer';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import {
-  FaArrowAltCircleRight,
-  FaArrowRight,
-  FaRegArrowAltCircleRight,
-  FaTrash,
-} from 'react-icons/fa';
-// 리듀서
+import { FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -52,7 +44,6 @@ export default function CheckListRe() {
   }, [update]);
 
   const handleToggle = (b) => () => {
-    // console.log(b);
     const currentIndex = checked.indexOf(b);
     const newChecked = [...checked];
 
@@ -68,8 +59,6 @@ export default function CheckListRe() {
   /* 추가 인풋 */
   let input = '';
   const changeHandler = (e) => {
-    // console.log(e.target.value);
-    // input = e.target.value;
     setText(e.target.value);
   };
 
@@ -77,15 +66,6 @@ export default function CheckListRe() {
     return (
       <>
         <Container className="m-auto mx-5 col-9">
-          {/* <h1
-            className="fw-bold lh-base mt-2 mb-4 m-auto"
-            style={{ width: '90%' }}
-          >
-            <span style={{ color: '#198754' }}>{nickName}</span>
-            <span>님의</span>
-            <br></br>
-            <span>체크리스트📝 입니다.</span>
-          </h1> */}
           <AccordionCustom style={{ width: '130%' }}>
             <Accordion
               defaultActiveKey={[0]}

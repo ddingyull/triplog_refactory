@@ -8,7 +8,6 @@ import PlanKakao from '../../components/share/PlanKakao';
 
 // detail 페이지의 submenu 부분
 export default function Welcome() {
-  // 리듀서의  useSelector, dispatch
   let state = useSelector((state) => state.triplog);
   let users = useSelector((state) => state.users);
   let dispatch = useDispatch();

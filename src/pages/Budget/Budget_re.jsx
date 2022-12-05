@@ -1,18 +1,8 @@
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  InputGroup,
-  Form,
-  Modal,
-} from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Nav from '../../components/Nav';
-import Footer from '../../components/Footer';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { FaArrowAltCircleUp, FaPencilAlt, FaTrash } from 'react-icons/fa';
+import { FaArrowAltCircleUp, FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { chargeUpdate } from '../../store/modules/budget';
 
@@ -53,15 +43,6 @@ export default function BudgetRe() {
     return (
       <>
         <Container className="mx-5">
-          {/* <h1
-            className="fw-bold lh-base mt-2 mb-4 m-auto"
-            // style={{ width: '65%' }}
-          >
-            <span style={{ color: '#198754' }}>{nickName}</span>
-            <span>님의</span>
-            <br></br>
-            <span>정산💸내역입니다.</span>
-          </h1> */}
           <Col
             className=" p-5 m-auto rounded border mt-4"
             style={{ backgroundColor: '#fafafa', width: '90%' }}
