@@ -226,7 +226,10 @@ export default function Login({
             hoverColor="#fff"
             hoverBackgroundColor="#555"
           ></Btn>
-          <a href={KAKAO_AUTH_URL} style={{ textDecoration: 'none' }}>
+          <a
+            href={KAKAO_AUTH_URL}
+            style={{ textDecoration: 'none', width: '350px' }}
+          >
             <Btn
               text="카카오로그인"
               textColor="#333"
