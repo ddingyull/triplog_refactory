@@ -96,85 +96,79 @@ export default function CheckList() {
             >
               {checklist.items.map(function (a, i) {
                 return (
-                  <>
-                    <Accordion.Item eventKey={i} key={checklist.i}>
-                      <Accordion.Header>
-                        {checklist.items[i].title}
-                      </Accordion.Header>
-                      <Accordion.Body className="text-start">
-                        <Form>
-                          {checklist.items[i].content.map(function (b, j) {
-                            return (
-                              <>
-                                <Form.Check type="checkbox" key={i}>
-                                  <Form.Check.Input
-                                    type="checkbox"
-                                    onClick={handleToggle(b)}
-                                    checked={checked.indexOf(b) !== -1}
-                                  />
-                                  <Form.Check.Label className="col-10">
-                                    {checklist.items[i].content[j]}
-                                  </Form.Check.Label>
-                                  <FaTrash
-                                    className="col-2"
-                                    style={{ color: 'grey' }}
-                                    onClick={() => {
-                                      axios
-                                        .delete(
-                                          'http://13.125.234.1:4000/checklist/deleteItem',
-                                          {
-                                            data: {
-                                              nickName: nickName,
-                                              title: checklist.items[i].title,
-                                              item: checklist.items[i].content[
-                                                j
-                                              ],
-                                            },
-                                          }
-                                        )
-                                        .then(() => {
-                                          setUpdate(!update);
-                                        })
-                                        .catch((err) => console.log(err));
-                                    }}
-                                  />
-                                </Form.Check>
-                              </>
-                            );
-                          })}
-                          <InputGroup className="mt-3">
-                            <Form.Control
-                              type={'text'}
-                              placeholder="아이템 추가하기🤗"
-                              onChange={(e) => changeHandler(e)}
-                            />
-                            <Button
-                              variant="success"
-                              id="button-addon2"
-                              onClick={() => {
-                                axios
-                                  .post(
-                                    'http://13.125.234.1:4000/checklist/addItem',
-                                    {
-                                      nickName: nickName,
-                                      title: checklist.items[i].title,
-                                      item: text,
-                                    }
-                                  )
-                                  .then(() => {
-                                    setText('');
-                                    setUpdate(!update);
-                                  })
-                                  .catch((err) => console.log(err));
-                              }}
-                            >
-                              추가
-                            </Button>
-                          </InputGroup>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </>
+                  <Accordion.Item eventKey={i} key={i}>
+                    <Accordion.Header>
+                      {checklist.items[i].title}
+                    </Accordion.Header>
+                    <Accordion.Body className="text-start">
+                      <Form>
+                        {checklist.items[i].content.map(function (b, j) {
+                          return (
+                            <Form.Check type="checkbox" key={j}>
+                              <Form.Check.Input
+                                type="checkbox"
+                                onChange={handleToggle(b)}
+                                checked={checked.indexOf(b) !== -1}
+                              />
+                              <Form.Check.Label className="col-10">
+                                {checklist.items[i].content[j]}
+                              </Form.Check.Label>
+                              <FaTrash
+                                className="col-2"
+                                style={{ color: 'grey' }}
+                                onClick={() => {
+                                  axios
+                                    .delete(
+                                      'http://13.125.234.1:4000/checklist/deleteItem',
+                                      {
+                                        data: {
+                                          nickName: nickName,
+                                          title: checklist.items[i].title,
+                                          item: checklist.items[i].content[j],
+                                        },
+                                      }
+                                    )
+                                    .then(() => {
+                                      setUpdate(!update);
+                                    })
+                                    .catch((err) => console.log(err));
+                                }}
+                              />
+                            </Form.Check>
+                          );
+                        })}
+                        <InputGroup className="mt-3">
+                          <Form.Control
+                            type={'text'}
+                            placeholder="아이템 추가하기🤗"
+                            onChange={(e) => changeHandler(e)}
+                          />
+                          <Button
+                            variant="success"
+                            id="button-addon2"
+                            onClick={() => {
+                              axios
+                                .post(
+                                  'http://13.125.234.1:4000/checklist/addItem',
+                                  {
+                                    nickName: nickName,
+                                    title: checklist.items[i].title,
+                                    item: text,
+                                  }
+                                )
+                                .then(() => {
+                                  setText('');
+                                  setUpdate(!update);
+                                })
+                                .catch((err) => console.log(err));
+                            }}
+                          >
+                            추가
+                          </Button>
+                        </InputGroup>
+                      </Form>
+                    </Accordion.Body>
+                  </Accordion.Item>
                 );
               })}
               <Row className="mt-3 mx-1">
